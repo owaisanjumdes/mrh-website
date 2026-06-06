@@ -1,26 +1,186 @@
-@import "tailwindcss";
+@import "@heroui/styles";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Surfaces */
+  --surface-paper: #F4F2EE;
+  --surface-paper-2: #EAE7E1;
+  --surface-deep: #0B0E12;
+  --surface-deep-2: #14181E;
+
+  /* Foreground on paper */
+  --ink: #0B0C0E;
+  --ink-2: #44464B;
+  --ink-3: #74777D;
+  --ink-4: #A3A6AC;
+
+  /* Foreground on deep */
+  --paper: #EDEAE3;
+  --paper-2: #9C9991;
+  --paper-3: #6E6B65;
+
+  /* Accents */
+  --verified: #3F7D5A;
+  --verified-soft: #E8EFE9;
+  --verified-deep: #2A5740;
+  --severity: #C7472E;
+
+  /* AQI severity ramp */
+  --aqi-good: #3F7D5A;
+  --aqi-moderate: #B49344;
+  --aqi-poor: #C7732E;
+  --aqi-bad: #C7472E;
+  --aqi-severe: #7A2A1A;
+
+  /* Borders (hairline only) */
+  --border-paper: rgba(11, 12, 14, 0.12);
+  --border-deep: rgba(237, 234, 227, 0.16);
+
+  /* Spacing (8px base) */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+  --sp-9: 96px;
+  --sp-10: 128px;
+
+  /* Motion */
+  --ease-firm: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-fast: 120ms;
+  --t-mid: 240ms;
+  --t-slow: 400ms;
+  --t-counter: 1400ms;
+
+  /* Layout */
+  --max-content: 1600px;
+  --page-gutter: clamp(24px, 6vw, 160px);
+
+  /* Radius */
+  --r-0: 0px;
+  --r-1: 2px;
+  --r-pill: 999px;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Surfaces -> bg-surface-paper, bg-surface-deep, etc. */
+  --color-surface-paper: var(--surface-paper);
+  --color-surface-paper-2: var(--surface-paper-2);
+  --color-surface-deep: var(--surface-deep);
+  --color-surface-deep-2: var(--surface-deep-2);
+
+  /* Ink (foreground on paper) -> text-ink, text-ink-2, etc. */
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-ink-4: var(--ink-4);
+
+  /* Paper (foreground on deep) -> text-paper, text-paper-2, etc. */
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-paper-3: var(--paper-3);
+
+  /* Accents */
+  --color-verified: var(--verified);
+  --color-verified-soft: var(--verified-soft);
+  --color-verified-deep: var(--verified-deep);
+  --color-severity: var(--severity);
+
+  /* AQI ramp */
+  --color-aqi-good: var(--aqi-good);
+  --color-aqi-moderate: var(--aqi-moderate);
+  --color-aqi-poor: var(--aqi-poor);
+  --color-aqi-bad: var(--aqi-bad);
+  --color-aqi-severe: var(--aqi-severe);
+
+  /* Borders -> border-border-paper, border-border-deep */
+  --color-border-paper: var(--border-paper);
+  --color-border-deep: var(--border-deep);
+
+  /* Fonts */
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, "SFMono-Regular", monospace;
+
+  /* Spacing scale (mirrors --sp-* tokens) */
+  --spacing-sp-1: 4px;
+  --spacing-sp-2: 8px;
+  --spacing-sp-3: 12px;
+  --spacing-sp-4: 16px;
+  --spacing-sp-5: 24px;
+  --spacing-sp-6: 32px;
+  --spacing-sp-7: 48px;
+  --spacing-sp-8: 64px;
+  --spacing-sp-9: 96px;
+  --spacing-sp-10: 128px;
+
+  /* Radius -> rounded-0, rounded-1, rounded-pill */
+  --radius-0: 0px;
+  --radius-1: 2px;
+  --radius-pill: 999px;
+
+  /* Motion -> ease-firm, ease-settle, duration-fast, etc. */
+  --ease-firm: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Base typography */
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #ffffff;
+  color: var(--ink);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -0.005em;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 0.92;
+  margin: 0;
+}
+
+/* Utility classes */
+.display-numeral {
+  font-size: clamp(80px, 12vw, 200px);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 0.9;
+  font-variant-numeric: tabular-nums;
+}
+
+.micro-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.font-mono {
+  font-family: var(--font-mono), ui-monospace, "SFMono-Regular", monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Surface context swap */
+.surface-paper {
+  background: var(--surface-paper);
+  color: var(--ink);
+}
+
+.surface-deep {
+  background: var(--surface-deep);
+  color: var(--paper);
 }
