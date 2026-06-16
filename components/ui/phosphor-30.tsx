@@ -179,6 +179,19 @@ function ShaderCanvas({
     canvas.addEventListener("webglcontextrestored", onContextRestored);
     ctxBound = true;
 
+    const onVisibility = () => {
+      if (document.hidden) {
+        if (rafRef.current) {
+          cancelAnimationFrame(rafRef.current);
+          rafRef.current = null;
+        }
+      } else if (!rafRef.current && !disposed) {
+        startRef.current = performance.now() - (frameRef.current * 16);
+        rafRef.current = requestAnimationFrame(tick);
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+
     startRef.current = performance.now();
     frameRef.current = 0;
 
@@ -235,6 +248,8 @@ function ShaderCanvas({
         canvas.removeEventListener("webglcontextrestored", onContextRestored);
         ctxBound = false;
       }
+
+      document.removeEventListener("visibilitychange", onVisibility);
 
       if (ro) { try { ro.disconnect(); } catch {} ro = null; }
 

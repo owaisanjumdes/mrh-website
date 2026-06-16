@@ -396,10 +396,10 @@ export default function KeepExploring() {
             style={{
               margin: 0,
               color: ink,
-              fontSize: "clamp(32px, 4.2vw, 54px)",
-              fontWeight: 700,
-              letterSpacing: "-0.28px",
-              lineHeight: 1.11,
+              fontSize: "clamp(32px, 4vw, 48px)",
+              fontWeight: 500,
+              letterSpacing: "-0.03em",
+              lineHeight: 1.05,
             }}
           >
             Keep exploring MRH.

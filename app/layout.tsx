@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Inter_Tight, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Nav from "@/components/Nav";
+import NavGate from "@/components/NavGate";
+import PageTransition from "@/components/PageTransition";
+import RevealManager from "@/components/RevealManager";
 
 const interTight = Inter_Tight({
   variable: "--font-sans",
@@ -31,8 +33,10 @@ export default function RootLayout({
       className={`${interTight.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Nav />
+        <NavGate />
         <div className="flex-1">{children}</div>
+        <RevealManager />
+        <PageTransition />
       </body>
     </html>
   );

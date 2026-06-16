@@ -166,50 +166,6 @@ export default function ProductsBento() {
         fontFamily: "var(--font-sans), ui-sans-serif, system-ui, sans-serif",
       }}
     >
-      {/* Heading block */}
-      <div
-        style={{
-          maxWidth: "1440px",
-          margin: "0 auto",
-          paddingLeft: "clamp(16px, 2.5vw, 40px)",
-          paddingRight: "clamp(16px, 2.5vw, 40px)",
-          paddingTop: "clamp(80px, 12vh, 160px)",
-          paddingBottom: "clamp(48px, 8vh, 96px)",
-        }}
-      >
-        <h2
-          style={{
-            fontFamily:
-              "var(--font-sans), ui-sans-serif, system-ui, sans-serif",
-            fontSize: "clamp(32px, 4.2vw, 64px)",
-            fontWeight: 700,
-            letterSpacing: "-0.025em",
-            lineHeight: 1.05,
-            color: "#1a1a1a",
-            margin: 0,
-            maxWidth: "16ch",
-          }}
-        >
-          Engineered down to the cell
-        </h2>
-        <p
-          style={{
-            margin: "clamp(12px, 1.5vw, 24px) 0 0 0",
-            fontSize: "clamp(15px, 1.2vw, 20px)",
-            fontWeight: 400,
-            lineHeight: 1.5,
-            color: "#444",
-            maxWidth: "60ch",
-            fontFamily:
-              "var(--font-sans), ui-sans-serif, system-ui, sans-serif",
-          }}
-        >
-          Every part of PureAir earns its place — the honeycomb intake, the
-          sealed metal body, the live readout. Built by OK Play, filtered by
-          MANN+HUMMEL, made to run for years.
-        </p>
-      </div>
-
       {/* Stack of four full-viewport rectangles with small white gaps */}
       <div
         style={{

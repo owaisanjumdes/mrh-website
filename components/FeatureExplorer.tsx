@@ -25,8 +25,8 @@ const features: Feature[] = [
     title: "Colors",
     description:
       "Available in four powder-coated finishes built for institutional deployment — each tuned to disappear into the room it cleans.",
-    image: "/pureair-product.png",
-    accent: "#ef5a3c",
+    image: "/PRODUCTSHOT.png",
+    accent: "#148042",
     colors: [
       { name: "Stainless", swatch: "#b8b3af" },
       { name: "Charcoal", swatch: "#2a2a2c" },
@@ -40,7 +40,7 @@ const features: Feature[] = [
     title: "Multi-stage filter",
     description:
       "Pre-filter, activated carbon, HEPA H13, and antimicrobial mesh tuned for India's particulate, gas, and bioaerosol mix.",
-    image: "/Multi Stage Filter 1.png",
+    image: "/Multi Stage Filter.png",
   },
   {
     id: "media",
@@ -48,7 +48,7 @@ const features: Feature[] = [
     title: "MANN+HUMMEL HEPA H13",
     description:
       "German-engineered filter media partner. Captures 99.97% of particles down to 0.3 microns, independently validated by IIT Delhi.",
-    image: "/HEPA filter 1.png",
+    image: "/HEPA filter.png",
   },
   {
     id: "sensor",
@@ -56,7 +56,7 @@ const features: Feature[] = [
     title: "Live AQI sensor",
     description:
       "Real-time PM 2.5 and AQI display on the front panel. The same air you're breathing, read continuously, surfaced in plain numbers.",
-    image: "/Live AQI MONITOR(1).png",
+    image: "/AQIMETER.png",
   },
   {
     id: "quiet",
@@ -64,7 +64,7 @@ const features: Feature[] = [
     title: "Whisper-quiet motor",
     description:
       "Tuned for bedrooms, classrooms, and consultation rooms. Sleep mode drops below 28 dB — softer than a library.",
-    image: "/Honeycomb.png",
+    image: "/Honeycomb Grill.png",
   },
   {
     id: "chassis",
@@ -72,7 +72,7 @@ const features: Feature[] = [
     title: "Steel chassis",
     description:
       "Powder-coated steel built for institutional deployment cycles. No plastic creak. No warping. Field-serviceable.",
-    image: "/Steel CHasis.png",
+    image: "/STEELBODY.png",
   },
   {
     id: "smart",
@@ -80,7 +80,7 @@ const features: Feature[] = [
     title: "Smart controls",
     description:
       "App control, scheduling, and filter-life alerts. Ships ready for the OK Play deployment ops dashboard.",
-    image: "/Smart Control.png",
+    image: "/DIGITAL.png",
   },
 ];
 
@@ -193,8 +193,6 @@ export default function FeatureExplorer() {
       style={{
         paddingTop: "clamp(96px, 12vw, 200px)",
         paddingBottom: "clamp(96px, 10vw, 176px)",
-        paddingLeft: "24px",
-        paddingRight: "24px",
       }}
     >
       <style>{`
@@ -298,24 +296,25 @@ export default function FeatureExplorer() {
         }
       `}</style>
       <div
-        className="mx-auto"
-        style={{ maxWidth: "1440px" }}
+        style={{
+          width: "100%",
+          paddingLeft: "clamp(20px, 8.85%, 127px)",
+          paddingRight: "clamp(20px, 8.85%, 127px)",
+        }}
       >
         <h2
-          className="mrh-feat-h"
           style={{
             fontFamily:
               "var(--font-sans), ui-sans-serif, system-ui, sans-serif",
-            fontSize: "clamp(32px, 4.2vw, 64px)",
-            fontWeight: 700,
-            letterSpacing: "-0.025em",
+            fontSize: "clamp(32px, 4vw, 48px)",
+            fontWeight: 500,
+            letterSpacing: "-0.03em",
             lineHeight: 1.05,
-            color: "#1a1a1a",
+            color: "var(--ink)",
             margin: "0 0 clamp(40px, 5vw, 80px) 0",
-            maxWidth: "16ch",
           }}
         >
-          What&rsquo;s i<span className="mrh-feat-n">n</span>side
+          What&rsquo;s inside
         </h2>
 
         <div
@@ -514,7 +513,7 @@ export default function FeatureExplorer() {
           </div>
 
           {/* Product image */}
-          <div className="w-full md:flex-1 flex items-center justify-center">
+          <div className="w-full md:flex-1 flex items-start justify-center">
             <img
               className={`mrh-feat-img ${
                 imgPhase === "out"
@@ -527,11 +526,12 @@ export default function FeatureExplorer() {
               alt={features[imgIndex].label}
               style={{
                 width: "100%",
-                maxWidth: "clamp(280px, 32vw, 520px)",
+                maxWidth: "clamp(360px, 44vw, 720px)",
+                aspectRatio: "1402 / 1122",
                 height: "auto",
+                objectFit: "cover",
                 display: "block",
-                filter:
-                  "drop-shadow(0 14px 24px rgba(0, 0, 0, 0.18)) drop-shadow(0 40px 60px rgba(0, 0, 0, 0.14))",
+                borderRadius: "clamp(20px, 2vw, 32px)",
               }}
             />
           </div>
