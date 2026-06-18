@@ -71,9 +71,9 @@ function BrandMark({ light }: { light: boolean }) {
 // bar (white contents) after scrolling past it.
 const LIGHT_HERO_ROUTES = new Set<string>([]);
 // Routes whose hero uses a dark background — the nav stays transparent over them
-// while the hero is on screen. (/products uses a solid black nav instead, which
-// is the default no-hero treatment below.)
-const DARK_HERO_ROUTES = new Set<string>([]);
+// while the hero is on screen (only the nav content shows over the video), then
+// flips to the solid black bar after scrolling past it.
+const DARK_HERO_ROUTES = new Set<string>(["/"]);
 
 export default function Nav() {
   const pathname = usePathname();

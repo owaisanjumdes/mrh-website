@@ -22,18 +22,22 @@ export default function HomePage() {
       }}
     >
       <HomeHero />
-      <HomeGlobe />
-      <MacTahoe />
-      <ProfoundSound />
-      <M5Family />
-      <ProfoundSound title="AirFINEry" />
-      <M5Family ctaLabel="Explore AirFINEry" ctaHref="/products/airfinery" />
-      <Performance />
-      <SiriIntercom />
-      <BatteryLife />
-      <PureAirInAction heading="Deployment" />
-      <PureAirInAction heading="Press Coverage" />
-      <SiteFooter />
+      {/* Higher layer that scrolls UP over the pinned hero (parallax reveal).
+          z-index above the sticky hero; solid section backgrounds cover it. */}
+      <div style={{ position: "relative", zIndex: 1 }}>
+        <HomeGlobe />
+        <MacTahoe />
+        <ProfoundSound />
+        <M5Family />
+        <ProfoundSound title="AirFINEry" />
+        <M5Family ctaLabel="Explore AirFINEry" ctaHref="/products/airfinery" />
+        <Performance />
+        <SiriIntercom />
+        <BatteryLife />
+        <PureAirInAction heading="Deployment" />
+        <PureAirInAction heading="Press Coverage" />
+        <SiteFooter />
+      </div>
     </main>
   );
 }
