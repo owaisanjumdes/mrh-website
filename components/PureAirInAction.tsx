@@ -15,25 +15,25 @@ type Deployment = {
 
 const DEPLOYMENTS: Deployment[] = [
   {
-    image: "/MRH-ENVIRONMENT_01.png",
+    image: "/mrh-environment-01.png",
     title: "Offices & workspaces.",
     description:
       "Cleaner air at the desk — fewer sick days, sharper focus, quietly running all day.",
   },
   {
-    image: "/MRH-BASEKETBALL COURT_REV.png",
+    image: "/mrh-basketball-court.png",
     title: "Schools & sports arenas.",
     description:
       "Engineered to clear large, high-traffic indoor spaces where kids breathe hardest.",
   },
   {
-    image: "/Environment.png",
+    image: "/environment.png",
     title: "Homes & living rooms.",
     description:
       "Continuous, whisper-quiet purification for the rooms families spend the most time in.",
   },
   {
-    image: "/MRH-ENVIRONMENT_02.png",
+    image: "/mrh-environment-02.png",
     title: "Clinics & hospitality.",
     description:
       "Reliable, measurable AQI control for waiting rooms, lobbies, and wellness spaces.",

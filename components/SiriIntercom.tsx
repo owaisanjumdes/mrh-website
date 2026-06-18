@@ -3,7 +3,7 @@
 // Copy kept verbatim from the design.
 
 const PLAN_IMG =
-  "/Image (Animation of various Siri commands written over a home's floor plan).png";
+  "/siri-floorplan.png";
 
 export default function SiriIntercom() {
   return (

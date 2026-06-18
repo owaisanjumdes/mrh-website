@@ -94,7 +94,7 @@ export default function ProductExplorer() {
 
     const loader = new GLTFLoader();
     loader.load(
-      "/models/MRH__.glb",
+      "/models/mrh.glb",
       (gltf) => {
         const model = gltf.scene;
         const box = new THREE.Box3().setFromObject(model);

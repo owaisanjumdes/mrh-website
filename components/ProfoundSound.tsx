@@ -5,7 +5,7 @@ import { useInView } from "@/lib/useInView";
 // "Introducing PureAir" — adapted from Figma node 755:5692. Centered chip +
 // headline + price over a product shot that pushes in behind the text. On scroll
 // into view: the text reveals first, then the image fades in behind it.
-const PRODUCT_IMG = "/Image (Push in on a side view product shot of HomePod).png";
+const PRODUCT_IMG = "/homepod-side-view.png";
 
 export default function ProfoundSound({ title = "PureAir" }: { title?: string }) {
   const { ref, inView } = useInView<HTMLElement>();

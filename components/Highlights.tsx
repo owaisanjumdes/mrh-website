@@ -19,15 +19,15 @@ const SLIDES: Slide[] = [
   },
   {
     title: "Three‑stage filtration captures 99.97% of particles down to 0.3 microns.",
-    image: "/Multi Stage Filter.png",
+    image: "/multi-stage-filter.png",
   },
   {
     title: "A live AQI readout you can trust — clean air you can actually see.",
-    image: "/AQIMETER.png",
+    image: "/aqimeter.png",
   },
   {
     title: "Proven clean air in the rooms where people live and work.",
-    image: "/Environment.png",
+    image: "/environment.png",
   },
 ];
 

@@ -10,19 +10,19 @@ import { useEffect, useRef, useState } from "react";
 const HEADING = "Leading the Way in Sustainable Air Purification";
 
 const TOP = {
-  image: "/MRH-ENVIRONMENT_02.png",
+  image: "/mrh-environment-02.png",
   title: "Premium Materials",
   body: "A sealed steel body, finished to last through years of daily commercial use. No plastic, no rattle, no early replacement.",
 };
 
 const BOTTOM = [
   {
-    image: "/MRH-HONEYCOMB GRILL 1.png",
+    image: "/mrh-honeycomb-grill.png",
     title: "German Filtration",
     body: "Nano fiber–enhanced filters by MANN+HUMMEL, the same standard trusted in industry and healthcare across the world.",
   },
   {
-    image: "/MRH-ENVIRONMENT_01.png",
+    image: "/mrh-environment-01.png",
     title: "Made in India",
     body: "Manufactured, installed, and serviced locally. Filters and support are always within reach, never an import away.",
   },

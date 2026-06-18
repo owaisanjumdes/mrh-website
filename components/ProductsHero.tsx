@@ -155,7 +155,7 @@ export default function ProductsHero() {
         <div className="ph-media">
           <img
             className="ph-shot"
-            src="/PRODUCTSHOT.png"
+            src="/productshot.png"
             alt="MRH PureAir air purifier — brushed-steel body with honeycomb grille"
           />
         </div>

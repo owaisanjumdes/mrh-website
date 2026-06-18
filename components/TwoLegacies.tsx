@@ -126,12 +126,12 @@ export default function TwoLegacies() {
           <div className="legacy-col">
             <FadeInOnView className="legacy-logos">
               <img
-                src="/Ok_Play_Logo.png"
+                src="/ok-play-logo.png"
                 alt="OK Play"
                 className="legacy-logo-lg"
               />
               <span className="legacy-div" aria-hidden />
-              <img src="/MRH blacklogo.png" alt="MRH" className="legacy-logo-sm" />
+              <img src="/mrh-blacklogo.png" alt="MRH" className="legacy-logo-sm" />
             </FadeInOnView>
             <p className="legacy-stat">
               <CountUp end={30} />+ Years
@@ -143,7 +143,7 @@ export default function TwoLegacies() {
           <div className="legacy-col">
             <FadeInOnView className="legacy-logos" delayMs={150}>
               <img
-                src="/MANN+HUMMEL_Logo.svg"
+                src="/mann-hummel-logo.svg"
                 alt="MANN+HUMMEL"
                 className="legacy-logo-lg"
               />

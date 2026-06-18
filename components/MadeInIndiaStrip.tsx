@@ -64,7 +64,7 @@ export default function MadeInIndiaStrip() {
         {TRACK.map((text, i) => (
           <div className="mii-seg" key={i}>
             <span className="mii-text">{text}</span>
-            <img src="/Make-in-India.png" alt="" className="mii-logo" />
+            <img src="/make-in-india.png" alt="" className="mii-logo" />
           </div>
         ))}
       </div>

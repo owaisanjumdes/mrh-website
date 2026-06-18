@@ -88,7 +88,7 @@ const products: [Product, Product] = [
   {
     tag: "Now shipping",
     name: "PureAir",
-    image: "/Hero PureAIR.png",
+    image: "/hero-pureair.png",
     imageAlt: "MRH PureAir wall-mounted purifier",
     swatches: [
       { color: "#b8b3af" },
@@ -110,7 +110,7 @@ const products: [Product, Product] = [
   {
     tag: "New",
     name: "AirFINEry",
-    image: "/AirFINERY.png",
+    image: "/airfinery.png",
     imageAlt: "MRH AirFINEry institutional purifier",
     swatches: [
       { color: "#b8b3af" },

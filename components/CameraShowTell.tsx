@@ -191,7 +191,7 @@ export default function CameraShowTell() {
         <div className="cam-frame">
           <video
             ref={videoRef}
-            src="/Mann + Hummel Simulation of improving indoor air quality in a classroom using OUR AIR SQ2500 - Exi-tite HVAC Supplier (1080p, h264).mp4"
+            src="/classroom-air-simulation.mp4"
             loop
             muted
             playsInline

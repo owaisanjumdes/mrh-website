@@ -133,7 +133,7 @@ export default function SiteFooter() {
         <div className="ft-top">
           {/* Newsletter */}
           <div className="ft-news">
-            <img src="/MRH Logo.png" alt="MRH" className="ft-brand-logo" />
+            <img src="/mrh-logo.png" alt="MRH" className="ft-brand-logo" />
             <p className="ft-news-text">
               Join our newsletter to stay up to date on features and releases.
             </p>

@@ -53,7 +53,7 @@ function BrandMark({ light }: { light: boolean }) {
   return (
     <img
       // Black logo over the light (white) nav; white logo over the dark nav.
-      src={light ? "/MRH blacklogo.png" : "/MRH Logo.png"}
+      src={light ? "/mrh-blacklogo.png" : "/mrh-logo.png"}
       alt="MRH"
       style={{
         width: "2.4em",

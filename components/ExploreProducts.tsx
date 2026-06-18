@@ -12,7 +12,7 @@ const PRODUCTS = [
     name: "PureAir",
     price: "from ₹24,999",
     href: "/products",
-    image: "/MRH-ENVIRONMENT_02.png",
+    image: "/mrh-environment-02.png",
   },
   {
     name: "AirFINEry",

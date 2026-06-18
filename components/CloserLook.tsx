@@ -26,7 +26,7 @@ const FEATURES: Feature[] = [
     title: "Colors",
     description:
       "Four powder-coated finishes built for institutional deployment — each tuned to disappear into the room it cleans.",
-    image: "/PRODUCTSHOT.png",
+    image: "/productshot.png",
     accent: "#148042",
     colors: [
       { name: "Stainless", swatch: "#b8b3af" },
@@ -41,7 +41,7 @@ const FEATURES: Feature[] = [
     title: "Multi-stage filter",
     description:
       "Pre-filter, activated carbon, HEPA H13, and antimicrobial mesh tuned for India's particulate, gas, and bioaerosol mix.",
-    image: "/Multi Stage Filter.png",
+    image: "/multi-stage-filter.png",
   },
   {
     id: "media",
@@ -49,7 +49,7 @@ const FEATURES: Feature[] = [
     title: "MANN+HUMMEL HEPA H13",
     description:
       "German-engineered filter media. Captures 99.97% of particles down to 0.3 microns, independently validated by IIT Delhi.",
-    image: "/HEPA filter.png",
+    image: "/hepa-filter.png",
   },
   {
     id: "sensor",
@@ -57,7 +57,7 @@ const FEATURES: Feature[] = [
     title: "Live AQI sensor",
     description:
       "Real-time PM 2.5 and AQI display on the front panel. The same air you're breathing, read continuously, in plain numbers.",
-    image: "/AQIMETER.png",
+    image: "/aqimeter.png",
   },
   {
     id: "quiet",
@@ -65,7 +65,7 @@ const FEATURES: Feature[] = [
     title: "Whisper-quiet motor",
     description:
       "Tuned for bedrooms, classrooms, and consultation rooms. Sleep mode drops below 28 dB — softer than a library.",
-    image: "/Honeycomb Grill.png",
+    image: "/honeycomb-grill.png",
   },
   {
     id: "chassis",
@@ -73,7 +73,7 @@ const FEATURES: Feature[] = [
     title: "Steel chassis",
     description:
       "Powder-coated steel built for institutional deployment cycles. No plastic creak. No warping. Field-serviceable.",
-    image: "/STEELBODY.png",
+    image: "/steelbody.png",
   },
   {
     id: "smart",
@@ -81,7 +81,7 @@ const FEATURES: Feature[] = [
     title: "Smart controls",
     description:
       "App control, scheduling, and filter-life alerts. Ships ready for the OK Play deployment ops dashboard.",
-    image: "/DIGITAL.png",
+    image: "/digital.png",
   },
 ];
 
