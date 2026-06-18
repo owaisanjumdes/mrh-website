@@ -7,3 +7,8 @@
 - Network:       http://192.168.0.105:3000
 ✓ Ready in 653ms
 
+ GET /MRH%20Logo.png 404 in 1177ms (next.js: 929ms, application-code: 248ms)
+ GET / 200 in 371ms (next.js: 45ms, application-code: 326ms)
+ GET /technology 200 in 80ms (next.js: 45ms, application-code: 35ms)
+ GET /impact 200 in 476ms (next.js: 447ms, application-code: 29ms)
+ GET /products/pureair 200 in 120ms (next.js: 60ms, application-code: 60ms)
