@@ -4,846 +4,158 @@
 
 ▲ Next.js 16.2.6 (Turbopack)
 - Local:         http://localhost:3000
-- Network:       http://192.168.0.103:3000
-✓ Ready in 696ms
+- Network:       http://192.168.0.106:3000
+✓ Ready in 609ms
 
- GET /products 200 in 2.3s (next.js: 2.1s, application-code: 211ms)
- GET /products 200 in 114ms (next.js: 9ms, application-code: 105ms)
- GET / 200 in 2.0s (next.js: 1339ms, application-code: 703ms)
- GET /products 200 in 135ms (next.js: 71ms, application-code: 64ms)
-✓ Compiled in 163ms
- GET /products 200 in 190ms (next.js: 116ms, application-code: 74ms)
- GET /products 200 in 37ms (next.js: 3ms, application-code: 34ms)
- GET /products 200 in 131ms (next.js: 4ms, application-code: 128ms)
- GET /products 200 in 215ms (next.js: 121ms, application-code: 93ms)
- GET /products 200 in 56ms (next.js: 5ms, application-code: 52ms)
- GET /products 200 in 30ms (next.js: 3ms, application-code: 27ms)
- GET /products 200 in 135ms (next.js: 3ms, application-code: 132ms)
- GET /products 200 in 217ms (next.js: 132ms, application-code: 84ms)
- GET /products 200 in 38ms (next.js: 4ms, application-code: 33ms)
- GET /products 200 in 112ms (next.js: 3ms, application-code: 110ms)
-✓ Compiled in 137ms
- GET /products 200 in 227ms (next.js: 102ms, application-code: 125ms)
- GET /products 200 in 85ms (next.js: 3ms, application-code: 81ms)
- GET /products 200 in 61ms (next.js: 3ms, application-code: 58ms)
- GET /products 200 in 61ms (next.js: 22ms, application-code: 38ms)
- GET /products 200 in 61ms (next.js: 39ms, application-code: 22ms)
-✓ Compiled in 100ms
- GET /products 200 in 133ms (next.js: 100ms, application-code: 33ms)
-✓ Compiled in 97ms
- GET /products 200 in 136ms (next.js: 103ms, application-code: 33ms)
-✓ Compiled in 97ms
- GET /products 200 in 154ms (next.js: 110ms, application-code: 44ms)
- GET /products 200 in 131ms (next.js: 3ms, application-code: 129ms)
- GET /products 200 in 43ms (next.js: 3ms, application-code: 40ms)
- GET /products 200 in 47ms (next.js: 5ms, application-code: 42ms)
-✓ Compiled in 180ms
- GET /products 200 in 236ms (next.js: 99ms, application-code: 138ms)
- GET /products 200 in 103ms (next.js: 3ms, application-code: 100ms)
- GET /products 200 in 67ms (next.js: 3ms, application-code: 64ms)
- GET /products 200 in 67ms (next.js: 21ms, application-code: 46ms)
- GET /products 200 in 67ms (next.js: 42ms, application-code: 25ms)
- GET /products 200 in 122ms (next.js: 3ms, application-code: 119ms)
-✓ Compiled in 148ms
- GET /products 200 in 156ms (next.js: 115ms, application-code: 41ms)
-✓ Compiled in 98ms
- GET /products 200 in 141ms (next.js: 105ms, application-code: 36ms)
- GET /products 200 in 116ms (next.js: 3ms, application-code: 114ms)
- GET /products 200 in 54ms (next.js: 4ms, application-code: 50ms)
-✓ Compiled in 101ms
- GET /products 200 in 130ms (next.js: 96ms, application-code: 34ms)
-✓ Compiled in 106ms
- GET /products 200 in 143ms (next.js: 101ms, application-code: 42ms)
- GET /products 200 in 110ms (next.js: 2ms, application-code: 108ms)
- GET /products 200 in 52ms (next.js: 3ms, application-code: 49ms)
-✓ Compiled in 114ms
- GET /products 200 in 167ms (next.js: 124ms, application-code: 43ms)
-✓ Compiled in 107ms
- GET /products 200 in 136ms (next.js: 98ms, application-code: 38ms)
-✓ Compiled in 94ms
- GET /products 200 in 126ms (next.js: 91ms, application-code: 35ms)
-✓ Compiled in 125ms
- GET /products 200 in 126ms (next.js: 94ms, application-code: 32ms)
- GET /products 200 in 127ms (next.js: 3ms, application-code: 124ms)
- GET /products 200 in 61ms (next.js: 3ms, application-code: 58ms)
- GET /products 200 in 69ms (next.js: 5ms, application-code: 64ms)
- GET /products 200 in 50ms (next.js: 3ms, application-code: 46ms)
- GET /products 200 in 50ms (next.js: 3ms, application-code: 46ms)
- GET /products 200 in 230ms (next.js: 132ms, application-code: 98ms)
- GET /products 200 in 59ms (next.js: 3ms, application-code: 57ms)
- GET /products 200 in 30ms (next.js: 2ms, application-code: 28ms)
- GET /products 200 in 174ms (next.js: 3ms, application-code: 171ms)
-✓ Compiled in 179ms
- GET /products 200 in 242ms (next.js: 101ms, application-code: 141ms)
- GET /products 200 in 102ms (next.js: 3ms, application-code: 99ms)
- GET /products 200 in 77ms (next.js: 5ms, application-code: 72ms)
- GET /products 200 in 76ms (next.js: 28ms, application-code: 48ms)
- GET /products 200 in 76ms (next.js: 48ms, application-code: 28ms)
- GET /products 200 in 148ms (next.js: 5ms, application-code: 143ms)
-✓ Compiled in 108ms
- GET /products 200 in 128ms (next.js: 94ms, application-code: 34ms)
-✓ Compiled in 104ms
- GET /products 200 in 128ms (next.js: 94ms, application-code: 34ms)
-✓ Compiled in 149ms
- GET /products 200 in 132ms (next.js: 94ms, application-code: 37ms)
-✓ Compiled in 101ms
- GET /products 200 in 123ms (next.js: 92ms, application-code: 32ms)
-✓ Compiled in 94ms
- GET /products 200 in 125ms (next.js: 91ms, application-code: 34ms)
-✓ Compiled in 96ms
- GET /products 200 in 127ms (next.js: 94ms, application-code: 33ms)
-✓ Compiled in 93ms
- GET /products 200 in 124ms (next.js: 92ms, application-code: 32ms)
-✓ Compiled in 96ms
- GET /products 200 in 140ms (next.js: 104ms, application-code: 37ms)
- GET /products 200 in 120ms (next.js: 2ms, application-code: 118ms)
- GET /products 200 in 55ms (next.js: 3ms, application-code: 52ms)
- GET /products 200 in 55ms (next.js: 5ms, application-code: 50ms)
-✓ Compiled in 112ms
- GET /products 200 in 174ms (next.js: 128ms, application-code: 46ms)
- GET /products 200 in 155ms (next.js: 3ms, application-code: 152ms)
-✓ Compiled in 134ms
- GET /products 200 in 158ms (next.js: 115ms, application-code: 43ms)
- GET /products 200 in 171ms (next.js: 4ms, application-code: 166ms)
-✓ Compiled in 122ms
- GET /products 200 in 144ms (next.js: 107ms, application-code: 37ms)
- GET /products 200 in 124ms (next.js: 3ms, application-code: 121ms)
- GET /products 200 in 66ms (next.js: 6ms, application-code: 60ms)
-✓ Compiled in 92ms
- GET /products 200 in 146ms (next.js: 102ms, application-code: 44ms)
-✓ Compiled in 152ms
- GET /products 200 in 221ms (next.js: 119ms, application-code: 102ms)
- GET /products 200 in 62ms (next.js: 3ms, application-code: 59ms)
- GET /products 200 in 32ms (next.js: 3ms, application-code: 30ms)
- GET /products 200 in 184ms (next.js: 3ms, application-code: 181ms)
- GET /products 200 in 62ms (next.js: 4ms, application-code: 58ms)
-✓ Compiled in 150ms
- GET /products 200 in 228ms (next.js: 117ms, application-code: 110ms)
- GET /products 200 in 64ms (next.js: 4ms, application-code: 60ms)
- GET /products 200 in 34ms (next.js: 3ms, application-code: 31ms)
- GET /products 200 in 187ms (next.js: 2ms, application-code: 185ms)
-✓ Compiled in 179ms
- GET /products 200 in 299ms (next.js: 130ms, application-code: 169ms)
- GET /products 200 in 116ms (next.js: 3ms, application-code: 114ms)
- GET /products 200 in 86ms (next.js: 7ms, application-code: 80ms)
- GET /products 200 in 86ms (next.js: 29ms, application-code: 57ms)
- GET /products 200 in 86ms (next.js: 52ms, application-code: 34ms)
- GET /products 200 in 197ms (next.js: 4ms, application-code: 194ms)
-✓ Compiled in 156ms
- GET /products 200 in 162ms (next.js: 118ms, application-code: 44ms)
-✓ Compiled in 119ms
- GET /products 200 in 187ms (next.js: 123ms, application-code: 64ms)
- GET /products 200 in 153ms (next.js: 3ms, application-code: 150ms)
- GET /products 200 in 75ms (next.js: 3ms, application-code: 71ms)
-✓ Compiled in 109ms
- GET /products 200 in 144ms (next.js: 103ms, application-code: 40ms)
- GET /products 200 in 169ms (next.js: 3ms, application-code: 166ms)
-✓ Compiled in 128ms
- GET /products 200 in 156ms (next.js: 116ms, application-code: 39ms)
-✓ Compiled in 194ms
- GET /products 200 in 173ms (next.js: 120ms, application-code: 53ms)
-✓ Compiled in 145ms
- GET /products 200 in 156ms (next.js: 114ms, application-code: 42ms)
-✓ Compiled in 117ms
- GET /products 200 in 169ms (next.js: 122ms, application-code: 47ms)
- GET /products 200 in 181ms (next.js: 2ms, application-code: 179ms)
- GET /products 200 in 66ms (next.js: 4ms, application-code: 62ms)
-✓ Compiled in 199ms
- GET /products 200 in 459ms (next.js: 197ms, application-code: 263ms)
- GET /products 200 in 210ms (next.js: 5ms, application-code: 206ms)
- GET /products 200 in 158ms (next.js: 4ms, application-code: 154ms)
- GET /products 200 in 110ms (next.js: 8ms, application-code: 102ms)
- GET /products 200 in 108ms (next.js: 63ms, application-code: 46ms)
- GET /products 200 in 111ms (next.js: 41ms, application-code: 69ms)
- GET /products 200 in 766ms (next.js: 174ms, application-code: 592ms)
-✓ Compiled in 306ms
- GET /products 200 in 526ms (next.js: 321ms, application-code: 205ms)
- GET /products 200 in 128ms (next.js: 3ms, application-code: 124ms)
- GET /products 200 in 85ms (next.js: 36ms, application-code: 49ms)
- GET /products 200 in 87ms (next.js: 4ms, application-code: 83ms)
- GET /products 200 in 500ms (next.js: 3ms, application-code: 497ms)
-✓ Compiled in 186ms
- GET /products 200 in 330ms (next.js: 124ms, application-code: 207ms)
- GET /products 200 in 129ms (next.js: 4ms, application-code: 125ms)
- GET /products 200 in 68ms (next.js: 4ms, application-code: 64ms)
- GET /products 200 in 310ms (next.js: 2ms, application-code: 308ms)
- GET /products 200 in 255ms (next.js: 139ms, application-code: 116ms)
- GET /products 200 in 44ms (next.js: 2ms, application-code: 42ms)
- GET /products 200 in 153ms (next.js: 2ms, application-code: 151ms)
- GET /products 200 in 149ms (next.js: 3ms, application-code: 146ms)
+ GET / 200 in 659ms (next.js: 247ms, application-code: 411ms)
+ GET / 200 in 133ms (next.js: 5ms, application-code: 128ms)
+ GET / 200 in 125ms (next.js: 4ms, application-code: 121ms)
+ GET / 200 in 136ms (next.js: 4ms, application-code: 133ms)
+✓ Compiled in 688ms
+ GET / 200 in 203ms (next.js: 103ms, application-code: 100ms)
+ GET / 200 in 41ms (next.js: 3ms, application-code: 38ms)
 ✓ Compiled in 190ms
- GET /products 200 in 407ms (next.js: 147ms, application-code: 259ms)
- GET /products 200 in 215ms (next.js: 3ms, application-code: 213ms)
- GET /products 200 in 177ms (next.js: 4ms, application-code: 173ms)
- GET /products 200 in 178ms (next.js: 66ms, application-code: 112ms)
- GET /products 200 in 178ms (next.js: 97ms, application-code: 81ms)
- GET /products 200 in 180ms (next.js: 35ms, application-code: 144ms)
- GET /products 200 in 42ms (next.js: 3ms, application-code: 39ms)
-✓ Compiled in 150ms
- GET /products 200 in 171ms (next.js: 122ms, application-code: 49ms)
-✓ Compiled in 147ms
- GET /products 200 in 319ms (next.js: 105ms, application-code: 213ms)
- GET /products 200 in 171ms (next.js: 3ms, application-code: 168ms)
- GET /products 200 in 168ms (next.js: 34ms, application-code: 134ms)
- GET /products 200 in 168ms (next.js: 64ms, application-code: 105ms)
- GET /products 200 in 169ms (next.js: 93ms, application-code: 75ms)
- GET /products 200 in 170ms (next.js: 4ms, application-code: 166ms)
- GET /products 200 in 41ms (next.js: 6ms, application-code: 35ms)
-✓ Compiled in 137ms
-✓ Compiled in 98ms
-✓ Compiled in 99ms
-✓ Compiled in 116ms
-✓ Compiled in 93ms
-✓ Compiled in 116ms
-✓ Compiled in 102ms
-✓ Compiled in 111ms
-✓ Compiled in 94ms
-✓ Compiled in 111ms
-✓ Compiled in 189ms
- GET /products 200 in 343ms (next.js: 134ms, application-code: 210ms)
- GET /products 200 in 207ms (next.js: 3ms, application-code: 205ms)
- GET /products 200 in 176ms (next.js: 86ms, application-code: 90ms)
- GET /products 200 in 178ms (next.js: 34ms, application-code: 143ms)
- GET /products 200 in 178ms (next.js: 61ms, application-code: 117ms)
- GET /products 200 in 180ms (next.js: 5ms, application-code: 175ms)
- GET /products 200 in 234ms (next.js: 4ms, application-code: 230ms)
- GET /products 200 in 191ms (next.js: 6ms, application-code: 185ms)
- GET /products 200 in 153ms (next.js: 4ms, application-code: 149ms)
- GET /products 200 in 154ms (next.js: 30ms, application-code: 124ms)
- GET /products 200 in 154ms (next.js: 83ms, application-code: 71ms)
- GET /products 200 in 155ms (next.js: 54ms, application-code: 101ms)
- GET /products 200 in 193ms (next.js: 4ms, application-code: 189ms)
- GET /products 200 in 166ms (next.js: 4ms, application-code: 161ms)
- GET /products 200 in 189ms (next.js: 31ms, application-code: 158ms)
- GET /products 200 in 192ms (next.js: 3ms, application-code: 188ms)
- GET /products 200 in 138ms (next.js: 8ms, application-code: 130ms)
- GET /products 200 in 139ms (next.js: 35ms, application-code: 103ms)
- GET /products 200 in 64ms (next.js: 7ms, application-code: 57ms)
-✓ Compiled in 132ms
- GET /products 200 in 191ms (next.js: 118ms, application-code: 73ms)
- GET /products 200 in 27ms (next.js: 2ms, application-code: 24ms)
-✓ Compiled in 119ms
- GET /products 200 in 168ms (next.js: 104ms, application-code: 64ms)
- GET /products 200 in 29ms (next.js: 3ms, application-code: 26ms)
-✓ Compiled in 104ms
- GET /products 200 in 160ms (next.js: 117ms, application-code: 43ms)
-✓ Compiled in 104ms
- GET /products 200 in 155ms (next.js: 116ms, application-code: 39ms)
-✓ Compiled in 99ms
- GET /products 200 in 135ms (next.js: 97ms, application-code: 39ms)
-✓ Compiled in 106ms
- GET /products 200 in 147ms (next.js: 109ms, application-code: 38ms)
-✓ Compiled in 110ms
- GET /products 200 in 140ms (next.js: 97ms, application-code: 42ms)
-✓ Compiled in 97ms
- GET /products 200 in 128ms (next.js: 91ms, application-code: 37ms)
-✓ Compiled in 101ms
- GET /products 200 in 131ms (next.js: 92ms, application-code: 39ms)
-✓ Compiled in 99ms
- GET /products 200 in 125ms (next.js: 90ms, application-code: 35ms)
-✓ Compiled in 103ms
- GET /products 200 in 199ms (next.js: 144ms, application-code: 55ms)
-✓ Compiled in 99ms
- GET /products 200 in 123ms (next.js: 88ms, application-code: 35ms)
-✓ Compiled in 94ms
- GET /products 200 in 128ms (next.js: 92ms, application-code: 36ms)
+ GET / 200 in 365ms (next.js: 112ms, application-code: 253ms)
+ GET / 200 in 122ms (next.js: 5ms, application-code: 117ms)
+ GET / 200 in 62ms (next.js: 5ms, application-code: 57ms)
+ GET / 200 in 285ms (next.js: 5ms, application-code: 280ms)
+ GET / 200 in 144ms (next.js: 9ms, application-code: 135ms)
+✓ Compiled in 152ms
+ GET / 200 in 195ms (next.js: 132ms, application-code: 63ms)
 ✓ Compiled in 118ms
- GET /products 200 in 138ms (next.js: 97ms, application-code: 41ms)
-✓ Compiled in 101ms
- GET /products 200 in 446ms (next.js: 100ms, application-code: 345ms)
- GET / 200 in 493ms (next.js: 107ms, application-code: 386ms)
- GET / 200 in 95ms (next.js: 3ms, application-code: 92ms)
- GET /products 200 in 38ms (next.js: 3ms, application-code: 35ms)
- GET /products 200 in 72ms (next.js: 3ms, application-code: 70ms)
- GET /products 200 in 94ms (next.js: 3ms, application-code: 91ms)
- GET /products 200 in 89ms (next.js: 5ms, application-code: 84ms)
- GET /products 200 in 75ms (next.js: 3ms, application-code: 71ms)
- GET /products 200 in 79ms (next.js: 3ms, application-code: 76ms)
- GET /products 200 in 94ms (next.js: 4ms, application-code: 90ms)
- GET /products 200 in 228ms (next.js: 5ms, application-code: 223ms)
- GET /products 200 in 116ms (next.js: 6ms, application-code: 111ms)
- GET /products 200 in 136ms (next.js: 4ms, application-code: 132ms)
- GET /products 200 in 93ms (next.js: 5ms, application-code: 87ms)
-✓ Compiled in 505ms
- GET /products 200 in 682ms (next.js: 615ms, application-code: 67ms)
-✓ Compiled in 143ms
- GET /products 200 in 762ms (next.js: 440ms, application-code: 322ms)
-✓ Compiled in 115ms
- GET /products 200 in 176ms (next.js: 107ms, application-code: 68ms)
- GET /products 200 in 385ms (next.js: 3ms, application-code: 382ms)
-✓ Compiled in 124ms
- GET /products 200 in 146ms (next.js: 107ms, application-code: 39ms)
-✓ Compiled in 109ms
- GET /products 200 in 140ms (next.js: 101ms, application-code: 39ms)
-✓ Compiled in 302ms
-⨯ ./components/Nav.tsx:431:1
-Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
-  [90m429 |[0m     </nav>
-  [90m430 |[0m   );
-[31m[1m>[0m [90m431 |[0m }
-  [90m    |[0m [31m[1m^[0m
-  [90m432 |[0m
-
-Parsing ecmascript source code failed
-
-Import trace:
-  Server Component:
-    ./components/Nav.tsx
-    ./components/NavGate.tsx
-    ./app/layout.tsx
-
-
- GET /products 500 in 1397ms (next.js: 1178ms, application-code: 218ms)
-⨯ ./components/Nav.tsx:431:1
-Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
-  [90m429 |[0m     </nav>
-  [90m430 |[0m   );
-[31m[1m>[0m [90m431 |[0m }
-  [90m    |[0m [31m[1m^[0m
-  [90m432 |[0m
-
-Parsing ecmascript source code failed
-
-Import trace:
-  Server Component:
-    ./components/Nav.tsx
-    ./components/NavGate.tsx
-    ./app/layout.tsx
-
-
- GET /products 500 in 19ms (next.js: 8ms, application-code: 11ms)
-⨯ ./components/Nav.tsx:431:1
-Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
-  [90m429 |[0m     </nav>
-  [90m430 |[0m   );
-[31m[1m>[0m [90m431 |[0m }
-  [90m    |[0m [31m[1m^[0m
-  [90m432 |[0m
-
-Parsing ecmascript source code failed
-
-Import trace:
-  Server Component:
-    ./components/Nav.tsx
-    ./components/NavGate.tsx
-    ./app/layout.tsx
-
-
- GET /products 500 in 15ms (next.js: 7ms, application-code: 9ms)
-[browser] Uncaught Error: ./components/Nav.tsx:431:1
-Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
-  429 |     </nav>
-  430 |   );
-> 431 | }
-      | ^
-  432 |
-
-Parsing ecmascript source code failed
-
-Import trace:
-  Server Component:
-    ./components/Nav.tsx
-    ./components/NavGate.tsx
-    ./app/layout.tsx
-
-
-    at <unknown> (Error: ./components/Nav.tsx:431:1)
-    at <unknown> (Error: (./components/Nav.tsx:431:1)
-✓ Compiled in 116ms
- GET /products 200 in 252ms (next.js: 96ms, application-code: 156ms)
- GET /products 200 in 72ms (next.js: 3ms, application-code: 69ms)
- GET /products 200 in 71ms (next.js: 4ms, application-code: 68ms)
- GET /products 200 in 62ms (next.js: 2ms, application-code: 59ms)
-✓ Compiled in 106ms
- GET /products 200 in 138ms (next.js: 96ms, application-code: 42ms)
-✓ Compiled in 108ms
- GET /products 200 in 137ms (next.js: 98ms, application-code: 39ms)
- GET /products 200 in 144ms (next.js: 3ms, application-code: 141ms)
- GET /products 200 in 8ms (next.js: 3ms, application-code: 5ms)
- GET /products 200 in 27ms (next.js: 2ms, application-code: 25ms)
-✓ Compiled in 114ms
- GET /products 200 in 156ms (next.js: 111ms, application-code: 45ms)
- GET /products 200 in 150ms (next.js: 3ms, application-code: 147ms)
- GET /products 200 in 93ms (next.js: 3ms, application-code: 90ms)
-✓ Compiled in 100ms
- GET /products 200 in 134ms (next.js: 93ms, application-code: 41ms)
- GET /products 200 in 140ms (next.js: 3ms, application-code: 137ms)
- GET / 200 in 186ms (next.js: 115ms, application-code: 71ms)
-[browser] THREE.WebGLProgram: Program Info Log: (210,81-129): warning X4122: sum of 0.996094 and -2.98545e-017 cannot be represented accurately in double precision
-(209,37-61): warning X4122: sum of 1 and -1.49272e-017 cannot be represented accurately in double precision
-(210,82-106): warning X4122: sum of 1 and -1.49272e-017 cannot be represented accurately in double precision
-(209,37-61): warning X4122: sum of 1 and -1.66644e-018 cannot be represented accurately in double precision
-(210,82-106): warning X4122: sum of 1 and -1.66644e-018 cannot be represented accurately in double precision
-
-
-  (components/ProductExplorer.tsx:77:31)
- GET /products 200 in 47ms (next.js: 5ms, application-code: 42ms)
- GET /products 200 in 30ms (next.js: 3ms, application-code: 27ms)
- GET / 200 in 75ms (next.js: 4ms, application-code: 71ms)
- GET / 200 in 64ms (next.js: 3ms, application-code: 61ms)
- GET /products 200 in 32ms (next.js: 3ms, application-code: 29ms)
- GET /products 200 in 26ms (next.js: 3ms, application-code: 23ms)
-✓ Compiled in 115ms
- GET /products 200 in 205ms (next.js: 102ms, application-code: 102ms)
- GET /products 200 in 62ms (next.js: 3ms, application-code: 59ms)
- GET /products 200 in 32ms (next.js: 3ms, application-code: 30ms)
-✓ Compiled in 102ms
- GET /products 200 in 141ms (next.js: 98ms, application-code: 44ms)
- GET /products 200 in 197ms (next.js: 4ms, application-code: 193ms)
- GET /products/pureair 200 in 471ms (next.js: 388ms, application-code: 83ms)
- GET /products/airfinery 200 in 354ms (next.js: 267ms, application-code: 87ms)
- GET /products/airfinery 200 in 64ms (next.js: 3ms, application-code: 62ms)
- GET /products 200 in 83ms (next.js: 3ms, application-code: 80ms)
- GET / 200 in 182ms (next.js: 106ms, application-code: 76ms)
- GET /products/pureair 200 in 32ms (next.js: 3ms, application-code: 29ms)
- GET /products/airfinery 200 in 29ms (next.js: 3ms, application-code: 26ms)
- GET /products/pureair 200 in 332ms (next.js: 113ms, application-code: 219ms)
- GET / 200 in 519ms (next.js: 102ms, application-code: 417ms)
- GET /products 200 in 244ms (next.js: 98ms, application-code: 146ms)
- GET /products/pureair 200 in 224ms (next.js: 79ms, application-code: 145ms)
- GET /products/airfinery 200 in 274ms (next.js: 87ms, application-code: 187ms)
- GET / 200 in 205ms (next.js: 3ms, application-code: 202ms)
- GET /products/pureair 200 in 48ms (next.js: 4ms, application-code: 44ms)
-✓ Compiled in 714ms
-✓ Compiled in 156ms
-✓ Compiled in 727ms
- GET /products/pureair 200 in 786ms (next.js: 582ms, application-code: 204ms)
- GET /products/pureair 200 in 1609ms (next.js: 551ms, application-code: 1057ms)
- GET /products/pureair 200 in 157ms (next.js: 8ms, application-code: 149ms)
- GET /products/pureair 200 in 157ms (next.js: 54ms, application-code: 103ms)
- GET /products/pureair 200 in 867ms (next.js: 6ms, application-code: 861ms)
-✓ Compiled in 157ms
- GET /products/pureair 200 in 180ms (next.js: 127ms, application-code: 53ms)
-✓ Compiled in 133ms
- GET /products/pureair 200 in 147ms (next.js: 99ms, application-code: 49ms)
-✓ Compiled in 141ms
- GET /products/pureair 200 in 161ms (next.js: 107ms, application-code: 54ms)
-✓ Compiled in 137ms
- GET /products/pureair 200 in 161ms (next.js: 102ms, application-code: 58ms)
-✓ Compiled in 129ms
- GET /products/pureair 200 in 166ms (next.js: 116ms, application-code: 50ms)
-✓ Compiled in 128ms
- GET /products/pureair 200 in 132ms (next.js: 90ms, application-code: 42ms)
-✓ Compiled in 142ms
- GET /products/pureair 200 in 138ms (next.js: 91ms, application-code: 47ms)
-✓ Compiled in 140ms
-⚠ Fast Refresh had to perform a full reload due to a runtime error.
- GET /products/pureair 200 in 309ms (next.js: 108ms, application-code: 201ms)
-✓ Compiled in 129ms
- GET /products/pureair 200 in 142ms (next.js: 92ms, application-code: 50ms)
-✓ Compiled in 135ms
- GET /products/pureair 200 in 131ms (next.js: 93ms, application-code: 39ms)
- GET / 200 in 566ms (next.js: 123ms, application-code: 443ms)
- GET /products 200 in 297ms (next.js: 127ms, application-code: 171ms)
- GET /products/pureair 200 in 83ms (next.js: 3ms, application-code: 80ms)
- GET /products/airfinery 200 in 257ms (next.js: 94ms, application-code: 163ms)
- GET /products/pureair 200 in 90ms (next.js: 3ms, application-code: 87ms)
- GET /products/pureair 200 in 118ms (next.js: 5ms, application-code: 113ms)
- GET /products/airfinery 200 in 32ms (next.js: 4ms, application-code: 28ms)
-✓ Compiled in 2.7s
- GET /products/airfinery 200 in 1422ms (next.js: 676ms, application-code: 746ms)
- GET /products/airfinery 200 in 464ms (next.js: 9ms, application-code: 455ms)
- GET /products/airfinery 200 in 319ms (next.js: 67ms, application-code: 253ms)
- GET /products/airfinery 200 in 322ms (next.js: 8ms, application-code: 314ms)
- GET /products/airfinery 200 in 358ms (next.js: 126ms, application-code: 233ms)
- GET /products/airfinery 200 in 363ms (next.js: 178ms, application-code: 185ms)
- GET /products/airfinery 200 in 294ms (next.js: 5ms, application-code: 289ms)
- GET /products/airfinery 200 in 245ms (next.js: 9ms, application-code: 236ms)
- GET /products/airfinery 200 in 195ms (next.js: 7ms, application-code: 188ms)
- GET /products/airfinery 200 in 195ms (next.js: 41ms, application-code: 154ms)
- GET /products/airfinery 200 in 193ms (next.js: 133ms, application-code: 60ms)
- GET /products/airfinery 200 in 194ms (next.js: 94ms, application-code: 100ms)
-✓ Compiled in 287ms
- GET /products/airfinery 200 in 289ms (next.js: 191ms, application-code: 98ms)
- GET / 200 in 1141ms (next.js: 446ms, application-code: 695ms)
- GET / 200 in 28ms (next.js: 5ms, application-code: 23ms)
- GET /products/pureair 200 in 182ms (next.js: 123ms, application-code: 59ms)
- GET /products/airfinery 200 in 70ms (next.js: 6ms, application-code: 64ms)
- GET / 200 in 25ms (next.js: 4ms, application-code: 21ms)
- GET /products/pureair 200 in 335ms (next.js: 120ms, application-code: 215ms)
- GET /products/pureair 200 in 401ms (next.js: 13ms, application-code: 389ms)
-✓ Compiled in 1079ms
-✓ Compiled in 166ms
- GET /products/pureair 200 in 351ms (next.js: 301ms, application-code: 50ms)
-✓ Compiled in 121ms
- GET /products/pureair 200 in 137ms (next.js: 94ms, application-code: 43ms)
-✓ Compiled in 114ms
- GET /products/pureair 200 in 160ms (next.js: 117ms, application-code: 43ms)
-⨯ ReferenceError: useRef is not defined
-    at DesignSection (components\DesignSection.tsx:8:18)
-   6 |
-   7 | export default function DesignSection() {
->  8 |   const ctaRef = useRef<HTMLAnchorElement>(null);
-     |                  ^
-   9 |   const [shown, setShown] = useState(false);
-  10 |
-  11 |   useEffect(() => { {
-  digest: '531400799'
-}
-✓ Compiled in 826ms
-⨯ ReferenceError: useRef is not defined
-    at DesignSection (components\DesignSection.tsx:8:18)
-   6 |
-   7 | export default function DesignSection() {
->  8 |   const ctaRef = useRef<HTMLAnchorElement>(null);
-     |                  ^
-   9 |   const [shown, setShown] = useState(false);
-  10 |
-  11 |   useEffect(() => { {
-  digest: '531400799'
-}
-⨯ ReferenceError: useRef is not defined
-    at DesignSection (components\DesignSection.tsx:8:18)
-   6 |
-   7 | export default function DesignSection() {
->  8 |   const ctaRef = useRef<HTMLAnchorElement>(null);
-     |                  ^
-   9 |   const [shown, setShown] = useState(false);
-  10 |
-  11 |   useEffect(() => { {
-  digest: '531400799'
-}
-⨯ ReferenceError: useRef is not defined
-    at DesignSection (components\DesignSection.tsx:8:18)
-   6 |
-   7 | export default function DesignSection() {
->  8 |   const ctaRef = useRef<HTMLAnchorElement>(null);
-     |                  ^
-   9 |   const [shown, setShown] = useState(false);
-  10 |
-  11 |   useEffect(() => { {
-  digest: '531400799'
-}
-⨯ ReferenceError: useRef is not defined
-    at DesignSection (components\DesignSection.tsx:8:18)
-   6 |
-   7 | export default function DesignSection() {
->  8 |   const ctaRef = useRef<HTMLAnchorElement>(null);
-     |                  ^
-   9 |   const [shown, setShown] = useState(false);
-  10 |
-  11 |   useEffect(() => { {
-  digest: '531400799'
-}
-⨯ ReferenceError: useRef is not defined
-    at DesignSection (components\DesignSection.tsx:8:18)
-   6 |
-   7 | export default function DesignSection() {
->  8 |   const ctaRef = useRef<HTMLAnchorElement>(null);
-     |                  ^
-   9 |   const [shown, setShown] = useState(false);
-  10 |
-  11 |   useEffect(() => { {
-  digest: '531400799'
-}
- GET /products/pureair 200 in 799ms (next.js: 262ms, application-code: 538ms)
-⨯ ReferenceError: useRef is not defined
-    at DesignSection (components\DesignSection.tsx:8:18)
-   6 |
-   7 | export default function DesignSection() {
->  8 |   const ctaRef = useRef<HTMLAnchorElement>(null);
-     |                  ^
-   9 |   const [shown, setShown] = useState(false);
-  10 |
-  11 |   useEffect(() => { {
-  digest: '531400799'
-}
- GET /products/pureair 200 in 289ms (next.js: 69ms, application-code: 220ms)
- GET /products/pureair 200 in 162ms (next.js: 33ms, application-code: 129ms)
- GET /products/pureair 200 in 163ms (next.js: 67ms, application-code: 96ms)
- GET /products/pureair 200 in 162ms (next.js: 100ms, application-code: 63ms)
- GET /products/pureair 200 in 164ms (next.js: 4ms, application-code: 160ms)
-⨯ ReferenceError: useRef is not defined
-    at DesignSection (components\DesignSection.tsx:8:18)
-   6 |
-   7 | export default function DesignSection() {
->  8 |   const ctaRef = useRef<HTMLAnchorElement>(null);
-     |                  ^
-   9 |   const [shown, setShown] = useState(false);
-  10 |
-  11 |   useEffect(() => { {
-  digest: '531400799'
-}
-⨯ ReferenceError: useRef is not defined
-    at DesignSection (components\DesignSection.tsx:8:18)
-   6 |
-   7 | export default function DesignSection() {
->  8 |   const ctaRef = useRef<HTMLAnchorElement>(null);
-     |                  ^
-   9 |   const [shown, setShown] = useState(false);
-  10 |
-  11 |   useEffect(() => { {
-  digest: '531400799'
-}
-⨯ ReferenceError: useRef is not defined
-    at DesignSection (components\DesignSection.tsx:8:18)
-   6 |
-   7 | export default function DesignSection() {
->  8 |   const ctaRef = useRef<HTMLAnchorElement>(null);
-     |                  ^
-   9 |   const [shown, setShown] = useState(false);
-  10 |
-  11 |   useEffect(() => { {
-  digest: '531400799'
-}
-⨯ ReferenceError: useRef is not defined
-    at DesignSection (components\DesignSection.tsx:8:18)
-   6 |
-   7 | export default function DesignSection() {
->  8 |   const ctaRef = useRef<HTMLAnchorElement>(null);
-     |                  ^
-   9 |   const [shown, setShown] = useState(false);
-  10 |
-  11 |   useEffect(() => { {
-  digest: '531400799'
-}
-⨯ ReferenceError: useRef is not defined
-    at DesignSection (components\DesignSection.tsx:8:18)
-   6 |
-   7 | export default function DesignSection() {
->  8 |   const ctaRef = useRef<HTMLAnchorElement>(null);
-     |                  ^
-   9 |   const [shown, setShown] = useState(false);
-  10 |
-  11 |   useEffect(() => { {
-  digest: '531400799'
-}
- GET /products/pureair 200 in 186ms (next.js: 3ms, application-code: 184ms)
-⨯ ReferenceError: useRef is not defined
-    at DesignSection (components\DesignSection.tsx:8:18)
-   6 |
-   7 | export default function DesignSection() {
->  8 |   const ctaRef = useRef<HTMLAnchorElement>(null);
-     |                  ^
-   9 |   const [shown, setShown] = useState(false);
-  10 |
-  11 |   useEffect(() => { {
-  digest: '531400799'
-}
- GET /products/pureair 200 in 184ms (next.js: 4ms, application-code: 180ms)
- GET /products/pureair 200 in 152ms (next.js: 3ms, application-code: 149ms)
- GET /products/pureair 200 in 152ms (next.js: 30ms, application-code: 123ms)
- GET /products/pureair 200 in 153ms (next.js: 91ms, application-code: 62ms)
- GET /products/pureair 200 in 154ms (next.js: 59ms, application-code: 94ms)
- GET /products/pureair 200 in 36ms (next.js: 3ms, application-code: 33ms)
-✓ Compiled in 111ms
-⨯ ReferenceError: ctaRef is not defined
-    at DesignSection (components\DesignSection.tsx:141:14)
-  139 |
-  140 |       <a
-> 141 |         ref={ctaRef}
-      |              ^
-  142 |         className={`ds-cta ${shown ? "is-in" : ""}`}
-  143 |         href="#design"
-  144 |       > {
-  digest: '1294710904'
-}
- GET /products/pureair 500 in 345ms (next.js: 88ms, application-code: 257ms)
-✓ Compiled in 106ms
-⨯ ReferenceError: ctaRef is not defined
-    at DesignSection (components\DesignSection.tsx:132:14)
-  130 |
-  131 |       <a
-> 132 |         ref={ctaRef}
-      |              ^
-  133 |         className={`ds-cta ${shown ? "is-in" : ""}`}
-  134 |         href="#design"
-  135 |       > {
-  digest: '2385471761'
-}
- GET /products/pureair 500 in 296ms (next.js: 83ms, application-code: 213ms)
-✓ Compiled in 101ms
-⨯ ReferenceError: ctaRef is not defined
-    at DesignSection (components\DesignSection.tsx:129:14)
-  127 |
-  128 |       <a
-> 129 |         ref={ctaRef}
-      |              ^
-  130 |         className={`ds-cta ${shown ? "is-in" : ""}`}
-  131 |         href="#design"
-  132 |       > {
-  digest: '3577617182'
-}
- GET /products/pureair 500 in 294ms (next.js: 88ms, application-code: 206ms)
-✓ Compiled in 118ms
- GET /products/pureair 200 in 275ms (next.js: 94ms, application-code: 181ms)
- GET /products/pureair 200 in 92ms (next.js: 5ms, application-code: 87ms)
- GET /products/airfinery 200 in 328ms (next.js: 96ms, application-code: 232ms)
- GET /products/pureair 200 in 90ms (next.js: 3ms, application-code: 87ms)
- GET /products/pureair 200 in 135ms (next.js: 5ms, application-code: 131ms)
- GET /products/pureair 200 in 109ms (next.js: 4ms, application-code: 105ms)
- GET / 200 in 38ms (next.js: 16ms, application-code: 22ms)
- GET / 200 in 682ms (next.js: 389ms, application-code: 293ms)
- GET / 200 in 161ms (next.js: 83ms, application-code: 78ms)
- GET / 200 in 49ms (next.js: 23ms, application-code: 26ms)
- GET / 200 in 255ms (next.js: 7ms, application-code: 248ms)
- GET / 200 in 51ms (next.js: 5ms, application-code: 46ms)
-✓ Compiled in 108ms
- GET / 200 in 160ms (next.js: 96ms, application-code: 64ms)
- GET / 200 in 30ms (next.js: 3ms, application-code: 26ms)
- GET / 200 in 251ms (next.js: 4ms, application-code: 247ms)
- GET / 200 in 50ms (next.js: 4ms, application-code: 46ms)
- GET / 200 in 177ms (next.js: 107ms, application-code: 70ms)
- GET / 200 in 31ms (next.js: 3ms, application-code: 28ms)
- GET / 200 in 150ms (next.js: 3ms, application-code: 147ms)
- GET / 200 in 66ms (next.js: 3ms, application-code: 63ms)
-✓ Compiled in 650ms
- GET /products/pureair 200 in 69ms (next.js: 22ms, application-code: 47ms)
- GET / 200 in 31ms (next.js: 4ms, application-code: 28ms)
- GET / 200 in 66ms (next.js: 3ms, application-code: 63ms)
- GET / 200 in 80ms (next.js: 4ms, application-code: 77ms)
-✓ Compiled in 128ms
- GET / 200 in 200ms (next.js: 127ms, application-code: 73ms)
- GET / 200 in 31ms (next.js: 3ms, application-code: 28ms)
- GET / 200 in 152ms (next.js: 3ms, application-code: 149ms)
- GET / 200 in 52ms (next.js: 4ms, application-code: 48ms)
- GET / 200 in 51ms (next.js: 3ms, application-code: 48ms)
- GET / 200 in 55ms (next.js: 3ms, application-code: 52ms)
- GET / 200 in 67ms (next.js: 3ms, application-code: 64ms)
- GET /products/pureair 200 in 37ms (next.js: 10ms, application-code: 27ms)
- GET / 200 in 26ms (next.js: 3ms, application-code: 23ms)
- GET / 200 in 18ms (next.js: 6ms, application-code: 12ms)
- GET / 200 in 47ms (next.js: 3ms, application-code: 44ms)
- GET / 200 in 73ms (next.js: 2ms, application-code: 70ms)
- GET /products/pureair 200 in 38ms (next.js: 4ms, application-code: 34ms)
- GET / 200 in 30ms (next.js: 3ms, application-code: 27ms)
- GET / 200 in 774ms (next.js: 370ms, application-code: 403ms)
- GET / 200 in 246ms (next.js: 104ms, application-code: 142ms)
- GET / 200 in 91ms (next.js: 6ms, application-code: 85ms)
- GET / 200 in 91ms (next.js: 44ms, application-code: 46ms)
- GET / 200 in 185ms (next.js: 4ms, application-code: 182ms)
- GET / 200 in 65ms (next.js: 3ms, application-code: 62ms)
+ GET / 200 in 155ms (next.js: 97ms, application-code: 58ms)
+ GET / 200 in 185ms (next.js: 3ms, application-code: 182ms)
+ GET / 200 in 160ms (next.js: 5ms, application-code: 155ms)
+ GET / 200 in 166ms (next.js: 3ms, application-code: 162ms)
+ GET / 200 in 204ms (next.js: 5ms, application-code: 199ms)
+ GET /products/pureair 200 in 104ms (next.js: 62ms, application-code: 42ms)
+ GET / 200 in 116ms (next.js: 21ms, application-code: 96ms)
+✓ Compiled in 557ms
+ GET / 200 in 335ms (next.js: 167ms, application-code: 168ms)
  GET / 200 in 82ms (next.js: 4ms, application-code: 78ms)
-✓ Compiled in 158ms
- GET / 200 in 196ms (next.js: 133ms, application-code: 62ms)
- GET / 200 in 169ms (next.js: 4ms, application-code: 166ms)
-✓ Compiled in 130ms
- GET / 200 in 163ms (next.js: 105ms, application-code: 58ms)
-✓ Compiled in 119ms
- GET / 200 in 133ms (next.js: 95ms, application-code: 38ms)
- GET / 200 in 150ms (next.js: 9ms, application-code: 142ms)
- GET / 200 in 65ms (next.js: 4ms, application-code: 61ms)
- GET / 200 in 103ms (next.js: 6ms, application-code: 97ms)
- GET /products/pureair 200 in 65ms (next.js: 20ms, application-code: 45ms)
- GET /products/airfinery 200 in 101ms (next.js: 35ms, application-code: 66ms)
- GET / 200 in 68ms (next.js: 6ms, application-code: 62ms)
- GET /products/pureair 200 in 95ms (next.js: 7ms, application-code: 87ms)
- GET / 200 in 34ms (next.js: 4ms, application-code: 30ms)
- GET /products/pureair 200 in 66ms (next.js: 4ms, application-code: 61ms)
- GET / 200 in 39ms (next.js: 6ms, application-code: 33ms)
-✓ Compiled in 121ms
- GET / 200 in 460ms (next.js: 363ms, application-code: 97ms)
- GET / 200 in 43ms (next.js: 3ms, application-code: 40ms)
- GET / 200 in 405ms (next.js: 139ms, application-code: 266ms)
- GET / 200 in 148ms (next.js: 71ms, application-code: 77ms)
- GET / 200 in 36ms (next.js: 3ms, application-code: 32ms)
- GET / 200 in 339ms (next.js: 3ms, application-code: 336ms)
- GET / 200 in 98ms (next.js: 3ms, application-code: 95ms)
-✓ Compiled in 434ms
- GET / 200 in 277ms (next.js: 115ms, application-code: 162ms)
- GET / 200 in 121ms (next.js: 5ms, application-code: 116ms)
- GET / 200 in 89ms (next.js: 4ms, application-code: 85ms)
- GET / 200 in 89ms (next.js: 29ms, application-code: 60ms)
- GET / 200 in 89ms (next.js: 55ms, application-code: 34ms)
- GET / 200 in 152ms (next.js: 3ms, application-code: 149ms)
- GET / 200 in 87ms (next.js: 3ms, application-code: 84ms)
- GET / 200 in 88ms (next.js: 3ms, application-code: 85ms)
-✓ Compiled in 132ms
- GET / 200 in 152ms (next.js: 110ms, application-code: 42ms)
- GET / 200 in 157ms (next.js: 7ms, application-code: 150ms)
-✓ Compiled in 106ms
- GET / 200 in 177ms (next.js: 112ms, application-code: 65ms)
- GET / 200 in 27ms (next.js: 3ms, application-code: 25ms)
-✓ Compiled in 130ms
- GET / 200 in 204ms (next.js: 95ms, application-code: 109ms)
- GET / 200 in 70ms (next.js: 3ms, application-code: 67ms)
- GET / 200 in 37ms (next.js: 2ms, application-code: 35ms)
- GET / 200 in 169ms (next.js: 2ms, application-code: 166ms)
- GET / 200 in 97ms (next.js: 3ms, application-code: 94ms)
-✓ Compiled in 140ms
- GET / 200 in 193ms (next.js: 106ms, application-code: 87ms)
- GET / 200 in 37ms (next.js: 3ms, application-code: 34ms)
- GET / 200 in 1346ms (next.js: 64ms, application-code: 1283ms)
-✓ Compiled in 460ms
- GET / 200 in 818ms (next.js: 546ms, application-code: 272ms)
- GET / 200 in 97ms (next.js: 8ms, application-code: 89ms)
-✓ Compiled in 149ms
- GET / 200 in 1177ms (next.js: 108ms, application-code: 1068ms)
- GET / 200 in 954ms (next.js: 26ms, application-code: 928ms)
- GET / 200 in 1081ms (next.js: 600ms, application-code: 481ms)
- GET / 200 in 280ms (next.js: 100ms, application-code: 180ms)
- GET / 200 in 123ms (next.js: 41ms, application-code: 82ms)
- GET / 200 in 124ms (next.js: 5ms, application-code: 120ms)
- GET / 200 in 124ms (next.js: 80ms, application-code: 44ms)
- GET / 200 in 314ms (next.js: 6ms, application-code: 308ms)
- GET / 200 in 73ms (next.js: 4ms, application-code: 69ms)
- GET / 200 in 56ms (next.js: 3ms, application-code: 53ms)
- GET /products/pureair 200 in 61ms (next.js: 21ms, application-code: 39ms)
- GET / 200 in 37ms (next.js: 3ms, application-code: 34ms)
-✓ Compiled in 663ms
- GET / 200 in 90ms (next.js: 4ms, application-code: 87ms)
- GET / 200 in 106ms (next.js: 3ms, application-code: 103ms)
- GET / 200 in 96ms (next.js: 3ms, application-code: 93ms)
- GET / 200 in 100ms (next.js: 4ms, application-code: 96ms)
-✓ Compiled in 354ms
- GET / 200 in 72ms (next.js: 3ms, application-code: 69ms)
- GET / 200 in 75ms (next.js: 3ms, application-code: 72ms)
- GET / 200 in 71ms (next.js: 3ms, application-code: 68ms)
-✓ Compiled in 145ms
- GET / 200 in 161ms (next.js: 113ms, application-code: 49ms)
-✓ Compiled in 106ms
- GET / 200 in 143ms (next.js: 102ms, application-code: 41ms)
-✓ Compiled in 158ms
- GET / 200 in 211ms (next.js: 130ms, application-code: 81ms)
- GET / 200 in 37ms (next.js: 4ms, application-code: 33ms)
-✓ Compiled in 124ms
- GET / 200 in 194ms (next.js: 99ms, application-code: 95ms)
- GET / 200 in 48ms (next.js: 3ms, application-code: 45ms)
- GET / 200 in 195ms (next.js: 107ms, application-code: 88ms)
- GET / 200 in 39ms (next.js: 3ms, application-code: 36ms)
- GET / 200 in 337ms (next.js: 7ms, application-code: 330ms)
-✓ Compiled in 118ms
- GET / 200 in 205ms (next.js: 120ms, application-code: 85ms)
- GET / 200 in 37ms (next.js: 3ms, application-code: 35ms)
-✓ Compiled in 126ms
- GET / 200 in 143ms (next.js: 96ms, application-code: 47ms)
- GET / 200 in 130ms (next.js: 83ms, application-code: 47ms)
- GET / 200 in 169ms (next.js: 3ms, application-code: 166ms)
- GET /products/pureair 200 in 265ms (next.js: 104ms, application-code: 162ms)
- GET / 200 in 77ms (next.js: 3ms, application-code: 74ms)
- GET /products/pureair 200 in 37ms (next.js: 4ms, application-code: 33ms)
+ GET / 200 in 222ms (next.js: 3ms, application-code: 220ms)
+ GET / 200 in 142ms (next.js: 4ms, application-code: 138ms)
+ GET / 200 in 200ms (next.js: 5ms, application-code: 195ms)
+ GET / 200 in 616ms (next.js: 131ms, application-code: 485ms)
+ GET / 200 in 283ms (next.js: 23ms, application-code: 260ms)
+ GET / 200 in 377ms (next.js: 4ms, application-code: 373ms)
+ GET / 200 in 146ms (next.js: 6ms, application-code: 139ms)
+ GET / 200 in 141ms (next.js: 8ms, application-code: 133ms)
+ GET / 200 in 211ms (next.js: 19ms, application-code: 192ms)
+ GET / 200 in 111ms (next.js: 48ms, application-code: 63ms)
+ GET / 200 in 120ms (next.js: 7ms, application-code: 113ms)
+ GET / 200 in 480ms (next.js: 6ms, application-code: 474ms)
+ GET /products/pureair 200 in 116ms (next.js: 53ms, application-code: 63ms)
+ GET /technology 200 in 2.6s (next.js: 2.4s, application-code: 225ms)
+✓ Compiled in 499ms
+ GET /technology 200 in 442ms (next.js: 234ms, application-code: 208ms)
+ GET /technology 200 in 132ms (next.js: 5ms, application-code: 126ms)
+ GET /technology 200 in 59ms (next.js: 6ms, application-code: 52ms)
+ GET /technology 200 in 269ms (next.js: 18ms, application-code: 251ms)
+ GET / 200 in 346ms (next.js: 145ms, application-code: 201ms)
+ GET /technology 200 in 36ms (next.js: 9ms, application-code: 28ms)
+✓ Compiled in 715ms
+ GET /technology 200 in 572ms (next.js: 290ms, application-code: 282ms)
+ GET /technology 200 in 152ms (next.js: 8ms, application-code: 144ms)
+ GET /technology 200 in 99ms (next.js: 4ms, application-code: 95ms)
+ GET /technology 200 in 64ms (next.js: 5ms, application-code: 59ms)
+ GET /technology 200 in 64ms (next.js: 32ms, application-code: 31ms)
+✓ Compiled in 267ms
+ GET /technology 200 in 209ms (next.js: 163ms, application-code: 47ms)
+✓ Compiled in 159ms
+ GET /technology 200 in 194ms (next.js: 146ms, application-code: 48ms)
+ GET /technology 200 in 137ms (next.js: 3ms, application-code: 134ms)
+ GET /technology 200 in 57ms (next.js: 5ms, application-code: 52ms)
+ GET /technology 200 in 63ms (next.js: 5ms, application-code: 57ms)
+✓ Compiled in 215ms
+ GET /technology 200 in 153ms (next.js: 107ms, application-code: 46ms)
+✓ Compiled in 257ms
+ GET /technology 200 in 183ms (next.js: 139ms, application-code: 43ms)
+ GET /technology 200 in 153ms (next.js: 3ms, application-code: 149ms)
+ GET /technology 200 in 51ms (next.js: 4ms, application-code: 47ms)
 ✓ Compiled in 195ms
- GET /products/pureair 200 in 328ms (next.js: 139ms, application-code: 188ms)
- GET /products/pureair 200 in 144ms (next.js: 3ms, application-code: 141ms)
- GET /products/pureair 200 in 115ms (next.js: 4ms, application-code: 112ms)
- GET /products/pureair 200 in 120ms (next.js: 29ms, application-code: 91ms)
- GET /products/pureair 200 in 120ms (next.js: 83ms, application-code: 37ms)
- GET /products/pureair 200 in 121ms (next.js: 54ms, application-code: 66ms)
- GET /products/pureair 200 in 209ms (next.js: 4ms, application-code: 205ms)
- GET / 200 in 72ms (next.js: 23ms, application-code: 49ms)
- GET /products/pureair 200 in 40ms (next.js: 3ms, application-code: 37ms)
- GET / 200 in 75ms (next.js: 4ms, application-code: 72ms)
+✓ Compiled in 759ms
+ GET /technology 200 in 475ms (next.js: 230ms, application-code: 244ms)
+ GET /technology 200 in 209ms (next.js: 19ms, application-code: 190ms)
+ GET /technology 200 in 177ms (next.js: 3ms, application-code: 174ms)
+ GET /technology 200 in 142ms (next.js: 61ms, application-code: 82ms)
+ GET /technology 200 in 145ms (next.js: 7ms, application-code: 138ms)
+ GET /technology 200 in 145ms (next.js: 36ms, application-code: 109ms)
+ GET /technology 200 in 145ms (next.js: 83ms, application-code: 62ms)
+ GET /technology 200 in 40ms (next.js: 4ms, application-code: 36ms)
 ✓ Compiled in 203ms
- GET / 200 in 535ms (next.js: 199ms, application-code: 336ms)
- GET / 200 in 280ms (next.js: 5ms, application-code: 275ms)
- GET / 200 in 222ms (next.js: 101ms, application-code: 121ms)
- GET / 200 in 224ms (next.js: 5ms, application-code: 219ms)
- GET / 200 in 224ms (next.js: 58ms, application-code: 166ms)
- GET / 200 in 223ms (next.js: 155ms, application-code: 68ms)
- GET /products/pureair 200 in 409ms (next.js: 128ms, application-code: 281ms)
- GET /products/pureair 200 in 44ms (next.js: 3ms, application-code: 41ms)
- GET /products/pureair 200 in 128ms (next.js: 5ms, application-code: 123ms)
- GET / 200 in 49ms (next.js: 3ms, application-code: 45ms)
- GET /products/pureair 200 in 47ms (next.js: 4ms, application-code: 43ms)
- GET / 200 in 57ms (next.js: 6ms, application-code: 51ms)
- GET /products/pureair 200 in 59ms (next.js: 7ms, application-code: 53ms)
- GET /products/pureair 200 in 488ms (next.js: 82ms, application-code: 406ms)
- GET / 200 in 84ms (next.js: 12ms, application-code: 71ms)
-✓ Compiled in 1339ms
- GET / 200 in 161ms (next.js: 8ms, application-code: 153ms)
- GET /products/pureair 200 in 108ms (next.js: 5ms, application-code: 102ms)
- GET / 200 in 233ms (next.js: 4ms, application-code: 229ms)
- GET /products/pureair 200 in 55ms (next.js: 3ms, application-code: 52ms)
- GET /products/pureair 200 in 110ms (next.js: 3ms, application-code: 107ms)
-✓ Compiled in 434ms
- GET / 200 in 97ms (next.js: 6ms, application-code: 91ms)
+⨯ ReferenceError: useState is not defined
+    at UpgradeBento (components\UpgradeBento.tsx:188:31)
+  186 |
+  187 | export default function UpgradeBento() {
+> 188 |   const [active, setActive] = useState(0);
+      |                               ^
+  189 |   const p = PANELS[active];
+  190 |
+  191 |   return ( {
+  digest: '1529019010'
+}
+⨯ ReferenceError: useState is not defined
+    at UpgradeBento (components\UpgradeBento.tsx:188:31)
+  186 |
+  187 | export default function UpgradeBento() {
+> 188 |   const [active, setActive] = useState(0);
+      |                               ^
+  189 |   const p = PANELS[active];
+  190 |
+  191 |   return ( {
+  digest: '1529019010'
+}
+⨯ ReferenceError: useState is not defined
+    at UpgradeBento (components\UpgradeBento.tsx:188:31)
+  186 |
+  187 | export default function UpgradeBento() {
+> 188 |   const [active, setActive] = useState(0);
+      |                               ^
+  189 |   const p = PANELS[active];
+  190 |
+  191 |   return ( {
+  digest: '1529019010'
+}
+⨯ ReferenceError: useState is not defined
+    at UpgradeBento (components\UpgradeBento.tsx:188:31)
+  186 |
+  187 | export default function UpgradeBento() {
+> 188 |   const [active, setActive] = useState(0);
+      |                               ^
+  189 |   const p = PANELS[active];
+  190 |
+  191 |   return ( {
+  digest: '1529019010'
+}
+⨯ ReferenceError: useState is not defined
+    at UpgradeBento (components\UpgradeBento.tsx:188:31)
+  186 |
+  187 | export default function UpgradeBento() {
+> 188 |   const [active, setActive] = useState(0);
+      |                               ^
+  189 |   const p = PANELS[active];
+  190 |
+  191 |   return ( {
+  digest: '1529019010'
+}
+ GET /technology 200 in 346ms (next.js: 121ms, application-code: 224ms)
+ GET /technology 200 in 158ms (next.js: 5ms, application-code: 152ms)
+ GET /technology 200 in 102ms (next.js: 6ms, application-code: 97ms)
+ GET /technology 200 in 101ms (next.js: 61ms, application-code: 41ms)
+ GET /technology 200 in 102ms (next.js: 32ms, application-code: 70ms)
+✓ Compiled in 163ms
+⨯ ReferenceError: active is not defined
+    at UpgradeBento (components\UpgradeBento.tsx:387:22)
+  385 |             <select
+  386 |               aria-label="Select your current MacBook Pro"
+> 387 |               value={active}
+      |                      ^
+  388 |               onChange={(e) => setActive(Number(e.target.value))}
+  389 |             >
+  390 |               {PANELS.map((panel, i) => ( {
+  digest: '2361087277'
+}
+ GET /technology 500 in 341ms (next.js: 118ms, application-code: 223ms)
+✓ Compiled in 156ms
+ GET /technology 200 in 300ms (next.js: 104ms, application-code: 196ms)

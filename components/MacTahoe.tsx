@@ -112,6 +112,14 @@ export default function MacTahoe() {
           height: 100%;
           object-fit: cover;
         }
+        /* Black scrim so the white headline stays legible over the image */
+        .mt-banner-scrim {
+          position: absolute;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.42);
+          z-index: 1;
+          pointer-events: none;
+        }
         .mt-banner-head {
           position: absolute;
           left: 0;
@@ -264,7 +272,8 @@ export default function MacTahoe() {
 
       <div className="mt-banner" data-reveal>
         <div className="mt-banner-bleed">
-          <img src="/mt-hero.png" alt="" aria-hidden />
+          <img src="/mh-ppt-headerimage.jpeg" alt="" aria-hidden />
+          <div className="mt-banner-scrim" aria-hidden />
           <div className="mt-banner-head">
             <p className="mt-label">Partners with</p>
             <h2 className="mt-h2">MANN+HUMMEL</h2>

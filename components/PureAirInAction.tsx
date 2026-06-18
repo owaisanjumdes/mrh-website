@@ -40,7 +40,11 @@ const DEPLOYMENTS: Deployment[] = [
   },
 ];
 
-export default function PureAirInAction() {
+export default function PureAirInAction({
+  heading = "PureAir in action",
+}: {
+  heading?: string;
+}) {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
@@ -176,7 +180,7 @@ export default function PureAirInAction() {
       `}</style>
 
       <div className="pia-head" data-reveal>
-        <h2 className="pia-title">PureAir in action</h2>
+        <h2 className="pia-title">{heading}</h2>
       </div>
 
       <div

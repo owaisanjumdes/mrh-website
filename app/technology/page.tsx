@@ -1,29 +1,22 @@
-import SectionBlock from "../components/SectionBlock";
+import SiriIntercom from "@/components/SiriIntercom";
+import CameraShowTell from "@/components/CameraShowTell";
+import UpgradeBento from "@/components/UpgradeBento";
 
+// Technology — dark canvas. Nav comes from the layout.
 export default function TechnologyLandingPage() {
   return (
-    <main>
-      <SectionBlock
-        number="01"
-        microLabel="HERO"
-        title="Technology"
-        description="Engineering pillars overview. Simulation plus filtration."
-        surface="paper"
-      />
-      <SectionBlock
-        number="02"
-        microLabel="SIMULATION"
-        title="Air simulation"
-        description="CFD-driven design and validation. Link to simulation detail."
-        surface="paper"
-      />
-      <SectionBlock
-        number="03"
-        microLabel="PROOF"
-        title="Filtration technology"
-        description="Multi-stage filter stack lineage from MANN+HUMMEL. Link to filtration detail."
-        surface="deep"
-      />
+    <main
+      style={{
+        background: "#000000",
+        minHeight: "100vh",
+        width: "100vw",
+        marginLeft: "calc(50% - 50vw)",
+        marginRight: "calc(50% - 50vw)",
+      }}
+    >
+      <SiriIntercom />
+      <CameraShowTell />
+      <UpgradeBento />
     </main>
   );
 }
