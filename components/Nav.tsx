@@ -74,11 +74,15 @@ const LIGHT_HERO_ROUTES = new Set<string>([]);
 // while the hero is on screen (only the nav content shows over the video), then
 // flips to the solid black bar after scrolling past it.
 const DARK_HERO_ROUTES = new Set<string>(["/"]);
+// Full light-mode pages — the nav is a persistent white bar with dark contents the
+// entire time (it never flips to the black bar).
+const LIGHT_PAGE_ROUTES = new Set<string>(["/impact"]);
 
 export default function Nav() {
   const pathname = usePathname();
   const hasLightHero = LIGHT_HERO_ROUTES.has(pathname);
   const hasDarkHero = DARK_HERO_ROUTES.has(pathname);
+  const isLightPage = LIGHT_PAGE_ROUTES.has(pathname);
   const hasHero = hasLightHero || hasDarkHero;
 
   const [hidden, setHidden] = useState(false);
@@ -141,8 +145,10 @@ export default function Nav() {
 
   // While over the light hero the nav is white with dark contents; over a dark
   // hero it's transparent; once scrolled past either, it's the solid black bar.
-  const lightNav = hasLightHero && overHero;
-  const wrapperBg = lightNav
+  const lightNav = isLightPage || (hasLightHero && overHero);
+  const wrapperBg = isLightPage
+    ? "#ffffff"
+    : lightNav
     ? "#ffffff"
     : hasDarkHero && overHero
     ? "transparent"

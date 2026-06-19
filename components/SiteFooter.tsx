@@ -44,19 +44,42 @@ const SOCIAL = [
   },
 ];
 
-export default function SiteFooter() {
+export default function SiteFooter({ light = false }: { light?: boolean } = {}) {
   return (
-    <footer className="ft">
+    <footer className={`ft ${light ? "ft--light" : ""}`}>
       <style>{`
         .ft {
-          background: #000000;
-          color: #ffffff;
+          /* dark theme (default) */
+          --ft-bg: #000000;
+          --ft-fg: #ffffff;
+          --ft-text: rgba(255,255,255,0.7);
+          --ft-muted: rgba(255,255,255,0.6);
+          --ft-faint: rgba(255,255,255,0.4);
+          --ft-copy: rgba(255,255,255,0.5);
+          --ft-placeholder: rgba(255,255,255,0.45);
+          --ft-border: rgba(255,255,255,0.22);
+          --ft-border-focus: rgba(255,255,255,0.5);
+          --ft-divider: rgba(255,255,255,0.15);
+          background: var(--ft-bg);
+          color: var(--ft-fg);
           width: 100vw;
           margin-left: calc(50% - 50vw);
           margin-right: calc(50% - 50vw);
           font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
           padding-top: clamp(56px, 8vh, 104px);
           overflow: hidden;
+        }
+        .ft--light {
+          --ft-bg: #f5f5f7;
+          --ft-fg: #1d1d1f;
+          --ft-text: #515154;
+          --ft-muted: #6e6e73;
+          --ft-faint: #86868b;
+          --ft-copy: #86868b;
+          --ft-placeholder: #86868b;
+          --ft-border: rgba(0,0,0,0.18);
+          --ft-border-focus: rgba(0,0,0,0.42);
+          --ft-divider: rgba(0,0,0,0.12);
         }
         .ft-inner {
           max-width: 1340px;
@@ -70,21 +93,21 @@ export default function SiteFooter() {
           align-items: start;
         }
         .ft-brand-logo { height: clamp(26px, 2.4vw, 34px); width: auto; display: block; margin-bottom: clamp(18px, 2vw, 26px); }
-        .ft-news-text { margin: 0 0 clamp(16px, 2vw, 22px); font-size: clamp(14px, 1.05vw, 16px); line-height: 1.5; color: rgba(255,255,255,0.7); max-width: 460px; }
+        .ft-news-text { margin: 0 0 clamp(16px, 2vw, 22px); font-size: clamp(14px, 1.05vw, 16px); line-height: 1.5; color: var(--ft-text); max-width: 460px; }
         .ft-form { display: flex; gap: 10px; max-width: 460px; }
         .ft-input {
           flex: 1;
           min-width: 0;
           background: transparent;
-          border: 1px solid rgba(255,255,255,0.22);
+          border: 1px solid var(--ft-border);
           border-radius: 8px;
           padding: 12px 14px;
-          color: #ffffff;
+          color: var(--ft-fg);
           font: inherit;
           font-size: 15px;
         }
-        .ft-input::placeholder { color: rgba(255,255,255,0.45); }
-        .ft-input:focus { outline: none; border-color: rgba(255,255,255,0.5); }
+        .ft-input::placeholder { color: var(--ft-placeholder); }
+        .ft-input:focus { outline: none; border-color: var(--ft-border-focus); }
         .ft-submit {
           flex: none;
           background: #148042;
@@ -99,17 +122,17 @@ export default function SiteFooter() {
           transition: background 200ms ease;
         }
         .ft-submit:hover { background: #0f6a36; }
-        .ft-fine { margin: clamp(14px, 1.6vw, 18px) 0 0; font-size: 12px; line-height: 1.5; color: rgba(255,255,255,0.4); max-width: 460px; }
-        .ft-col-h { margin: 0 0 clamp(16px, 1.8vw, 22px); font-size: clamp(14px, 1.05vw, 16px); font-weight: 600; color: #ffffff; }
+        .ft-fine { margin: clamp(14px, 1.6vw, 18px) 0 0; font-size: 12px; line-height: 1.5; color: var(--ft-faint); max-width: 460px; }
+        .ft-col-h { margin: 0 0 clamp(16px, 1.8vw, 22px); font-size: clamp(14px, 1.05vw, 16px); font-weight: 600; color: var(--ft-fg); }
         .ft-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: clamp(10px, 1.2vw, 14px); }
-        .ft-link { color: rgba(255,255,255,0.6); text-decoration: none; font-size: clamp(14px, 1.05vw, 15px); transition: color 180ms ease; }
-        .ft-link:hover { color: #ffffff; }
-        .ft-social { display: inline-flex; align-items: center; gap: 12px; color: rgba(255,255,255,0.6); text-decoration: none; transition: color 180ms ease; }
-        .ft-social:hover { color: #ffffff; }
+        .ft-link { color: var(--ft-muted); text-decoration: none; font-size: clamp(14px, 1.05vw, 15px); transition: color 180ms ease; }
+        .ft-link:hover { color: var(--ft-fg); }
+        .ft-social { display: inline-flex; align-items: center; gap: 12px; color: var(--ft-muted); text-decoration: none; transition: color 180ms ease; }
+        .ft-social:hover { color: var(--ft-fg); }
         .ft-social svg { width: 22px; height: 22px; flex: none; }
-        .ft-divider { height: 1px; background: rgba(255,255,255,0.15); margin: clamp(40px, 5vw, 72px) 0 clamp(20px, 2.4vw, 32px); }
+        .ft-divider { height: 1px; background: var(--ft-divider); margin: clamp(40px, 5vw, 72px) 0 clamp(20px, 2.4vw, 32px); }
         .ft-bottom { display: flex; flex-wrap: wrap; gap: 16px 32px; justify-content: space-between; align-items: center; }
-        .ft-copy { margin: 0; font-size: 13px; color: rgba(255,255,255,0.5); }
+        .ft-copy { margin: 0; font-size: 13px; color: var(--ft-copy); }
         .ft-legal { display: flex; flex-wrap: wrap; gap: 12px 28px; }
         .ft-wordmark {
           margin: clamp(32px, 4vw, 56px) 0 0;
@@ -118,7 +141,7 @@ export default function SiteFooter() {
           letter-spacing: -0.04em;
           line-height: 1;
           white-space: nowrap;
-          color: #ffffff;
+          color: var(--ft-fg);
         }
         @media (max-width: 900px) {
           .ft-top { grid-template-columns: 1fr 1fr; gap: clamp(28px, 6vw, 48px); }
@@ -133,7 +156,7 @@ export default function SiteFooter() {
         <div className="ft-top">
           {/* Newsletter */}
           <div className="ft-news">
-            <img src="/mrh-logo.png" alt="MRH" className="ft-brand-logo" />
+            <img src={light ? "/mrh-blacklogo.png" : "/mrh-logo.png"} alt="MRH" className="ft-brand-logo" />
             <p className="ft-news-text">
               Join our newsletter to stay up to date on features and releases.
             </p>
