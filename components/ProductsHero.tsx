@@ -4,9 +4,9 @@ import Link from "next/link";
 // Layout: small brand eyebrow → giant wordmark → large centered product render
 // → centered pill CTA + financing line. Black canvas, brand-green accents.
 
-export default function ProductsHero() {
+export default function ProductsHero({ videoSrc }: { videoSrc?: string } = {}) {
   return (
-    <section className="ph">
+    <section className={`ph ${videoSrc ? "ph--video" : ""}`}>
       <style>{`
         .ph {
           background: #000000;
@@ -24,6 +24,42 @@ export default function ProductsHero() {
           flex-direction: column;
           align-items: center;
         }
+
+        /* --- Full-bleed video hero (pulled under the transparent nav) --- */
+        .ph--video {
+          --ph-nav: clamp(64px, 7vw, 130px);
+          position: relative;
+          margin-top: calc(-1 * var(--ph-nav));
+          min-height: 100svh;
+          padding-top: calc(var(--ph-nav) + clamp(28px, 5vh, 64px));
+          display: flex;
+          align-items: flex-end;
+        }
+        .ph-video {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          z-index: 0;
+          /* fade the video up from black on every load (same as the home hero) */
+          opacity: 0;
+          animation: phVideoIn 1500ms ease-out 120ms both;
+        }
+        @keyframes phVideoIn {
+          from { opacity: 0; }
+          to   { opacity: 1; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .ph-video { animation: none; opacity: 1; }
+        }
+        .ph--video .ph-stage {
+          position: relative;
+          z-index: 2;
+          width: 100%;
+          padding-bottom: clamp(10px, 2vh, 22px);
+        }
+        .ph--video .ph-buy { margin-top: 0; }
 
         /* --- Wordmark --- */
         .ph-head {
@@ -146,19 +182,36 @@ export default function ProductsHero() {
         }
       `}</style>
 
-      <div className="ph-stage">
-        <div className="ph-head">
-          <span className="ph-eyebrow">MRH</span>
-          <h1 className="ph-wordmark">PureAir</h1>
-        </div>
+      {videoSrc ? (
+        <video
+          className="ph-video"
+          src={videoSrc}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          aria-hidden
+        />
+      ) : null}
 
-        <div className="ph-media">
-          <img
-            className="ph-shot"
-            src="/productshot.png"
-            alt="MRH PureAir air purifier — brushed-steel body with honeycomb grille"
-          />
-        </div>
+      <div className="ph-stage">
+        {!videoSrc && (
+          <div className="ph-head">
+            <span className="ph-eyebrow">MRH</span>
+            <h1 className="ph-wordmark">PureAir</h1>
+          </div>
+        )}
+
+        {!videoSrc && (
+          <div className="ph-media">
+            <img
+              className="ph-shot"
+              src="/productshot.png"
+              alt="MRH PureAir air purifier — brushed-steel body with honeycomb grille"
+            />
+          </div>
+        )}
 
         <div className="ph-buy">
           <Link href="/contact" className="ph-cta">

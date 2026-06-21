@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useInView } from "@/lib/useInView";
 
 // "Introducing PureAir" — adapted from Figma node 755:5692. Centered chip +
@@ -7,7 +8,13 @@ import { useInView } from "@/lib/useInView";
 // into view: the text reveals first, then the image fades in behind it.
 const PRODUCT_IMG = "/homepod-side-view.png";
 
-export default function ProfoundSound({ title = "PureAir" }: { title?: string }) {
+export default function ProfoundSound({
+  title = "PureAir",
+  sub = "Available in Midnight and White. $299",
+}: {
+  title?: string;
+  sub?: ReactNode;
+}) {
   const { ref, inView } = useInView<HTMLElement>();
 
   return (
@@ -80,12 +87,13 @@ export default function ProfoundSound({ title = "PureAir" }: { title?: string })
         }
         .ps-sub {
           margin: clamp(20px, 2.4vw, 32px) 0 0;
-          color: #86868b;
-          font-size: clamp(17px, 2vw, 24px);
+          color: #c7c7cc;
+          font-size: clamp(14px, 1.4vw, 18px);
           font-weight: 600;
           line-height: 1.17;
           letter-spacing: 0.009em;
         }
+        .ps-sub b { color: #f5f5f7; font-weight: 600; }
 
         /* Text reveals first, staggered */
         .ps-chip, .ps-title, .ps-sub { opacity: 0; transform: translateY(20px); }
@@ -109,7 +117,7 @@ export default function ProfoundSound({ title = "PureAir" }: { title?: string })
       <div className="ps-content">
         <span className="ps-chip">Introducing</span>
         <h2 className="ps-title">{title}</h2>
-        <p className="ps-sub">Available in Midnight and White. $299</p>
+        <p className="ps-sub">{sub}</p>
       </div>
     </section>
   );

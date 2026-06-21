@@ -4,7 +4,23 @@
 // to the bottom of this section and pops up when scrolled into view.
 // Copy kept verbatim from the Figma design.
 
-export default function DesignSection() {
+import type { ReactNode } from "react";
+
+export default function DesignSection({
+  eyebrow = "Design",
+  title,
+  copy,
+  cols,
+}: {
+  eyebrow?: string;
+  title?: ReactNode;
+  copy?: ReactNode;
+  cols?: {
+    title: ReactNode;
+    desc: ReactNode;
+    cta?: { label: string; href?: string };
+  }[];
+} = {}) {
   return (
     <section className="ds" id="design" aria-label="Design">
       <style>{`
@@ -53,6 +69,56 @@ export default function DesignSection() {
         .ds-media {
           margin-top: clamp(40px, 5vw, 64px);
           width: min(1048px, 100%);
+        }
+        /* two feature blocks (title + divider + paragraph), like the Benchmark grid */
+        .ds-cols {
+          width: 100%;
+          max-width: 840px;
+          margin: clamp(48px, 6vw, 80px) auto 0;
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: clamp(24px, 3vw, 48px);
+          text-align: left;
+        }
+        .ds-col-title {
+          margin: 0;
+          color: #f5f5f7;
+          font-size: clamp(19px, 1.5vw, 21px);
+          font-weight: 600;
+          line-height: 1.38;
+          letter-spacing: 0.011em;
+        }
+        .ds-col-body {
+          margin-top: 24px;
+          padding-top: 24px;
+          border-top: 0.8px solid #424245;
+        }
+        .ds-col-desc {
+          margin: 0;
+          color: #86868b;
+          font-size: 17px;
+          font-weight: 600;
+          line-height: 1.47;
+          letter-spacing: -0.022em;
+        }
+        .ds-col-desc b { color: #f5f5f7; font-weight: 600; }
+        .ds-col-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          margin-top: 16px;
+          color: #2997ff;
+          font-size: 17px;
+          font-weight: 600;
+          line-height: 1.47;
+          letter-spacing: -0.022em;
+          text-decoration: none;
+        }
+        .ds-col-link:hover { text-decoration: underline; }
+        .ds-col-link span { transition: transform 200ms ease; }
+        .ds-col-link:hover span { transform: translateX(3px); }
+        @media (max-width: 720px) {
+          .ds-cols { grid-template-columns: 1fr; gap: 36px; }
         }
         .ds-media img {
           display: block;
@@ -103,19 +169,27 @@ export default function DesignSection() {
 
       `}</style>
 
-      <p className="ds-eyebrow" data-reveal>Design</p>
+      <p className="ds-eyebrow" data-reveal>{eyebrow}</p>
 
       <h2 className="ds-title" data-reveal style={{ ["--ri" as string]: 1 }}>
-        Unibody enclosure.
-        <br />
-        Makes a strong case for itself.
+        {title ?? (
+          <>
+            Unibody enclosure.
+            <br />
+            Makes a strong case for itself.
+          </>
+        )}
       </h2>
 
       <p className="ds-copy" data-reveal style={{ ["--ri" as string]: 2 }}>
-        Introducing iPhone 17 Pro and iPhone 17 Pro Max, designed from the inside
-        out to be the most powerful iPhone models ever made. At the core of the new
-        design is a heat-forged aluminum unibody enclosure that maximizes
-        performance, battery capacity, and durability.
+        {copy ?? (
+          <>
+            Introducing iPhone 17 Pro and iPhone 17 Pro Max, designed from the
+            inside out to be the most powerful iPhone models ever made. At the core
+            of the new design is a heat-forged aluminum unibody enclosure that
+            maximizes performance, battery capacity, and durability.
+          </>
+        )}
       </p>
 
       <div className="ds-media" data-reveal style={{ ["--ri" as string]: 3 }}>
@@ -124,6 +198,30 @@ export default function DesignSection() {
           alt="Exploded view of the PureAir shell and internal stack"
         />
       </div>
+
+      {cols && cols.length > 0 ? (
+        <div className="ds-cols">
+          {cols.map((c, i) => (
+            <div
+              className="ds-col"
+              key={i}
+              data-reveal
+              style={{ ["--ri" as string]: 4 + i }}
+            >
+              <h3 className="ds-col-title">{c.title}</h3>
+              <div className="ds-col-body">
+                <p className="ds-col-desc">{c.desc}</p>
+                {c.cta ? (
+                  <a className="ds-col-link" href={c.cta.href ?? "#"}>
+                    {c.cta.label}
+                    <span aria-hidden>→</span>
+                  </a>
+                ) : null}
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : null}
 
       <a className="ds-cta reveal-bubble" href="#design" data-reveal>
         <span className="ds-cta-label">Compare iPhone design</span>

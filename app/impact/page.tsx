@@ -21,10 +21,11 @@ export default function ImpactPage() {
     >
       <ImpactHero />
       <ImpactDevices />
-      <ImpactMaterials />
+      <ImpactMaterials statsHeader="PureAir" />
       <ImpactMaterials
         showHeader={false}
         reverse
+        statsHeader="AirFINEry"
         stats={[
           {
             num: "4,000",

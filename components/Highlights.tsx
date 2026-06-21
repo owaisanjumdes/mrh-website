@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useInView } from "@/lib/useInView";
 
 // "Get the highlights." carousel — Figma node 707:3535.
@@ -39,6 +39,21 @@ export default function Highlights() {
   const next = () => setActive((i) => (i + 1) % n);
 
   const { ref, inView } = useInView<HTMLElement>();
+
+  // The sticky control pill should only appear once the section is substantially
+  // in view — otherwise it pins to the viewport bottom while a preceding full-bleed
+  // hero is still on screen and looks like it's overlapping it.
+  const [pinned, setPinned] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => setPinned(e.isIntersecting),
+      { threshold: 0, rootMargin: "0px 0px -65% 0px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [ref]);
 
   return (
     <section
@@ -175,7 +190,11 @@ export default function Highlights() {
           display: flex;
           align-items: center;
           gap: 16px;
+          transition: opacity 300ms ease;
         }
+        /* keep the pill hidden until the section is properly in view, so it doesn't
+           pin over a preceding full-bleed hero */
+        .hl-controls.is-prehidden { opacity: 0 !important; pointer-events: none; }
         .hl-progress {
           display: inline-flex;
           align-items: center;
@@ -268,7 +287,10 @@ export default function Highlights() {
         </div>
       </div>
 
-      <div className="hl-controls reveal-bubble" data-reveal>
+      <div
+        className={`hl-controls reveal-bubble ${pinned ? "" : "is-prehidden"}`}
+        data-reveal
+      >
         <div className="hl-progress">
           {SLIDES.map((s, i) => (
             <button

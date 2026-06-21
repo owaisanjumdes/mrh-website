@@ -73,7 +73,7 @@ const LIGHT_HERO_ROUTES = new Set<string>([]);
 // Routes whose hero uses a dark background — the nav stays transparent over them
 // while the hero is on screen (only the nav content shows over the video), then
 // flips to the solid black bar after scrolling past it.
-const DARK_HERO_ROUTES = new Set<string>(["/"]);
+const DARK_HERO_ROUTES = new Set<string>(["/", "/products/pureair"]);
 // Full light-mode pages — the nav is a persistent white bar with dark contents the
 // entire time (it never flips to the black bar).
 const LIGHT_PAGE_ROUTES = new Set<string>(["/impact"]);

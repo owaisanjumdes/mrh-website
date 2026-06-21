@@ -65,10 +65,12 @@ export default function ImpactMaterials({
   showHeader = true,
   reverse = false,
   stats,
+  statsHeader = "PureAir",
 }: {
   showHeader?: boolean;
   reverse?: boolean;
   stats?: StatOverride[];
+  statsHeader?: string;
 } = {}) {
   // reuse the default icons (area / filter / air) by index when stats are overridden
   const items = stats ? stats.map((s, i) => ({ icon: STATS[i].icon, ...s })) : STATS;
@@ -85,9 +87,7 @@ export default function ImpactMaterials({
   const statsCol = (
     <div className="dm-stats">
       <p className="dm-stats-head" data-reveal>
-        MacBook Neo.
-        <br />
-        Our lowest-carbon MacBook ever.
+        {statsHeader}
       </p>
       {items.map((s, i) => (
         <div className="dm-stat" key={i} data-reveal style={{ ["--ri" as string]: i + 1 }}>
@@ -241,9 +241,9 @@ export default function ImpactMaterials({
       {showHeader && (
         <div className="dm-head">
           <h2 className="dm-title" data-reveal>
-            <span className="dm-hl">Designed, sourced,</span>
+            <span className="dm-hl">Products that speak</span>
             <br />
-            and made to last.
+            for itself
           </h2>
           <p className="dm-sub" data-reveal style={{ ["--ri" as string]: 1 }}>
             We design our products with the environment in mind. That starts by using

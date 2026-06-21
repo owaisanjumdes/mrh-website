@@ -110,9 +110,9 @@ export default function HomeGlobe() {
           // ease to India along the shortest angular path, slowing to a stop
           let dPhi = targetPhi - phi;
           dPhi = ((dPhi % (2 * Math.PI)) + 3 * Math.PI) % (2 * Math.PI) - Math.PI;
-          phi += dPhi * 0.06;
-          theta += (targetTheta - theta) * 0.06;
-          lit += (1 - lit) * 0.08;
+          phi += dPhi * 0.12;
+          theta += (targetTheta - theta) * 0.12;
+          lit += (1 - lit) * 0.16;
           if (
             !arrivedRef.current &&
             Math.abs(dPhi) < 0.02 &&
@@ -123,8 +123,8 @@ export default function HomeGlobe() {
           }
         } else {
           phi += SPIN;
-          theta += (DEFAULT_THETA - theta) * 0.06;
-          lit += (0 - lit) * 0.1;
+          theta += (DEFAULT_THETA - theta) * 0.12;
+          lit += (0 - lit) * 0.2;
         }
 
         globe!.update({
@@ -165,7 +165,7 @@ export default function HomeGlobe() {
     <section
       ref={sectionRef}
       className={`hg ${ready ? "is-ready" : ""} ${arrived ? "is-arrived" : ""}`}
-      aria-label="India ranks 3rd in global pollution"
+      aria-label="India breathes the world's 3rd worst air"
     >
       <style>{`
         .hg {
@@ -176,6 +176,8 @@ export default function HomeGlobe() {
           padding: clamp(80px, 12vh, 160px) clamp(20px, 6vw, 88px);
           font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
           display: flex;
+          flex-direction: column;
+          align-items: center;
           justify-content: center;
         }
         .hg-stage {
@@ -187,7 +189,7 @@ export default function HomeGlobe() {
           width: 100%;
           height: 100%;
           opacity: 0;
-          transition: opacity 1.2s ease;
+          transition: opacity 0.6s ease;
           contain: layout paint size;
         }
         .hg.is-ready .hg-canvas { opacity: 1; }
@@ -206,31 +208,54 @@ export default function HomeGlobe() {
           filter: blur(8px);
           transform: translate(-50%, -50%) scale(0.6);
           opacity: 0;
-          transition: opacity 0.6s ease 0.15s, transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s;
+          transition: opacity 0.3s ease 0.075s, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) 0.075s;
           pointer-events: none;
         }
         .hg.is-arrived .hg-glow { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 
-        /* headline overlay */
-        .hg-headline {
-          position: absolute;
-          left: 50%;
-          bottom: 8%;
-          transform: translate(-50%, 16px);
-          margin: 0;
-          width: max-content;
-          max-width: 92vw;
+        /* heading + subtext — sits below the globe, revealed together */
+        .hg-text {
+          margin-top: clamp(-40px, -4vh, -14px);
+          max-width: 94vw;
           text-align: center;
+          opacity: 0;
+          transform: translateY(16px);
+          transition: opacity 0.3s ease 0.125s, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) 0.125s;
+        }
+        .hg.is-arrived .hg-text { opacity: 1; transform: translateY(0); }
+        /* eyebrow — sits above the globe; matches the "Benchmark" eyebrow in Performance */
+        .hg-eyebrow {
+          margin: 0 0 clamp(-56px, -6vh, -28px);
+          color: #ff791b;
+          font-size: clamp(17px, 2vw, 24px);
+          font-weight: 600;
+          line-height: 1.17;
+          letter-spacing: 0.009em;
+          text-align: center;
+          opacity: 0;
+          transform: translateY(16px);
+          transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .hg.is-arrived .hg-eyebrow { opacity: 1; transform: translateY(0); }
+        .hg-headline {
+          margin: 0;
           color: var(--paper);
-          font-size: clamp(24px, 3.4vw, 44px);
+          font-size: clamp(15px, 4.3vw, 44px);
           font-weight: 600;
           line-height: 1.1;
           letter-spacing: -0.02em;
-          opacity: 0;
-          transition: opacity 0.6s ease 0.25s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.25s;
-          pointer-events: none;
+          white-space: nowrap;
         }
-        .hg.is-arrived .hg-headline { opacity: 1; transform: translate(-50%, 0); }
+        .hg-sub {
+          margin: clamp(12px, 1.6vw, 18px) auto 0;
+          max-width: min(620px, 86vw);
+          color: var(--paper-2);
+          font-size: clamp(15px, 1.5vw, 18px);
+          font-weight: 400;
+          line-height: 1.5;
+          letter-spacing: -0.005em;
+        }
+        .hg-sub b { color: var(--paper); font-weight: 600; }
         .hg-pollution {
           background: linear-gradient(180deg, #ff7e6b 0%, #ff3b30 48%, #cf0a2c 100%);
           -webkit-background-clip: text;
@@ -240,16 +265,25 @@ export default function HomeGlobe() {
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .hg-canvas, .hg-glow, .hg-headline { transition: none; }
+          .hg-canvas, .hg-glow, .hg-text, .hg-eyebrow { transition: none; }
         }
       `}</style>
 
+      <p className="hg-eyebrow">The reality</p>
       <div className="hg-stage">
         <canvas ref={canvasRef} className="hg-canvas" />
         <span className="hg-glow" aria-hidden />
+      </div>
+      <div className="hg-text">
         <h2 className="hg-headline">
-          India Ranks 3rd in Global <span className="hg-pollution">Pollution</span>.
+          India breathes the world&apos;s{" "}
+          <span className="hg-pollution">3rd worst air</span>
         </h2>
+        <p className="hg-sub">
+          On a bad day, breathing it is like smoking <b>70</b> cigarettes. It
+          costs focus, attendance, and health, quietly, every day. MRH exists to
+          change the number on the meter.
+        </p>
       </div>
     </section>
   );

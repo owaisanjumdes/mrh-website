@@ -12,10 +12,10 @@ import SiteFooter from "@/components/SiteFooter";
 
 // Shared product page body — rendered identically by /products, /products/pureair,
 // and /products/airfinery so all three have the same content and animations.
-export default function ProductShowcase() {
+export default function ProductShowcase({ heroVideo }: { heroVideo?: string } = {}) {
   return (
     <main style={{ background: "#000000", minHeight: "100vh" }}>
-      <ProductsHero />
+      <ProductsHero videoSrc={heroVideo} />
       <Highlights />
       <DesignSection />
       <CloserLook />

@@ -25,7 +25,7 @@ const FEATURES: Feature[] = [
     label: "Colors",
     title: "Colors",
     description:
-      "Four powder-coated finishes built for institutional deployment — each tuned to disappear into the room it cleans.",
+      "Four powder-coated finishes built to fit the room. Pick one that disappears into your space, or match it to your brand.",
     image: "/productshot.png",
     accent: "#148042",
     colors: [
@@ -40,48 +40,40 @@ const FEATURES: Feature[] = [
     label: "Multi-stage filter",
     title: "Multi-stage filter",
     description:
-      "Pre-filter, activated carbon, HEPA H13, and antimicrobial mesh tuned for India's particulate, gas, and bioaerosol mix.",
+      "Pre-filter, activated carbon, HEPA H13, and antimicrobial mesh, tuned for India's mix of dust, gases, and bioaerosols. Captures 99.97% of particles down to 0.3 microns.",
     image: "/multi-stage-filter.png",
-  },
-  {
-    id: "media",
-    label: "MANN+HUMMEL HEPA H13",
-    title: "MANN+HUMMEL HEPA H13",
-    description:
-      "German-engineered filter media. Captures 99.97% of particles down to 0.3 microns, independently validated by IIT Delhi.",
-    image: "/hepa-filter.png",
   },
   {
     id: "sensor",
     label: "Live AQI sensor",
     title: "Live AQI sensor",
     description:
-      "Real-time PM 2.5 and AQI display on the front panel. The same air you're breathing, read continuously, in plain numbers.",
+      "Real-time PM2.5 and AQI right on the front panel. The same air you're breathing, read continuously, in plain numbers you can trust.",
     image: "/aqimeter.png",
   },
   {
-    id: "quiet",
-    label: "Whisper-quiet motor",
-    title: "Whisper-quiet motor",
+    id: "iot",
+    label: "IoT",
+    title: "IoT",
     description:
-      "Tuned for bedrooms, classrooms, and consultation rooms. Sleep mode drops below 28 dB — softer than a library.",
-    image: "/honeycomb-grill.png",
-  },
-  {
-    id: "chassis",
-    label: "Steel chassis",
-    title: "Steel chassis",
-    description:
-      "Powder-coated steel built for institutional deployment cycles. No plastic creak. No warping. Field-serviceable.",
-    image: "/steelbody.png",
-  },
-  {
-    id: "smart",
-    label: "Smart controls",
-    title: "Smart controls",
-    description:
-      "App control, scheduling, and filter-life alerts. Ships ready for the OK Play deployment ops dashboard.",
+      "Connect PureAir to the MRH app for live readings, filter health, and scheduling from anywhere. Every unit reports into the OK Play deployment dashboard.",
     image: "/digital.png",
+  },
+  {
+    id: "engineering",
+    label: "German engineering, Indian reliability",
+    title: "German engineering, Indian reliability",
+    description:
+      "Filters designed by MANN+HUMMEL in Germany, with 80 years of filtration science behind them. Built and serviced in India, for India's air.",
+    image: "/hepa-filter.png",
+  },
+  {
+    id: "diagnostics",
+    label: "Self-diagnostic alerts",
+    title: "Self-diagnostic alerts",
+    description:
+      "PureAir tracks its own health and flags service before you notice a thing. We get the alert, and we handle it.",
+    image: "/internal.png",
   },
 ];
 

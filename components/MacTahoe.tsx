@@ -10,6 +10,7 @@ type Card = {
   img: string;
   wide?: boolean;
   play?: boolean;
+  contain?: boolean;
   title: string;
   desc: ReactNode;
 };
@@ -18,33 +19,25 @@ const CARDS: Card[] = [
   {
     img: "/mt-card1.jpg",
     wide: true,
-    title: "Liquid Glass. Clearly inspired.",
-    desc: " macOS Tahoe features a stunning new design with Liquid Glass, intuitive productivity tools, and a reimagined Spotlight. Fast just flows.",
+    title: "MANN+HUMMEL media",
+    desc: "Nano-fiber filters that capture more and breathe easier, with best-in-class flow resistance.",
   },
   {
     img: "/mt-card2.jpg",
     wide: true,
-    play: true,
-    title: "Spotlight helps you act fast.",
-    desc: " Perform hundreds of actions — from sending a message to taking down a note — all within Spotlight.",
+    title: "Multi-stage filtration",
+    desc: "Pulls PM0.1 through PM10, smoke, and gases out of the air in a single pass.",
   },
   {
     img: "/mt-card3.jpg",
-    title: "Live Translation speaks your language.",
-    desc: (
-      <>
-        Communicate effortlessly across languages. Instantly translate texts in
-        Messages,<span className="mt-fn">48</span> display live translated captions
-        in FaceTime, and get real‑time spoken translations in the Phone app.
-        <span className="mt-fn">49</span>
-      </>
-    ),
+    title: "Eurovent-certified performance",
+    desc: "Independent, third-party verification that every M+H filter performs exactly as claimed, with the widest A+ energy-efficiency range on the market.",
   },
   {
     img: "/mt-card4.jpg",
     wide: true,
-    title: "Run shortcuts automagically.",
-    desc: " Boost your productivity by automatically running shortcuts at a certain time of day or when you take specific actions — like organizing images based on their content.",
+    title: "Validated efficiency",
+    desc: "Captures 99.97% of particles down to 0.3 microns, independently verified by IIT Delhi.",
   },
 ];
 
@@ -199,6 +192,10 @@ export default function MacTahoe() {
           display: flex;
           gap: 20px;
           overflow-x: auto;
+          /* Without this, overflow-y computes to auto (because overflow-x is set),
+             turning the gallery into a vertical scroll container that swallows page
+             scroll. Keep it horizontal-only so downward scrolling never snags here. */
+          overflow-y: hidden;
           scroll-snap-type: x proximity;
           overscroll-behavior-x: contain;
           scroll-padding-left: var(--inset);
@@ -223,6 +220,11 @@ export default function MacTahoe() {
           height: clamp(300px, 30vw, 450px);
         }
         .mt-card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        /* graph card: keep the shared card height, show the full chart, and fill
+           the space below it with white (matches the chart's white background) so
+           there are no black letterbox bars */
+        .mt-card-media.is-contain { background: #ffffff; }
+        .mt-card-media.is-contain img { object-fit: contain; object-position: top; }
         .mt-card-media .mt-play { bottom: 20px; right: 20px; top: auto; }
         .mt-cap {
           margin: 0;
@@ -289,10 +291,9 @@ export default function MacTahoe() {
       <div className="mt-intro" data-reveal>
         <div className="mt-intro-inner">
           <p className="mt-copy">
-            macOS Tahoe with Liquid Glass delivers a{" "}
-            <b>refined yet familiar look.</b> With new ways to boost your
-            productivity, work seamlessly with iPhone, and get even more from Apple
-            Intelligence, it’s the most beautiful and powerful version of macOS yet.
+            Our filters are designed by MANN+HUMMEL, 80 years of filtration
+            science, deployed across 80+ countries and tuned for India’s dust,
+            smoke, and traffic. <b>Engineered in Germany. Made in India.</b>
           </p>
           <a className="mt-link" href="#">
             Learn more about macOS Tahoe ›
@@ -308,7 +309,7 @@ export default function MacTahoe() {
               key={c.title}
               data-reveal
             >
-              <div className="mt-card-media">
+              <div className={`mt-card-media${c.contain ? " is-contain" : ""}`}>
                 <img src={c.img} alt={c.title} />
                 {c.play ? <PlayBtn label={`Play ${c.title} animation`} /> : null}
               </div>
