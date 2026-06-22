@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 // rounded card with glass pills overlaid on the left, on a background that
 // blends from the black of the "Design" section into #1d1d1f gray.
 
-type ColorOption = { name: string; swatch: string; border?: string };
+type ColorOption = { name: string; swatch: string; border?: string; image: string };
 type Feature = {
   id: string;
   label: string;
@@ -26,13 +26,12 @@ const FEATURES: Feature[] = [
     title: "Colors",
     description:
       "Four powder-coated finishes built to fit the room. Pick one that disappears into your space, or match it to your brand.",
-    image: "/productshot.png",
-    accent: "#148042",
+    image: "/slr.png",
     colors: [
-      { name: "Stainless", swatch: "#b8b3af" },
-      { name: "Charcoal", swatch: "#2a2a2c" },
-      { name: "Champagne", swatch: "#d4b896" },
-      { name: "Snow", swatch: "#f5f5f5", border: "#5a5a5e" },
+      { name: "Silver", swatch: "#c8c5c1", image: "/slr.png" },
+      { name: "Rose Gold", swatch: "#e0b6a6", image: "/rsg.png" },
+      { name: "Pearl White", swatch: "#f3f0ec", border: "#5a5a5e", image: "/pwht.png" },
+      { name: "Graphite Gray", swatch: "#4a4a4d", image: "/grgr.png" },
     ],
   },
   {
@@ -95,7 +94,10 @@ function PlusIcon() {
 export default function CloserLook() {
   const [activeIndex, setActiveIndex] = useState(-1); // no pill active by default
   const [imgIndex, setImgIndex] = useState(0);
+  const [colorIndex, setColorIndex] = useState(0); // selected finish on the Colors tab
   const [imgPhase, setImgPhase] = useState<"rest" | "out" | "in">("rest");
+  // "slide" for switching features, "fade" for switching colors within a feature
+  const [swapMode, setSwapMode] = useState<"slide" | "fade">("slide");
   const timers = useRef<number[]>([]);
 
   // Trigger the in-card sequence (image slide + pill bubble/pop) when the CARD
@@ -130,6 +132,7 @@ export default function CloserLook() {
     if (i === imgIndex) return;
     timers.current.forEach((id) => window.clearTimeout(id));
     timers.current = [];
+    setSwapMode("slide");
     setImgPhase("out");
     const t = window.setTimeout(() => {
       setImgIndex(i);
@@ -137,6 +140,26 @@ export default function CloserLook() {
     }, EXIT_MS);
     timers.current.push(t);
   };
+
+  // Swap the product image for a different finish, with a subtle fade out/in.
+  const selectColor = (ci: number) => {
+    if (ci === colorIndex) return;
+    timers.current.forEach((id) => window.clearTimeout(id));
+    timers.current = [];
+    setSwapMode("fade");
+    setImgPhase("out");
+    const t = window.setTimeout(() => {
+      setColorIndex(ci);
+      setImgPhase("in");
+    }, EXIT_MS);
+    timers.current.push(t);
+  };
+
+  // The Colors tab (index 0) shows the selected finish; other tabs show their own image.
+  const activeColors = FEATURES[imgIndex].colors;
+  const currentSrc = activeColors
+    ? activeColors[colorIndex].image
+    : FEATURES[imgIndex].image;
 
   return (
     <section
@@ -196,6 +219,16 @@ export default function CloserLook() {
         }
         .cl-img-out { animation: clImgOut ${EXIT_MS}ms cubic-bezier(0.55, 0, 0.7, 0.2) forwards !important; }
         .cl-img-in { animation: clImgIn 520ms cubic-bezier(0.22, 1, 0.36, 1) forwards !important; }
+        /* Subtle cross-fade for swapping colors (no horizontal slide) */
+        @keyframes clImgFadeOut {
+          to { opacity: 0; transform: scale(0.985); }
+        }
+        @keyframes clImgFadeIn {
+          from { opacity: 0; transform: scale(1.015); }
+          to { opacity: 1; transform: scale(1); }
+        }
+        .cl-img-fadeout { animation: clImgFadeOut ${EXIT_MS}ms ease forwards !important; }
+        .cl-img-fadein { animation: clImgFadeIn 460ms ease forwards !important; }
 
         /* Pill list overlaid on the left */
         .cl-list {
@@ -283,8 +316,33 @@ export default function CloserLook() {
           gap: 12px;
           padding-bottom: 22px;
         }
-        .cl-swatch { display: inline-flex; align-items: center; gap: 7px; }
-        .cl-swatch-dot { width: 18px; height: 18px; border-radius: 50%; flex: none; }
+        .cl-swatch {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          padding: 5px 10px 5px 6px;
+          border: 1px solid transparent;
+          border-radius: 999px;
+          background: transparent;
+          cursor: pointer;
+          font-family: inherit;
+          transition: background 200ms ease, border-color 200ms ease;
+        }
+        .cl-swatch:hover { background: rgba(245, 245, 247, 0.08); }
+        .cl-swatch.is-selected {
+          background: rgba(245, 245, 247, 0.12);
+          border-color: rgba(245, 245, 247, 0.45);
+        }
+        .cl-swatch-dot {
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          flex: none;
+          transition: box-shadow 200ms ease;
+        }
+        .cl-swatch.is-selected .cl-swatch-dot {
+          box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.9), 0 0 0 3.5px rgba(245, 245, 247, 0.8);
+        }
         .cl-swatch-name { font-size: 12.5px; font-weight: 500; color: #f5f5f7; }
 
         /* --- Entrance timeline ---
@@ -357,9 +415,17 @@ export default function CloserLook() {
       <div className="cl-viewer" ref={viewerRef}>
         <img
           className={`cl-img ${
-            imgPhase === "out" ? "cl-img-out" : imgPhase === "in" ? "cl-img-in" : ""
+            imgPhase === "out"
+              ? swapMode === "fade"
+                ? "cl-img-fadeout"
+                : "cl-img-out"
+              : imgPhase === "in"
+              ? swapMode === "fade"
+                ? "cl-img-fadein"
+                : "cl-img-in"
+              : ""
           }`}
-          src={FEATURES[imgIndex].image}
+          src={currentSrc}
           alt={FEATURES[imgIndex].label}
         />
 
@@ -370,14 +436,21 @@ export default function CloserLook() {
             const isBubble = i === 2;
             const delay = isBubble ? 1450 : 2000 + i * 80;
             return (
-              <button
+              <div
                 key={f.id}
-                type="button"
+                role="button"
+                tabIndex={0}
                 className={`cl-pill ${isBubble ? "cl-pill-bubble" : "cl-pill-pop"} ${
                   isActive ? "is-active" : ""
                 }`}
                 style={{ ["--d" as string]: `${delay}ms` }}
                 onClick={() => select(i)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    select(i);
+                  }
+                }}
                 aria-expanded={isActive}
               >
                 <span className="cl-pill-row">
@@ -396,8 +469,17 @@ export default function CloserLook() {
                     <p className="cl-pill-desc">{f.description}</p>
                     {f.colors ? (
                       <div className="cl-swatches">
-                        {f.colors.map((c) => (
-                          <span className="cl-swatch" key={c.name}>
+                        {f.colors.map((c, ci) => (
+                          <button
+                            type="button"
+                            className={`cl-swatch ${ci === colorIndex ? "is-selected" : ""}`}
+                            key={c.name}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              selectColor(ci);
+                            }}
+                            aria-pressed={ci === colorIndex}
+                          >
                             <span
                               className="cl-swatch-dot"
                               style={{
@@ -406,13 +488,13 @@ export default function CloserLook() {
                               }}
                             />
                             <span className="cl-swatch-name">{c.name}</span>
-                          </span>
+                          </button>
                         ))}
                       </div>
                     ) : null}
                   </div>
                 </span>
-              </button>
+              </div>
             );
           })}
         </div>

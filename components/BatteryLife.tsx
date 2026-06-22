@@ -1,5 +1,7 @@
 "use client";
 
+import type { ReactNode } from "react";
+import Link from "next/link";
 import { useInView } from "@/lib/useInView";
 
 // "Battery life. All-time high." — Figma node 707:4416.
@@ -7,8 +9,59 @@ import { useInView } from "@/lib/useInView";
 // holding iPhone (Silo on Apple TV), and three orange stat columns at the bottom.
 // Copy kept verbatim from the Figma design.
 
-export default function BatteryLife() {
+type Stat = { up: string; big: ReactNode; desc: ReactNode };
+
+const DEFAULT_STATS: Stat[] = [
+  {
+    up: "Up to",
+    big: "33 hours",
+    desc: (
+      <>
+        video playback on iPhone 17 Pro<span className="bl-fn">11</span>
+      </>
+    ),
+  },
+  {
+    up: "Up to",
+    big: "39 hours",
+    desc: (
+      <>
+        video playback on iPhone 17 Pro Max<span className="bl-fn">11</span>
+      </>
+    ),
+  },
+  {
+    up: "Up to",
+    big: (
+      <>
+        50% charge
+        <br />
+        in 20 minutes
+      </>
+    ),
+    desc: (
+      <>
+        with high‑wattage power adapter<span className="bl-fn">12</span>
+      </>
+    ),
+  },
+];
+
+export default function BatteryLife({
+  title,
+  text,
+  stats,
+  centerStats = false,
+  link,
+}: {
+  title?: ReactNode;
+  text?: ReactNode;
+  stats?: Stat[];
+  centerStats?: boolean;
+  link?: { label: string; href: string };
+} = {}) {
   const { ref, inView } = useInView<HTMLElement>();
+  const items = stats ?? DEFAULT_STATS;
   return (
     <section
       ref={ref}
@@ -75,6 +128,25 @@ export default function BatteryLife() {
           padding-left: clamp(0px, 8vw, 105px);
           margin-top: clamp(32px, 4vw, 60px);
         }
+        .bl-stats--center {
+          justify-content: center;
+          padding-left: 0;
+        }
+        .bl-link-wrap { text-align: center; margin-top: clamp(36px, 5vw, 60px); }
+        .bl-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          color: #2997ff;
+          font-size: clamp(16px, 1.4vw, 19px);
+          font-weight: 600;
+          letter-spacing: -0.01em;
+          text-decoration: none;
+          transition: color 200ms ease;
+        }
+        .bl-link:hover { color: #4aa8ff; }
+        .bl-link span { display: inline-block; transition: transform 200ms ease; }
+        .bl-link:hover span { transform: translateX(3px); }
         .bl-stat {
           width: 233px;
           max-width: 100%;
@@ -113,17 +185,25 @@ export default function BatteryLife() {
       <div className="bl-wrap">
         <div className="bl-copy" data-reveal>
           <h2 className="bl-title">
-            Battery life.
-            <br />
-            All-time high.
+            {title ?? (
+              <>
+                Battery life.
+                <br />
+                All-time high.
+              </>
+            )}
           </h2>
           <p className="bl-text">
-            The new internal design creates significant additional room for battery
-            capacity, giving iPhone 17 Pro Max the{" "}
-            <b>best-ever iPhone battery life,</b>
-            <b className="bl-fn">11</b> and up to 4 more hours per full charge
-            compared to iPhone 15 Pro Max. From extended video playback to
-            after-hours work, it’s always ready for overtime.
+            {text ?? (
+              <>
+                The new internal design creates significant additional room for
+                battery capacity, giving iPhone 17 Pro Max the{" "}
+                <b>best-ever iPhone battery life,</b>
+                <b className="bl-fn">11</b> and up to 4 more hours per full charge
+                compared to iPhone 15 Pro Max. From extended video playback to
+                after-hours work, it’s always ready for overtime.
+              </>
+            )}
           </p>
         </div>
       </div>
@@ -136,33 +216,27 @@ export default function BatteryLife() {
       </div>
 
       <div className="bl-wrap">
-        <div className="bl-stats">
-          <div className="bl-stat" data-reveal style={{ ["--ri" as string]: 2 }}>
-            <p className="bl-stat-up">Up to</p>
-            <p className="bl-stat-big">33 hours</p>
-            <p className="bl-stat-desc">
-              video playback on iPhone 17 Pro<span className="bl-fn">11</span>
-            </p>
-          </div>
-          <div className="bl-stat" data-reveal style={{ ["--ri" as string]: 3 }}>
-            <p className="bl-stat-up">Up to</p>
-            <p className="bl-stat-big">39 hours</p>
-            <p className="bl-stat-desc">
-              video playback on iPhone 17 Pro Max<span className="bl-fn">11</span>
-            </p>
-          </div>
-          <div className="bl-stat" data-reveal style={{ ["--ri" as string]: 4 }}>
-            <p className="bl-stat-up">Up to</p>
-            <p className="bl-stat-big">
-              50% charge
-              <br />
-              in 20 minutes
-            </p>
-            <p className="bl-stat-desc">
-              with high‑wattage power adapter<span className="bl-fn">12</span>
-            </p>
-          </div>
+        <div className={`bl-stats ${centerStats ? "bl-stats--center" : ""}`}>
+          {items.map((s, i) => (
+            <div
+              className="bl-stat"
+              key={i}
+              data-reveal
+              style={{ ["--ri" as string]: i + 2 }}
+            >
+              <p className="bl-stat-up">{s.up}</p>
+              <p className="bl-stat-big">{s.big}</p>
+              <p className="bl-stat-desc">{s.desc}</p>
+            </div>
+          ))}
         </div>
+        {link ? (
+          <div className="bl-link-wrap" data-reveal>
+            <Link className="bl-link" href={link.href}>
+              {link.label} <span aria-hidden>→</span>
+            </Link>
+          </div>
+        ) : null}
       </div>
     </section>
   );

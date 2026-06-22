@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import Link from "next/link";
 
 // "macOS Tahoe — Fresh faced. Timelessly Mac." — Figma node 756:8800.
 // Hero banner + intro, then a horizontal feature-card gallery with prev/next
@@ -442,9 +443,9 @@ export default function MacTahoe({
                 </>
               )}
             </p>
-            <a className="mt-link" href="#">
-              Learn more about macOS Tahoe ›
-            </a>
+            <Link className="mt-link" href="/proof">
+              Learn more about MRH ›
+            </Link>
           </div>
         </div>
       ) : null}

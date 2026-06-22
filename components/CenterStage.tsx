@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { useInView } from "@/lib/useInView";
 
 // "18MP Center Stage front camera." — Figma node 707:4137.
@@ -21,7 +21,48 @@ const TABS: Tab[] = [
   { icon: "/cs-ic4.svg", l1: "Center Stage", l2: "for video calls", screen: "/cs-screen3.jpg" },
 ];
 
-export default function CenterStage() {
+const BLOCKS = [
+  {
+    title: "See everything",
+    desc: (
+      <>
+        Connect every unit and see it all in one place. One dashboard, whether
+        it&rsquo;s one room or two hundred.
+      </>
+    ),
+  },
+  {
+    title: "Control in real time",
+    desc: (
+      <>
+        Live AQI, filter health, and fan speed, adjustable from your phone,
+        wherever you are.
+      </>
+    ),
+  },
+  {
+    title: "It services itself",
+    desc: (
+      <>
+        Your purifier knows when it needs service and tells us before you notice.
+        No checking, no guesswork, no maintenance you forgot about. We already
+        know, and we&rsquo;re already on the way.
+      </>
+    ),
+  },
+];
+
+export default function CenterStage({
+  eyebrow,
+  heading,
+  body,
+  showBlocks = false,
+}: {
+  eyebrow?: string;
+  heading?: ReactNode;
+  body?: ReactNode;
+  showBlocks?: boolean;
+} = {}) {
   const [active, setActive] = useState(0);
   const { ref, inView } = useInView<HTMLElement>();
 
@@ -43,6 +84,15 @@ export default function CenterStage() {
           display: flex;
           flex-direction: column;
           align-items: center;
+        }
+        .cs-eyebrow {
+          margin: 0 auto clamp(12px, 1.6vw, 20px);
+          color: #ff791b;
+          font-size: clamp(17px, 2vw, 24px);
+          font-weight: 600;
+          line-height: 1.17;
+          letter-spacing: 0.009em;
+          text-align: center;
         }
         .cs-title {
           margin: 0;
@@ -155,20 +205,69 @@ export default function CenterStage() {
           letter-spacing: 0.011em;
           text-align: center;
         }
+
+        /* three feature blocks (title + divider + paragraph) */
+        .cs-grid {
+          max-width: 1260px;
+          margin: clamp(48px, 6vw, 80px) auto 0;
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: clamp(24px, 2.7vw, 34px);
+          text-align: left;
+        }
+        .cs-col-title {
+          margin: 0;
+          color: #f5f5f7;
+          font-size: clamp(19px, 1.5vw, 21px);
+          font-weight: 600;
+          line-height: 1.38;
+          letter-spacing: 0.011em;
+        }
+        .cs-col-body {
+          margin-top: 24px;
+          padding-top: 24px;
+          border-top: 0.8px solid #424245;
+        }
+        .cs-col-desc {
+          margin: 0;
+          color: #86868b;
+          font-size: 17px;
+          font-weight: 600;
+          line-height: 1.47;
+          letter-spacing: -0.022em;
+        }
+        .cs-col-desc b { color: #f5f5f7; font-weight: 600; }
+        @media (max-width: 720px) {
+          .cs-grid { grid-template-columns: 1fr; gap: 36px; }
+        }
       `}</style>
 
+      {eyebrow ? (
+        <p className="cs-eyebrow" data-reveal>
+          {eyebrow}
+        </p>
+      ) : null}
+
       <h2 className="cs-title" data-reveal>
-        18MP Center Stage front camera.
-        <br />
-        It’s a total frame changer.
+        {heading ?? (
+          <>
+            18MP Center Stage front camera.
+            <br />
+            It’s a total frame changer.
+          </>
+        )}
       </h2>
 
       <p className="cs-text" data-reveal style={{ ["--ri" as string]: 1 }}>
-        The new front camera gives you flexible ways to frame your photos and
-        videos — and so much more. Tap to expand the field of view and rotate from
-        portrait to landscape <b>without moving your iPhone</b>. And when friends
-        join the shot, the field of view expands so you get more friendsies in your
-        selfies.
+        {body ?? (
+          <>
+            The new front camera gives you flexible ways to frame your photos and
+            videos — and so much more. Tap to expand the field of view and rotate
+            from portrait to landscape <b>without moving your iPhone</b>. And when
+            friends join the shot, the field of view expands so you get more
+            friendsies in your selfies.
+          </>
+        )}
       </p>
 
       <div className="cs-phone" data-reveal style={{ ["--ri" as string]: 2 }}>
@@ -199,11 +298,29 @@ export default function CenterStage() {
         ))}
       </div>
 
-      <p className="cs-caption" data-reveal style={{ ["--ri" as string]: 4 }}>
-        An all-new square sensor enables zoom and rotate options, for more flexible
-        ways to frame selfies and videos. And it gets everyone in a group shot —
-        automatically.
-      </p>
+      {showBlocks ? (
+        <div className="cs-grid">
+          {BLOCKS.map((b, i) => (
+            <div
+              className="cs-col"
+              key={b.title}
+              data-reveal
+              style={{ ["--ri" as string]: 4 + i }}
+            >
+              <h3 className="cs-col-title">{b.title}</h3>
+              <div className="cs-col-body">
+                <p className="cs-col-desc">{b.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="cs-caption" data-reveal style={{ ["--ri" as string]: 4 }}>
+          An all-new square sensor enables zoom and rotate options, for more
+          flexible ways to frame selfies and videos. And it gets everyone in a
+          group shot — automatically.
+        </p>
+      )}
     </section>
   );
 }

@@ -3,8 +3,8 @@ import Link from "next/link";
 const sitemap = [
   { href: "/products", label: "Products" },
   { href: "/technology", label: "Technology" },
-  { href: "/impact", label: "Impact" },
-  { href: "/case-studies", label: "Case studies" },
+  { href: "/proof", label: "Proof" },
+  { href: "/deployments", label: "Deployments" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
   { href: "/trust", label: "Trust" },

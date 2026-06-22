@@ -6,8 +6,8 @@ import Link from "next/link";
 const EXPLORE = [
   { label: "Products", href: "/products" },
   { label: "Technology", href: "/technology" },
-  { label: "Impact", href: "/impact" },
-  { label: "Case Studies", href: "/case-studies" },
+  { label: "Proof", href: "/proof" },
+  { label: "Deployments", href: "/deployments" },
 ];
 
 const PRODUCTS = [

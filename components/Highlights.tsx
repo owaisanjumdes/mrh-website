@@ -9,25 +9,41 @@ import { useInView } from "@/lib/useInView";
 // to the bottom of the viewport ONLY while this section is on screen.
 
 type Slide = {
-  title: string;
-  image?: string; // omitted → text-only card
+  lead: string;
+  rest: string;
+  video?: string;
+  image?: string;
+  imagePos?: string;
 };
 
 const SLIDES: Slide[] = [
   {
-    title: "Heat‑forged steel unibody, engineered to outlast the room it cleans.",
+    lead: "One PureAir for every space.",
+    rest: "Three sizes, one standard of clean.",
+    image: "/trio.png",
   },
   {
-    title: "Three‑stage filtration captures 99.97% of particles down to 0.3 microns.",
-    image: "/multi-stage-filter.png",
+    lead: "14 stages of filtration.",
+    rest: "Captures up to 99.97% of particles, down to 0.3 microns.",
+    video: "/msf.mp4",
   },
   {
-    title: "A live AQI readout you can trust — clean air you can actually see.",
-    image: "/aqimeter.png",
+    lead: "The air, on the front panel.",
+    rest: "A live AQI sensor you can read at a glance.",
+    image: "/am.png",
+    imagePos: "left top",
   },
   {
-    title: "Proven clean air in the rooms where people live and work.",
-    image: "/environment.png",
+    lead: "Proven across 200+ spaces.",
+    rest: "Schools, offices, hotels, hospitals, homes.",
+  },
+  {
+    lead: "2,000 sq ft, cleared fast.",
+    rest: "A full classroom of clean air in minutes.",
+  },
+  {
+    lead: "Smarter the longer you own it.",
+    rest: "Live control and self-service alerts from the app.",
   },
 ];
 
@@ -113,8 +129,8 @@ export default function Highlights() {
         .hl-viewport { position: relative; width: 100%; overflow: hidden; }
         .hl-track {
           /* Max leftward shift: when reached, the last card's right edge aligns
-             with the right gutter (i.e. with "Watch the film"). 4 cards, 3 gaps. */
-          --maxshift: max(0px, calc(4 * var(--cardw) + 3 * var(--gap) + 2 * var(--gutter) - 100vw));
+             with the right gutter (i.e. with "Watch the film"). 6 cards, 5 gaps. */
+          --maxshift: max(0px, calc(6 * var(--cardw) + 5 * var(--gap) + 2 * var(--gutter) - 100vw));
           display: flex;
           gap: var(--gap);
           padding: 0 var(--gutter);
@@ -133,17 +149,56 @@ export default function Highlights() {
           flex-direction: column;
         }
 
-        /* Text-only card — centered statement */
-        .hl-card-text {
-          margin: auto;
-          max-width: 22ch;
-          padding: clamp(24px, 3vw, 48px);
+        /* Caption — small one-line text centered at the top of each (black) card */
+        .hl-card-cap {
+          margin: 0;
+          max-width: none;
+          width: 100%;
+          padding: clamp(28px, 3.4vw, 44px) clamp(20px, 2.4vw, 32px) 0;
           text-align: center;
-          font-size: clamp(20px, 2.4vw, 28px);
-          font-weight: 600;
-          line-height: 1.16;
-          letter-spacing: 0.007em;
-          color: rgba(255, 255, 255, 0.92);
+          white-space: nowrap;
+          font-size: clamp(13px, 1.3vw, 18px);
+          font-weight: 500;
+          line-height: 1.3;
+          letter-spacing: -0.01em;
+          color: rgba(255, 255, 255, 0.6);
+        }
+        .hl-card-cap b { color: #ffffff; font-weight: 600; }
+        .hl-card-cap { position: relative; z-index: 2; }
+
+        /* Video fill — sits below the caption, fills the card */
+        .hl-card-video {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+          z-index: 0;
+        }
+        /* Contained image on the black card (centered by default) */
+        .hl-card-img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          object-position: center;
+          z-index: 0;
+        }
+
+        /* Subtle black overlay so the caption stays legible over the video */
+        .hl-card-vscrim {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.55) 0%,
+            rgba(0, 0, 0, 0.28) 30%,
+            rgba(0, 0, 0, 0.2) 100%
+          );
+          pointer-events: none;
         }
 
         /* Cover image cards */
@@ -273,15 +328,32 @@ export default function Highlights() {
         <div className="hl-track" style={{ ["--active" as string]: active }}>
           {SLIDES.map((s, i) => (
             <article className="hl-card" key={i}>
-              {s.image ? (
+              {s.video ? (
                 <>
-                  <img className="hl-card-cover" src={s.image} alt={s.title} />
-                  <div className="hl-card-scrim" aria-hidden />
-                  <h3 className="hl-card-caption">{s.title}</h3>
+                  <video
+                    className="hl-card-video"
+                    src={s.video}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="auto"
+                    aria-hidden
+                  />
+                  <div className="hl-card-vscrim" aria-hidden />
                 </>
-              ) : (
-                <p className="hl-card-text">{s.title}</p>
-              )}
+              ) : null}
+              {s.image ? (
+                <img
+                  className="hl-card-img"
+                  src={s.image}
+                  alt={s.lead}
+                  style={s.imagePos ? { objectPosition: s.imagePos } : undefined}
+                />
+              ) : null}
+              <p className="hl-card-cap">
+                <b>{s.lead}</b> {s.rest}
+              </p>
             </article>
           ))}
         </div>

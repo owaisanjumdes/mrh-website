@@ -154,15 +154,24 @@ export default function ProductsHero({ videoSrc }: { videoSrc?: string } = {}) {
           color: #ffffff;
           border-radius: 980px;
           font-weight: 600;
-          font-size: clamp(15px, 1.2vw, 19px);
-          line-height: 1;
-          padding: 0.62em 1.5em;
+          font-size: clamp(15px, 1.2vw, 18px);
+          letter-spacing: -0.01em;
+          padding: 0.85em 1.6em;
           text-decoration: none;
           display: inline-flex;
           align-items: center;
+          justify-content: center;
           transition: background 200ms ease, transform 200ms ease;
         }
         .ph-cta:hover { background: #0f6a36; transform: translateY(-1px); }
+        .ph-cta-row {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: clamp(10px, 1.2vw, 16px);
+        }
+        .ph-cta--secondary { background: #ffffff; color: #1d1d1f; }
+        .ph-cta--secondary:hover { background: #e9e9ec; transform: translateY(-1px); }
         .ph-price {
           color: #ffffff;
           font-weight: 700;
@@ -246,12 +255,14 @@ export default function ProductsHero({ videoSrc }: { videoSrc?: string } = {}) {
         )}
 
         <div className="ph-buy">
-          <Link href="/contact" className="ph-cta">
-            Pre-order
-          </Link>
-          <p className="ph-price">
-            From ₹24,999 or ₹2,083/mo. for 12 mo.<sup>*</sup>
-          </p>
+          <div className="ph-cta-row">
+            <Link href="/contact" className="ph-cta">
+              Buy now
+            </Link>
+            <Link href="/contact" className="ph-cta ph-cta--secondary">
+              Get bulk quotes
+            </Link>
+          </div>
         </div>
       </div>
     </section>

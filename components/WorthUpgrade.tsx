@@ -1,21 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 
 // "Worth the upgrade? 100 percent." comparison panel — Figma node 707:4889.
 // Implemented exactly as designed: #121214 rounded panel, heading + compare
 // dropdown, a 3×2 grid of black feature cards, and an Apple Trade In footer.
 // On scroll into view the header fades in, then the six cards fade in one by one.
 // Copy kept verbatim from the Figma design.
-
-const COMPARE_OPTIONS = [
-  "iPhone 16 Pro",
-  "iPhone 16",
-  "iPhone 15 Pro",
-  "iPhone 15",
-  "iPhone 14 Pro",
-  "iPhone 13",
-];
 
 export default function WorthUpgrade() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -156,6 +148,29 @@ export default function WorthUpgrade() {
         }
         .wtu-card--center { justify-content: center; padding: 24px; }
         .wtu-card--media { padding-top: 30px; }
+        /* AQI card: image anchored top-left, text pinned to the bottom */
+        .wtu-card--aqi {
+          justify-content: flex-end;
+          align-items: stretch;
+          text-align: left;
+          padding: 0;
+        }
+        .wtu-aqi-img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 80%;
+          height: auto;
+          max-height: 64%;
+          object-fit: contain;
+          object-position: left top;
+        }
+        .wtu-card--aqi .wtu-card-lead {
+          position: relative;
+          z-index: 1;
+          max-width: none;
+          padding: clamp(20px, 2.4vw, 32px);
+        }
 
         .wtu-card-title {
           margin: 0;
@@ -175,9 +190,28 @@ export default function WorthUpgrade() {
           line-height: 1.19;
           letter-spacing: 0.011em;
         }
+        .wtu-card-lead {
+          margin: 0;
+          max-width: 300px;
+          padding: 0 12px;
+          color: #f5f5f7;
+          font-size: clamp(23px, 2.1vw, 30px);
+          font-weight: 600;
+          line-height: 1.1;
+          letter-spacing: -0.01em;
+        }
+        .wtu-card-note {
+          margin: 12px 0 0;
+          max-width: 280px;
+          padding: 0 12px;
+          color: #86868b;
+          font-size: clamp(16px, 1.4vw, 19px);
+          font-weight: 600;
+          line-height: 1.26;
+          letter-spacing: 0.005em;
+        }
         .wtu-card-big {
           margin: 8px 0;
-          color: #f5f5f7;
           font-size: clamp(38px, 3.6vw, 48px);
           font-weight: 600;
           line-height: 1.08;
@@ -186,6 +220,11 @@ export default function WorthUpgrade() {
           flex-direction: column;
           align-items: center;
           gap: 2px;
+          background: linear-gradient(180deg, #6cb8ff 0%, #2b8fff 48%, #0a84ff 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          -webkit-text-fill-color: transparent;
         }
         .wtu-card-big .row {
           display: inline-flex;
@@ -270,113 +309,78 @@ export default function WorthUpgrade() {
               <br />
               &nbsp;100 percent.
             </h2>
-
-            <div className="wtu-select-wrap">
-              <p className="wtu-select-label">
-                Select an iPhone to
-                <br />
-                compare to iPhone 17 Pro:
-              </p>
-              <div className="wtu-select">
-                <select aria-label="Select an iPhone to compare to iPhone 17 Pro">
-                  <option value="">Select a model</option>
-                  {COMPARE_OPTIONS.map((o) => (
-                    <option key={o} value={o}>
-                      {o}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
           </div>
 
           <p className="wtu-sub" data-reveal>
-            A few ways <b>iPhone 17 Pro</b> gives you more.
+            A few ways <b>PureAir</b> gives you more.
           </p>
 
           <div className="wtu-grid">
-            {/* 1 — Unibody */}
-            <article className="wtu-card wtu-card--media" data-reveal style={{ ["--ri" as string]: 0 }}>
-              <p className="wtu-card-title">Forged aluminum unibody design</p>
-              <div className="wtu-media">
-                <img
-                  className="wtu-img-unibody"
-                  src="/wtu-unibody.jpg"
-                  alt="Forged aluminum unibody design"
-                />
-              </div>
-            </article>
-
-            {/* 2 — Battery */}
-            <article className="wtu-card wtu-card--center" data-reveal style={{ ["--ri" as string]: 1 }}>
-              <p className="wtu-card-label">Up to</p>
-              <div className="wtu-card-big">
-                <span>16 more</span>
-                <span className="row">
-                  hours
-                  <img className="wtu-batt" src="/wtu-battery.png" alt="" aria-hidden />
-                </span>
-              </div>
-              <p className="wtu-card-label">
-                video playback
+            {/* 1 — 14-stage filtration */}
+            <article className="wtu-card wtu-card--center" data-reveal style={{ ["--ri" as string]: 0 }}>
+              <p className="wtu-card-lead">
+                14-stage
                 <br />
-                on iPhone 17 Pro Max<span className="wtu-foot11">11</span>
+                filtration.
               </p>
             </article>
 
-            {/* 3 — Cameras */}
-            <article className="wtu-card wtu-card--media" data-reveal style={{ ["--ri" as string]: 2 }}>
-              <p className="wtu-card-title">48MP rear cameras and Camera Control</p>
-              <div className="wtu-media">
-                <img
-                  className="wtu-img-cameras"
-                  src="/wtu-cameras.jpg"
-                  alt="48MP rear cameras and Camera Control"
-                />
-              </div>
-            </article>
-
-            {/* 4 — GPU */}
-            <article className="wtu-card wtu-card--center" data-reveal style={{ ["--ri" as string]: 0 }}>
-              <p className="wtu-card-label">Up to</p>
+            {/* 2 — Capture rate */}
+            <article className="wtu-card wtu-card--center" data-reveal style={{ ["--ri" as string]: 1 }}>
               <div className="wtu-card-big">
-                <span>2x</span>
-                <span>faster</span>
+                <span>99.97%</span>
               </div>
-              <p className="wtu-card-label">GPU performance</p>
-            </article>
-
-            {/* 5 — Center Stage */}
-            <article className="wtu-card wtu-card--media" data-reveal style={{ ["--ri" as string]: 1 }}>
-              <p className="wtu-card-title">18MP Center Stage front camera</p>
-              <div className="wtu-media">
-                <img
-                  className="wtu-img-center"
-                  src="/wtu-centerstage.jpg"
-                  alt="18MP Center Stage front camera"
-                />
-              </div>
-            </article>
-
-            {/* 6 — 4K video */}
-            <article className="wtu-card wtu-card--center" data-reveal style={{ ["--ri" as string]: 2 }}>
-              <img className="wtu-film" src="/wtu-film.png" alt="" aria-hidden />
               <p className="wtu-card-label">
-                Record video in
+                captured.
                 <br />
-                4K 120 fps Dolby Vision
+                Down to 0.3 microns.
+              </p>
+            </article>
+
+            {/* 3 — Independently validated */}
+            <article className="wtu-card wtu-card--center" data-reveal style={{ ["--ri" as string]: 2 }}>
+              <p className="wtu-card-lead">Independently validated.</p>
+              <p className="wtu-card-note">
+                ISO 16890 certified, proven by IIT Delhi.
+              </p>
+            </article>
+
+            {/* 4 — Coverage */}
+            <article className="wtu-card wtu-card--center" data-reveal style={{ ["--ri" as string]: 0 }}>
+              <div className="wtu-card-big">
+                <span>2,000</span>
+              </div>
+              <p className="wtu-card-label">
+                sq ft cleared.
+                <br />
+                From a single unit.
+              </p>
+            </article>
+
+            {/* 5 — Quiet and efficient */}
+            <article className="wtu-card wtu-card--center" data-reveal style={{ ["--ri" as string]: 1 }}>
+              <p className="wtu-card-lead">Quiet and efficient.</p>
+              <p className="wtu-card-note">Under 55 dB, under 80W.</p>
+            </article>
+
+            {/* 6 — Live AQI sensor */}
+            <article className="wtu-card wtu-card--aqi" data-reveal style={{ ["--ri" as string]: 2 }}>
+              <img className="wtu-aqi-img" src="/am.png" alt="" aria-hidden />
+              <p className="wtu-card-lead">
+                A live AQI sensor you can read at a glance.
               </p>
             </article>
           </div>
         </div>
 
         <div className="wtu-footer" data-reveal>
-          <img className="wtu-tradein" src="/wtu-tradein.jpg" alt="Apple Trade In" />
           <p className="wtu-footer-text">
-            Get credit toward a new iPhone when you trade in an eligible device.
+            More coverage from fewer units, filters built to last, and service
+            handled for you. PureAir delivers cleaner air at a lower cost per
+            square foot, year after year.
           </p>
-          <a className="wtu-footer-link" href="#">
-            Find your trade‑in value
+          <Link className="wtu-footer-link" href="/contact">
+            Get a quote for your space
             <svg viewBox="0 0 24 24" fill="none" aria-hidden>
               <path
                 d="M9 6l6 6-6 6"
@@ -386,7 +390,7 @@ export default function WorthUpgrade() {
                 strokeLinejoin="round"
               />
             </svg>
-          </a>
+          </Link>
         </div>
       </div>
     </section>

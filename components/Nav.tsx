@@ -20,8 +20,8 @@ const links: NavLink[] = [
     ],
   },
   { href: "/technology", label: "Technology" },
-  { href: "/impact", label: "Impact" },
-  { href: "/case-studies", label: "Case studies" },
+  { href: "/proof", label: "Proof" },
+  { href: "/deployments", label: "Deployments" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -77,7 +77,7 @@ const LIGHT_HERO_ROUTES = new Set<string>([]);
 const DARK_HERO_ROUTES = new Set<string>(["/", "/products/pureair"]);
 // Full light-mode pages — the nav is a persistent white bar with dark contents the
 // entire time (it never flips to the black bar).
-const LIGHT_PAGE_ROUTES = new Set<string>(["/impact", "/contact"]);
+const LIGHT_PAGE_ROUTES = new Set<string>(["/proof", "/contact"]);
 
 export default function Nav() {
   const pathname = usePathname();

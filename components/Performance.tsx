@@ -1,36 +1,7 @@
-// "Performance — New dimensions in power." — Figma node 772:11025.
-// Orange eyebrow + headline + paragraph, a full-bleed gaming shot, and a
-// three-column spec grid. Copy kept verbatim from the Figma design.
+// "Intelligent Space Planning" — blue-gradient eyebrow + headline, the air
+// simulation video, a supporting paragraph, and a link to the technology page.
 
-const COLS = [
-  {
-    title: "A19 Pro chip",
-    desc: (
-      <>
-        The Apple silicon powering iPhone 17 Pro delivers the highest iPhone
-        performance ever, ideal for advanced gaming and the most demanding tasks.
-      </>
-    ),
-  },
-  {
-    title: "Graphics and speed",
-    desc: (
-      <>
-        Paired with an innovative thermal design, the GPU and CPU deliver up to{" "}
-        <b>40 percent better</b> sustained performance.
-      </>
-    ),
-  },
-  {
-    title: "Neural Accelerators",
-    desc: (
-      <>
-        With Neural Accelerators integrated into each GPU core, iPhone 17 Pro is
-        more powerful than ever when working with local AI models.
-      </>
-    ),
-  },
-];
+import Link from "next/link";
 
 export default function Performance() {
   return (
@@ -48,11 +19,15 @@ export default function Performance() {
         .pf-head { max-width: 1260px; margin: 0 auto; text-align: center; }
         .pf-eyebrow {
           margin: 0;
-          color: #ff791b;
           font-size: clamp(17px, 2vw, 24px);
           font-weight: 600;
           line-height: 1.17;
           letter-spacing: 0.009em;
+          background: linear-gradient(180deg, #6cb8ff 0%, #2b8fff 52%, #0a84ff 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          -webkit-text-fill-color: transparent;
         }
         .pf-title {
           margin: clamp(10px, 1.4vw, 16px) 0 0;
@@ -62,13 +37,6 @@ export default function Performance() {
           line-height: 1.08;
           letter-spacing: -0.015em;
           text-wrap: balance;
-        }
-        .pf-blue {
-          background: linear-gradient(180deg, #6cb8ff 0%, #2b8fff 52%, #0a84ff 100%);
-          -webkit-background-clip: text;
-          background-clip: text;
-          color: transparent;
-          -webkit-text-fill-color: transparent;
         }
         .pf-copy {
           margin: clamp(18px, 2vw, 24px) auto 0;
@@ -86,6 +54,21 @@ export default function Performance() {
           text-align: center;
         }
         .pf-foot .pf-copy { margin-top: 0; }
+        .pf-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          margin-top: clamp(18px, 2vw, 28px);
+          color: #2997ff;
+          font-size: clamp(16px, 1.4vw, 19px);
+          font-weight: 600;
+          letter-spacing: -0.01em;
+          text-decoration: none;
+          transition: color 200ms ease;
+        }
+        .pf-link:hover { color: #4aa8ff; }
+        .pf-link span { display: inline-block; transition: transform 200ms ease; }
+        .pf-link:hover span { transform: translateX(3px); }
 
         .pf-media {
           max-width: 1200px;
@@ -140,7 +123,7 @@ export default function Performance() {
         <h2 className="pf-title" data-reveal style={{ ["--ri" as string]: 1 }}>
           We don&rsquo;t guess where clean air goes.
           <br />
-          We <span className="pf-blue">simulate</span> it.
+          We simulate it.
         </h2>
       </div>
 
@@ -167,17 +150,9 @@ export default function Performance() {
           unit took the air from 100 µg/m³ to zero in 30 minutes. The simulation
           called the placement.
         </p>
-      </div>
-
-      <div className="pf-grid">
-        {COLS.map((c, i) => (
-          <div className="pf-col" key={c.title} data-reveal style={{ ["--ri" as string]: i }}>
-            <h3 className="pf-col-title">{c.title}</h3>
-            <div className="pf-col-body">
-              <p className="pf-col-desc">{c.desc}</p>
-            </div>
-          </div>
-        ))}
+        <Link className="pf-link" href="/technology" data-reveal>
+          Discover Simulation <span aria-hidden>→</span>
+        </Link>
       </div>
     </section>
   );

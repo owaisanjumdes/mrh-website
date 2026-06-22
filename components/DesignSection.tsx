@@ -58,17 +58,37 @@ export default function DesignSection({
         }
         .ds-copy {
           margin: clamp(18px, 2vw, 28px) 0 0;
-          max-width: 760px;
+          max-width: 1080px;
           color: #86868b;
           font-size: clamp(15px, 1.4vw, 19px);
           font-weight: 600;
           line-height: 1.36;
           letter-spacing: 0.011em;
           text-align: center;
+          text-wrap: balance;
         }
         .ds-media {
-          margin-top: clamp(40px, 5vw, 64px);
+          margin-top: clamp(20px, 2.6vw, 36px);
           width: min(1048px, 100%);
+        }
+        /* Distinct scale + fade reveal for the product render (overrides the
+           generic fade-up) when this element scrolls into view. */
+        .ds-media[data-reveal] {
+          opacity: 0;
+          transform: translateY(36px) scale(1.06);
+          transform-origin: center top;
+        }
+        .ds-media[data-reveal].is-revealed {
+          animation: dsMediaIn 1200ms cubic-bezier(0.16, 1, 0.3, 1) both;
+          animation-delay: calc(var(--ri, 0) * 90ms);
+        }
+        @keyframes dsMediaIn {
+          from { opacity: 0; transform: translateY(36px) scale(1.06); }
+          to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .ds-media[data-reveal] { opacity: 1; transform: none; }
+          .ds-media[data-reveal].is-revealed { animation: none; }
         }
         /* two feature blocks (title + divider + paragraph), like the Benchmark grid */
         .ds-cols {
@@ -194,7 +214,7 @@ export default function DesignSection({
 
       <div className="ds-media" data-reveal style={{ ["--ri" as string]: 3 }}>
         <img
-          src="/design.png"
+          src="/001.png"
           alt="Exploded view of the PureAir shell and internal stack"
         />
       </div>
@@ -224,7 +244,7 @@ export default function DesignSection({
       ) : null}
 
       <a className="ds-cta reveal-bubble" href="#design" data-reveal>
-        <span className="ds-cta-label">Compare iPhone design</span>
+        <span className="ds-cta-label">Compare PureAir Design</span>
         <span className="ds-cta-icon" aria-hidden>
           <svg viewBox="0 0 24 24" fill="none">
             <path

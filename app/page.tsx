@@ -9,7 +9,7 @@ import TwoProducts from "@/components/TwoProducts";
 import ImpactMaterials from "@/components/ImpactMaterials";
 import ChooserLine from "@/components/ChooserLine";
 import Performance from "@/components/Performance";
-import SiriIntercom from "@/components/SiriIntercom";
+import CenterStage from "@/components/CenterStage";
 import BatteryLife from "@/components/BatteryLife";
 import PureAirInAction from "@/components/PureAirInAction";
 import SiteFooter from "@/components/SiteFooter";
@@ -121,8 +121,60 @@ export default function HomePage() {
         />
         <ChooserLine />
         <Performance />
-        <SiriIntercom />
-        <BatteryLife />
+        <CenterStage
+          eyebrow="Connected Intelligence"
+          heading="The smartest thing in the room."
+          body={
+            <>
+              Every MRH unit is online. Open the app and the air becomes a number
+              you can watch, a system you can control, and a service that takes
+              care of itself.{" "}
+              <b>
+                Live AQI, filter health, and performance, in real time, from
+                anywhere.
+              </b>
+            </>
+          }
+          showBlocks
+        />
+        <BatteryLife
+          title={
+            <>
+              We didn&rsquo;t test it ourselves.
+              <br />
+              IIT Delhi did.
+            </>
+          }
+          text={
+            <>
+              Over 60 days, through Delhi&rsquo;s worst air of the year, an
+              independent IIT Delhi study measured exactly what MRH does to the air
+              in a real school, indoors and out. The verdict:{" "}
+              <b>
+                hazardous air turned healthy, with up to 90% of pollutants gone.
+              </b>
+            </>
+          }
+          stats={[
+            {
+              up: "Up to",
+              big: "90%",
+              desc: "pollutant reduction, independently measured",
+            },
+            {
+              up: "more than",
+              big: "60 days",
+              desc: "of 24/7 monitoring, Sep to Nov 2024",
+            },
+            {
+              up: "from",
+              big: "Severe → Good",
+              desc: "AQI, on the worst-air days",
+            },
+          ]}
+          centerStats
+          link={{ label: "See the full study", href: "/proof" }}
+        />
         <PureAirInAction heading="Deployment" />
         <PureAirInAction heading="Press Coverage" />
         <SiteFooter />
