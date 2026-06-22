@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 // Impact — "Designed, sourced, and made to last." materials section. Figma node
 // 794:11503. Centered heading (first line green-highlighted) + subtext, then a
 // large citrus MacBook keyboard photo bleeding off the left, with a right-hand
@@ -66,31 +68,34 @@ export default function ImpactMaterials({
   reverse = false,
   stats,
   statsHeader = "PureAir",
+  dark = false,
+  image = "/impact-macbook.jpg",
+  cta,
 }: {
   showHeader?: boolean;
   reverse?: boolean;
   stats?: StatOverride[];
   statsHeader?: string;
+  dark?: boolean;
+  image?: string;
+  cta?: { label: string; href: string };
 } = {}) {
   // reuse the default icons (area / filter / air) by index when stats are overridden
   const items = stats ? stats.map((s, i) => ({ icon: STATS[i].icon, ...s })) : STATS;
 
   const media = (
     <div className="dm-media" data-reveal>
-      <img
-        src="/impact-macbook.jpg"
-        alt="MacBook Neo, top view — keyboard, full-size function key row, Touch ID button, and trackpad in a citrus color"
-      />
+      <img src={image} alt={statsHeader} />
     </div>
   );
 
   const statsCol = (
     <div className="dm-stats">
-      <p className="dm-stats-head" data-reveal>
+      <p className="dm-stats-head" data-reveal style={{ ["--ri" as string]: 1 }}>
         {statsHeader}
       </p>
       {items.map((s, i) => (
-        <div className="dm-stat" key={i} data-reveal style={{ ["--ri" as string]: i + 1 }}>
+        <div className="dm-stat" key={i} data-reveal style={{ ["--ri" as string]: i + 2 }}>
           <div className="dm-stat-fig">
             <span className="dm-stat-icon">{s.icon}</span>
             <span className="dm-stat-num">{s.num}</span>
@@ -104,7 +109,7 @@ export default function ImpactMaterials({
 
   return (
     <section
-      className={`dm ${showHeader ? "" : "dm--nohead"}`}
+      className={`dm ${showHeader ? "" : "dm--nohead"} ${dark ? "dm--dark" : ""}`}
       aria-label="Designed, sourced, and made to last."
     >
       <style>{`
@@ -219,6 +224,46 @@ export default function ImpactMaterials({
           letter-spacing: -0.022em;
         }
 
+        /* ---- Dark-mode overrides ---- */
+        .dm--dark { background: #000000; }
+        .dm--dark .dm-title { color: #f5f5f7; }
+        .dm--dark .dm-sub { color: #c7c7cc; }
+        .dm--dark .dm-stats-head { color: #86868b; }
+        .dm--dark .dm-stat-icon { color: #4ade80; }
+        .dm--dark .dm-stat-num { color: #f5f5f7; }
+        .dm--dark .dm-stat-unit { color: #f5f5f7; }
+        .dm--dark .dm-stat-desc { color: #86868b; }
+
+        /* Bottom CTA — glass pill (same as the product CTA) */
+        .dm-cta-wrap {
+          display: flex;
+          justify-content: center;
+          margin-top: clamp(40px, 6vw, 80px);
+          padding: 0 var(--gutter);
+        }
+        .dm-cta {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          height: 56px;
+          padding: 0 clamp(24px, 3vw, 34px);
+          border-radius: 28px;
+          background: rgba(42, 42, 45, 0.72);
+          backdrop-filter: blur(20px) saturate(180%);
+          -webkit-backdrop-filter: blur(20px) saturate(180%);
+          text-decoration: none;
+          transition: background 200ms ease;
+        }
+        .dm-cta:hover { background: rgba(60, 60, 64, 0.82); }
+        .dm-cta-label {
+          color: #f5f5f7;
+          font-size: 17px;
+          font-weight: 600;
+          line-height: 1.24;
+          letter-spacing: -0.022em;
+          white-space: nowrap;
+        }
+
         @media (max-width: 820px) {
           .dm-body {
             flex-direction: column;
@@ -265,6 +310,14 @@ export default function ImpactMaterials({
           </>
         )}
       </div>
+
+      {cta ? (
+        <div className="dm-cta-wrap">
+          <Link className="dm-cta reveal-bubble" href={cta.href} data-reveal>
+            <span className="dm-cta-label">{cta.label}</span>
+          </Link>
+        </div>
+      ) : null}
     </section>
   );
 }

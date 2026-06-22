@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 
 // Products hero — Apple-style product reveal (adapted from Figma "assemble" hero).
@@ -5,6 +8,34 @@ import Link from "next/link";
 // → centered pill CTA + financing line. Black canvas, brand-green accents.
 
 export default function ProductsHero({ videoSrc }: { videoSrc?: string } = {}) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Mobile autoplay (esp. iOS Safari) only works for a *muted, inline* video, and
+  // React doesn't reliably reflect the `muted` attribute to the DOM property — so we
+  // set it imperatively and retry play() on load and on the first touch, since the
+  // initial attempt can be blocked before the clip is ready.
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v || !videoSrc) return;
+    v.muted = true;
+    v.defaultMuted = true;
+    const tryPlay = () => {
+      const p = v.play();
+      if (p && typeof p.catch === "function") p.catch(() => {});
+    };
+    tryPlay();
+    v.addEventListener("loadeddata", tryPlay);
+    const onFirstTouch = () => tryPlay();
+    window.addEventListener("touchstart", onFirstTouch, {
+      once: true,
+      passive: true,
+    });
+    return () => {
+      v.removeEventListener("loadeddata", tryPlay);
+      window.removeEventListener("touchstart", onFirstTouch);
+    };
+  }, [videoSrc]);
+
   return (
     <section className={`ph ${videoSrc ? "ph--video" : ""}`}>
       <style>{`
@@ -184,6 +215,7 @@ export default function ProductsHero({ videoSrc }: { videoSrc?: string } = {}) {
 
       {videoSrc ? (
         <video
+          ref={videoRef}
           className="ph-video"
           src={videoSrc}
           autoPlay

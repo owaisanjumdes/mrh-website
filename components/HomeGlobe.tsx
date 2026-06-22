@@ -13,24 +13,10 @@ const INDIA: [number, number] = [22, 79];
 const DEFAULT_THETA = 0.2;
 const SPIN = 0.0035;
 
-// Cluster of small markers across India's landmass (lat 8–35, lon 68–97) so the
-// whole region reads as a glowing red hot-zone rather than a single dot.
-const INDIA_MARKERS: { loc: [number, number]; size: number }[] = [
-  { loc: [28.6, 77.2], size: 0.04 },  // Delhi
-  { loc: [19.0, 72.8], size: 0.04 },  // Mumbai
-  { loc: [13.0, 80.2], size: 0.035 }, // Chennai
-  { loc: [22.5, 88.3], size: 0.035 }, // Kolkata
-  { loc: [12.9, 77.6], size: 0.035 }, // Bengaluru
-  { loc: [17.4, 78.5], size: 0.035 }, // Hyderabad
-  { loc: [23.0, 72.6], size: 0.03 },  // Ahmedabad
-  { loc: [26.9, 75.8], size: 0.03 },  // Jaipur
-  { loc: [21.1, 79.1], size: 0.03 },  // Nagpur
-  { loc: [25.3, 82.9], size: 0.03 },  // Varanasi
-  { loc: [30.7, 76.8], size: 0.028 }, // Chandigarh
-  { loc: [15.3, 75.1], size: 0.028 }, // Hubli
-  { loc: [11.0, 76.9], size: 0.028 }, // Coimbatore
-  { loc: [26.1, 91.7], size: 0.028 }, // Guwahati
-];
+// The single India hot-spot is drawn as a CSS overlay (a red-gradient dot with
+// four concentric ripple rings) that appears once the globe settles on India, so
+// the 3D globe itself renders no cobe markers.
+const INDIA_MARKERS: { loc: [number, number]; size: number }[] = [];
 
 // token-derived cobe colours (0–1 RGB)
 const BASE: [number, number, number] = [0.431, 0.42, 0.396]; // --paper-3 #6E6B65
@@ -165,7 +151,7 @@ export default function HomeGlobe() {
     <section
       ref={sectionRef}
       className={`hg ${ready ? "is-ready" : ""} ${arrived ? "is-arrived" : ""}`}
-      aria-label="India breathes the world's 3rd worst air"
+      aria-label="India is breathing the worst air in the world"
     >
       <style>{`
         .hg {
@@ -213,6 +199,60 @@ export default function HomeGlobe() {
         }
         .hg.is-arrived .hg-glow { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 
+        /* single India hot-spot: a red-gradient dot with four concentric ripple
+           rings of decreasing opacity, revealed when the globe settles on India */
+        .hg-ping {
+          position: absolute;
+          left: 50%;
+          top: 41%;
+          transform: translate(-50%, -50%);
+          z-index: 2;
+          pointer-events: none;
+          opacity: 0;
+          transition: opacity 0.4s ease 0.12s;
+        }
+        .hg.is-arrived .hg-ping { opacity: 1; }
+        .hg-dot {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          background: radial-gradient(circle at 35% 30%, #ff8a7a 0%, #ff3b30 52%, #c20e2c 100%);
+          box-shadow: 0 0 10px 2px rgba(255, 59, 48, 0.55);
+        }
+        .hg-ripple {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          /* the size each ring grows TO; the animation scales it up from the dot */
+          width: 300px;
+          height: 300px;
+          border-radius: 50%;
+          border: 2px solid #ff4d3d;
+          transform: translate(-50%, -50%) scale(0.2);
+          opacity: 0;
+        }
+        /* Four ripples on one cycle, started exactly 1/4 apart (negative delays),
+           so four rings sit on screen at once — expanding outward with a
+           75 / 50 / 25 / 10% opacity falloff. Each fades in quickly just outside the
+           dot and fades out only at the edge, so all four stay clearly visible. */
+        .hg.is-arrived .hg-ripple { animation: hgRipple 3.6s linear infinite; }
+        .hg-ripple--1 { animation-delay: 0s; }
+        .hg-ripple--2 { animation-delay: -0.9s; }
+        .hg-ripple--3 { animation-delay: -1.8s; }
+        .hg-ripple--4 { animation-delay: -2.7s; }
+        @keyframes hgRipple {
+          0%   { transform: translate(-50%, -50%) scale(0.2); opacity: 0; }
+          10%  { opacity: 0.75; }
+          37%  { opacity: 0.50; }
+          64%  { opacity: 0.25; }
+          90%  { opacity: 0.10; }
+          100% { transform: translate(-50%, -50%) scale(1);   opacity: 0; }
+        }
+
         /* heading + subtext — sits below the globe, revealed together */
         .hg-text {
           margin-top: clamp(-40px, -4vh, -14px);
@@ -225,7 +265,7 @@ export default function HomeGlobe() {
         .hg.is-arrived .hg-text { opacity: 1; transform: translateY(0); }
         /* eyebrow — sits above the globe; matches the "Benchmark" eyebrow in Performance */
         .hg-eyebrow {
-          margin: 0 0 clamp(-56px, -6vh, -28px);
+          margin: 0 0 clamp(10px, 1.6vw, 20px);
           color: #ff791b;
           font-size: clamp(17px, 2vw, 24px);
           font-weight: 600;
@@ -237,23 +277,31 @@ export default function HomeGlobe() {
           transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .hg.is-arrived .hg-eyebrow { opacity: 1; transform: translateY(0); }
+        /* headline now sits between the eyebrow and the globe */
         .hg-headline {
-          margin: 0;
+          margin: 0 auto clamp(-24px, -2.5vh, -8px);
+          max-width: min(640px, 92vw);
           color: var(--paper);
-          font-size: clamp(15px, 4.3vw, 44px);
+          font-size: clamp(28px, 5vw, 60px);
           font-weight: 600;
-          line-height: 1.1;
+          line-height: 1.08;
           letter-spacing: -0.02em;
-          white-space: nowrap;
+          text-align: center;
+          text-wrap: balance;
+          opacity: 0;
+          transform: translateY(16px);
+          transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
+        .hg.is-arrived .hg-headline { opacity: 1; transform: translateY(0); }
         .hg-sub {
           margin: clamp(12px, 1.6vw, 18px) auto 0;
-          max-width: min(620px, 86vw);
+          max-width: min(820px, 92vw);
           color: var(--paper-2);
           font-size: clamp(15px, 1.5vw, 18px);
           font-weight: 400;
           line-height: 1.5;
           letter-spacing: -0.005em;
+          text-wrap: balance;
         }
         .hg-sub b { color: var(--paper); font-weight: 600; }
         .hg-pollution {
@@ -265,20 +313,35 @@ export default function HomeGlobe() {
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .hg-canvas, .hg-glow, .hg-text, .hg-eyebrow { transition: none; }
+          .hg-canvas, .hg-glow, .hg-text, .hg-eyebrow, .hg-headline { transition: none; }
+          /* static concentric rings at the defined opacities under reduced motion */
+          .hg-ripple { animation: none; }
+          .hg-ripple--1 { transform: translate(-50%, -50%) scale(0.25); opacity: 0.75; }
+          .hg-ripple--2 { transform: translate(-50%, -50%) scale(0.5);  opacity: 0.50; }
+          .hg-ripple--3 { transform: translate(-50%, -50%) scale(0.75); opacity: 0.25; }
+          .hg-ripple--4 { transform: translate(-50%, -50%) scale(1);    opacity: 0.10; }
         }
       `}</style>
 
-      <p className="hg-eyebrow">The reality</p>
+      <p className="hg-eyebrow">
+        <span className="hg-pollution">The Crisis</span>
+      </p>
+      <h2 className="hg-headline">
+        India Is Breathing the{" "}
+        <span className="hg-pollution">Worst Air</span> in the World
+      </h2>
       <div className="hg-stage">
         <canvas ref={canvasRef} className="hg-canvas" />
         <span className="hg-glow" aria-hidden />
+        <span className="hg-ping" aria-hidden>
+          <span className="hg-ripple hg-ripple--4" />
+          <span className="hg-ripple hg-ripple--3" />
+          <span className="hg-ripple hg-ripple--2" />
+          <span className="hg-ripple hg-ripple--1" />
+          <span className="hg-dot" />
+        </span>
       </div>
       <div className="hg-text">
-        <h2 className="hg-headline">
-          India breathes the world&apos;s{" "}
-          <span className="hg-pollution">3rd worst air</span>
-        </h2>
         <p className="hg-sub">
           On a bad day, breathing it is like smoking <b>70</b> cigarettes. It
           costs focus, attendance, and health, quietly, every day. MRH exists to

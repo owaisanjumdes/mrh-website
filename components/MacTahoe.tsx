@@ -51,7 +51,33 @@ function PlayBtn({ label }: { label: string }) {
   );
 }
 
-export default function MacTahoe() {
+export default function MacTahoe({
+  eyebrow = "The Breakthrough",
+  bannerLabel = "Partners with",
+  bannerHeading = "MANN+HUMMEL",
+  bannerHeadingSentence = false,
+  bodyCopy,
+  showCards = true,
+  showBanner = true,
+  bannerImage,
+  trio,
+  headingSub,
+  showIntro = true,
+  headingJustify = false,
+}: {
+  bannerLabel?: string | null;
+  bannerHeading?: string;
+  bannerHeadingSentence?: boolean;
+  bodyCopy?: ReactNode;
+  showCards?: boolean;
+  showBanner?: boolean;
+  bannerImage?: string;
+  trio?: { img: string; title: string; desc: string }[];
+  headingSub?: ReactNode;
+  showIntro?: boolean;
+  headingJustify?: boolean;
+  eyebrow?: string;
+} = {}) {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
@@ -89,11 +115,56 @@ export default function MacTahoe() {
           font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
         }
 
+        .mt-eyebrow {
+          margin: 0 auto clamp(12px, 1.6vw, 20px);
+          padding: 0 var(--gutter);
+          text-align: center;
+          color: #ff791b;
+          font-size: clamp(17px, 2vw, 24px);
+          font-weight: 600;
+          line-height: 1.17;
+          letter-spacing: 0.009em;
+        }
+
+        /* plain heading (when the image banner is hidden) */
+        .mt-heading {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 var(--gutter);
+          text-align: center;
+        }
+        .mt-heading .mt-h2 { color: #f5f5f7; }
+        .mt-headsub {
+          margin: clamp(16px, 2vw, 26px) auto 0;
+          max-width: 760px;
+          color: #86868b;
+          font-size: clamp(17px, 1.5vw, 21px);
+          font-weight: 500;
+          line-height: 1.42;
+          letter-spacing: -0.005em;
+          text-wrap: balance;
+        }
+        .mt-headsub b { color: #f5f5f7; font-weight: 600; }
+
+        /* three tall image cards (same media + caption style as the gallery) */
+        .mt-trio {
+          max-width: 1260px;
+          margin: clamp(28px, 4vw, 56px) auto 0;
+          padding: 0 var(--gutter);
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: clamp(14px, 1.8vw, 24px);
+        }
+        .mt-trio-card { display: flex; flex-direction: column; }
+        @media (max-width: 700px) {
+          .mt-trio { grid-template-columns: 1fr; }
+        }
+
         /* Hero banner */
         .mt-banner {
           position: relative;
           max-width: 1512px;
-          margin: 0 auto;
+          margin: clamp(16px, 2.6vw, 38px) auto 0;
           height: clamp(360px, 48vw, 681px);
           overflow: hidden;
         }
@@ -139,6 +210,23 @@ export default function MacTahoe() {
           line-height: 1.02;
           letter-spacing: -0.02em;
           white-space: nowrap;
+        }
+        /* sentence headings wrap and sit a touch smaller (vs the short brand word) */
+        .mt-h2--sentence {
+          margin-left: auto;
+          margin-right: auto;
+          max-width: 18ch;
+          font-size: clamp(30px, 5vw, 66px);
+          line-height: 1.05;
+          white-space: normal;
+          text-wrap: balance;
+        }
+        /* wraps to ~two balanced centered lines */
+        .mt-h2--justify {
+          max-width: min(820px, 92vw);
+          font-size: clamp(28px, 4.4vw, 56px);
+          text-align: center;
+          text-wrap: balance;
         }
         .mt-play {
           position: absolute;
@@ -272,13 +360,50 @@ export default function MacTahoe() {
         }
       `}</style>
 
+      <p className="mt-eyebrow" data-reveal>{eyebrow}</p>
+
+      {!showBanner ? (
+        <>
+          <div className="mt-heading" data-reveal>
+            {bannerLabel ? <p className="mt-label">{bannerLabel}</p> : null}
+            <h2
+              className={`mt-h2${bannerHeadingSentence ? " mt-h2--sentence" : ""}${
+                headingJustify ? " mt-h2--justify" : ""
+              }`}
+            >
+              {bannerHeading}
+            </h2>
+            {headingSub ? <p className="mt-headsub">{headingSub}</p> : null}
+          </div>
+          {bannerImage ? (
+            <div className="mt-banner" data-reveal>
+              <div className="mt-banner-bleed">
+                <img src={bannerImage} alt="" aria-hidden />
+                <span
+                  className="mt-play mt-banner-play"
+                  aria-label="Play video"
+                  role="img"
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                    <path d="M8 5l11 7-11 7z" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          ) : null}
+        </>
+      ) : (
       <div className="mt-banner" data-reveal>
         <div className="mt-banner-bleed">
           <img src="/mh-ppt-headerimage.jpeg" alt="" aria-hidden />
           <div className="mt-banner-scrim" aria-hidden />
           <div className="mt-banner-head">
-            <p className="mt-label">Partners with</p>
-            <h2 className="mt-h2">MANN+HUMMEL</h2>
+            {bannerLabel ? <p className="mt-label">{bannerLabel}</p> : null}
+            <h2
+              className={`mt-h2${bannerHeadingSentence ? " mt-h2--sentence" : ""}`}
+            >
+              {bannerHeading}
+            </h2>
           </div>
           <span className="mt-play mt-banner-play" aria-label="Play macOS Tahoe animation" role="img">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -287,20 +412,44 @@ export default function MacTahoe() {
           </span>
         </div>
       </div>
+      )}
 
-      <div className="mt-intro" data-reveal>
-        <div className="mt-intro-inner">
-          <p className="mt-copy">
-            Our filters are designed by MANN+HUMMEL, 80 years of filtration
-            science, deployed across 80+ countries and tuned for India’s dust,
-            smoke, and traffic. <b>Engineered in Germany. Made in India.</b>
-          </p>
-          <a className="mt-link" href="#">
-            Learn more about macOS Tahoe ›
-          </a>
+      {trio && trio.length > 0 ? (
+        <div className="mt-trio" data-reveal>
+          {trio.slice(0, 3).map((c, i) => (
+            <article className="mt-trio-card" key={i}>
+              <div className="mt-card-media">
+                <img src={c.img} alt={c.title} />
+              </div>
+              <p className="mt-cap">
+                <b>{c.title}</b> {c.desc}
+              </p>
+            </article>
+          ))}
         </div>
-      </div>
+      ) : null}
 
+      {showIntro ? (
+        <div className="mt-intro" data-reveal>
+          <div className="mt-intro-inner">
+            <p className="mt-copy">
+              {bodyCopy ?? (
+                <>
+                  Our filters are designed by MANN+HUMMEL, 80 years of filtration
+                  science, deployed across 80+ countries and tuned for India’s
+                  dust, smoke, and traffic.{" "}
+                  <b>Engineered in Germany. Made in India.</b>
+                </>
+              )}
+            </p>
+            <a className="mt-link" href="#">
+              Learn more about macOS Tahoe ›
+            </a>
+          </div>
+        </div>
+      ) : null}
+
+      {showCards ? (
       <div className="mt-gallery">
         <div className="mt-scroller" ref={scrollerRef} onScroll={updateEdges}>
           {CARDS.map((c) => (
@@ -345,6 +494,7 @@ export default function MacTahoe() {
           </button>
         </div>
       </div>
+      ) : null}
     </section>
   );
 }

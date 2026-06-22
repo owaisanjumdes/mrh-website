@@ -57,10 +57,18 @@ export default function Performance() {
         .pf-title {
           margin: clamp(10px, 1.4vw, 16px) 0 0;
           color: #f5f5f7;
-          font-size: clamp(40px, 6.4vw, 80px);
+          font-size: clamp(28px, 4.8vw, 58px);
           font-weight: 600;
-          line-height: 1.05;
+          line-height: 1.08;
           letter-spacing: -0.015em;
+          text-wrap: balance;
+        }
+        .pf-blue {
+          background: linear-gradient(180deg, #6cb8ff 0%, #2b8fff 52%, #0a84ff 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          -webkit-text-fill-color: transparent;
         }
         .pf-copy {
           margin: clamp(18px, 2vw, 24px) auto 0;
@@ -72,12 +80,25 @@ export default function Performance() {
           letter-spacing: 0.011em;
         }
         .pf-copy b { color: #f5f5f7; font-weight: 600; }
+        .pf-foot {
+          max-width: 1260px;
+          margin: clamp(36px, 5vw, 64px) auto 0;
+          text-align: center;
+        }
+        .pf-foot .pf-copy { margin-top: 0; }
 
         .pf-media {
-          max-width: 1512px;
+          max-width: 1200px;
           margin: clamp(56px, 8vw, 120px) auto 0;
+          padding: 0 clamp(20px, 6vw, 88px);
         }
-        .pf-media img { display: block; width: 100%; height: auto; }
+        .pf-media img,
+        .pf-media video {
+          display: block;
+          width: 100%;
+          height: auto;
+          border-radius: clamp(12px, 1.4vw, 22px);
+        }
 
         .pf-grid {
           max-width: 1260px;
@@ -115,28 +136,37 @@ export default function Performance() {
       `}</style>
 
       <div className="pf-head">
-        <p className="pf-eyebrow" data-reveal>Benchmark</p>
+        <p className="pf-eyebrow" data-reveal>Intelligent Space Planning</p>
         <h2 className="pf-title" data-reveal style={{ ["--ri" as string]: 1 }}>
-          New dimensions
+          We don&rsquo;t guess where clean air goes.
           <br />
-          in power.
+          We <span className="pf-blue">simulate</span> it.
         </h2>
-        <p className="pf-copy" data-reveal style={{ ["--ri" as string]: 2 }}>
-          Whether you’re working with intensive graphics or massive media files,
-          iPhone 17 Pro offers blazing-fast performance — with advanced cooling
-          technology. An Apple-designed laser-welded vapor chamber works with the
-          aluminum unibody structure to efficiently move heat away from the A19 Pro
-          chip, allowing for even <b>higher sustained performance</b>. This
-          breakthrough in thermal management is key to the most powerful iPhone ever
-          created.
-        </p>
       </div>
 
       <div className="pf-media" data-reveal>
-        <img
-          src="/perf-game.jpg"
-          alt="iPhone 17 Pro running Arknights: Endfield, demonstrating the A19 Pro chip"
+        <video
+          src="/classroom-air-simulation.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          aria-label="Air simulation showing how fast one unit clears a classroom"
         />
+      </div>
+
+      <div className="pf-foot">
+        <p className="pf-copy" data-reveal>
+          Before a single unit is installed,{" "}
+          <b>
+            our simulation engine maps your space and shows exactly how fast it
+            reaches clean air
+          </b>
+          , and where every purifier should sit. In a real classroom test, one
+          unit took the air from 100 µg/m³ to zero in 30 minutes. The simulation
+          called the placement.
+        </p>
       </div>
 
       <div className="pf-grid">

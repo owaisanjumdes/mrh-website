@@ -1,10 +1,13 @@
 import HomeHero from "@/components/HomeHero";
-import { Logos3 } from "@/components/ui/logos3";
 import HomeGlobe from "@/components/HomeGlobe";
+import IoTMonitoring from "@/components/IoTMonitoring";
+import ScrollConverge from "@/components/ScrollConverge";
+import UnfairAdvantage from "@/components/UnfairAdvantage";
+import CompareLineup from "@/components/CompareLineup";
 import MacTahoe from "@/components/MacTahoe";
-import DesignSection from "@/components/DesignSection";
-import ProfoundSound from "@/components/ProfoundSound";
-import M5Family from "@/components/M5Family";
+import TwoProducts from "@/components/TwoProducts";
+import ImpactMaterials from "@/components/ImpactMaterials";
+import ChooserLine from "@/components/ChooserLine";
 import Performance from "@/components/Performance";
 import SiriIntercom from "@/components/SiriIntercom";
 import BatteryLife from "@/components/BatteryLife";
@@ -27,56 +30,96 @@ export default function HomePage() {
       {/* Higher layer that scrolls UP over the pinned hero (parallax reveal).
           z-index above the sticky hero; solid section backgrounds cover it. */}
       <div style={{ position: "relative", zIndex: 1 }}>
-        <Logos3 heading="Filtration engineered in Germany. Proven in India." />
         <HomeGlobe />
-        <MacTahoe />
-        <DesignSection
-          eyebrow="See it work"
-          title={
-            <>
-              Clean air you can
-              <br />
-              actually watch happen
-            </>
-          }
-          copy="Before we install a single unit, our simulation engine maps your space → air volume, layout, pollution load and shows exactly where clean air will land. After we install, a live AQI readout shows the drop in real time. No claims. Just the number, falling."
-          cols={[
+        <IoTMonitoring />
+        <ScrollConverge />
+        <UnfairAdvantage />
+        <CompareLineup />
+        <MacTahoe
+          bannerLabel={null}
+          bannerHeading="MRH solves what the industry couldn’t"
+          bannerHeadingSentence
+          showBanner={false}
+          showCards={false}
+          trio={[
             {
-              title: "Air Simulation",
-              desc: "Map any space. See coverage, placement, and the AQI you'll reach before you buy.",
-              cta: { label: "Simulate your space", href: "/technology/simulation" },
+              img: "/mrh-environment-01.png",
+              title: "Indoor.",
+              desc: "Offices, classrooms, clinics, and homes.",
             },
             {
-              title: "Live AQI",
-              desc: "Every unit reads the air it's cleaning, continuously, in plain numbers you can trust.",
+              img: "/mrh-basketball-court.png",
+              title: "Semi-outdoor.",
+              desc: "Lobbies, corridors, courts, and balconies.",
+            },
+            {
+              img: "/mrh-environment-02.png",
+              title: "Outdoor.",
+              desc: "Markets, playgrounds, and open public spaces.",
+            },
+          ]}
+          bodyCopy={
+            <>
+              In exclusive partnership with MANN+HUMMEL, MRH purifies indoor,
+              semi-outdoor, and outdoor spaces,{" "}
+              <b>
+                using fewer units, with superior coverage and faster cleaning.
+              </b>
+            </>
+          }
+        />
+        <MacTahoe
+          eyebrow="Powered by MANN+HUMMEL"
+          bannerLabel={null}
+          bannerHeading="80 years of German filtration science, now built for India."
+          bannerHeadingSentence
+          headingJustify
+          showBanner={false}
+          bannerImage="/mh-ppt-headerimage.jpeg"
+          showCards={false}
+          showIntro={false}
+          headingSub={
+            <>
+              An exclusive manufacturing and distribution license gives MRH what
+              no competitor in India has: MANN+HUMMEL’s filtration technology,{" "}
+              <b>made here, for here.</b>
+            </>
+          }
+        />
+        <TwoProducts />
+        <ImpactMaterials
+          dark
+          showHeader={false}
+          statsHeader="PureAir"
+          image="/006.png"
+          cta={{ label: "Explore PureAir", href: "/products/pureair" }}
+        />
+        <ImpactMaterials
+          dark
+          showHeader={false}
+          reverse
+          statsHeader="AirFINEry"
+          image="/006.png"
+          cta={{ label: "Explore AirFINEry", href: "/products/airfinery" }}
+          stats={[
+            {
+              num: "4,000",
+              unit: "sq ft.",
+              desc: "of area coverage from a single unit — built for the largest open indoor spaces.",
+            },
+            {
+              num: "99.9%",
+              unit: "",
+              desc: "filter efficiency, capturing fine particles down to 0.3 microns.",
+            },
+            {
+              num: "3,500",
+              unit: "m³/h",
+              desc: "Clean Air Delivery Rate (CADR) for rapid, whole-room purification.",
             },
           ]}
         />
-        <ProfoundSound
-          sub={
-            <>
-              Whisper-quiet purification for the rooms
-              <br />
-              you live and work in.
-              <br />
-              Clears 2,000 sq ft in <b>10</b> minutes.
-            </>
-          }
-        />
-        <M5Family />
-        <ProfoundSound
-          title="AirFINEry"
-          sub={
-            <>
-              Industrial-grade, weatherproof purification
-              <br />
-              for open and semi-open spaces.
-              <br />
-              Clears 3,500 sq ft in <b>10</b> minutes.
-            </>
-          }
-        />
-        <M5Family ctaLabel="Explore AirFINEry" ctaHref="/products/airfinery" />
+        <ChooserLine />
         <Performance />
         <SiriIntercom />
         <BatteryLife />

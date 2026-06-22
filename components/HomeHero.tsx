@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment, useEffect, useRef } from "react";
+import Link from "next/link";
 
 // Home hero — full-bleed background video filling one viewport (extends up behind
 // the transparent nav). Headline left-aligned, materializing letter by letter with
@@ -79,6 +80,7 @@ export default function HomeHero() {
           margin-top: calc(-1 * var(--hh-nav));
           height: 100svh;
           display: flex;
+          flex-direction: column;
           align-items: center;
           overflow: hidden;
           background: #000000;
@@ -113,7 +115,9 @@ export default function HomeHero() {
           z-index: 2;
           width: 100%;
           max-width: 1680px;
-          margin: 0 auto;
+          /* the whole block (headline, sub, CTAs, trust) auto-centers vertically
+             in the hero */
+          margin: auto 0;
           padding: 0 var(--gutter);
           /* headline recedes (drifts up + fades) as the next section comes up */
           transform: translateY(calc(var(--p) * -48px));
@@ -148,10 +152,62 @@ export default function HomeHero() {
           55%  { opacity: 1; }
           100% { opacity: 1; filter: blur(0); transform: translate(0, 0) scale(1); }
         }
+        .hh-sub {
+          margin: clamp(16px, 2vw, 26px) auto 0;
+          max-width: 720px;
+          text-align: center;
+          color: #e7e7ec;
+          font-size: clamp(16px, 1.8vw, 22px);
+          font-weight: 400;
+          line-height: 1.35;
+          letter-spacing: -0.01em;
+          opacity: 0;
+          animation: hhFadeUp 900ms cubic-bezier(0.22, 1, 0.36, 1) 900ms both;
+        }
+        .hh-cta-row {
+          margin: clamp(24px, 3.4vw, 40px) auto 0;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: clamp(10px, 1.2vw, 16px);
+          opacity: 0;
+          animation: hhFadeUp 900ms cubic-bezier(0.22, 1, 0.36, 1) 1050ms both;
+        }
+        .hh-cta {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 980px;
+          padding: 0.85em 1.6em;
+          font-size: clamp(15px, 1.2vw, 18px);
+          font-weight: 600;
+          letter-spacing: -0.01em;
+          text-decoration: none;
+          transition: background 200ms ease, color 200ms ease, transform 200ms ease;
+        }
+        .hh-cta--primary { background: #148042; color: #ffffff; }
+        .hh-cta--primary:hover { background: #0f6a36; transform: translateY(-1px); }
+        .hh-cta--secondary { background: #ffffff; color: #1d1d1f; }
+        .hh-cta--secondary:hover { background: #e9e9ec; transform: translateY(-1px); }
+        .hh-trust {
+          margin: clamp(14px, 2vw, 22px) auto 0;
+          text-align: center;
+          color: rgba(255, 255, 255, 0.62);
+          font-size: clamp(12px, 1vw, 14px);
+          font-weight: 500;
+          letter-spacing: 0.01em;
+          opacity: 0;
+          animation: hhFadeUp 900ms cubic-bezier(0.22, 1, 0.36, 1) 1200ms both;
+        }
+        @keyframes hhFadeUp {
+          from { opacity: 0; transform: translateY(16px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
         @media (prefers-reduced-motion: reduce) {
           .hh-ch { animation: none; opacity: 1; filter: none; transform: none; }
           .hh-video { animation: none; opacity: 1; transform: none; }
           .hh-inner { transform: none; opacity: 1; }
+          .hh-sub, .hh-cta-row, .hh-trust { animation: none; opacity: 1; transform: none; }
         }
       `}</style>
 
@@ -198,6 +254,23 @@ export default function HomeHero() {
             </span>
           ))}
         </h1>
+
+        <p className="hh-sub">
+          German-engineered purification, built for India’s air.
+        </p>
+
+        <div className="hh-cta-row">
+          <Link href="/contact" className="hh-cta hh-cta--primary">
+            Get a free air assessment
+          </Link>
+          <Link href="/products" className="hh-cta hh-cta--secondary">
+            Explore products
+          </Link>
+        </div>
+
+        <p className="hh-trust">
+          Powered by MANN+HUMMEL Germany · Made in India
+        </p>
       </div>
     </section>
   );
