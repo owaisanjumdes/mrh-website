@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { PlusIcon } from "lucide-react";
 import ImpactDevices from "@/components/ImpactDevices";
 import SiteFooter from "@/components/SiteFooter";
+import VideoEmbed from "@/components/VideoEmbed";
 
 // Neutral page template — layout and design system only.
 // Section structure, grid, type scale, the highlight motif, carousels, stat
@@ -471,6 +472,13 @@ export default function Environment() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* 3b — VIDEO */}
+      <section className="env-section" style={{ background: "#ffffff", paddingTop: 0 }}>
+        <div className="env-wrap">
+          <VideoEmbed id="81e35zV81WY" title="MANN+HUMMEL filtration" />
         </div>
       </section>
 
