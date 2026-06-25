@@ -46,6 +46,7 @@ type CardItem = {
   fg?: string;
   accent?: string;
   withImage?: boolean;
+  imgLabel?: string;
   graphic?: "recycle" | "bolt" | "bricks" | "waves" | "drop" | "sun";
 };
 
@@ -105,7 +106,7 @@ function Graphic({ kind, color }: { kind: NonNullable<CardItem["graphic"]>; colo
 }
 
 /* A horizontal card carousel with the segmented progress pill. */
-function Carousel({ cards }: { cards: CardItem[] }) {
+function Carousel({ cards, controls = true, center = false }: { cards: CardItem[]; controls?: boolean; center?: boolean }) {
   const [active, setActive] = useState(0);
   const trackRef = useRef<HTMLDivElement>(null);
   const n = cards.length;
@@ -122,39 +123,43 @@ function Carousel({ cards }: { cards: CardItem[] }) {
 
   return (
     <div className="env-carousel">
-      <div className="env-track" ref={trackRef}>
+      <div className={`env-track ${center ? "is-center" : ""}`} ref={trackRef}>
         {cards.map((c, i) => (
           <article className="env-card" key={i} style={{ background: c.bg ?? "#ffffff", color: c.fg ?? "#1d1d1f" }}>
             {c.withImage ? (
-              <Slot className="env-card-img" />
+              <Slot className="env-card-img" label={c.imgLabel ?? "Image"} />
             ) : c.graphic ? (
               <div className="env-card-graphic">
                 <Graphic kind={c.graphic} color={c.accent ?? "#30d158"} />
               </div>
             ) : null}
-            <div className="env-card-text">
-              {c.eyebrow ? <p className="env-card-eyebrow">{c.eyebrow}</p> : null}
-              <h3 className="env-card-title">{c.title}</h3>
-              {c.body ? <p className="env-card-body">{c.body}</p> : null}
-            </div>
+            {c.eyebrow || c.title || c.body ? (
+              <div className="env-card-text">
+                {c.eyebrow ? <p className="env-card-eyebrow">{c.eyebrow}</p> : null}
+                {c.title ? <h3 className="env-card-title">{c.title}</h3> : null}
+                {c.body ? <p className="env-card-body">{c.body}</p> : null}
+              </div>
+            ) : null}
           </article>
         ))}
       </div>
-      <div className="env-controls">
-        <div className="env-dots">
-          {cards.map((_, i) => (
-            <button key={i} type="button" className={`env-dot ${i === active ? "is-active" : ""}`} aria-label={`Go to card ${i + 1}`} onClick={() => go(i)} />
-          ))}
+      {controls ? (
+        <div className="env-controls">
+          <div className="env-dots">
+            {cards.map((_, i) => (
+              <button key={i} type="button" className={`env-dot ${i === active ? "is-active" : ""}`} aria-label={`Go to card ${i + 1}`} onClick={() => go(i)} />
+            ))}
+          </div>
+          <div className="env-arrows">
+            <button type="button" className="env-arrow" aria-label="Previous" onClick={() => go(active - 1)} disabled={active === 0}>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M15 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </button>
+            <button type="button" className="env-arrow" aria-label="Next" onClick={() => go(active + 1)} disabled={active === n - 1}>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </button>
+          </div>
         </div>
-        <div className="env-arrows">
-          <button type="button" className="env-arrow" aria-label="Previous" onClick={() => go(active - 1)} disabled={active === 0}>
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M15 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-          </button>
-          <button type="button" className="env-arrow" aria-label="Next" onClick={() => go(active + 1)} disabled={active === n - 1}>
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-          </button>
-        </div>
-      </div>
+      ) : null}
     </div>
   );
 }
@@ -163,18 +168,13 @@ function Carousel({ cards }: { cards: CardItem[] }) {
 
 const LIPSUM = "Supporting copy goes here. Use this space for a short description that fills one or two lines.";
 
-const APPROACH_CARDS: CardItem[] = [
-  { eyebrow: "Card one.", title: "Headline for the first card goes on these two lines.", graphic: "recycle", accent: "#30d158" },
-  { eyebrow: "Card two.", title: "Headline for the second card goes on these two lines.", graphic: "waves", accent: "#0a84ff" },
-  { eyebrow: "Card three.", title: "Headline for the third card goes on these two lines.", graphic: "bolt", accent: "#ff9f0a" },
-  { eyebrow: "Card four.", title: "Headline for the fourth card goes on these two lines.", graphic: "drop", accent: "#30d158" },
-];
-
-const RECOVER_CARDS: CardItem[] = [
-  { title: "Card title one.", body: LIPSUM, withImage: true },
-  { title: "Card title two.", body: LIPSUM, graphic: "bolt", bg: "#ffffff", accent: "#ff9f0a" },
-  { title: "Card title three.", body: LIPSUM, withImage: true },
-  { title: "Card title four.", body: LIPSUM, graphic: "sun", bg: "#ffd60a", fg: "#1d1d1f", accent: "#1d1d1f" },
+const SPACES_CARDS: CardItem[] = [
+  { title: "", withImage: true, imgLabel: "Classroom" },
+  { title: "", withImage: true, imgLabel: "Office" },
+  { title: "", withImage: true, imgLabel: "Court" },
+  { title: "", withImage: true, imgLabel: "Lobby" },
+  { title: "", withImage: true, imgLabel: "Playground" },
+  { title: "", withImage: true, imgLabel: "Gym" },
 ];
 
 const VALUE_CARDS = [
@@ -216,31 +216,57 @@ export default function Environment() {
         /* gray image placeholder */
         .env-ph { background: repeating-linear-gradient(135deg,#e3e3e6,#e3e3e6 18px,#dcdce0 18px,#dcdce0 36px); display: flex; align-items: center; justify-content: center; color: #8a8a8f; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
 
-        /* ---------- 1. Hero ---------- */
-        .env-hero { padding: clamp(120px, 16vh, 220px) var(--gutter) 0; text-align: center; background: linear-gradient(180deg, #ffffff 0%, #eef1f4 60%, #f5f5f7 100%); }
-        .env-mark { display: inline-flex; align-items: center; gap: 10px; font-size: clamp(46px, 8vw, 104px); font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
-        .env-loop { width: 0.86em; height: 0.86em; }
-        .env-mark .leaf { width: 0.34em; height: 0.34em; transform: translateY(-0.5em); }
-        .env-hero-h1 { margin: clamp(20px, 3vw, 36px) auto 0; max-width: 16ch; font-size: clamp(30px, 4.6vw, 56px); font-weight: 600; line-height: 1.08; letter-spacing: -0.02em; text-wrap: balance; }
-        .env-hero-media { position: relative; margin-top: clamp(36px, 5vw, 64px); width: 100vw; margin-left: calc(50% - 50vw); height: clamp(420px, 64vh, 760px); overflow: hidden; display: flex; align-items: flex-end; justify-content: center; }
-        .env-hero-media .env-ph { position: absolute; inset: 0; }
-        .env-hero-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.55) 100%); }
-        .env-hero-overlay { position: relative; z-index: 1; max-width: 760px; padding: 0 var(--gutter) clamp(40px, 6vw, 80px); color: #ffffff; text-align: center; }
-        .env-hero-overlay h2 { margin: 0; font-size: clamp(26px, 3.6vw, 44px); font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; }
-        .env-hero-overlay p { margin: 14px 0 0; font-size: clamp(14px, 1.3vw, 18px); font-weight: 500; line-height: 1.5; color: rgba(255,255,255,0.88); }
+        /* ---------- 1. Hero (white, full screen) ---------- */
+        .env-hero { position: relative; min-height: 100svh; display: flex; align-items: center; justify-content: center; text-align: center; padding: clamp(72px, 11vh, 120px) var(--gutter); background: #ffffff; color: #1d1d1f; }
+        .env-hero-h1 { margin: 0; font-weight: 400; white-space: nowrap; text-transform: uppercase; font-size: clamp(16px, 4vw, 60px); line-height: 1.05; letter-spacing: 0.01em; color: #1d1d1f; }
 
         /* ---------- generic section heading ---------- */
         .env-section { padding: clamp(72px, 11vh, 150px) 0; }
-        .env-h2 { margin: 0 auto; max-width: 18ch; text-align: center; font-size: clamp(30px, 4.6vw, 56px); font-weight: 600; line-height: 1.07; letter-spacing: -0.02em; text-wrap: balance; }
-        .env-sub { margin: clamp(14px, 1.6vw, 22px) auto 0; max-width: 52ch; text-align: center; font-size: clamp(15px, 1.4vw, 19px); font-weight: 500; line-height: 1.45; color: #6e6e73; }
+        .env-eyebrow { margin: 0 0 clamp(10px, 1.4vw, 16px); text-align: center; font-size: clamp(17px, 2vw, 24px); font-weight: 600; letter-spacing: 0.01em; color: #1a8f3c; }
+        .env-h2 { margin: 0 auto; max-width: 18ch; text-align: center; font-size: clamp(32px, 5.2vw, 76px); font-weight: 600; line-height: 1.07; letter-spacing: -0.02em; text-wrap: balance; }
+        .env-sub { margin: clamp(18px, 2vw, 28px) auto 0; max-width: 52ch; text-align: center; font-size: clamp(15px, 1.4vw, 19px); font-weight: 500; line-height: 1.45; color: #6e6e73; }
         .env-h2--left { text-align: left; margin-left: 0; max-width: 22ch; }
+
+        /* ---------- 2. two product cards ---------- */
+        .env-products { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 2.4vw, 40px); margin-top: clamp(36px, 4vw, 60px); }
+        .env-prod-card { border-radius: 22px; overflow: hidden; aspect-ratio: 11 / 8; }
+        .env-prod-card .env-ph { width: 100%; height: 100%; }
+        .env-prod-cap { margin: clamp(16px, 1.6vw, 22px) 0 0; font-size: clamp(14px, 1.3vw, 16px); font-weight: 500; line-height: 1.45; color: #6e6e73; max-width: 48ch; }
+        .env-prod-cap b { color: #1d1d1f; font-weight: 600; }
+
+        /* ---------- 2b. impact blocks (image + 3 stats) ---------- */
+        .env-im { display: grid; grid-template-columns: 1fr 1fr; align-items: center; background: #ffffff; width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); }
+        .env-im-media { align-self: stretch; min-height: clamp(360px, 44vw, 640px); }
+        .env-im-media .env-ph { width: 100%; height: 100%; }
+        .env-im-text { padding: clamp(48px, 7vh, 100px) clamp(28px, 6vw, 96px); }
+        .env-im-head { margin: 0 0 clamp(22px, 3vw, 38px); font-size: clamp(20px, 1.8vw, 24px); font-weight: 600; color: #1d1d1f; }
+        .env-im-stat { margin-bottom: clamp(22px, 3vw, 38px); }
+        .env-im-stat:last-child { margin-bottom: 0; }
+        .env-im-stat-top { display: flex; align-items: flex-end; gap: 12px; }
+        .env-im-icon { width: clamp(26px, 2.2vw, 32px); height: clamp(26px, 2.2vw, 32px); color: #1a8f3c; flex: none; align-self: center; }
+        .env-im-num { font-size: clamp(34px, 4vw, 52px); font-weight: 600; letter-spacing: -0.02em; color: #1d1d1f; line-height: 1; }
+        .env-im-unit { font-size: clamp(14px, 1.3vw, 17px); font-weight: 600; color: #1d1d1f; padding-bottom: 0.35em; }
+        .env-im-desc { margin: clamp(8px, 1vw, 12px) 0 0; font-size: clamp(15px, 1.4vw, 18px); font-weight: 500; color: #6e6e73; line-height: 1.4; max-width: 34ch; }
+
+        /* ---------- 5. design section (light) ---------- */
+        .env-design-media { position: relative; margin: clamp(40px, 5vw, 64px) auto 0; width: min(1048px, 100%); aspect-ratio: 16 / 9; border-radius: 20px; overflow: hidden; }
+        .env-design-media .env-ph { width: 100%; height: 100%; }
+        .env-design-cta-row { display: flex; justify-content: center; margin-top: clamp(40px, 5vw, 64px); }
+        .env-design-cta { display: inline-flex; align-items: center; height: 56px; padding: 0 32px; border-radius: 28px; background: #1d1d1f; text-decoration: none; cursor: pointer; transition: background 200ms ease; }
+        .env-design-cta:hover { background: #333335; }
+        .env-design-cta-label { color: #ffffff; font-size: 17px; font-weight: 600; letter-spacing: -0.022em; white-space: nowrap; }
+        .env-stats3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(28px, 4vw, 60px); max-width: 980px; margin: clamp(48px, 6vw, 80px) auto 0; text-align: center; }
+        .env-stat3-up { margin: 0; font-size: clamp(15px, 1.4vw, 17px); font-weight: 500; color: #6e6e73; line-height: 1.4; }
+        .env-stat3-big { margin: 4px 0; font-size: clamp(30px, 3.4vw, 46px); font-weight: 600; letter-spacing: -0.01em; line-height: 1.12; background: linear-gradient(180deg, #f6d0bf 0%, #e3a98f 48%, #c98a72 100%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
+        .env-stat3-desc { margin: 0; font-size: clamp(14px, 1.3vw, 16px); font-weight: 500; color: #6e6e73; line-height: 1.38; }
 
         /* ---------- carousel ---------- */
         .env-carousel { margin-top: clamp(36px, 4vw, 60px); }
         .env-track { display: flex; gap: clamp(16px, 1.6vw, 22px); padding: 4px var(--gutter); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
         .env-track::-webkit-scrollbar { display: none; }
+        .env-track.is-center { justify-content: center; }
         .env-card { scroll-snap-align: start; flex: none; width: min(560px, 82vw); min-height: clamp(420px, 48vw, 560px); border-radius: 24px; overflow: hidden; padding: clamp(28px, 3vw, 44px); display: flex; flex-direction: column; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
-        .env-card-img { width: 100%; height: 56%; border-radius: 14px; margin-bottom: auto; }
+        .env-card-img { flex: 1; width: 100%; min-height: 0; border-radius: 14px; }
         .env-card-graphic { flex: 1; display: flex; align-items: center; justify-content: center; }
         .env-g { width: clamp(90px, 12vw, 140px); height: clamp(90px, 12vw, 140px); }
         .env-card-text { margin-top: clamp(20px, 2vw, 28px); }
@@ -316,6 +342,10 @@ export default function Environment() {
         .env-value-link:hover { text-decoration: underline; }
 
         @media (max-width: 860px) {
+          .env-products { grid-template-columns: 1fr; }
+          .env-stats3 { grid-template-columns: 1fr; }
+          .env-im { grid-template-columns: 1fr; }
+          .env-im--rev .env-im-media { order: -1; }
           .env-stats-row { grid-template-columns: 1fr; }
           .env-tri { grid-template-columns: 1fr; }
           .env-duo { grid-template-columns: 1fr; }
@@ -325,47 +355,73 @@ export default function Environment() {
 
       {/* 1 — HERO */}
       <header className="env-hero">
-        <div className="env-mark">
-          <LoopMark />
-          <span style={{ display: "inline-flex", alignItems: "flex-start" }}>
-            Brand
-            <span className="leaf"><Leaf /></span>
-          </span>
-          <span>2030</span>
-        </div>
-        <h1 className="env-hero-h1">Hero headline goes here on two lines.</h1>
-        <div className="env-hero-media">
-          <Slot label="Hero image" />
-          <div className="env-hero-overlay">
-            <h2>Overlay headline goes here.</h2>
-            <p>
-              Overlay supporting copy goes here, a sentence or two long.{" "}
-              <mark>Highlighted phrase</mark> sits inline with the rest.
-            </p>
-          </div>
-        </div>
+        <h1 className="env-hero-h1">The best air you will ever breathe.</h1>
       </header>
 
-      {/* 2 — APPROACH (carousel) */}
+      {/* 2 — TWO PRODUCTS */}
       <section className="env-section">
         <div className="env-wrap">
-          <h2 className="env-h2">Section headline goes here on two lines.</h2>
+          <p className="env-eyebrow">Two products, every space</p>
+          <h2 className="env-h2">One purifier for indoors. One for everywhere else.</h2>
+          <p className="env-sub">PureAir works inside. AirFINEry works where the air is open.</p>
+          <div className="env-products">
+            <div>
+              <div className="env-prod-card"><Slot label="PureAir" /></div>
+              <p className="env-prod-cap">
+                <b>PureAir.</b> Handles indoor and large indoor areas, schools,
+                offices, meeting rooms, warehouses, libraries, and labs, up to
+                2,000 sq ft per unit.
+              </p>
+            </div>
+            <div>
+              <div className="env-prod-card"><Slot label="AirFINEry" /></div>
+              <p className="env-prod-cap">
+                <b>AirFINEry.</b> Handles semi-outdoor and outdoor areas,
+                corridors, lobbies, playgrounds, courts, cafes, and gyms, up to
+                3,500 sq ft per unit.
+              </p>
+            </div>
+          </div>
         </div>
-        <Carousel cards={APPROACH_CARDS} />
       </section>
+
+      {/* 2b — PureAir / AirFINEry impact blocks (from Proof page) */}
+      <ImpactBlock
+        title="PureAir"
+        imgLabel="PureAir image"
+        stats={[
+          { icon: "frame", num: "2,000", unit: "sq ft.", desc: "of area coverage from a single unit, built for large, open indoor spaces." },
+          { icon: "filter", num: "99.9%", unit: "", desc: "filter efficiency, capturing fine particles down to 0.3 microns." },
+          { icon: "wind", num: "2,800", unit: "m³/h", desc: "Clean Air Delivery Rate (CADR) for rapid, whole-room purification." },
+        ]}
+      />
+      <ImpactBlock
+        reverse
+        title="AirFINEry"
+        imgLabel="AirFINEry image"
+        stats={[
+          { icon: "frame", num: "4,000", unit: "sq ft.", desc: "of area coverage from a single unit, built for the largest open indoor spaces." },
+          { icon: "filter", num: "99.9%", unit: "", desc: "filter efficiency, capturing fine particles down to 0.3 microns." },
+          { icon: "wind", num: "3,500", unit: "m³/h", desc: "Clean Air Delivery Rate (CADR) for rapid, whole-room purification." },
+        ]}
+      />
 
       {/* 3 — STATS */}
       <section className="env-section" style={{ background: "#ffffff" }}>
         <div className="env-wrap">
-          <h2 className="env-h2">Section headline goes here on two lines.</h2>
-          <p className="env-sub">Supporting copy for this section goes here on one or two lines.</p>
+          <p className="env-eyebrow">Powered by MANN+HUMMEL</p>
+          <h2 className="env-h2" style={{ maxWidth: "none", whiteSpace: "nowrap" }}>
+            80 years of German filtration<br />now made in India.
+          </h2>
+          <p className="env-sub">The world&rsquo;s filtration benchmark, built for Indian air.</p>
           <div className="env-stats-row">
-            <div className="env-stats-media"><Slot /></div>
+            <div className="env-stats-media"><Slot label="MANN+ HUMMEL image" /></div>
             <div className="env-stats">
               {[
-                { num: "00%", desc: "Stat description goes here on one or two lines." },
-                { num: "00%", desc: "Stat description goes here on one or two lines." },
-                { num: "00%", desc: "Stat description goes here on one or two lines." },
+                { num: "1941", desc: "founded" },
+                { num: "80+", desc: "countries" },
+                { num: "4,700+", desc: "patents" },
+                { num: "60+", desc: "university partnerships" },
               ].map((s, i) => (
                 <div className="env-stat" key={i}>
                   <span className="env-stat-ico"><Leaf /></span>
@@ -377,55 +433,50 @@ export default function Environment() {
               ))}
             </div>
           </div>
-          <div className="env-tri">
-            <div className="env-tri-card dark">
-              <div className="env-tri-graphic"><Graphic kind="recycle" color="#30d158" /></div>
-              <h3 className="env-tri-title">Card title one.</h3>
-              <p className="env-tri-note">Short note for this card goes here.</p>
-            </div>
-            <div className="env-tri-card">
-              <div className="env-tri-graphic"><Graphic kind="drop" color="#0a84ff" /></div>
-              <h3 className="env-tri-title">Card title two.</h3>
-              <p className="env-tri-note">Short note for this card goes here.</p>
-            </div>
-            <div className="env-tri-card green">
-              <div className="env-tri-graphic"><Graphic kind="bolt" color="#06310f" /></div>
-              <h3 className="env-tri-title">00%</h3>
-              <p className="env-tri-note">Short note for this card goes here.</p>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* 4 — PACKAGING */}
+      {/* 4 — WHERE MRH WORKS (6-image carousel) */}
       <section className="env-section">
         <div className="env-wrap">
-          <h2 className="env-h2"><mark>Highlighted headline</mark> continues here.</h2>
-          <p className="env-sub">Supporting copy for this section goes here on one or two lines.</p>
-          <p className="env-pack-big" style={{ textAlign: "center" }}>00%</p>
-          <div className="env-pack-media"><Slot /></div>
-          <div className="env-duo">
-            <div className="env-duo-card" style={{ background: "#3a2417", color: "#f5f5f7" }}>
-              <div className="env-duo-graphic"><Graphic kind="bricks" color="#d98a52" /></div>
-              <h3 className="env-duo-title">Card headline goes here.</h3>
-              <p className="env-duo-note" style={{ color: "rgba(245,245,247,0.7)" }}>Short supporting note for this card goes here.</p>
-            </div>
-            <div className="env-duo-card" style={{ background: "#30d158", color: "#06310f" }}>
-              <div className="env-duo-graphic"><Graphic kind="waves" color="#06310f" /></div>
-              <h3 className="env-duo-title">Card headline goes here.</h3>
-              <p className="env-duo-note" style={{ color: "rgba(6,49,15,0.7)" }}>Short supporting note for this card goes here.</p>
-            </div>
-          </div>
+          <p className="env-eyebrow">Where MRH works</p>
+          <h2 className="env-h2">From classrooms to courtyards.</h2>
+          <p className="env-sub">200+ spaces, and counting.</p>
         </div>
+        <Carousel cards={SPACES_CARDS} />
       </section>
 
-      {/* 5 — RECOVER (carousel) */}
+      {/* 5 — DESIGN (light) */}
       <section className="env-section" style={{ background: "#ffffff" }}>
         <div className="env-wrap">
-          <h2 className="env-h2"><mark>Highlighted headline.</mark></h2>
-          <p className="env-sub">Supporting copy for this section goes here on one or two lines.</p>
+          <p className="env-eyebrow">The technology inside</p>
+          <h2 className="env-h2">Multi-Stage Filtration</h2>
+          <p className="env-sub">Catches the fine particles ordinary purifiers miss.</p>
+          <div className="env-design-media"><Slot label="Filter image" /></div>
+          <div className="env-stats3">
+            <div className="env-stat3">
+              <p className="env-stat3-up">up to</p>
+              <p className="env-stat3-big">2,000 sq ft</p>
+              <p className="env-stat3-desc">cleaned per unit, so you need fewer</p>
+            </div>
+            <div className="env-stat3">
+              <p className="env-stat3-up">down to</p>
+              <p className="env-stat3-big">0.3 microns</p>
+              <p className="env-stat3-desc">captured, including ultrafine particles</p>
+            </div>
+            <div className="env-stat3">
+              <p className="env-stat3-up">certified to</p>
+              <p className="env-stat3-big">ISO 16890</p>
+              <p className="env-stat3-desc">the global clean-air standard</p>
+            </div>
+          </div>
+
+          <div className="env-design-cta-row">
+            <a className="env-design-cta" href="/technology">
+              <span className="env-design-cta-label">Explore Technology</span>
+            </a>
+          </div>
         </div>
-        <Carousel cards={RECOVER_CARDS} />
       </section>
 
       {/* 6 — REPORTS */}
@@ -505,6 +556,80 @@ function Reports() {
         </div>
         <div className="env-reports-foot"><a className="env-link">Link text goes here</a></div>
       </div>
+    </section>
+  );
+}
+
+function ImpactIcon({ kind }: { kind: string }) {
+  const p = { stroke: "currentColor", strokeWidth: 2, fill: "none", strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+  return (
+    <svg className="env-im-icon" viewBox="0 0 24 24" aria-hidden>
+      {kind === "frame" && (
+        <>
+          <path d="M4 8V6a2 2 0 0 1 2-2h2" {...p} />
+          <path d="M16 4h2a2 2 0 0 1 2 2v2" {...p} />
+          <path d="M20 16v2a2 2 0 0 1-2 2h-2" {...p} />
+          <path d="M8 20H6a2 2 0 0 1-2-2v-2" {...p} />
+        </>
+      )}
+      {kind === "filter" && <path d="M3 5h18l-7 8v5l-4 2v-7L3 5Z" {...p} />}
+      {kind === "wind" && (
+        <>
+          <path d="M3 8h10a2.5 2.5 0 1 0-2.5-2.5" {...p} />
+          <path d="M3 12h14a2.5 2.5 0 1 1-2.5 2.5" {...p} />
+          <path d="M3 16h8a2 2 0 1 1-2 2" {...p} />
+        </>
+      )}
+    </svg>
+  );
+}
+
+type ImpactStat = { icon: string; num: string; unit: string; desc: string };
+
+function ImpactBlock({
+  reverse = false,
+  title,
+  imgLabel,
+  stats,
+}: {
+  reverse?: boolean;
+  title: string;
+  imgLabel: string;
+  stats: ImpactStat[];
+}) {
+  const media = (
+    <div className="env-im-media">
+      <Slot label={imgLabel} />
+    </div>
+  );
+  const text = (
+    <div className="env-im-text">
+      <h3 className="env-im-head">{title}</h3>
+      {stats.map((s, i) => (
+        <div className="env-im-stat" key={i}>
+          <div className="env-im-stat-top">
+            <ImpactIcon kind={s.icon} />
+            <span className="env-im-num">{s.num}</span>
+            {s.unit ? <span className="env-im-unit">{s.unit}</span> : null}
+          </div>
+          <p className="env-im-desc">{s.desc}</p>
+        </div>
+      ))}
+    </div>
+  );
+  return (
+    <section className={`env-im ${reverse ? "env-im--rev" : ""}`}>
+      {reverse ? (
+        <>
+          {text}
+          {media}
+        </>
+      ) : (
+        <>
+          {media}
+          {text}
+        </>
+      )}
     </section>
   );
 }
