@@ -1,6 +1,9 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { PlusIcon } from "lucide-react";
+import ImpactDevices from "@/components/ImpactDevices";
+import SiteFooter from "@/components/SiteFooter";
 
 // Neutral page template — layout and design system only.
 // Section structure, grid, type scale, the highlight motif, carousels, stat
@@ -166,8 +169,6 @@ function Carousel({ cards, controls = true, center = false }: { cards: CardItem[
 
 /* ----------------------------------------------- placeholder content ------ */
 
-const LIPSUM = "Supporting copy goes here. Use this space for a short description that fills one or two lines.";
-
 const SPACES_CARDS: CardItem[] = [
   { title: "", withImage: true, imgLabel: "Classroom" },
   { title: "", withImage: true, imgLabel: "Office" },
@@ -175,22 +176,6 @@ const SPACES_CARDS: CardItem[] = [
   { title: "", withImage: true, imgLabel: "Lobby" },
   { title: "", withImage: true, imgLabel: "Playground" },
   { title: "", withImage: true, imgLabel: "Gym" },
-];
-
-const VALUE_CARDS = [
-  { title: "Value one", body: LIPSUM, icon: "a" },
-  { title: "Value two", body: LIPSUM, icon: "b" },
-  { title: "Value three and four", body: LIPSUM, icon: "c" },
-  { title: "Value four", body: LIPSUM, icon: "d" },
-] as const;
-
-const REPORT_TABS = ["Tab one", "Tab two", "Tab three", "Tab four", "Tab five"] as const;
-
-const RESOURCE_GROUPS = [
-  { title: "Group one", body: LIPSUM, links: ["Link text one", "Link text two", "Link text three"] },
-  { title: "Group two", body: LIPSUM, links: ["Link text one", "Link text two"] },
-  { title: "Group three", body: LIPSUM, links: ["Link text one", "Link text two", "Link text three"] },
-  { title: "Group four", body: LIPSUM, links: ["Link text one"] },
 ];
 
 /* ---------------------------------------------------------------- page ----- */
@@ -218,7 +203,7 @@ export default function Environment() {
 
         /* ---------- 1. Hero (white, full screen) ---------- */
         .env-hero { position: relative; min-height: 100svh; display: flex; align-items: center; justify-content: center; text-align: center; padding: clamp(72px, 11vh, 120px) var(--gutter); background: #ffffff; color: #1d1d1f; }
-        .env-hero-h1 { margin: 0; font-weight: 400; white-space: nowrap; text-transform: uppercase; font-size: clamp(16px, 4vw, 60px); line-height: 1.05; letter-spacing: 0.01em; color: #1d1d1f; }
+        .env-hero-h1 { margin: 0; font-weight: 400; white-space: nowrap; text-transform: uppercase; font-size: clamp(13px, 4.3vw, 60px); line-height: 1.05; letter-spacing: 0.01em; color: #1d1d1f; }
 
         /* ---------- generic section heading ---------- */
         .env-section { padding: clamp(72px, 11vh, 150px) 0; }
@@ -226,6 +211,7 @@ export default function Environment() {
         .env-h2 { margin: 0 auto; max-width: 18ch; text-align: center; font-size: clamp(32px, 5.2vw, 76px); font-weight: 600; line-height: 1.07; letter-spacing: -0.02em; text-wrap: balance; }
         .env-sub { margin: clamp(18px, 2vw, 28px) auto 0; max-width: 52ch; text-align: center; font-size: clamp(15px, 1.4vw, 19px); font-weight: 500; line-height: 1.45; color: #6e6e73; }
         .env-h2--left { text-align: left; margin-left: 0; max-width: 22ch; }
+        .env-h2--nowrap { max-width: none; white-space: nowrap; }
 
         /* ---------- 2. two product cards ---------- */
         .env-products { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 2.4vw, 40px); margin-top: clamp(36px, 4vw, 60px); }
@@ -310,16 +296,60 @@ export default function Environment() {
         .env-duo-title { margin: 0; font-size: clamp(20px, 2vw, 28px); font-weight: 600; line-height: 1.14; letter-spacing: -0.01em; }
         .env-duo-note { margin: 16px 0 0; font-size: clamp(13px, 1.2vw, 15px); font-weight: 500; line-height: 1.4; color: #6e6e73; }
 
-        /* ---------- 6. reports ---------- */
-        .env-tabs { display: flex; gap: 10px; overflow-x: auto; margin-top: clamp(28px, 3vw, 44px); padding-bottom: 6px; scrollbar-width: none; }
-        .env-tabs::-webkit-scrollbar { display: none; }
-        .env-tab { flex: none; display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 20px; border: none; border-radius: 999px; background: #e3e3e6; color: #1d1d1f; font-family: inherit; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 200ms ease, color 200ms ease; }
-        .env-tab.is-active { background: #30d158; color: #06310f; }
-        .env-reports-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: clamp(20px, 2vw, 32px); margin-top: clamp(28px, 3vw, 44px); padding-top: clamp(28px, 3vw, 40px); border-top: 1px solid #d2d2d7; }
-        .env-report-name { margin: 0; font-size: 15px; font-weight: 600; line-height: 1.3; }
-        .env-report-link { display: inline-block; margin-top: 4px; color: #0066cc; font-size: 15px; font-weight: 500; text-decoration: none; }
-        .env-report-link:hover { text-decoration: underline; }
-        .env-reports-foot { margin-top: clamp(28px, 3vw, 40px); padding-top: 20px; border-top: 1px solid #d2d2d7; text-align: center; }
+        /* ---------- 6. bento grid ---------- */
+        .env-bento { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 1.6vw, 22px); margin-top: clamp(36px, 4vw, 60px); }
+        .env-bento-card { background: #ffffff; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column; min-height: clamp(380px, 42vw, 560px); }
+        .env-bento-card.span2 { grid-column: 1 / -1; }
+        .env-bento-card.split { display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; min-height: clamp(260px, 28vw, 340px); }
+        .env-bento-card.split .env-bento-text { align-self: center; }
+        .env-bento-text { padding: clamp(28px, 3vw, 44px); }
+        .env-bento-label { margin: 0 0 10px; font-size: clamp(15px, 1.4vw, 18px); font-weight: 600; color: #1a8f3c; }
+        .env-bento-body { margin: 0; font-size: clamp(17px, 1.7vw, 22px); font-weight: 500; line-height: 1.3; letter-spacing: -0.01em; color: #1d1d1f; max-width: 36ch; }
+        .env-bento-media { position: relative; flex: 1; min-height: clamp(180px, 20vw, 260px); }
+        .env-bento-media .env-ph { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+        /* ---------- 6c. impact bento (1 full + 3) ---------- */
+        .env-ib { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 1.6vw, 22px); margin-top: clamp(36px, 4vw, 60px); }
+        .env-ib-card { background: #ffffff; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column; min-height: clamp(300px, 26vw, 380px); }
+        .env-ib-card.full { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; min-height: clamp(300px, 30vw, 400px); }
+        .env-ib-card.full .env-ib-text { align-self: center; }
+        .env-ib-media { position: relative; min-height: clamp(220px, 24vw, 320px); }
+        .env-ib-card:not(.full) .env-ib-media { flex: none; height: clamp(220px, 24vw, 320px); }
+        .env-ib-media .env-ph { position: absolute; inset: 0; width: 100%; height: 100%; }
+        .env-ib-text { padding: clamp(24px, 2.6vw, 40px); }
+        .env-ib-label { margin: 0 0 8px; font-size: clamp(15px, 1.4vw, 18px); font-weight: 600; color: #1a8f3c; }
+        .env-ib-num { margin: 0 0 clamp(10px, 1.2vw, 16px); font-size: clamp(34px, 4.4vw, 56px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.04; color: #1d1d1f; }
+        .env-ib-desc { margin: 0; font-size: clamp(15px, 1.4vw, 17px); font-weight: 500; line-height: 1.42; color: #6e6e73; max-width: 34ch; }
+
+        /* ---------- 6d. logo wall ---------- */
+        .env-logos { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid #d2d2d7; border-left: 1px solid #d2d2d7; margin-top: clamp(40px, 5vw, 64px); }
+        .env-logo-cell { position: relative; display: flex; align-items: center; justify-content: center; min-height: clamp(110px, 12vw, 150px); padding: clamp(20px, 3vw, 40px); border-right: 1px solid #d2d2d7; border-bottom: 1px solid #d2d2d7; }
+        .env-logo-ph { color: #b4b4b9; font-size: clamp(16px, 1.7vw, 22px); font-weight: 700; letter-spacing: -0.01em; }
+        .env-logo-plus { position: absolute; right: -12.5px; bottom: -12.5px; width: 24px; height: 24px; color: #9a9aa0; z-index: 1; }
+
+        /* ---------- 6e. testimonials ---------- */
+        .env-tm-track { margin-top: clamp(36px, 4vw, 60px); display: flex; gap: clamp(16px, 1.6vw, 22px); overflow-x: auto; scroll-snap-type: x proximity; padding-top: 4px; padding-bottom: 4px; padding-right: var(--gutter); padding-left: max(var(--gutter), calc((100vw - var(--maxw)) / 2 + var(--gutter))); scrollbar-width: none; }
+        .env-tm-track::-webkit-scrollbar { display: none; }
+        .env-tm-card { flex: none; width: min(420px, 84vw); scroll-snap-align: start; background: #ffffff; border-radius: 24px; padding: clamp(28px, 3vw, 40px); display: flex; flex-direction: column; min-height: clamp(290px, 30vw, 360px); box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+        .env-tm-quote { margin: 0; font-size: clamp(17px, 1.6vw, 21px); font-weight: 500; line-height: 1.4; letter-spacing: -0.01em; color: #1d1d1f; }
+        .env-tm-author { margin-top: auto; padding-top: clamp(22px, 2.4vw, 30px); display: flex; align-items: center; gap: 13px; }
+        .env-tm-avatar { flex: none; width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 15px; font-weight: 600; letter-spacing: 0.01em; background: linear-gradient(135deg, #5fe488, #18a544); }
+        .env-tm-meta { display: flex; flex-direction: column; }
+        .env-tm-name { font-size: 15px; font-weight: 600; color: #1d1d1f; }
+        .env-tm-role { font-size: 14px; font-weight: 500; color: #6e6e73; }
+        .env-tm-nav { display: flex; justify-content: center; gap: 12px; margin-top: clamp(24px, 3vw, 40px); padding: 0 var(--gutter); }
+
+        /* ---------- 6b. simulation (light) ---------- */
+        .env-sim-media { max-width: 1200px; margin: clamp(40px, 6vw, 80px) auto 0; padding: 0 var(--gutter); }
+        .env-sim-frame { border-radius: 22px; overflow: hidden; isolation: isolate; transform: translateZ(0); }
+        .env-sim-media video { display: block; width: 100%; height: auto; }
+        .env-sim-foot { text-align: center; margin-top: clamp(36px, 5vw, 64px); }
+        .env-sim-copy { max-width: 840px; margin: 0 auto; font-size: clamp(17px, 1.5vw, 21px); font-weight: 500; line-height: 1.4; letter-spacing: 0.011em; color: #6e6e73; }
+        .env-sim-copy b { color: #1d1d1f; font-weight: 600; }
+        .env-sim-link { display: inline-flex; align-items: center; gap: 6px; margin-top: clamp(18px, 2vw, 28px); color: #0066cc; font-size: clamp(16px, 1.4vw, 19px); font-weight: 600; letter-spacing: -0.01em; text-decoration: none; transition: color 200ms ease; }
+        .env-sim-link:hover { color: #0a84ff; }
+        .env-sim-link span { display: inline-block; transition: transform 200ms ease; }
+        .env-sim-link:hover span { transform: translateX(3px); }
 
         /* ---------- 7/8 link sections ---------- */
         .env-closer { padding: clamp(56px, 8vh, 110px) 0; }
@@ -346,6 +376,14 @@ export default function Environment() {
           .env-stats3 { grid-template-columns: 1fr; }
           .env-im { grid-template-columns: 1fr; }
           .env-im--rev .env-im-media { order: -1; }
+          .env-bento { grid-template-columns: 1fr; }
+          .env-bento-card { min-height: clamp(320px, 70vw, 460px); }
+          .env-bento-card.split { grid-template-columns: 1fr; }
+          .env-ib { grid-template-columns: 1fr; }
+          .env-ib-card.full { grid-template-columns: 1fr; }
+          .env-h2--nowrap { white-space: normal; }
+          .env-logos { grid-template-columns: repeat(2, 1fr); }
+          .env-logo-plus { display: none; }
           .env-stats-row { grid-template-columns: 1fr; }
           .env-tri { grid-template-columns: 1fr; }
           .env-duo { grid-template-columns: 1fr; }
@@ -361,7 +399,7 @@ export default function Environment() {
       {/* 2 — TWO PRODUCTS */}
       <section className="env-section">
         <div className="env-wrap">
-          <p className="env-eyebrow">Two products, every space</p>
+          <p className="env-eyebrow">Two Products, Every Space</p>
           <h2 className="env-h2">One purifier for indoors. One for everywhere else.</h2>
           <p className="env-sub">PureAir works inside. AirFINEry works where the air is open.</p>
           <div className="env-products">
@@ -409,8 +447,8 @@ export default function Environment() {
       {/* 3 — STATS */}
       <section className="env-section" style={{ background: "#ffffff" }}>
         <div className="env-wrap">
-          <p className="env-eyebrow">Powered by MANN+HUMMEL</p>
-          <h2 className="env-h2" style={{ maxWidth: "none", whiteSpace: "nowrap" }}>
+          <p className="env-eyebrow">Powered By MANN+HUMMEL</p>
+          <h2 className="env-h2 env-h2--nowrap">
             80 years of German filtration<br />now made in India.
           </h2>
           <p className="env-sub">The world&rsquo;s filtration benchmark, built for Indian air.</p>
@@ -439,7 +477,7 @@ export default function Environment() {
       {/* 4 — WHERE MRH WORKS (6-image carousel) */}
       <section className="env-section">
         <div className="env-wrap">
-          <p className="env-eyebrow">Where MRH works</p>
+          <p className="env-eyebrow">Where MRH Works</p>
           <h2 className="env-h2">From classrooms to courtyards.</h2>
           <p className="env-sub">200+ spaces, and counting.</p>
         </div>
@@ -449,23 +487,23 @@ export default function Environment() {
       {/* 5 — DESIGN (light) */}
       <section className="env-section" style={{ background: "#ffffff" }}>
         <div className="env-wrap">
-          <p className="env-eyebrow">The technology inside</p>
+          <p className="env-eyebrow">The Technology Inside</p>
           <h2 className="env-h2">Multi-Stage Filtration</h2>
           <p className="env-sub">Catches the fine particles ordinary purifiers miss.</p>
           <div className="env-design-media"><Slot label="Filter image" /></div>
           <div className="env-stats3">
             <div className="env-stat3">
-              <p className="env-stat3-up">up to</p>
+              <p className="env-stat3-up">Up to</p>
               <p className="env-stat3-big">2,000 sq ft</p>
               <p className="env-stat3-desc">cleaned per unit, so you need fewer</p>
             </div>
             <div className="env-stat3">
-              <p className="env-stat3-up">down to</p>
+              <p className="env-stat3-up">Down to</p>
               <p className="env-stat3-big">0.3 microns</p>
               <p className="env-stat3-desc">captured, including ultrafine particles</p>
             </div>
             <div className="env-stat3">
-              <p className="env-stat3-up">certified to</p>
+              <p className="env-stat3-up">Certified to</p>
               <p className="env-stat3-big">ISO 16890</p>
               <p className="env-stat3-desc">the global clean-air standard</p>
             </div>
@@ -479,55 +517,135 @@ export default function Environment() {
         </div>
       </section>
 
-      {/* 6 — REPORTS */}
+      {/* 6 — REPORTS / CONNECTED (bento) */}
       <Reports />
 
-      {/* 7 — CLOSER LOOK */}
-      <section className="env-closer">
+      {/* 6b — SIMULATION (light) */}
+      <section className="env-section" style={{ background: "#ffffff" }}>
         <div className="env-wrap">
-          <h2 className="env-h2 env-h2--left">Section headline goes here.</h2>
-          <p className="env-sub" style={{ textAlign: "left", marginLeft: 0 }}>Supporting copy goes here on one line.</p>
-          <p style={{ marginTop: "clamp(24px,3vw,40px)" }}><a className="env-link">Link text goes here (PDF)</a></p>
-          <hr className="env-divider" />
+          <p className="env-eyebrow">Intelligent Space Planning</p>
+          <h2 className="env-h2" style={{ maxWidth: "none" }}>
+            We don&rsquo;t guess where clean air goes.
+            <br />
+            We simulate it.
+          </h2>
+        </div>
+        <div className="env-sim-media">
+          <div className="env-sim-frame">
+            <video
+              src="/classroom-air-simulation.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              aria-label="Air simulation showing how fast one unit clears a classroom"
+            />
+          </div>
+        </div>
+        <div className="env-wrap env-sim-foot">
+          <p className="env-sim-copy">
+            Before a single unit is installed,{" "}
+            <b>
+              our simulation engine maps your space and shows exactly how fast it
+              reaches clean air
+            </b>
+            , and where every purifier should sit. In a real classroom test, one
+            unit took the air from 100 µg/m³ to zero in 30 minutes. The simulation
+            called the placement.
+          </p>
+          <a className="env-sim-link" href="/technology">
+            Discover Simulation <span aria-hidden>→</span>
+          </a>
         </div>
       </section>
 
-      {/* 8 — RESOURCES */}
-      <section className="env-section" style={{ paddingTop: 0 }}>
+      {/* 6c — INDEPENDENTLY VALIDATED (4-card bento) */}
+      <section className="env-section">
         <div className="env-wrap">
-          <h2 className="env-h2 env-h2--left" style={{ maxWidth: "none" }}>Section headline goes here</h2>
-          <div className="env-res-grid">
-            {RESOURCE_GROUPS.map((g) => (
-              <div key={g.title}>
-                <h3 className="env-res-title">{g.title}</h3>
-                <p className="env-res-body">{g.body}</p>
-                <div className="env-res-links">
-                  {g.links.map((l, i) => (
-                    <a key={i} className="env-link">{l}</a>
-                  ))}
-                </div>
+          <p className="env-eyebrow">Independently Validated</p>
+          <h2 className="env-h2" style={{ maxWidth: "none" }}>
+            We didn&rsquo;t test it ourselves.
+            <br />
+            IIT Delhi did.
+          </h2>
+          <p className="env-sub">60 days, real spaces, Delhi&rsquo;s worst air.</p>
+
+          <div className="env-ib">
+            {/* 1 — full width: image left, text right */}
+            <article className="env-ib-card full">
+              <div className="env-ib-media"><Slot label="IIT Delhi study" /></div>
+              <div className="env-ib-text">
+                <p className="env-ib-label">The Duration</p>
+                <p className="env-ib-num">60 Days</p>
+                <p className="env-ib-desc">Continuous field testing, not a lab simulation.</p>
+              </div>
+            </article>
+
+            {/* 2 */}
+            <article className="env-ib-card">
+              <div className="env-ib-media"><Slot /></div>
+              <div className="env-ib-text">
+                <p className="env-ib-label">The PM2.5 Result</p>
+                <p className="env-ib-num">65%</p>
+                <p className="env-ib-desc">Average PM2.5 reduction across tested sites.</p>
+              </div>
+            </article>
+
+            {/* 3 */}
+            <article className="env-ib-card">
+              <div className="env-ib-media"><Slot /></div>
+              <div className="env-ib-text">
+                <p className="env-ib-label">The Best Result</p>
+                <p className="env-ib-num">327 → 63</p>
+                <p className="env-ib-desc">AQI recorded at Indian Overseas Bank, Rajendra Place.</p>
+              </div>
+            </article>
+
+            {/* 4 */}
+            <article className="env-ib-card">
+              <div className="env-ib-media"><Slot /></div>
+              <div className="env-ib-text">
+                <p className="env-ib-label">The Institution</p>
+                <p className="env-ib-num">IIT Delhi</p>
+                <p className="env-ib-desc">Department of Civil Engineering. Independent. Unsponsored findings.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      {/* 6d — LOGO WALL (Trusted across India) */}
+      <section className="env-section">
+        <div className="env-wrap">
+          <p className="env-eyebrow">Trusted Across India</p>
+          <h2 className="env-h2">Schools, offices, hotels, and the Indian Army.</h2>
+          <p className="env-sub">The names that already run MRH.</p>
+          <div className="env-logos">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div className="env-logo-cell" key={i}>
+                <span className="env-logo-ph">Logo</span>
+                {i < 3 ? (
+                  <PlusIcon className="env-logo-plus" strokeWidth={1} />
+                ) : null}
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 9 — VALUES (carousel) */}
-      <section className="env-section" style={{ background: "#ffffff", paddingBottom: "clamp(96px,14vh,180px)" }}>
-        <div className="env-wrap">
-          <h2 className="env-h2 env-h2--left">Section headline goes here.</h2>
-        </div>
-        <div className="env-values-grid">
-          {VALUE_CARDS.map((v) => (
-            <article className="env-value" key={v.title}>
-              <ValueIcon kind={v.icon} />
-              <h3 className="env-value-title">{v.title}</h3>
-              <p className="env-value-body">{v.body}</p>
-              <a className="env-value-link">Learn more</a>
-            </article>
-          ))}
-        </div>
-      </section>
+      {/* 6e — TESTIMONIALS */}
+      <Testimonials />
+
+      {/* 7 — ASSESSMENT CTA CARD (from Proof page) */}
+      <ImpactDevices
+        title={<>Find out what your<br />air is hiding.</>}
+        sub="Tell us about your space and we return a coverage plan, the number of units you need, and the AQI you can expect."
+        cta={{ label: "Get a free assessment", href: "/contact" }}
+      />
+
+      {/* 8 — FOOTER (light) */}
+      <SiteFooter light />
     </main>
   );
 }
@@ -535,26 +653,121 @@ export default function Environment() {
 /* ----------------------------------------------------------- sub-blocks --- */
 
 function Reports() {
-  const [tab, setTab] = useState(0);
   return (
     <section className="env-section">
       <div className="env-wrap">
-        <h2 className="env-h2 env-h2--left">Section headline goes here.</h2>
-        <p className="env-sub" style={{ textAlign: "left", marginLeft: 0 }}>Supporting copy goes here on one line.</p>
-        <div className="env-tabs">
-          {REPORT_TABS.map((t, i) => (
-            <button key={t} type="button" className={`env-tab ${i === tab ? "is-active" : ""}`} onClick={() => setTab(i)}>{t}</button>
-          ))}
-        </div>
-        <div className="env-reports-grid">
-          {["Item one", "Item two", "Item three", "Item four", "Item five"].map((name) => (
-            <div key={name}>
-              <p className="env-report-name">{name}</p>
-              <a className="env-report-link">Link text (PDF)</a>
+        <p className="env-eyebrow">Connected Intelligence</p>
+        <h2 className="env-h2">See the air.<br />Control the unit.<br />Skip the maintenance.</h2>
+        <p className="env-sub">Every unit online, every reading in one place.</p>
+
+        <div className="env-bento">
+          {/* 1 — top left: text on top, image below */}
+          <article className="env-bento-card">
+            <div className="env-bento-text">
+              <p className="env-bento-label">Live AQI, everywhere</p>
+              <p className="env-bento-body">Watch your air quality update in real time. PM2.5, PM10, and AQI for every unit, on one screen, from anywhere.</p>
             </div>
-          ))}
+            <div className="env-bento-media"><Slot /></div>
+          </article>
+
+          {/* 2 — top right: text on top, image below */}
+          <article className="env-bento-card">
+            <div className="env-bento-text">
+              <p className="env-bento-label">Every unit, one dashboard</p>
+              <p className="env-bento-body">See all your purifiers in a single view. One room or two hundred, every reading sits in the same place.</p>
+            </div>
+            <div className="env-bento-media"><Slot /></div>
+          </article>
+
+          {/* 3 — full width: image left, text right */}
+          <article className="env-bento-card span2 split">
+            <div className="env-bento-media"><Slot /></div>
+            <div className="env-bento-text">
+              <p className="env-bento-label">Control from your phone</p>
+              <p className="env-bento-body">Set fan speed, modes, and schedules without leaving your desk. Full control of every unit, wherever you are.</p>
+            </div>
+          </article>
+
+          {/* 4 — bottom left: image on top, text below */}
+          <article className="env-bento-card">
+            <div className="env-bento-media"><Slot /></div>
+            <div className="env-bento-text">
+              <p className="env-bento-label">Filter health, tracked</p>
+              <p className="env-bento-body">Know exactly how much life each filter has left. No more guesswork, no more checking units by hand.</p>
+            </div>
+          </article>
+
+          {/* 5 — bottom right: image on top, text below */}
+          <article className="env-bento-card">
+            <div className="env-bento-media"><Slot /></div>
+            <div className="env-bento-text">
+              <p className="env-bento-label">It books its own service</p>
+              <p className="env-bento-body">When a filter nears the end, the unit tells us first. Service is scheduled before you ever notice a drop.</p>
+            </div>
+          </article>
         </div>
-        <div className="env-reports-foot"><a className="env-link">Link text goes here</a></div>
+      </div>
+    </section>
+  );
+}
+
+const REVIEWS = [
+  { quote: "Our classrooms used to smell of the road outside. Now the AQI board stays green all day, and the parents notice.", name: "Anjali Mehta", role: "Principal, Delhi Public School" },
+  { quote: "One unit covers our whole floor. We replaced three old purifiers with a single PureAir, and the readings are better.", name: "Rohan Kapoor", role: "Facilities Head, Corporate Office" },
+  { quote: "Reliable in the harshest conditions. The team deployed fast and the units have run without a hitch.", name: "Col. Vikram Singh", role: "Indian Army" },
+  { quote: "Guests comment on how fresh the lobby feels. AirFINEry handles our open atrium that nothing else could.", name: "Priya Nair", role: "General Manager, The Grand Hotel" },
+  { quote: "In our wards, clean air is not optional. The independent IIT data is what convinced our board.", name: "Dr. Sameer Rao", role: "Administrator, City Hospital" },
+  { quote: "The app flags filter health before we ever think about it. Service just happens. We never chase it.", name: "Neha Gupta", role: "Operations Manager, WorkHub" },
+  { quote: "We deployed across six campuses. One dashboard, every reading in one place. It made the rollout simple.", name: "Arjun Desai", role: "Trustee, Vidya Schools" },
+  { quote: "Quiet, efficient, and it actually works. The PM2.5 numbers dropped within the first hour.", name: "Meera Iyer", role: "Office Admin, Lumen Labs" },
+];
+
+function initials(name: string) {
+  return name
+    .split(" ")
+    .filter((w) => /[a-z]/i.test(w))
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase();
+}
+
+function Testimonials() {
+  const ref = useRef<HTMLDivElement>(null);
+  const scroll = (dir: number) => {
+    const el = ref.current;
+    if (el) el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: "smooth" });
+  };
+  return (
+    <section className="env-section">
+      <div className="env-wrap">
+        <p className="env-eyebrow">In Their Words</p>
+        <h2 className="env-h2">The people breathing it, on the difference.</h2>
+        <p className="env-sub">Real results, from the teams who deployed MRH.</p>
+      </div>
+
+      <div className="env-tm-track" ref={ref}>
+        {REVIEWS.map((r, i) => (
+          <article className="env-tm-card" key={i}>
+            <p className="env-tm-quote">{r.quote}</p>
+            <div className="env-tm-author">
+              <span className="env-tm-avatar">{initials(r.name)}</span>
+              <span className="env-tm-meta">
+                <span className="env-tm-name">{r.name}</span>
+                <span className="env-tm-role">{r.role}</span>
+              </span>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div className="env-tm-nav">
+        <button type="button" className="env-arrow" aria-label="Previous" onClick={() => scroll(-1)}>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M15 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        </button>
+        <button type="button" className="env-arrow" aria-label="Next" onClick={() => scroll(1)}>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        </button>
       </div>
     </section>
   );
@@ -631,17 +844,5 @@ function ImpactBlock({
         </>
       )}
     </section>
-  );
-}
-
-function ValueIcon({ kind }: { kind: string }) {
-  const p = { stroke: "currentColor", strokeWidth: 1.8, fill: "none", strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
-  return (
-    <svg className="env-value-ico" viewBox="0 0 32 32" aria-hidden>
-      {kind === "a" && <><circle cx="16" cy="16" r="12" {...p} /><path d="M16 10v12M10 16h12" {...p} /></>}
-      {kind === "b" && <><path d="M16 7 3 13l13 6 13-6-13-6Z" {...p} /><path d="M9 16v6c0 1.5 3.1 3 7 3s7-1.5 7-3v-6" {...p} /></>}
-      {kind === "c" && <><circle cx="16" cy="11" r="4" {...p} /><circle cx="7" cy="13" r="3" {...p} /><circle cx="25" cy="13" r="3" {...p} /><path d="M10 24c0-3.3 2.7-6 6-6s6 2.7 6 6" {...p} /></>}
-      {kind === "d" && <><rect x="8" y="14" width="16" height="12" rx="2.5" {...p} /><path d="M11 14v-3a5 5 0 0 1 10 0v3" {...p} /></>}
-    </svg>
   );
 }

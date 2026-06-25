@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
 
 // Impact — "Our IIT results" gallery. Figma node 794:11579 (Apple's "Use. Recover.
 // Reuse." horizontal card gallery). Green-highlighted heading + subtext, then four
@@ -59,9 +60,17 @@ type Caption = { lead: string; desc: string };
 export default function ImpactGallery({
   showHeader = true,
   captions,
+  eyebrow,
+  heading,
+  subheading,
+  highlightHeading = true,
 }: {
   showHeader?: boolean;
   captions?: Caption[];
+  eyebrow?: string;
+  heading?: ReactNode;
+  subheading?: ReactNode;
+  highlightHeading?: boolean;
 } = {}) {
   // keep each card's image/title; optionally override the bold lead + caption text
   const cards = captions
@@ -116,6 +125,13 @@ export default function ImpactGallery({
           padding: 0 var(--gutter);
           text-align: center;
         }
+        .ig-eyebrow {
+          margin: 0 0 clamp(10px, 1.4vw, 16px);
+          font-size: clamp(17px, 2vw, 24px);
+          font-weight: 600;
+          letter-spacing: 0.01em;
+          color: #1a8f3c;
+        }
         .ig-title {
           margin: 0;
           color: #1d1d1f;
@@ -123,6 +139,10 @@ export default function ImpactGallery({
           font-weight: 600;
           line-height: 1.0;
           letter-spacing: -0.015em;
+        }
+        .ig-title--custom {
+          font-size: clamp(30px, 4.4vw, 56px);
+          line-height: 1.07;
         }
         .ig-hl {
           background: #00d959;
@@ -231,12 +251,23 @@ export default function ImpactGallery({
 
       {showHeader && (
         <div className="ig-head">
-          <h2 className="ig-title" data-reveal>
-            <span className="ig-hl">Our IIT results</span>
+          {eyebrow ? (
+            <p className="ig-eyebrow" data-reveal>{eyebrow}</p>
+          ) : null}
+          <h2 className={`ig-title ${heading ? "ig-title--custom" : ""}`} data-reveal>
+            {heading ? (
+              highlightHeading ? <span className="ig-hl">{heading}</span> : heading
+            ) : (
+              <span className="ig-hl">Our IIT results</span>
+            )}
           </h2>
           <p className="ig-sub" data-reveal style={{ ["--ri" as string]: 1 }}>
-            Making products that last and can be recycled at their end of life helps
-            protect the earth’s precious resources.
+            {subheading ?? (
+              <>
+                Making products that last and can be recycled at their end of life
+                helps protect the earth’s precious resources.
+              </>
+            )}
           </p>
         </div>
       )}

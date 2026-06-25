@@ -2,9 +2,19 @@
 // 794:11358. A light-gray rounded card at the full banner size: the device cluster
 // fills it, with heading, subtext, and a blue pill CTA overlaid on the left.
 
-export default function ImpactDevices() {
+import type { ReactNode } from "react";
+
+export default function ImpactDevices({
+  title,
+  sub,
+  cta,
+}: {
+  title?: ReactNode;
+  sub?: ReactNode;
+  cta?: { label: string; href: string };
+} = {}) {
   return (
-    <section className="idev" aria-label="Your Apple products have more to give.">
+    <section className="idev" aria-label="Our products are validated by IIT Delhi.">
       <style>{`
         .idev {
           --gutter: clamp(20px, 6vw, 126px);
@@ -85,16 +95,24 @@ export default function ImpactDevices() {
       <div className="idev-card" data-reveal>
         <div className="idev-text">
           <h2 className="idev-title">
-            Our Products are Validated
-            <br />
-            by IIT Delhi
+            {title ?? (
+              <>
+                Our Products are Validated
+                <br />
+                by IIT Delhi
+              </>
+            )}
           </h2>
           <p className="idev-sub">
-            Protect the earth’s precious resources by recycling the Apple products,
-            packaging, and accessories you no longer use.
+            {sub ?? (
+              <>
+                Protect the earth’s precious resources by recycling the Apple
+                products, packaging, and accessories you no longer use.
+              </>
+            )}
           </p>
-          <a className="idev-cta" href="#recycle">
-            Learn More
+          <a className="idev-cta" href={cta?.href ?? "#recycle"}>
+            {cta?.label ?? "Learn More"}
           </a>
         </div>
 
