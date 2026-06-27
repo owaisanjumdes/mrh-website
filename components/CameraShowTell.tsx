@@ -71,6 +71,8 @@ export default function CameraShowTell() {
           font-weight: 600;
           line-height: 1.05;
           letter-spacing: -0.015em;
+          /* break only at the explicit <br />s so it stays 3 lines */
+          white-space: nowrap;
         }
         .cam-copy {
           margin: clamp(28px, 3vw, 46px) 0 0;
@@ -170,19 +172,25 @@ export default function CameraShowTell() {
 
         @media (max-width: 600px) {
           .cam-head-inner { padding-left: 0; }
+          .cam-title { white-space: normal; }
         }
       `}</style>
 
       <div className="cam-head">
         <div className="cam-head-inner">
-          <p className="cam-eyebrow" data-reveal>Camera</p>
+          <p className="cam-eyebrow" data-reveal>Intelligent Space Planning</p>
           <h2 className="cam-title" data-reveal style={{ ["--ri" as string]: 1 }}>
-            The ultimate show and tell.
+            We don&rsquo;t guess
+            <br />
+            where clean air goes.
+            <br />
+            We simulate it.
           </h2>
           <p className="cam-copy" data-reveal style={{ ["--ri" as string]: 2 }}>
-            The 12MP Center Stage camera helps you{" "}
-            <b>look sharp in any light.</b> Together with the advanced mics and
-            speakers, it lets you take charge of the meeting from afar.
+            Before a single unit is installed, our simulation engine maps your
+            space and shows{" "}
+            <b>exactly how fast it reaches clean air</b>, and where every
+            purifier should sit.
           </p>
         </div>
       </div>

@@ -11,10 +11,14 @@ function HighlightVideo({
   src,
   fit,
   pos,
+  scale = 1,
+  hardLoop = false,
 }: {
   src: string;
   fit?: string;
   pos?: string;
+  scale?: number;
+  hardLoop?: boolean;
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const v0 = useRef<HTMLVideoElement>(null);
@@ -24,16 +28,49 @@ function HighlightVideo({
 
   useEffect(() => {
     const wrap = wrapRef.current;
-    const vids = [v0.current, v1.current] as (HTMLVideoElement | null)[];
-    if (!wrap || !vids[0] || !vids[1]) return;
+    const a = v0.current;
+    if (!wrap || !a) return;
+
+    // Hard loop: a single video that restarts a hair before the end, so it skips
+    // any black/empty last frame in the clip (instant, no fade).
+    if (hardLoop) {
+      a.loop = false;
+      let raf = 0;
+      const tick = () => {
+        raf = requestAnimationFrame(tick);
+        if (a.paused || !a.duration || Number.isNaN(a.duration)) return;
+        if (a.duration - a.currentTime <= 0.08) {
+          a.currentTime = 0;
+          a.play().catch(() => {});
+        }
+      };
+      const io = new IntersectionObserver(
+        ([e]) => {
+          if (e.isIntersecting) a.play().catch(() => {});
+          else a.pause();
+        },
+        { threshold: 0.25 }
+      );
+      io.observe(wrap);
+      raf = requestAnimationFrame(tick);
+      return () => {
+        io.disconnect();
+        cancelAnimationFrame(raf);
+      };
+    }
+
+    // Crossfade loop: two stacked copies dissolve at the loop point.
+    const b = v1.current;
+    if (!b) return;
+    const vids = [a, b];
     const FADE = 0.7; // seconds of crossfade before the loop point
 
     let raf = 0;
     const step = () => {
       raf = requestAnimationFrame(step);
       if (!visible.current) return;
-      const cur = vids[active.current]!;
-      const other = vids[1 - active.current]!;
+      const cur = vids[active.current];
+      const other = vids[1 - active.current];
       if (cur.paused || !cur.duration || Number.isNaN(cur.duration)) return;
       const remaining = cur.duration - cur.currentTime;
       if (remaining <= FADE) {
@@ -56,8 +93,8 @@ function HighlightVideo({
     const io = new IntersectionObserver(
       ([e]) => {
         visible.current = e.isIntersecting;
-        if (e.isIntersecting) vids[active.current]!.play().catch(() => {});
-        else vids.forEach((v) => v!.pause());
+        if (e.isIntersecting) vids[active.current].play().catch(() => {});
+        else vids.forEach((v) => v.pause());
       },
       { threshold: 0.25 }
     );
@@ -67,16 +104,19 @@ function HighlightVideo({
       io.disconnect();
       cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [hardLoop]);
 
   const vs: CSSProperties = {
     objectFit: fit as CSSProperties["objectFit"],
     objectPosition: pos,
+    transform: scale !== 1 ? `scale(${scale})` : undefined,
   };
   return (
     <div className="hl-card-vidwrap" ref={wrapRef} aria-hidden>
       <video ref={v0} className="hl-card-video" style={{ ...vs, opacity: 1 }} src={src} muted playsInline preload="auto" />
-      <video ref={v1} className="hl-card-video" style={{ ...vs, opacity: 0 }} src={src} muted playsInline preload="auto" />
+      {!hardLoop ? (
+        <video ref={v1} className="hl-card-video" style={{ ...vs, opacity: 0 }} src={src} muted playsInline preload="auto" />
+      ) : null}
     </div>
   );
 }
@@ -92,8 +132,12 @@ type Slide = {
   video?: string;
   videoPos?: string;
   videoFit?: string;
+  videoScale?: number;
   image?: string;
   imagePos?: string;
+  capPos?: "br";
+  noScrim?: boolean;
+  hardLoop?: boolean;
 };
 
 const SLIDES: Slide[] = [
@@ -105,7 +149,9 @@ const SLIDES: Slide[] = [
   {
     lead: "14 stages of filtration.",
     rest: "Captures up to 99.97% of particles, down to 0.3 microns.",
-    video: "/msf.mp4",
+    video: "/filtervid.mp4",
+    videoPos: "center 12%",
+    hardLoop: true,
   },
   {
     lead: "The air, on the front panel.",
@@ -117,16 +163,21 @@ const SLIDES: Slide[] = [
     lead: "Proven across 200+ spaces.",
     rest: "Schools, offices, hotels, hospitals, homes.",
     video: "/twos.mp4",
+    noScrim: true,
+    hardLoop: true,
   },
   {
     lead: "2,000 sq ft, cleared fast.",
     rest: "A full classroom of clean air in minutes.",
     video: "/twot.mp4",
     videoFit: "contain",
+    capPos: "br",
+    noScrim: true,
   },
   {
-    lead: "Smarter the longer you own it.",
-    rest: "Live control and self-service alerts from the app.",
+    lead: "",
+    rest: "",
+    image: "/appss.png",
   },
 ];
 
@@ -241,7 +292,7 @@ export default function Highlights() {
           padding: clamp(28px, 3.4vw, 44px) clamp(20px, 2.4vw, 32px) 0;
           text-align: center;
           white-space: nowrap;
-          font-size: clamp(13px, 1.3vw, 18px);
+          font-size: clamp(15px, 1.7vw, 23px);
           font-weight: 500;
           line-height: 1.3;
           letter-spacing: -0.01em;
@@ -249,6 +300,16 @@ export default function Highlights() {
         }
         .hl-card-cap b { color: #ffffff; font-weight: 600; }
         .hl-card-cap { position: relative; z-index: 2; }
+        /* one card: caption pinned to the bottom-right corner, two lines */
+        .hl-card-cap--br {
+          position: absolute;
+          inset: auto clamp(26px, 3vw, 44px) clamp(28px, 3.4vw, 44px) auto;
+          width: auto;
+          max-width: 60%;
+          padding: 0;
+          text-align: right;
+          white-space: normal;
+        }
 
         /* Video fill — sits below the caption, fills the card */
         .hl-card-vidwrap {
@@ -418,8 +479,8 @@ export default function Highlights() {
             <article className="hl-card" key={i}>
               {s.video ? (
                 <>
-                  <HighlightVideo src={s.video} fit={s.videoFit} pos={s.videoPos} />
-                  <div className="hl-card-vscrim" aria-hidden />
+                  <HighlightVideo src={s.video} fit={s.videoFit} pos={s.videoPos} scale={s.videoScale} hardLoop={s.hardLoop} />
+                  {!s.noScrim ? <div className="hl-card-vscrim" aria-hidden /> : null}
                 </>
               ) : null}
               {s.image ? (
@@ -430,9 +491,13 @@ export default function Highlights() {
                   style={s.imagePos ? { objectPosition: s.imagePos } : undefined}
                 />
               ) : null}
-              <p className="hl-card-cap">
-                <b>{s.lead}</b> {s.rest}
-              </p>
+              {s.lead || s.rest ? (
+                <p className={`hl-card-cap ${s.capPos === "br" ? "hl-card-cap--br" : ""}`}>
+                  <b>{s.lead}</b>
+                  {s.capPos === "br" ? <br /> : " "}
+                  {s.rest}
+                </p>
+              ) : null}
             </article>
           ))}
         </div>
@@ -456,7 +521,7 @@ export default function Highlights() {
                 <span
                   key={active}
                   className="hl-fill"
-                  style={{ animationPlayState: playing ? "running" : "paused" }}
+                  style={{ animationPlayState: playing && pinned ? "running" : "paused" }}
                   onAnimationEnd={next}
                 />
               )}

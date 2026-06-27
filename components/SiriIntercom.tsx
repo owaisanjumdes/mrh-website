@@ -1,27 +1,50 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
 // "Siri, tell everyone, Dinner is ready" — Figma node 755:6839.
-// Centered gradient + white heading above an isometric floor-plan image.
+// Centered gradient + white heading above an isometric floor-plan video.
 // Copy kept verbatim from the design.
 
-const PLAN_IMG =
-  "/siri-floorplan.png";
-
 export default function SiriIntercom() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Play only while the section is on screen; pause when it scrolls away.
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) v.play().catch(() => {});
+        else v.pause();
+      },
+      { threshold: 0.3 }
+    );
+    io.observe(v);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <section className="si" aria-label="Siri, tell everyone, Dinner is ready">
       <style>{`
         .si {
+          position: relative;
           background: #000000;
           width: 100vw;
           margin-left: calc(50% - 50vw);
           margin-right: calc(50% - 50vw);
-          padding: clamp(80px, 12vh, 125px) clamp(20px, 6vw, 88px) clamp(60px, 9vh, 100px);
+          padding: 0;
           font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
           display: flex;
           flex-direction: column;
           align-items: center;
           text-align: center;
         }
-        .si-text { max-width: 760px; }
+        .si-text {
+          flex: none;
+          max-width: 760px;
+          padding: clamp(80px, 12vh, 125px) clamp(20px, 6vw, 88px) clamp(28px, 4vh, 52px);
+        }
         .si-siri {
           margin: 0;
           font-size: clamp(24px, 3vw, 32px);
@@ -43,9 +66,11 @@ export default function SiriIntercom() {
         }
         .si-plan {
           display: block;
-          width: min(700px, 100%);
+          width: min(1200px, 88vw);
           height: auto;
-          margin: clamp(32px, 5vw, 72px) auto 0;
+          margin: 0 auto;
+          border-radius: clamp(16px, 2vw, 28px);
+          overflow: hidden;
         }
       `}</style>
 
@@ -58,10 +83,15 @@ export default function SiriIntercom() {
         </p>
       </div>
 
-      <img
+      <video
+        ref={videoRef}
         className="si-plan"
-        src={PLAN_IMG}
-        alt="Various Siri commands written over a home's floor plan"
+        src="/simvid.mp4"
+        loop
+        muted
+        playsInline
+        preload="auto"
+        aria-label="Air simulation of a floor plan"
         data-reveal
         style={{ ["--ri" as string]: 1 }}
       />

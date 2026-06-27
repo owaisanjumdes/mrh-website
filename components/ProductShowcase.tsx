@@ -85,7 +85,7 @@ export default function ProductShowcase({ heroVideo }: { heroVideo?: string } = 
         }
         showBlocks
       />
-      <PureAirInAction />
+      <PureAirInAction sub="200+ spaces, and counting." />
       <KeepExploringIPhone />
       <SiteFooter />
     </main>

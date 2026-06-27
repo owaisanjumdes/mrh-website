@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { PlusIcon, Flag, Globe, Lightbulb, GraduationCap } from "lucide-react";
+import { PlusIcon, Flag, Globe, Award, GraduationCap } from "lucide-react";
 import ImpactDevices from "@/components/ImpactDevices";
 import SiteFooter from "@/components/SiteFooter";
 import VideoEmbed from "@/components/VideoEmbed";
@@ -52,6 +52,7 @@ type CardItem = {
   withImage?: boolean;
   imgLabel?: string;
   imgSrc?: string;
+  pillDark?: boolean;
   graphic?: "recycle" | "bolt" | "bricks" | "waves" | "drop" | "sun";
 };
 
@@ -113,6 +114,8 @@ function Graphic({ kind, color }: { kind: NonNullable<CardItem["graphic"]>; colo
 /* Auto-advancing card carousel with a segmented progress bar below the cards. */
 function Carousel({ cards }: { cards: CardItem[] }) {
   const [active, setActive] = useState(0);
+  const [inView, setInView] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const n = cards.length;
   const advance = () => setActive((i) => (i + 1) % n);
@@ -128,8 +131,21 @@ function Carousel({ cards }: { cards: CardItem[] }) {
     }
   }, [active]);
 
+  // Only auto-advance once the section is on screen, so it starts when the user
+  // lands on it (and pauses when they leave).
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => setInView(e.isIntersecting),
+      { threshold: 0.35 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <div className="env-carousel">
+    <div className="env-carousel" ref={rootRef}>
       <div className="env-track" ref={trackRef}>
         {cards.map((c, i) => (
           <article className="env-card" key={i} style={{ background: "#000000" }}>
@@ -140,7 +156,7 @@ function Carousel({ cards }: { cards: CardItem[] }) {
                 <Slot className="env-card-img" label={c.imgLabel ?? "Image"} />
               )
             ) : null}
-            {c.imgLabel ? <span className="env-card-pill">{c.imgLabel}</span> : null}
+            {c.imgLabel ? <span className={`env-card-pill ${c.pillDark ? "env-card-pill--dark" : ""}`}>{c.imgLabel}</span> : null}
           </article>
         ))}
       </div>
@@ -156,7 +172,12 @@ function Carousel({ cards }: { cards: CardItem[] }) {
             onClick={() => setActive(i)}
           >
             {i === active && (
-              <span key={active} className="env-cfill" onAnimationEnd={advance} />
+              <span
+                key={active}
+                className="env-cfill"
+                style={{ animationPlayState: inView ? "running" : "paused" }}
+                onAnimationEnd={advance}
+              />
             )}
           </button>
         ))}
@@ -170,10 +191,21 @@ function Carousel({ cards }: { cards: CardItem[] }) {
 const SPACES_CARDS: CardItem[] = [
   { title: "", withImage: true, imgLabel: "Classroom", imgSrc: "/pac.jpg" },
   { title: "", withImage: true, imgLabel: "Office", imgSrc: "/pao.jpg" },
-  { title: "", withImage: true, imgLabel: "Hotel", imgSrc: "/hotel.jpg" },
   { title: "", withImage: true, imgLabel: "Gym", imgSrc: "/gym.jpg" },
-  { title: "", withImage: true, imgLabel: "Hospital", imgSrc: "/hospital.jpg" },
   { title: "", withImage: true, imgLabel: "Cafe", imgSrc: "/cafe.jpg" },
+  { title: "", withImage: true, imgLabel: "Hospital", imgSrc: "/hospital.jpg", pillDark: true },
+  { title: "", withImage: true, imgLabel: "Hotel", imgSrc: "/hlf.jpg" },
+];
+
+const LOGOS = [
+  { name: "Delhi Public School", src: "/logos/dps.png" },
+  { name: "GD Goenka", src: "/logos/gdgoenka.png" },
+  { name: "Birla Estates", src: "/logos/birlaestates.png" },
+  { name: "O.P. Jindal", src: "/logos/opjindal.png" },
+  { name: "Isparva", src: "/logos/isparva.png" },
+  { name: "Forest Essentials", src: "/logos/forestessentials.png" },
+  { name: "Unox", src: "/logos/unox.png" },
+  { name: "Bal Bharati", src: "/logos/balbharti.png" },
 ];
 
 /* ---------------------------------------------------------------- page ----- */
@@ -201,8 +233,8 @@ export default function Environment() {
         .env-ph { background: repeating-linear-gradient(135deg,#e3e3e6,#e3e3e6 18px,#dcdce0 18px,#dcdce0 36px); display: flex; align-items: center; justify-content: center; color: #8a8a8f; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
 
         /* ---------- 1. Hero (full-screen image) ---------- */
-        .env-hero { position: relative; height: 100svh; min-height: 100svh; overflow: hidden; padding: 0; background: #ffffff; }
-        .env-hero-img { display: block; width: 100%; height: 100%; object-fit: cover; }
+        .env-hero { position: relative; overflow: hidden; padding: 0; background: #ffffff; }
+        .env-hero-img { display: block; width: 100%; height: auto; }
 
         /* ---------- generic section heading ---------- */
         .env-section { padding: clamp(72px, 11vh, 150px) 0; }
@@ -212,16 +244,17 @@ export default function Environment() {
         .env-h2--left { text-align: left; margin-left: 0; max-width: 22ch; }
         .env-h2--nowrap { max-width: none; white-space: nowrap; }
 
-        /* ---------- 2. two product cards ---------- */
-        .env-products { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 2.4vw, 40px); margin-top: clamp(36px, 4vw, 60px); }
-        .env-prod-card { position: relative; border-radius: 22px; overflow: hidden; aspect-ratio: 11 / 8; }
-        .env-prod-card .env-ph { width: 100%; height: 100%; }
+        /* ---------- 2. two product cards (large split, Apple-style) ---------- */
+        .env-products { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 2.4vw, 44px); width: min(1600px, 92vw); margin: clamp(40px, 5vw, 72px) auto 0; }
+        .env-prod-card { position: relative; border-radius: clamp(22px, 2vw, 30px); overflow: hidden; aspect-ratio: 7 / 5; background: #ffffff; }
+        .env-prod-card .env-ph { width: 100%; height: 100%; transition: filter 300ms ease; }
         .env-prod-img { display: block; width: 100%; height: 100%; object-fit: cover; transition: filter 300ms ease; }
-        .env-prod-card--shop:hover .env-prod-img { filter: brightness(0.5); }
-        .env-prod-cta { position: absolute; right: clamp(18px, 2vw, 28px); bottom: clamp(18px, 2vw, 28px); opacity: 0; pointer-events: none; background: #18a544; color: #ffffff; font-size: clamp(14px, 1.3vw, 16px); font-weight: 600; letter-spacing: -0.01em; padding: 0.72em 1.6em; border-radius: 980px; text-decoration: none; white-space: nowrap; transform: translateY(8px); transition: opacity 300ms ease, transform 300ms ease, background 200ms ease; }
+        .env-prod-card--shop:hover .env-prod-img,
+        .env-prod-card--shop:hover .env-ph { filter: brightness(0.5); }
+        .env-prod-cta { position: absolute; right: clamp(18px, 2vw, 28px); bottom: clamp(18px, 2vw, 28px); opacity: 0; pointer-events: none; background: #ffffff; color: #333336; font-size: clamp(14px, 1.3vw, 16px); font-weight: 600; letter-spacing: -0.01em; padding: 0.72em 1.6em; border-radius: 980px; text-decoration: none; white-space: nowrap; transform: translateY(8px); transition: opacity 300ms ease, transform 300ms ease, background 200ms ease; }
         .env-prod-card--shop:hover .env-prod-cta { opacity: 1; pointer-events: auto; transform: translateY(0); }
-        .env-prod-cta:hover { background: #128a37; }
-        .env-prod-cap { margin: clamp(16px, 1.6vw, 22px) 0 0; font-size: clamp(14px, 1.3vw, 16px); font-weight: 500; line-height: 1.45; color: #6e6e73; max-width: 48ch; }
+        .env-prod-cta:hover { background: #ececee; }
+        .env-prod-cap { margin: clamp(18px, 1.8vw, 26px) 0 0; font-size: clamp(15px, 1.4vw, 17px); font-weight: 500; line-height: 1.45; color: #6e6e73; max-width: 48ch; }
         .env-prod-cap b { color: #1d1d1f; font-weight: 600; }
 
         /* ---------- 2b. impact blocks (image + 3 stats) ---------- */
@@ -239,6 +272,12 @@ export default function Environment() {
         .env-im-num { font-size: clamp(34px, 4vw, 52px); font-weight: 600; letter-spacing: -0.02em; color: #1d1d1f; line-height: 1; }
         .env-im-unit { font-size: clamp(14px, 1.3vw, 17px); font-weight: 600; color: #1d1d1f; padding-bottom: 0.35em; }
         .env-im-desc { margin: clamp(8px, 1vw, 12px) 0 0; font-size: clamp(15px, 1.4vw, 18px); font-weight: 500; color: #6e6e73; line-height: 1.4; max-width: 34ch; }
+        /* centered "Explore X" pill that pops up as it scrolls into view */
+        .env-xcta { width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); background: #ffffff; display: flex; justify-content: center; padding: clamp(36px, 7vh, 88px) var(--gutter); }
+        .env-xcta-pill { display: inline-flex; align-items: center; height: 56px; padding: 0 34px; border-radius: 28px; background: #1d1d1f; color: #ffffff; font-size: clamp(15px, 1.5vw, 18px); font-weight: 600; letter-spacing: -0.01em; text-decoration: none; white-space: nowrap; opacity: 0; transform: translateY(18px) scale(0.96); transition: opacity 640ms cubic-bezier(0.22, 1, 0.36, 1), transform 640ms cubic-bezier(0.22, 1, 0.36, 1), background 200ms ease; }
+        .env-xcta.is-in .env-xcta-pill { opacity: 1; transform: translateY(0) scale(1); }
+        .env-xcta-pill:hover { background: #333335; }
+        @media (prefers-reduced-motion: reduce) { .env-xcta-pill { opacity: 1 !important; transform: none !important; } }
 
         /* ---------- 5. design section (light) ---------- */
         .env-design-media { position: relative; margin: clamp(40px, 5vw, 64px) auto 0; width: min(1048px, 100%); aspect-ratio: 16 / 9; border-radius: 20px; overflow: hidden; }
@@ -250,7 +289,7 @@ export default function Environment() {
         .env-design-cta-label { color: #ffffff; font-size: 17px; font-weight: 600; letter-spacing: -0.022em; white-space: nowrap; }
         .env-stats3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(28px, 4vw, 60px); max-width: 980px; margin: clamp(48px, 6vw, 80px) auto 0; text-align: center; }
         .env-stat3-up { margin: 0; font-size: clamp(15px, 1.4vw, 17px); font-weight: 500; color: #6e6e73; line-height: 1.4; }
-        .env-stat3-big { margin: 4px 0; font-size: clamp(30px, 3.4vw, 46px); font-weight: 600; letter-spacing: -0.01em; line-height: 1.12; background: linear-gradient(180deg, #1f9e57 0%, #0f7a3c 50%, #0a5c2c 100%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
+        .env-stat3-big { margin: 4px 0; font-size: clamp(30px, 3.4vw, 46px); font-weight: 600; letter-spacing: -0.01em; line-height: 1.12; background: linear-gradient(180deg, #2a2a2c 0%, #1d1d1f 100%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
         .env-stat3-desc { margin: 0; font-size: clamp(14px, 1.3vw, 16px); font-weight: 500; color: #6e6e73; line-height: 1.38; }
 
         /* ---------- carousel ---------- */
@@ -260,6 +299,7 @@ export default function Environment() {
         .env-track.is-center { justify-content: center; }
         .env-card { position: relative; scroll-snap-align: center; flex: none; width: var(--cardw); aspect-ratio: 16 / 9; border-radius: 24px; overflow: hidden; display: flex; flex-direction: column; }
         .env-card-pill { position: absolute; left: 50%; bottom: clamp(20px, 2.4vw, 34px); transform: translateX(-50%); z-index: 3; padding: clamp(9px, 0.9vw, 13px) clamp(20px, 1.9vw, 30px); border-radius: 999px; background: rgba(255, 255, 255, 0.26); border: 1px solid rgba(255, 255, 255, 0.4); backdrop-filter: blur(34px) saturate(180%); -webkit-backdrop-filter: blur(34px) saturate(180%); color: #ffffff; font-size: clamp(14px, 1.4vw, 19px); font-weight: 600; letter-spacing: -0.01em; white-space: nowrap; }
+        .env-card-pill--dark { color: #333336; }
         .env-cprog { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: clamp(28px, 3.4vw, 48px); padding: 0 var(--gutter); }
         .env-cseg { position: relative; height: 8px; width: 8px; padding: 0; border: none; border-radius: 980px; background: rgba(0, 0, 0, 0.18); cursor: pointer; overflow: hidden; transition: width 480ms cubic-bezier(0.22, 1, 0.36, 1), background 300ms ease; }
         .env-cseg.is-active { width: 52px; background: rgba(0, 0, 0, 0.14); }
@@ -285,22 +325,26 @@ export default function Environment() {
 
         /* ---------- 3. made to last (stats) ---------- */
         .env-stats-row { display: grid; grid-template-columns: 1fr; gap: clamp(36px, 5vw, 64px); margin-top: clamp(40px, 5vw, 72px); }
-        .env-stats-media { border-radius: 20px; overflow: hidden; aspect-ratio: 16 / 9; }
+        .env-stats-media { border-radius: 20px; overflow: hidden; }
         .env-stats-media .env-ph { width: 100%; height: 100%; }
-        .env-stats-img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+        .env-stats-img { display: block; width: 100%; height: auto; border-radius: 20px; }
         .env-ub { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .env-ub-col { display: flex; flex-direction: column; gap: 20px; }
-        .env-ub-card { position: relative; border-radius: 28px; overflow: hidden; background: #1d1d1f; }
+        .env-ub-card { position: relative; border-radius: 28px; overflow: hidden; background: #20CA9D; }
         .env-ub-tall { height: clamp(330px, 41vw, 401px); }
-        .env-ub-short { height: clamp(196px, 25vw, 241px); display: flex; align-items: center; gap: 20px; padding: clamp(24px, 3vw, 40px); }
+        .env-ub-short { height: clamp(196px, 25vw, 241px); display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: clamp(12px, 1.4vw, 18px); padding: clamp(24px, 3vw, 40px); }
         .env-ub-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+        /* frosted bottom: blurs only the lower part of the photo (masked fade),
+           matching the original Apple stat-card look behind the text */
+        .env-ub-blur { position: absolute; inset: 0; z-index: 1; pointer-events: none; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); -webkit-mask-image: linear-gradient(to top, #000 0%, #000 12%, rgba(0,0,0,0) 46%); mask-image: linear-gradient(to top, #000 0%, #000 12%, rgba(0,0,0,0) 46%); }
         .env-ub-scrim { position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(0,0,0,0) 42%, rgba(0,0,0,0.55) 100%); }
-        .env-ub-inner { position: relative; z-index: 2; height: 100%; padding: clamp(28px, 3.4vw, 40px); display: flex; flex-direction: column; justify-content: flex-end; gap: clamp(16px, 2vw, 24px); }
-        .env-ub-ic { width: clamp(38px, 4.4vw, 56px); height: clamp(38px, 4.4vw, 56px); flex: none; stroke: url(#sb-grad); }
-        .env-ub-tall .env-ub-ic { align-self: flex-start; margin-top: auto; }
+        .env-ub-inner { position: relative; z-index: 2; height: 100%; padding: clamp(28px, 3.4vw, 40px); display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; gap: clamp(12px, 1.4vw, 18px); }
+        /* same box for every icon, sized to sit just under the number */
+        .env-ub-ic { width: clamp(32px, 3.4vw, 44px); height: clamp(32px, 3.4vw, 44px); flex: none; stroke: #ffffff; }
+        .env-ub-tall .env-ub-ic { margin-top: auto; }
         .env-ub-text { display: flex; flex-direction: column; }
-        .env-ub-num { margin: 0; font-weight: 600; line-height: 1; letter-spacing: -0.02em; font-size: clamp(38px, 4.8vw, 64px); background: linear-gradient(180deg, #6cb8ff 0%, #2b8fff 52%, #0a84ff 100%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
-        .env-ub-label { margin: 10px 0 0; font-weight: 500; font-size: clamp(15px, 1.4vw, 18px); color: rgba(245, 245, 247, 0.8); }
+        .env-ub-num { margin: 0; font-weight: 600; line-height: 1; letter-spacing: -0.02em; font-size: clamp(38px, 4.8vw, 64px); color: #ffffff; }
+        .env-ub-label { margin: clamp(6px, 0.8vw, 10px) 0 0; font-weight: 500; font-size: clamp(15px, 1.4vw, 18px); color: rgba(245, 245, 247, 0.8); }
         .env-tri { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 1.6vw, 22px); margin-top: clamp(36px, 4vw, 60px); }
         .env-tri-card { background: #ffffff; border-radius: 20px; padding: clamp(24px, 2.6vw, 36px); min-height: 230px; display: flex; flex-direction: column; }
         .env-tri-card.dark { background: #1d1d1f; color: #f5f5f7; }
@@ -348,6 +392,7 @@ export default function Environment() {
         .env-logos { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid #d2d2d7; border-left: 1px solid #d2d2d7; margin-top: clamp(40px, 5vw, 64px); }
         .env-logo-cell { position: relative; display: flex; align-items: center; justify-content: center; min-height: clamp(110px, 12vw, 150px); padding: clamp(20px, 3vw, 40px); border-right: 1px solid #d2d2d7; border-bottom: 1px solid #d2d2d7; }
         .env-logo-ph { color: #b4b4b9; font-size: clamp(16px, 1.7vw, 22px); font-weight: 700; letter-spacing: -0.01em; }
+        .env-logo-img { max-width: 100%; max-height: clamp(46px, 6vw, 76px); width: auto; height: auto; object-fit: contain; }
         .env-logo-plus { position: absolute; right: -12.5px; bottom: -12.5px; width: 24px; height: 24px; color: #9a9aa0; z-index: 1; }
 
         /* ---------- 6e. testimonials ---------- */
@@ -417,7 +462,7 @@ export default function Environment() {
 
       {/* 1 — HERO */}
       <header className="env-hero">
-        <img className="env-hero-img" src="/rghp.jpg" alt="" />
+        <img className="env-hero-img" src="/3pa.jpg" alt="" />
       </header>
 
       {/* 2 — TWO PRODUCTS */}
@@ -426,26 +471,29 @@ export default function Environment() {
           <p className="env-eyebrow">Two Products, Every Space</p>
           <h2 className="env-h2">One purifier for indoors. One for everywhere else.</h2>
           <p className="env-sub">PureAir works inside. AirFINEry works where the air is open.</p>
-          <div className="env-products">
-            <div>
-              <div className="env-prod-card env-prod-card--shop">
-                <img className="env-prod-img" src="/spa.jpg" alt="PureAir" />
-                <a className="env-prod-cta" href="/contact">Buy Now</a>
-              </div>
-              <p className="env-prod-cap">
-                <b>PureAir.</b> Handles indoor and large indoor areas, schools,
-                offices, meeting rooms, warehouses, libraries, and labs, up to
-                2,000 sq ft per unit.
-              </p>
+        </div>
+        <div className="env-products">
+          <div className="env-prod">
+            <div className="env-prod-card env-prod-card--shop">
+              <img className="env-prod-img" src="/spa.jpg" alt="PureAir" />
+              <a className="env-prod-cta" href="/contact">Buy Now</a>
             </div>
-            <div>
-              <div className="env-prod-card"><Slot label="AirFINEry" /></div>
-              <p className="env-prod-cap">
-                <b>AirFINEry.</b> Handles semi-outdoor and outdoor areas,
-                corridors, lobbies, playgrounds, courts, cafes, and gyms, up to
-                3,500 sq ft per unit.
-              </p>
+            <p className="env-prod-cap">
+              <b>PureAir.</b> Handles indoor and large indoor areas, schools,
+              offices, meeting rooms, warehouses, libraries, and labs, up to
+              2,000 sq ft per unit.
+            </p>
+          </div>
+          <div className="env-prod">
+            <div className="env-prod-card env-prod-card--shop">
+              <Slot label="AirFINEry" />
+              <a className="env-prod-cta" href="/contact">Buy Now</a>
             </div>
+            <p className="env-prod-cap">
+              <b>AirFINEry.</b> Handles semi-outdoor and outdoor areas,
+              corridors, lobbies, playgrounds, courts, cafes, and gyms, up to
+              3,500 sq ft per unit.
+            </p>
           </div>
         </div>
       </section>
@@ -461,6 +509,7 @@ export default function Environment() {
           { icon: "wind", num: "2,800", unit: "m³/h", desc: "Clean Air Delivery Rate (CADR) for rapid, whole-room purification." },
         ]}
       />
+      <ExploreCTA label="Explore PureAir" href="/products/pureair" />
       <ImpactBlock
         reverse
         title="AirFINEry"
@@ -471,6 +520,7 @@ export default function Environment() {
           { icon: "wind", num: "3,500", unit: "m³/h", desc: "Clean Air Delivery Rate (CADR) for rapid, whole-room purification." },
         ]}
       />
+      <ExploreCTA label="Explore AirFINEry" href="/products/airfinery" />
 
       {/* 3 — STATS */}
       <section className="env-section" style={{ background: "#ffffff" }}>
@@ -493,7 +543,8 @@ export default function Environment() {
             <div className="env-ub">
               <div className="env-ub-col">
                 <article className="env-ub-card env-ub-tall">
-                  <img className="env-ub-photo" src="/ub-photo-d.jpg" alt="" aria-hidden />
+                  <img className="env-ub-photo" src="/h1.jpg" alt="" aria-hidden />
+                  <div className="env-ub-blur" aria-hidden />
                   <div className="env-ub-scrim" aria-hidden />
                   <div className="env-ub-inner">
                     <Flag className="env-ub-ic" strokeWidth={1.8} aria-hidden />
@@ -503,7 +554,7 @@ export default function Environment() {
                     </div>
                   </div>
                 </article>
-                <article className="env-ub-card env-ub-short">
+                <article className="env-ub-card env-ub-short" style={{ background: "#0C6553" }}>
                   <Globe className="env-ub-ic" strokeWidth={1.8} aria-hidden />
                   <div className="env-ub-text">
                     <p className="env-ub-num"><Counter to={80} suffix="+" /></p>
@@ -513,14 +564,15 @@ export default function Environment() {
               </div>
               <div className="env-ub-col">
                 <article className="env-ub-card env-ub-short">
-                  <Lightbulb className="env-ub-ic" strokeWidth={1.8} aria-hidden />
+                  <Award className="env-ub-ic" strokeWidth={1.8} aria-hidden />
                   <div className="env-ub-text">
                     <p className="env-ub-num"><Counter to={4700} suffix="+" /></p>
                     <p className="env-ub-label">Patents</p>
                   </div>
                 </article>
                 <article className="env-ub-card env-ub-tall">
-                  <img className="env-ub-photo" src="/ub-photo-e.jpg" alt="" aria-hidden />
+                  <img className="env-ub-photo" src="/h2.jpg" alt="" aria-hidden />
+                  <div className="env-ub-blur" aria-hidden />
                   <div className="env-ub-scrim" aria-hidden />
                   <div className="env-ub-inner">
                     <GraduationCap className="env-ub-ic" strokeWidth={1.8} aria-hidden />
@@ -693,9 +745,9 @@ export default function Environment() {
           <h2 className="env-h2">Schools, offices, hotels, and the Indian Army.</h2>
           <p className="env-sub">The names that already run MRH.</p>
           <div className="env-logos">
-            {Array.from({ length: 8 }).map((_, i) => (
+            {LOGOS.map((logo, i) => (
               <div className="env-logo-cell" key={i}>
-                <span className="env-logo-ph">Logo</span>
+                <img className="env-logo-img" src={logo.src} alt={logo.name} />
                 {i < 3 ? (
                   <PlusIcon className="env-logo-plus" strokeWidth={1} />
                 ) : null}
@@ -967,6 +1019,32 @@ function ImpactIcon({ kind }: { kind: string }) {
         </>
       )}
     </svg>
+  );
+}
+
+// Centered pill CTA that pops up when it scrolls into view.
+function ExploreCTA({ label, href }: { label: string; href: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setInView(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.6, rootMargin: "0px 0px -10% 0px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <div className={`env-xcta ${inView ? "is-in" : ""}`} ref={ref}>
+      <a className="env-xcta-pill" href={href}>{label}</a>
+    </div>
   );
 }
 

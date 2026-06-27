@@ -59,83 +59,23 @@ export default function ImpactHero() {
         .ie-headline {
           margin: 0;
           max-width: 16ch;
-          color: #1d1d1f;
+          color: #000000;
           font-size: clamp(40px, 7vw, 96px);
           font-weight: 500;
           line-height: 1.06;
           letter-spacing: -0.02em;
         }
 
-        /* ---- Forest photo with overlay copy ---- */
+        /* ---- Full proof image (shown in full, never cropped) ---- */
         .ie-forest {
           position: relative;
           z-index: 1;
           width: 100%;
-          height: clamp(520px, 50vw, 728px);
         }
         .ie-forest-img {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          object-position: center;
-        }
-        /* darken the upper area so the white overlay copy stays legible */
-        .ie-forest-scrim {
-          position: absolute;
-          inset: 0;
-          z-index: 1;
-          background: linear-gradient(180deg,
-            rgba(0, 0, 0, 0.55) 0%,
-            rgba(0, 0, 0, 0.45) 38%,
-            rgba(0, 0, 0, 0.18) 64%,
-            rgba(0, 0, 0, 0) 86%);
-          pointer-events: none;
-        }
-        .ie-overlay {
-          position: absolute;
-          inset: 0;
-          z-index: 2;
-          padding: 0 var(--gutter);
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          text-align: center;
-        }
-        .ie-stat {
-          margin: 0;
-          color: #ffffff;
-          font-weight: 500;
-          letter-spacing: -0.003em;
-        }
-        .ie-stat-up { font-size: clamp(30px, 4.4vw, 48px); line-height: 1.08; }
-        .ie-stat-down {
           display: block;
-          margin-top: clamp(2px, 0.4vw, 6px);
-          font-size: clamp(22px, 3.2vw, 34px);
-          line-height: 1.08;
-        }
-        .ie-body {
-          margin: clamp(18px, 2vw, 26px) auto 0;
-          max-width: 718px;
-          color: #ffffff;
-          font-size: clamp(16px, 1.6vw, 21px);
-          font-weight: 600;
-          line-height: 1.38;
-          letter-spacing: 0.006em;
-        }
-        .ie-caption {
-          position: absolute;
-          right: var(--gutter);
-          bottom: clamp(20px, 3vw, 40px);
-          z-index: 3;
-          margin: 0;
-          color: #d2d2d7;
-          font-size: 12px;
-          font-weight: 400;
-          letter-spacing: -0.01em;
+          width: 100%;
+          height: auto;
         }
       `}</style>
 
@@ -151,21 +91,9 @@ export default function ImpactHero() {
       <div className="ie-forest">
         <img
           className="ie-forest-img"
-          src="/impacthero.jpg"
-          alt="Our planet — the landscape MRH works to keep breathable"
+          src="/IIITTTT.jpg.jpeg"
+          alt="IIT Delhi field evaluation of PureAir"
         />
-        <div className="ie-forest-scrim" aria-hidden />
-        <div className="ie-overlay">
-          <p className="ie-stat" data-reveal>
-            <span className="ie-stat-up">Tested in the open.</span>
-            <span className="ie-stat-down">Not on paper.</span>
-          </p>
-          <p className="ie-body" data-reveal style={{ ["--ri" as string]: 1 }}>
-            60+ days of field evaluation at IIT Delhi, through Diwali, Dussehra, and
-            live classroom activity — PureAir reduced AQI from severe to good within
-            3–6 hours, while competitors offer no public test reports.
-          </p>
-        </div>
       </div>
     </section>
   );
