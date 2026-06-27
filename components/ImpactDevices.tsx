@@ -8,10 +8,12 @@ export default function ImpactDevices({
   title,
   sub,
   cta,
+  art,
 }: {
   title?: ReactNode;
   sub?: ReactNode;
   cta?: { label: string; href: string };
+  art?: ReactNode;
 } = {}) {
   return (
     <section className="idev" aria-label="Our products are validated by IIT Delhi.">
@@ -33,7 +35,8 @@ export default function ImpactDevices({
           border-radius: clamp(20px, 2vw, 28px);
           overflow: hidden;
         }
-        .idev-media img {
+        .idev-media img,
+        .idev-media svg {
           display: block;
           width: 100%;
           height: auto;
@@ -117,12 +120,14 @@ export default function ImpactDevices({
         </div>
 
         <div className="idev-media">
-          <img
-            src="/impact-devices.jpg"
-            alt="A laptop, earbuds, phone, watch, and tablet drawn in green line art"
-            width={2524}
-            height={964}
-          />
+          {art ?? (
+            <img
+              src="/impact-devices.jpg"
+              alt="A laptop, earbuds, phone, watch, and tablet drawn in green line art"
+              width={2524}
+              height={964}
+            />
+          )}
         </div>
       </div>
     </section>

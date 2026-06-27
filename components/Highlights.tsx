@@ -1,7 +1,85 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import { useInView } from "@/lib/useInView";
+
+// A card video that plays only while it's on screen (so it starts when the user
+// reaches the section and stops when they leave), and loops with a short
+// crossfade between two stacked copies so the restart dissolves instead of cutting.
+function HighlightVideo({
+  src,
+  fit,
+  pos,
+}: {
+  src: string;
+  fit?: string;
+  pos?: string;
+}) {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const v0 = useRef<HTMLVideoElement>(null);
+  const v1 = useRef<HTMLVideoElement>(null);
+  const active = useRef(0);
+  const visible = useRef(false);
+
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    const vids = [v0.current, v1.current] as (HTMLVideoElement | null)[];
+    if (!wrap || !vids[0] || !vids[1]) return;
+    const FADE = 0.7; // seconds of crossfade before the loop point
+
+    let raf = 0;
+    const step = () => {
+      raf = requestAnimationFrame(step);
+      if (!visible.current) return;
+      const cur = vids[active.current]!;
+      const other = vids[1 - active.current]!;
+      if (cur.paused || !cur.duration || Number.isNaN(cur.duration)) return;
+      const remaining = cur.duration - cur.currentTime;
+      if (remaining <= FADE) {
+        if (other.paused) {
+          other.currentTime = 0;
+          other.play().catch(() => {});
+        }
+        const t = Math.min(1, (FADE - remaining) / FADE);
+        cur.style.opacity = String(1 - t);
+        other.style.opacity = String(t);
+        if (remaining <= 0.05) {
+          cur.pause();
+          cur.style.opacity = "0";
+          other.style.opacity = "1";
+          active.current = 1 - active.current;
+        }
+      }
+    };
+
+    const io = new IntersectionObserver(
+      ([e]) => {
+        visible.current = e.isIntersecting;
+        if (e.isIntersecting) vids[active.current]!.play().catch(() => {});
+        else vids.forEach((v) => v!.pause());
+      },
+      { threshold: 0.25 }
+    );
+    io.observe(wrap);
+    raf = requestAnimationFrame(step);
+    return () => {
+      io.disconnect();
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  const vs: CSSProperties = {
+    objectFit: fit as CSSProperties["objectFit"],
+    objectPosition: pos,
+  };
+  return (
+    <div className="hl-card-vidwrap" ref={wrapRef} aria-hidden>
+      <video ref={v0} className="hl-card-video" style={{ ...vs, opacity: 1 }} src={src} muted playsInline preload="auto" />
+      <video ref={v1} className="hl-card-video" style={{ ...vs, opacity: 0 }} src={src} muted playsInline preload="auto" />
+    </div>
+  );
+}
 
 // "Get the highlights." carousel — Figma node 707:3535.
 // Dark (#1d1d1f) section, black rounded cards (one text-only, the rest full-bleed
@@ -12,6 +90,8 @@ type Slide = {
   lead: string;
   rest: string;
   video?: string;
+  videoPos?: string;
+  videoFit?: string;
   image?: string;
   imagePos?: string;
 };
@@ -36,10 +116,13 @@ const SLIDES: Slide[] = [
   {
     lead: "Proven across 200+ spaces.",
     rest: "Schools, offices, hotels, hospitals, homes.",
+    video: "/twos.mp4",
   },
   {
     lead: "2,000 sq ft, cleared fast.",
     rest: "A full classroom of clean air in minutes.",
+    video: "/twot.mp4",
+    videoFit: "contain",
   },
   {
     lead: "Smarter the longer you own it.",
@@ -56,16 +139,17 @@ export default function Highlights() {
 
   const { ref, inView } = useInView<HTMLElement>();
 
-  // The sticky control pill should only appear once the section is substantially
-  // in view — otherwise it pins to the viewport bottom while a preceding full-bleed
-  // hero is still on screen and looks like it's overlapping it.
+  // The sticky control pill stays visible the whole time this section fills the
+  // viewport: it's "pinned" whenever the section overlaps the central band of the
+  // screen, and only hides once an adjacent section takes that band over (so it
+  // never overlaps the surrounding sections).
   const [pinned, setPinned] = useState(false);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const io = new IntersectionObserver(
       ([e]) => setPinned(e.isIntersecting),
-      { threshold: 0, rootMargin: "0px 0px -65% 0px" }
+      { threshold: 0, rootMargin: "-25% 0px -25% 0px" }
     );
     io.observe(el);
     return () => io.disconnect();
@@ -167,6 +251,11 @@ export default function Highlights() {
         .hl-card-cap { position: relative; z-index: 2; }
 
         /* Video fill — sits below the caption, fills the card */
+        .hl-card-vidwrap {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+        }
         .hl-card-video {
           position: absolute;
           inset: 0;
@@ -174,7 +263,6 @@ export default function Highlights() {
           height: 100%;
           object-fit: cover;
           object-position: center;
-          z-index: 0;
         }
         /* Contained image on the black card (centered by default) */
         .hl-card-img {
@@ -330,16 +418,7 @@ export default function Highlights() {
             <article className="hl-card" key={i}>
               {s.video ? (
                 <>
-                  <video
-                    className="hl-card-video"
-                    src={s.video}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    preload="auto"
-                    aria-hidden
-                  />
+                  <HighlightVideo src={s.video} fit={s.videoFit} pos={s.videoPos} />
                   <div className="hl-card-vscrim" aria-hidden />
                 </>
               ) : null}

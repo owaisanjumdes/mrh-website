@@ -4,9 +4,13 @@ import { useEffect, useRef } from "react";
 import LiteYouTubeEmbed from "react-lite-youtube-embed";
 import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
 
-// Lightweight YouTube embed. Auto-activates (muted autoplay) once it scrolls into
-// view, so the user never has to press play. Styled to the site's tokens:
-// rounded 22px corners, no drop shadow, full container width.
+// YouTube embed that:
+//  - auto-plays (muted) when it scrolls into view,
+//  - pauses when it leaves the viewport,
+//  - resumes from where it left off when scrolled back,
+//  - starts from the beginning on a fresh mount (page reload / new navigation),
+//    since the component remounts and loads a fresh iframe at 0.
+// Control is via the YouTube iframe JS API (enablejsapi=1) over postMessage.
 export default function VideoEmbed({
   id,
   title = "Video",
@@ -15,23 +19,38 @@ export default function VideoEmbed({
   title?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const activated = useRef(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    const command = (func: string) => {
+      const iframe = el.querySelector("iframe");
+      iframe?.contentWindow?.postMessage(
+        JSON.stringify({ event: "command", func, args: [] }),
+        "*"
+      );
+    };
+
     const io = new IntersectionObserver(
       (entries) => {
-        if (entries[0]?.isIntersecting) {
-          // Activate the lite embed: this swaps the poster for the real iframe,
-          // which loads with autoplay=1 (muted, via params) so it starts on its own.
-          const wrap = el.querySelector<HTMLElement>(".yt-lite");
-          wrap?.click();
-          io.disconnect();
+        const inView = entries[0]?.isIntersecting;
+        if (inView) {
+          if (!activated.current) {
+            // First time in view: activate the lite embed, which swaps in the
+            // iframe and autoplays from the start.
+            activated.current = true;
+            el.querySelector<HTMLElement>(".yt-lite")?.click();
+          } else {
+            // Returning to view: resume from where it paused.
+            command("playVideo");
+          }
+        } else if (activated.current) {
+          command("pauseVideo");
         }
       },
-      // Fire ~one screen early (extend the root's bottom edge down) so the iframe
-      // has already loaded and is playing by the time the section is in view.
-      { threshold: 0, rootMargin: "0px 0px 900px 0px" }
+      { threshold: 0.3 }
     );
     io.observe(el);
     return () => io.disconnect();
@@ -47,7 +66,11 @@ export default function VideoEmbed({
           overflow: hidden;
         }
       `}</style>
-      <LiteYouTubeEmbed id={id} title={title} params="mute=1&playsinline=1" />
+      <LiteYouTubeEmbed
+        id={id}
+        title={title}
+        params="enablejsapi=1&mute=1&playsinline=1"
+      />
     </div>
   );
 }

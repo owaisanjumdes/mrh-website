@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { PlusIcon } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { PlusIcon, Flag, Globe, Lightbulb, GraduationCap } from "lucide-react";
 import ImpactDevices from "@/components/ImpactDevices";
 import SiteFooter from "@/components/SiteFooter";
 import VideoEmbed from "@/components/VideoEmbed";
@@ -51,6 +51,7 @@ type CardItem = {
   accent?: string;
   withImage?: boolean;
   imgLabel?: string;
+  imgSrc?: string;
   graphic?: "recycle" | "bolt" | "bricks" | "waves" | "drop" | "sun";
 };
 
@@ -109,61 +110,57 @@ function Graphic({ kind, color }: { kind: NonNullable<CardItem["graphic"]>; colo
   }
 }
 
-/* A horizontal card carousel with the segmented progress pill. */
-function Carousel({ cards, controls = true, center = false }: { cards: CardItem[]; controls?: boolean; center?: boolean }) {
+/* Auto-advancing card carousel with a segmented progress bar below the cards. */
+function Carousel({ cards }: { cards: CardItem[] }) {
   const [active, setActive] = useState(0);
   const trackRef = useRef<HTMLDivElement>(null);
   const n = cards.length;
+  const advance = () => setActive((i) => (i + 1) % n);
 
-  const go = (i: number) => {
-    const next = Math.max(0, Math.min(n - 1, i));
-    setActive(next);
+  // Center the active card in the viewport whenever it changes, so the previous
+  // and next cards bleed equally off the left and right edges.
+  useEffect(() => {
     const track = trackRef.current;
-    if (track) {
-      const card = track.children[next] as HTMLElement | undefined;
-      if (card) track.scrollTo({ left: card.offsetLeft - 24, behavior: "smooth" });
+    const card = track?.children[active] as HTMLElement | undefined;
+    if (track && card) {
+      const left = card.offsetLeft + card.offsetWidth / 2 - track.clientWidth / 2;
+      track.scrollTo({ left, behavior: "smooth" });
     }
-  };
+  }, [active]);
 
   return (
     <div className="env-carousel">
-      <div className={`env-track ${center ? "is-center" : ""}`} ref={trackRef}>
+      <div className="env-track" ref={trackRef}>
         {cards.map((c, i) => (
-          <article className="env-card" key={i} style={{ background: c.bg ?? "#ffffff", color: c.fg ?? "#1d1d1f" }}>
+          <article className="env-card" key={i} style={{ background: "#000000" }}>
             {c.withImage ? (
-              <Slot className="env-card-img" label={c.imgLabel ?? "Image"} />
-            ) : c.graphic ? (
-              <div className="env-card-graphic">
-                <Graphic kind={c.graphic} color={c.accent ?? "#30d158"} />
-              </div>
+              c.imgSrc ? (
+                <img className="env-card-img" src={c.imgSrc} alt={c.imgLabel ?? ""} />
+              ) : (
+                <Slot className="env-card-img" label={c.imgLabel ?? "Image"} />
+              )
             ) : null}
-            {c.eyebrow || c.title || c.body ? (
-              <div className="env-card-text">
-                {c.eyebrow ? <p className="env-card-eyebrow">{c.eyebrow}</p> : null}
-                {c.title ? <h3 className="env-card-title">{c.title}</h3> : null}
-                {c.body ? <p className="env-card-body">{c.body}</p> : null}
-              </div>
-            ) : null}
+            {c.imgLabel ? <span className="env-card-pill">{c.imgLabel}</span> : null}
           </article>
         ))}
       </div>
-      {controls ? (
-        <div className="env-controls">
-          <div className="env-dots">
-            {cards.map((_, i) => (
-              <button key={i} type="button" className={`env-dot ${i === active ? "is-active" : ""}`} aria-label={`Go to card ${i + 1}`} onClick={() => go(i)} />
-            ))}
-          </div>
-          <div className="env-arrows">
-            <button type="button" className="env-arrow" aria-label="Previous" onClick={() => go(active - 1)} disabled={active === 0}>
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M15 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-            </button>
-            <button type="button" className="env-arrow" aria-label="Next" onClick={() => go(active + 1)} disabled={active === n - 1}>
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-            </button>
-          </div>
-        </div>
-      ) : null}
+
+      <div className="env-cprog">
+        {cards.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            className={`env-cseg ${i === active ? "is-active" : ""}`}
+            aria-label={`Go to space ${i + 1}`}
+            aria-current={i === active}
+            onClick={() => setActive(i)}
+          >
+            {i === active && (
+              <span key={active} className="env-cfill" onAnimationEnd={advance} />
+            )}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
@@ -171,30 +168,44 @@ function Carousel({ cards, controls = true, center = false }: { cards: CardItem[
 /* ----------------------------------------------- placeholder content ------ */
 
 const SPACES_CARDS: CardItem[] = [
-  { title: "", withImage: true, imgLabel: "Classroom" },
-  { title: "", withImage: true, imgLabel: "Office" },
-  { title: "", withImage: true, imgLabel: "Court" },
-  { title: "", withImage: true, imgLabel: "Lobby" },
-  { title: "", withImage: true, imgLabel: "Playground" },
-  { title: "", withImage: true, imgLabel: "Gym" },
+  { title: "", withImage: true, imgLabel: "Classroom", imgSrc: "/pac.jpg" },
+  { title: "", withImage: true, imgLabel: "Office", imgSrc: "/pao.jpg" },
+  { title: "", withImage: true, imgLabel: "Hotel", imgSrc: "/hotel.jpg" },
+  { title: "", withImage: true, imgLabel: "Gym", imgSrc: "/gym.jpg" },
+  { title: "", withImage: true, imgLabel: "Hospital", imgSrc: "/hospital.jpg" },
+  { title: "", withImage: true, imgLabel: "Cafe", imgSrc: "/cafe.jpg" },
 ];
 
 /* ---------------------------------------------------------------- page ----- */
 
 export default function Environment() {
+  // Pull the hero up under the (sticky) nav by the nav's exact height, so the hero
+  // image sits behind the frosted nav instead of the page background.
+  const [navH, setNavH] = useState(0);
+  useEffect(() => {
+    const measure = () => {
+      const nav = document.querySelector(".mrh-nav") as HTMLElement | null;
+      setNavH(nav?.offsetHeight ?? 0);
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+
   return (
     <main className="env">
       <style>{`
         .env {
           --gutter: clamp(20px, 6vw, 88px);
           --maxw: 1260px;
+          --cardw: min(1120px, 92vw);
           background: #f5f5f7;
           width: 100vw;
           margin-left: calc(50% - 50vw);
           margin-right: calc(50% - 50vw);
           color: #1d1d1f;
           font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
-          overflow-x: hidden;
+          overflow-x: clip;
         }
         .env-wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
         .env mark { background: #30d158; color: #1d1d1f; border-radius: 2px; padding: 0 0.06em; }
@@ -202,9 +213,9 @@ export default function Environment() {
         /* gray image placeholder */
         .env-ph { background: repeating-linear-gradient(135deg,#e3e3e6,#e3e3e6 18px,#dcdce0 18px,#dcdce0 36px); display: flex; align-items: center; justify-content: center; color: #8a8a8f; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
 
-        /* ---------- 1. Hero (white, full screen) ---------- */
-        .env-hero { position: relative; min-height: 100svh; display: flex; align-items: center; justify-content: center; text-align: center; padding: clamp(72px, 11vh, 120px) var(--gutter); background: #ffffff; color: #1d1d1f; }
-        .env-hero-h1 { margin: 0; font-weight: 400; white-space: nowrap; text-transform: uppercase; font-size: clamp(13px, 4.3vw, 60px); line-height: 1.05; letter-spacing: 0.01em; color: #1d1d1f; }
+        /* ---------- 1. Hero (full-screen image) ---------- */
+        .env-hero { position: relative; height: 100svh; min-height: 100svh; overflow: hidden; padding: 0; background: #ffffff; margin-top: calc(-1 * clamp(64px, 7vw, 130px)); }
+        .env-hero-img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
         /* ---------- generic section heading ---------- */
         .env-section { padding: clamp(72px, 11vh, 150px) 0; }
@@ -216,15 +227,22 @@ export default function Environment() {
 
         /* ---------- 2. two product cards ---------- */
         .env-products { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 2.4vw, 40px); margin-top: clamp(36px, 4vw, 60px); }
-        .env-prod-card { border-radius: 22px; overflow: hidden; aspect-ratio: 11 / 8; }
+        .env-prod-card { position: relative; border-radius: 22px; overflow: hidden; aspect-ratio: 11 / 8; }
         .env-prod-card .env-ph { width: 100%; height: 100%; }
+        .env-prod-img { display: block; width: 100%; height: 100%; object-fit: cover; transition: filter 300ms ease; }
+        .env-prod-card--shop:hover .env-prod-img { filter: brightness(0.5); }
+        .env-prod-cta { position: absolute; right: clamp(18px, 2vw, 28px); bottom: clamp(18px, 2vw, 28px); opacity: 0; pointer-events: none; background: #18a544; color: #ffffff; font-size: clamp(14px, 1.3vw, 16px); font-weight: 600; letter-spacing: -0.01em; padding: 0.72em 1.6em; border-radius: 980px; text-decoration: none; white-space: nowrap; transform: translateY(8px); transition: opacity 300ms ease, transform 300ms ease, background 200ms ease; }
+        .env-prod-card--shop:hover .env-prod-cta { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        .env-prod-cta:hover { background: #128a37; }
         .env-prod-cap { margin: clamp(16px, 1.6vw, 22px) 0 0; font-size: clamp(14px, 1.3vw, 16px); font-weight: 500; line-height: 1.45; color: #6e6e73; max-width: 48ch; }
         .env-prod-cap b { color: #1d1d1f; font-weight: 600; }
 
         /* ---------- 2b. impact blocks (image + 3 stats) ---------- */
         .env-im { display: grid; grid-template-columns: 1fr 1fr; align-items: center; background: #ffffff; width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); }
+        .env-im + .env-im { border-top-style: solid; border-top-color: #ffffff; border-top-width: clamp(16px, 2vw, 28px); }
         .env-im-media { align-self: stretch; min-height: clamp(360px, 44vw, 640px); }
         .env-im-media .env-ph { width: 100%; height: 100%; }
+        .env-im-img { display: block; width: 100%; height: 100%; object-fit: cover; }
         .env-im-text { padding: clamp(48px, 7vh, 100px) clamp(28px, 6vw, 96px); }
         .env-im-head { margin: 0 0 clamp(22px, 3vw, 38px); font-size: clamp(20px, 1.8vw, 24px); font-weight: 600; color: #1d1d1f; }
         .env-im-stat { margin-bottom: clamp(22px, 3vw, 38px); }
@@ -238,22 +256,30 @@ export default function Environment() {
         /* ---------- 5. design section (light) ---------- */
         .env-design-media { position: relative; margin: clamp(40px, 5vw, 64px) auto 0; width: min(1048px, 100%); aspect-ratio: 16 / 9; border-radius: 20px; overflow: hidden; }
         .env-design-media .env-ph { width: 100%; height: 100%; }
+        .env-design-vid { display: block; width: 100%; height: 100%; object-fit: cover; }
         .env-design-cta-row { display: flex; justify-content: center; margin-top: clamp(40px, 5vw, 64px); }
         .env-design-cta { display: inline-flex; align-items: center; height: 56px; padding: 0 32px; border-radius: 28px; background: #1d1d1f; text-decoration: none; cursor: pointer; transition: background 200ms ease; }
         .env-design-cta:hover { background: #333335; }
         .env-design-cta-label { color: #ffffff; font-size: 17px; font-weight: 600; letter-spacing: -0.022em; white-space: nowrap; }
         .env-stats3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(28px, 4vw, 60px); max-width: 980px; margin: clamp(48px, 6vw, 80px) auto 0; text-align: center; }
         .env-stat3-up { margin: 0; font-size: clamp(15px, 1.4vw, 17px); font-weight: 500; color: #6e6e73; line-height: 1.4; }
-        .env-stat3-big { margin: 4px 0; font-size: clamp(30px, 3.4vw, 46px); font-weight: 600; letter-spacing: -0.01em; line-height: 1.12; background: linear-gradient(180deg, #f6d0bf 0%, #e3a98f 48%, #c98a72 100%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
+        .env-stat3-big { margin: 4px 0; font-size: clamp(30px, 3.4vw, 46px); font-weight: 600; letter-spacing: -0.01em; line-height: 1.12; background: linear-gradient(180deg, #1f9e57 0%, #0f7a3c 50%, #0a5c2c 100%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
         .env-stat3-desc { margin: 0; font-size: clamp(14px, 1.3vw, 16px); font-weight: 500; color: #6e6e73; line-height: 1.38; }
 
         /* ---------- carousel ---------- */
         .env-carousel { margin-top: clamp(36px, 4vw, 60px); }
-        .env-track { display: flex; gap: clamp(16px, 1.6vw, 22px); padding: 4px var(--gutter); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+        .env-track { display: flex; gap: clamp(16px, 1.6vw, 22px); padding: 4px max(var(--gutter), calc((100vw - var(--cardw)) / 2)); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
         .env-track::-webkit-scrollbar { display: none; }
         .env-track.is-center { justify-content: center; }
-        .env-card { scroll-snap-align: start; flex: none; width: min(560px, 82vw); min-height: clamp(420px, 48vw, 560px); border-radius: 24px; overflow: hidden; padding: clamp(28px, 3vw, 44px); display: flex; flex-direction: column; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
-        .env-card-img { flex: 1; width: 100%; min-height: 0; border-radius: 14px; }
+        .env-card { position: relative; scroll-snap-align: center; flex: none; width: var(--cardw); aspect-ratio: 16 / 9; border-radius: 24px; overflow: hidden; display: flex; flex-direction: column; }
+        .env-card-pill { position: absolute; left: 50%; bottom: clamp(20px, 2.4vw, 34px); transform: translateX(-50%); z-index: 3; padding: clamp(9px, 0.9vw, 13px) clamp(20px, 1.9vw, 30px); border-radius: 999px; background: rgba(255, 255, 255, 0.26); border: 1px solid rgba(255, 255, 255, 0.4); backdrop-filter: blur(34px) saturate(180%); -webkit-backdrop-filter: blur(34px) saturate(180%); color: #ffffff; font-size: clamp(14px, 1.4vw, 19px); font-weight: 600; letter-spacing: -0.01em; white-space: nowrap; }
+        .env-cprog { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: clamp(28px, 3.4vw, 48px); padding: 0 var(--gutter); }
+        .env-cseg { position: relative; height: 8px; width: 8px; padding: 0; border: none; border-radius: 980px; background: rgba(0, 0, 0, 0.18); cursor: pointer; overflow: hidden; transition: width 480ms cubic-bezier(0.22, 1, 0.36, 1), background 300ms ease; }
+        .env-cseg.is-active { width: 52px; background: rgba(0, 0, 0, 0.14); }
+        @keyframes envCfill { from { width: 0%; } to { width: 100%; } }
+        .env-cfill { display: block; height: 100%; width: 0%; border-radius: 980px; background: #1d1d1f; animation: envCfill 4500ms linear forwards; }
+        @media (prefers-reduced-motion: reduce) { .env-cfill { animation: none; width: 100%; } }
+        .env-card-img { flex: 1; width: 100%; min-height: 0; object-fit: cover; }
         .env-card-graphic { flex: 1; display: flex; align-items: center; justify-content: center; }
         .env-g { width: clamp(90px, 12vw, 140px); height: clamp(90px, 12vw, 140px); }
         .env-card-text { margin-top: clamp(20px, 2vw, 28px); }
@@ -271,14 +297,23 @@ export default function Environment() {
         .env-arrow svg { width: 18px; height: 18px; }
 
         /* ---------- 3. made to last (stats) ---------- */
-        .env-stats-row { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(32px, 5vw, 80px); align-items: center; margin-top: clamp(40px, 5vw, 72px); }
-        .env-stats-media { border-radius: 20px; overflow: hidden; aspect-ratio: 4/3; }
+        .env-stats-row { display: grid; grid-template-columns: 1fr; gap: clamp(36px, 5vw, 64px); margin-top: clamp(40px, 5vw, 72px); }
+        .env-stats-media { border-radius: 20px; overflow: hidden; aspect-ratio: 16 / 9; }
         .env-stats-media .env-ph { width: 100%; height: 100%; }
-        .env-stats { display: flex; flex-direction: column; gap: clamp(20px, 2.4vw, 34px); }
-        .env-stat { display: flex; align-items: center; gap: 16px; }
-        .env-stat-ico { flex: none; width: 40px; height: 40px; }
-        .env-stat-num { margin: 0; font-size: clamp(34px, 4vw, 52px); font-weight: 600; letter-spacing: -0.02em; line-height: 1; }
-        .env-stat-desc { margin: 4px 0 0; font-size: clamp(13px, 1.2vw, 15px); font-weight: 500; color: #6e6e73; line-height: 1.35; }
+        .env-stats-img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+        .env-ub { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .env-ub-col { display: flex; flex-direction: column; gap: 20px; }
+        .env-ub-card { position: relative; border-radius: 28px; overflow: hidden; background: #1d1d1f; }
+        .env-ub-tall { height: clamp(330px, 41vw, 401px); }
+        .env-ub-short { height: clamp(196px, 25vw, 241px); display: flex; align-items: center; gap: 20px; padding: clamp(24px, 3vw, 40px); }
+        .env-ub-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+        .env-ub-scrim { position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(0,0,0,0) 42%, rgba(0,0,0,0.55) 100%); }
+        .env-ub-inner { position: relative; z-index: 2; height: 100%; padding: clamp(28px, 3.4vw, 40px); display: flex; flex-direction: column; justify-content: flex-end; gap: clamp(16px, 2vw, 24px); }
+        .env-ub-ic { width: clamp(38px, 4.4vw, 56px); height: clamp(38px, 4.4vw, 56px); flex: none; stroke: url(#sb-grad); }
+        .env-ub-tall .env-ub-ic { align-self: flex-start; margin-top: auto; }
+        .env-ub-text { display: flex; flex-direction: column; }
+        .env-ub-num { margin: 0; font-weight: 600; line-height: 1; letter-spacing: -0.02em; font-size: clamp(38px, 4.8vw, 64px); background: linear-gradient(180deg, #6cb8ff 0%, #2b8fff 52%, #0a84ff 100%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
+        .env-ub-label { margin: 10px 0 0; font-weight: 500; font-size: clamp(15px, 1.4vw, 18px); color: rgba(245, 245, 247, 0.8); }
         .env-tri { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 1.6vw, 22px); margin-top: clamp(36px, 4vw, 60px); }
         .env-tri-card { background: #ffffff; border-radius: 20px; padding: clamp(24px, 2.6vw, 36px); min-height: 230px; display: flex; flex-direction: column; }
         .env-tri-card.dark { background: #1d1d1f; color: #f5f5f7; }
@@ -329,7 +364,7 @@ export default function Environment() {
         .env-logo-plus { position: absolute; right: -12.5px; bottom: -12.5px; width: 24px; height: 24px; color: #9a9aa0; z-index: 1; }
 
         /* ---------- 6e. testimonials ---------- */
-        .env-tm-track { margin-top: clamp(36px, 4vw, 60px); display: flex; gap: clamp(16px, 1.6vw, 22px); overflow-x: auto; scroll-snap-type: x proximity; padding-top: 4px; padding-bottom: 4px; padding-right: var(--gutter); padding-left: max(var(--gutter), calc((100vw - var(--maxw)) / 2 + var(--gutter))); scrollbar-width: none; }
+        .env-tm-track { margin-top: clamp(36px, 4vw, 60px); display: flex; gap: clamp(16px, 1.6vw, 22px); padding: 4px 0 4px var(--gutter); scroll-padding-left: var(--gutter); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
         .env-tm-track::-webkit-scrollbar { display: none; }
         .env-tm-card { flex: none; width: min(420px, 84vw); scroll-snap-align: start; background: #ffffff; border-radius: 24px; padding: clamp(28px, 3vw, 40px); display: flex; flex-direction: column; min-height: clamp(290px, 30vw, 360px); box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
         .env-tm-quote { margin: 0; font-size: clamp(17px, 1.6vw, 21px); font-weight: 500; line-height: 1.4; letter-spacing: -0.01em; color: #1d1d1f; }
@@ -377,6 +412,7 @@ export default function Environment() {
           .env-stats3 { grid-template-columns: 1fr; }
           .env-im { grid-template-columns: 1fr; }
           .env-im--rev .env-im-media { order: -1; }
+          .env-ub { grid-template-columns: 1fr; }
           .env-bento { grid-template-columns: 1fr; }
           .env-bento-card { min-height: clamp(320px, 70vw, 460px); }
           .env-bento-card.split { grid-template-columns: 1fr; }
@@ -393,8 +429,8 @@ export default function Environment() {
       `}</style>
 
       {/* 1 — HERO */}
-      <header className="env-hero">
-        <h1 className="env-hero-h1">The best air you will ever breathe.</h1>
+      <header className="env-hero" style={navH ? { marginTop: `-${navH}px` } : undefined}>
+        <img className="env-hero-img" src="/3pa.jpg" alt="" />
       </header>
 
       {/* 2 — TWO PRODUCTS */}
@@ -405,7 +441,10 @@ export default function Environment() {
           <p className="env-sub">PureAir works inside. AirFINEry works where the air is open.</p>
           <div className="env-products">
             <div>
-              <div className="env-prod-card"><Slot label="PureAir" /></div>
+              <div className="env-prod-card env-prod-card--shop">
+                <img className="env-prod-img" src="/spa.jpg" alt="PureAir" />
+                <a className="env-prod-cta" href="/contact">Buy Now</a>
+              </div>
               <p className="env-prod-cap">
                 <b>PureAir.</b> Handles indoor and large indoor areas, schools,
                 offices, meeting rooms, warehouses, libraries, and labs, up to
@@ -428,6 +467,7 @@ export default function Environment() {
       <ImpactBlock
         title="PureAir"
         imgLabel="PureAir image"
+        img="/pa3.jpg"
         stats={[
           { icon: "frame", num: "2,000", unit: "sq ft.", desc: "of area coverage from a single unit, built for large, open indoor spaces." },
           { icon: "filter", num: "99.9%", unit: "", desc: "filter efficiency, capturing fine particles down to 0.3 microns." },
@@ -454,22 +494,56 @@ export default function Environment() {
           </h2>
           <p className="env-sub">The world&rsquo;s filtration benchmark, built for Indian air.</p>
           <div className="env-stats-row">
-            <div className="env-stats-media"><Slot label="MANN+ HUMMEL image" /></div>
-            <div className="env-stats">
-              {[
-                { num: "1941", desc: "founded" },
-                { num: "80+", desc: "countries" },
-                { num: "4,700+", desc: "patents" },
-                { num: "60+", desc: "university partnerships" },
-              ].map((s, i) => (
-                <div className="env-stat" key={i}>
-                  <span className="env-stat-ico"><Leaf /></span>
-                  <div>
-                    <p className="env-stat-num">{s.num}</p>
-                    <p className="env-stat-desc">{s.desc}</p>
+            <div className="env-stats-media"><img className="env-stats-img" src="/mhh.jpg" alt="" /></div>
+            <svg width="0" height="0" aria-hidden style={{ position: "absolute" }}>
+              <defs>
+                <linearGradient id="sb-grad" gradientUnits="userSpaceOnUse" x1="12" y1="0" x2="12" y2="24">
+                  <stop offset="0%" stopColor="#6cb8ff" />
+                  <stop offset="100%" stopColor="#0a84ff" />
+                </linearGradient>
+              </defs>
+            </svg>
+            <div className="env-ub">
+              <div className="env-ub-col">
+                <article className="env-ub-card env-ub-tall">
+                  <img className="env-ub-photo" src="/ub-photo-d.jpg" alt="" aria-hidden />
+                  <div className="env-ub-scrim" aria-hidden />
+                  <div className="env-ub-inner">
+                    <Flag className="env-ub-ic" strokeWidth={1.8} aria-hidden />
+                    <div className="env-ub-text">
+                      <p className="env-ub-num"><Counter to={1941} group={false} /></p>
+                      <p className="env-ub-label">Founded</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                </article>
+                <article className="env-ub-card env-ub-short">
+                  <Globe className="env-ub-ic" strokeWidth={1.8} aria-hidden />
+                  <div className="env-ub-text">
+                    <p className="env-ub-num"><Counter to={80} suffix="+" /></p>
+                    <p className="env-ub-label">Countries</p>
+                  </div>
+                </article>
+              </div>
+              <div className="env-ub-col">
+                <article className="env-ub-card env-ub-short">
+                  <Lightbulb className="env-ub-ic" strokeWidth={1.8} aria-hidden />
+                  <div className="env-ub-text">
+                    <p className="env-ub-num"><Counter to={4700} suffix="+" /></p>
+                    <p className="env-ub-label">Patents</p>
+                  </div>
+                </article>
+                <article className="env-ub-card env-ub-tall">
+                  <img className="env-ub-photo" src="/ub-photo-e.jpg" alt="" aria-hidden />
+                  <div className="env-ub-scrim" aria-hidden />
+                  <div className="env-ub-inner">
+                    <GraduationCap className="env-ub-ic" strokeWidth={1.8} aria-hidden />
+                    <div className="env-ub-text">
+                      <p className="env-ub-num"><Counter to={60} suffix="+" /></p>
+                      <p className="env-ub-label">University partnerships</p>
+                    </div>
+                  </div>
+                </article>
+              </div>
             </div>
           </div>
         </div>
@@ -498,7 +572,9 @@ export default function Environment() {
           <p className="env-eyebrow">The Technology Inside</p>
           <h2 className="env-h2">Multi-Stage Filtration</h2>
           <p className="env-sub">Catches the fine particles ordinary purifiers miss.</p>
-          <div className="env-design-media"><Slot label="Filter image" /></div>
+          <div className="env-design-media">
+            <SectionVideo className="env-design-vid" src="/filtervid.mp4" />
+          </div>
           <div className="env-stats3">
             <div className="env-stat3">
               <p className="env-stat3-up">Up to</p>
@@ -650,6 +726,28 @@ export default function Environment() {
         title={<>Find out what your<br />air is hiding.</>}
         sub="Tell us about your space and we return a coverage plan, the number of units you need, and the AQI you can expect."
         cta={{ label: "Get a free assessment", href: "/contact" }}
+        art={
+          <svg viewBox="0 0 1310 500" fill="none" aria-hidden xmlns="http://www.w3.org/2000/svg">
+            <g stroke="#4ade80" strokeWidth={7} strokeLinecap="round" strokeLinejoin="round">
+              {/* PureAir — compact indoor unit */}
+              <rect x={690} y={182} width={208} height={228} rx={24} />
+              <circle cx={794} cy={300} r={80} />
+              <circle cx={794} cy={300} r={52} strokeWidth={6} />
+              <circle cx={794} cy={300} r={20} strokeWidth={6} />
+              <rect x={712} y={202} width={52} height={20} rx={6} strokeWidth={5} />
+              <rect x={826} y={352} width={48} height={36} rx={6} strokeWidth={5} />
+              <path d="M716 410v20M872 410v20" />
+              {/* AirFINEry — large-space unit */}
+              <rect x={952} y={110} width={262} height={300} rx={28} />
+              <circle cx={1083} cy={248} r={98} />
+              <circle cx={1083} cy={248} r={64} strokeWidth={6} />
+              <circle cx={1083} cy={248} r={26} strokeWidth={6} />
+              <rect x={978} y={132} width={64} height={22} rx={6} strokeWidth={5} />
+              <rect x={1134} y={352} width={54} height={38} rx={6} strokeWidth={5} />
+              <path d="M982 410v20M1182 410v20" />
+            </g>
+          </svg>
+        }
       />
 
       {/* 8 — FOOTER (light) */}
@@ -781,6 +879,86 @@ function Testimonials() {
   );
 }
 
+// Self-hosted video that plays only while its section is in view, and pauses
+// (keeping its position) when scrolled away.
+function SectionVideo({ src, className }: { src: string; className?: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) v.play().catch(() => {});
+        else v.pause();
+      },
+      { threshold: 0.3 }
+    );
+    io.observe(v);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <video
+      ref={ref}
+      className={className}
+      src={src}
+      loop
+      muted
+      playsInline
+      preload="auto"
+      aria-hidden
+    />
+  );
+}
+
+// Count-up number that animates from 0 to `to` when it scrolls into view.
+function Counter({
+  to,
+  suffix = "",
+  group = true,
+  duration = 1500,
+}: {
+  to: number;
+  suffix?: string;
+  group?: boolean;
+  duration?: number;
+}) {
+  const [val, setVal] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting && !started.current) {
+          started.current = true;
+          let startTime = 0;
+          const tick = (now: number) => {
+            if (!startTime) startTime = now;
+            const p = Math.min(1, (now - startTime) / duration);
+            const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+            setVal(Math.round(to * eased));
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.4 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [to, duration]);
+
+  return (
+    <span ref={ref}>
+      {group ? val.toLocaleString("en-US") : String(val)}
+      {suffix}
+    </span>
+  );
+}
+
 function ImpactIcon({ kind }: { kind: string }) {
   const p = { stroke: "currentColor", strokeWidth: 2, fill: "none", strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
   return (
@@ -811,16 +989,18 @@ function ImpactBlock({
   reverse = false,
   title,
   imgLabel,
+  img,
   stats,
 }: {
   reverse?: boolean;
   title: string;
   imgLabel: string;
+  img?: string;
   stats: ImpactStat[];
 }) {
   const media = (
     <div className="env-im-media">
-      <Slot label={imgLabel} />
+      {img ? <img className="env-im-img" src={img} alt="" /> : <Slot label={imgLabel} />}
     </div>
   );
   const text = (

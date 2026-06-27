@@ -78,14 +78,18 @@ const LIGHT_HERO_ROUTES = new Set<string>([]);
 const DARK_HERO_ROUTES = new Set<string>(["/about", "/products/pureair"]);
 // Full light-mode pages — the nav is a persistent white bar with dark contents the
 // entire time (it never flips to the black bar).
-const LIGHT_PAGE_ROUTES = new Set<string>(["/", "/proof", "/contact"]);
+const LIGHT_PAGE_ROUTES = new Set<string>(["/proof", "/contact"]);
+// Routes whose hero gets a frosted-glass nav (translucent white + blur) while the
+// hero is on screen so it blends with the image, then a solid white bar after.
+const FROSTED_HERO_ROUTES = new Set<string>(["/"]);
 
 export default function Nav() {
   const pathname = usePathname();
   const hasLightHero = LIGHT_HERO_ROUTES.has(pathname);
   const hasDarkHero = DARK_HERO_ROUTES.has(pathname);
+  const hasFrostedHero = FROSTED_HERO_ROUTES.has(pathname);
   const isLightPage = LIGHT_PAGE_ROUTES.has(pathname);
-  const hasHero = hasLightHero || hasDarkHero;
+  const hasHero = hasLightHero || hasDarkHero || hasFrostedHero;
 
   const [hidden, setHidden] = useState(false);
   const [overHero, setOverHero] = useState(hasHero);
@@ -145,12 +149,14 @@ export default function Nav() {
     };
   }, [hasHero]);
 
-  // While over the light hero the nav is white with dark contents; over a dark
-  // hero it's transparent; once scrolled past either, it's the solid black bar.
-  const lightNav = isLightPage || (hasLightHero && overHero);
-  const wrapperBg = isLightPage
-    ? "#ffffff"
-    : lightNav
+  // Over the home hero the bar is frosted glass (translucent + blur) so the image
+  // shows through; over a light hero it's solid white; over a dark hero it's
+  // transparent; once scrolled past, it's solid white (light pages) or black.
+  const frosted = hasFrostedHero && overHero && !navOpen;
+  const lightNav = isLightPage || hasFrostedHero || (hasLightHero && overHero);
+  const wrapperBg = frosted
+    ? "rgba(255, 255, 255, 0.18)"
+    : isLightPage || lightNav
     ? "#ffffff"
     : hasDarkHero && overHero
     ? "transparent"
@@ -181,6 +187,8 @@ export default function Nav() {
           color: "var(--nav-fg)",
           fontFamily: "var(--font-sans), ui-sans-serif, system-ui, sans-serif",
           background: navOpen ? "#1d1d1f" : wrapperBg,
+          backdropFilter: frosted ? "blur(26px) saturate(170%)" : undefined,
+          WebkitBackdropFilter: frosted ? "blur(26px) saturate(170%)" : undefined,
           transform: hidden ? "translateY(-100%)" : "translateY(0)",
           // While a menu is open the background must snap (no transition) so the
           // bar matches the panel's gray on the very first frame.
