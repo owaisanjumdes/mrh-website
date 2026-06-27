@@ -15,10 +15,10 @@ type Tab = {
 };
 
 const TABS: Tab[] = [
-  { icon: "/cs-ic1.svg", l1: "Center Stage", l2: "for photos", screen: "/app-aqi.jpg" },
-  { icon: "/cs-ic2.svg", l1: "Dual Capture", l2: "video", screen: "/app-filterhealth.jpg" },
-  { icon: "/cs-ic3.svg", l1: "Ultra‑stabilized", l2: "video", screen: "/app-serviceonwheels.jpg" },
-  { icon: "/cs-ic4.svg", l1: "Center Stage", l2: "for video calls", screen: "/app-timings.jpg" },
+  { icon: "/cs-ic2.svg", l1: "One Unified", l2: "Dashboard", screen: "/app-timings.jpg" },
+  { icon: "/tab-aqi.svg", l1: "Live AQI,", l2: "everywhere", screen: "/app-aqi.jpg" },
+  { icon: "/tab-service.svg", l1: "Service on", l2: "Wheels", screen: "/app-serviceonwheels.jpg" },
+  { icon: "/tab-filter.svg", l1: "Filter health,", l2: "tracked", screen: "/app-filterhealth.jpg" },
 ];
 
 const BLOCKS = [

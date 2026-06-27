@@ -456,6 +456,21 @@ export default function Highlights() {
 
         @media (max-width: 720px) {
           .hl-head { flex-direction: column; align-items: flex-start; gap: 8px; }
+          /* On mobile the narrow cardw made the cards portrait, cropping the
+             (landscape) video. So stack the cards vertically in a landscape
+             ratio instead of the horizontal portrait carousel. */
+          .hl-track {
+            flex-direction: column;
+            transform: none !important;
+            gap: clamp(16px, 4vw, 24px);
+          }
+          .hl-card {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 10;
+          }
+          .hl-card-cap { white-space: normal; }
+          .hl-controls { display: none; }
         }
         @media (prefers-reduced-motion: reduce) {
           .hl-track { transition: none; }

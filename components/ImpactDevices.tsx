@@ -15,6 +15,7 @@ export default function ImpactDevices({
   cta?: { label: string; href: string };
   art?: ReactNode;
 } = {}) {
+  const hasArt = art != null;
   return (
     <section className="idev" aria-label="Our products are validated by IIT Delhi.">
       <style>{`
@@ -81,6 +82,11 @@ export default function ImpactDevices({
         }
         .idev-cta:hover { background: #0077ed; }
 
+        /* text-only card (no illustration): text flows in a padded card */
+        .idev-card--text { padding: clamp(40px, 6vw, 80px) clamp(28px, 4.4vw, 72px); }
+        .idev-card--text .idev-text { position: static; transform: none; max-width: none; }
+        .idev-card--text .idev-sub { max-width: 56ch; }
+
         /* Stack on narrow screens — text above, illustration below */
         @media (max-width: 760px) {
           .idev-text {
@@ -95,7 +101,7 @@ export default function ImpactDevices({
         }
       `}</style>
 
-      <div className="idev-card" data-reveal>
+      <div className={`idev-card ${hasArt ? "" : "idev-card--text"}`} data-reveal>
         <div className="idev-text">
           <h2 className="idev-title">
             {title ?? (
@@ -109,8 +115,10 @@ export default function ImpactDevices({
           <p className="idev-sub">
             {sub ?? (
               <>
-                Protect the earth’s precious resources by recycling the Apple
-                products, packaging, and accessories you no longer use.
+                An independent IIT Delhi study tested MRH in real schools over 60
+                days, through Delhi&rsquo;s worst air. The result: up to 90%
+                fewer pollutants, indoors and out. No lab tricks, just measured
+                proof.
               </>
             )}
           </p>
@@ -119,16 +127,7 @@ export default function ImpactDevices({
           </a>
         </div>
 
-        <div className="idev-media">
-          {art ?? (
-            <img
-              src="/impact-devices.jpg"
-              alt="A laptop, earbuds, phone, watch, and tablet drawn in green line art"
-              width={2524}
-              height={964}
-            />
-          )}
-        </div>
+        {hasArt ? <div className="idev-media">{art}</div> : null}
       </div>
     </section>
   );

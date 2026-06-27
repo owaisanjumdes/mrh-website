@@ -1,26 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 // "Camera — The ultimate show and tell." — Figma node 756:9302.
-// Header + a media panel with a Center Stage / Desk View tab control and caption.
-// Copy kept verbatim from the Figma design.
-
-const TABS = [
-  {
-    label: "Center Stage",
-    caption:
-      "Center Stage keeps you in frame during video calls, even as you move around or when more people join your frame.",
-  },
-  {
-    label: "Desk View",
-    caption:
-      "Desk View shows an overhead look at your desk, so you can present what’s in front of you.",
-  },
-];
+// Header + a media panel (video).
 
 export default function CameraShowTell() {
-  const [active, setActive] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Play while the video is in view (looping); stop and reset when it leaves.
@@ -58,11 +43,15 @@ export default function CameraShowTell() {
         .cam-head-inner { padding-left: clamp(0px, 16vw, 210px); max-width: 840px; }
         .cam-eyebrow {
           margin: 0;
-          color: #f5f5f7;
           font-size: clamp(17px, 2vw, 24px);
           font-weight: 600;
           line-height: 1.17;
           letter-spacing: 0.009em;
+          background: linear-gradient(90deg, rgb(116,198,251) 0%, rgb(96,209,241) 45%, rgb(41,151,255) 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          -webkit-text-fill-color: transparent;
         }
         .cam-title {
           margin: clamp(12px, 1.6vw, 20px) 0 0;
@@ -212,25 +201,6 @@ export default function CameraShowTell() {
             </svg>
           </span>
         </div>
-
-        <div className="cam-tabs">
-          <div className="cam-tablist" role="tablist">
-            {TABS.map((t, i) => (
-              <button
-                key={t.label}
-                type="button"
-                role="tab"
-                aria-selected={i === active}
-                className={`cam-tab ${i === active ? "is-active" : ""}`}
-                onClick={() => setActive(i)}
-              >
-                {t.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <p className="cam-caption">{TABS[active].caption}</p>
       </div>
     </section>
   );

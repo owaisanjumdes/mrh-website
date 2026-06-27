@@ -26,13 +26,13 @@ const FEATURES: Feature[] = [
     title: "Colors",
     description:
       "Four powder-coated finishes built to fit the room. Pick one that disappears into your space, or match it to your brand.",
-    image: "/slr.png",
+    image: "/rgm.png",
     accent: "#f0a48c",
     colors: [
-      { name: "Silver", swatch: "#c8c5c1", image: "/slr.png" },
-      { name: "Rose Gold", swatch: "#e0b6a6", image: "/rsg.png" },
-      { name: "Pearl White", swatch: "#f3f0ec", border: "#5a5a5e", image: "/pwht.png" },
-      { name: "Graphite Gray", swatch: "#4a4a4d", image: "/grgr.png" },
+      { name: "Rose Gold", swatch: "#eea487", image: "/rgm.png" },
+      { name: "Silver", swatch: "#c8c5c1", image: "/sm.png" },
+      { name: "Pearl White", swatch: "#f3f0ec", border: "#5a5a5e", image: "/pwm.png" },
+      { name: "Graphite Gray", swatch: "#343b47", image: "/ggm.png" },
     ],
   },
   {
@@ -49,15 +49,15 @@ const FEATURES: Feature[] = [
     title: "Live AQI sensor",
     description:
       "Real-time PM2.5 and AQI right on the front panel. The same air you're breathing, read continuously, in plain numbers you can trust.",
-    image: "/aqimeter.png",
+    image: "/am.png",
   },
   {
     id: "iot",
-    label: "IoT",
-    title: "IoT",
+    label: "App control",
+    title: "App control",
     description:
       "Connect PureAir to the MRH app for live readings, filter health, and scheduling from anywhere. Every unit reports into the OK Play deployment dashboard.",
-    image: "/digital.png",
+    image: "/iphonetimings.png",
   },
   {
     id: "engineering",
@@ -73,7 +73,7 @@ const FEATURES: Feature[] = [
     title: "Self-diagnostic alerts",
     description:
       "PureAir tracks its own health and flags service before you notice a thing. We get the alert, and we handle it.",
-    image: "/internal.png",
+    image: "/iphonesow.png",
   },
 ];
 
@@ -244,6 +244,20 @@ export default function CloserLook() {
           object-fit: contain;
           padding: clamp(28px, 5vw, 80px);
           padding-left: clamp(220px, 30%, 420px);
+        }
+        /* App control + Self-diagnostic images: centered naturally, a bit smaller */
+        .cl-img--iot,
+        .cl-img--diagnostics {
+          padding: clamp(48px, 7vw, 110px);
+          padding-left: clamp(220px, 30%, 420px);
+          object-position: center;
+        }
+        /* Live AQI sensor image: smaller, nudged right, top pinned to the card edge */
+        .cl-img--sensor {
+          padding-top: 0;
+          padding-right: clamp(40px, 8vw, 150px);
+          padding-bottom: clamp(200px, 34vh, 500px);
+          object-position: 82% top;
         }
         @keyframes clImgOut {
           to { opacity: 0; transform: translateX(-48px) scale(0.96); }
@@ -544,7 +558,7 @@ export default function CloserLook() {
 
       <div className="cl-viewer" ref={viewerRef}>
         <img
-          className={`cl-img ${
+          className={`cl-img cl-img--${FEATURES[imgIndex].id} ${
             imgPhase === "out"
               ? swapMode === "fade"
                 ? "cl-img-fadeout"

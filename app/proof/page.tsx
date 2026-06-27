@@ -21,7 +21,7 @@ export default function ImpactPage() {
     >
       <ImpactHero />
       <ImpactDevices />
-      <ImpactMaterials statsHeader="PureAir" />
+      <ImpactMaterials statsHeader="PureAir" image="/rgp.png" />
       <ImpactMaterials
         showHeader={false}
         reverse

@@ -259,7 +259,7 @@ export default function Environment() {
 
         /* ---------- 2b. impact blocks (image + 3 stats) ---------- */
         .env-im { display: grid; grid-template-columns: 1fr 1fr; align-items: center; background: #ffffff; width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); }
-        .env-im + .env-im { border-top-style: solid; border-top-color: #ffffff; border-top-width: clamp(16px, 2vw, 28px); }
+        .env-im + .env-im { border-top: 0; }
         .env-im-media { align-self: stretch; min-height: clamp(360px, 44vw, 640px); }
         .env-im-media .env-ph { width: 100%; height: 100%; }
         .env-im-img { display: block; width: 100%; height: 100%; object-fit: cover; }
@@ -269,15 +269,13 @@ export default function Environment() {
         .env-im-stat:last-child { margin-bottom: 0; }
         .env-im-stat-top { display: flex; align-items: flex-end; gap: 12px; }
         .env-im-icon { width: clamp(26px, 2.2vw, 32px); height: clamp(26px, 2.2vw, 32px); color: #1a8f3c; flex: none; align-self: center; }
-        .env-im-num { font-size: clamp(34px, 4vw, 52px); font-weight: 600; letter-spacing: -0.02em; color: #1d1d1f; line-height: 1; }
+        .env-im-num { font-size: clamp(28px, 3.4vw, 44px); font-weight: 600; letter-spacing: -0.02em; color: #1d1d1f; line-height: 1; }
         .env-im-unit { font-size: clamp(14px, 1.3vw, 17px); font-weight: 600; color: #1d1d1f; padding-bottom: 0.35em; }
         .env-im-desc { margin: clamp(8px, 1vw, 12px) 0 0; font-size: clamp(15px, 1.4vw, 18px); font-weight: 500; color: #6e6e73; line-height: 1.4; max-width: 34ch; }
-        /* centered "Explore X" pill that pops up as it scrolls into view */
-        .env-xcta { width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); background: #ffffff; display: flex; justify-content: center; padding: clamp(36px, 7vh, 88px) var(--gutter); }
-        .env-xcta-pill { display: inline-flex; align-items: center; height: 56px; padding: 0 34px; border-radius: 28px; background: #1d1d1f; color: #ffffff; font-size: clamp(15px, 1.5vw, 18px); font-weight: 600; letter-spacing: -0.01em; text-decoration: none; white-space: nowrap; opacity: 0; transform: translateY(18px) scale(0.96); transition: opacity 640ms cubic-bezier(0.22, 1, 0.36, 1), transform 640ms cubic-bezier(0.22, 1, 0.36, 1), background 200ms ease; }
-        .env-xcta.is-in .env-xcta-pill { opacity: 1; transform: translateY(0) scale(1); }
+        /* "Explore X" pill (reveal-bubble animation), placed below the stats */
+        .env-im-cta-wrap { margin-top: clamp(26px, 3.2vw, 46px); }
+        .env-xcta-pill { display: inline-flex; align-items: center; height: 54px; padding: 0 32px; border-radius: 27px; background: #1d1d1f; color: #ffffff; font-size: clamp(15px, 1.5vw, 18px); font-weight: 600; letter-spacing: -0.01em; text-decoration: none; white-space: nowrap; transition: background 200ms ease; }
         .env-xcta-pill:hover { background: #333335; }
-        @media (prefers-reduced-motion: reduce) { .env-xcta-pill { opacity: 1 !important; transform: none !important; } }
 
         /* ---------- 5. design section (light) ---------- */
         .env-design-media { position: relative; margin: clamp(40px, 5vw, 64px) auto 0; width: min(1048px, 100%); aspect-ratio: 16 / 9; border-radius: 20px; overflow: hidden; }
@@ -374,6 +372,7 @@ export default function Environment() {
         .env-bento-body { margin: 0; font-size: clamp(17px, 1.7vw, 22px); font-weight: 500; line-height: 1.3; letter-spacing: -0.01em; color: #1d1d1f; max-width: 36ch; }
         .env-bento-media { position: relative; flex: 1; min-height: clamp(180px, 20vw, 260px); }
         .env-bento-media .env-ph { position: absolute; inset: 0; width: 100%; height: 100%; }
+        .env-bento-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
 
         /* ---------- 6c. impact bento (1 full + 3) ---------- */
         .env-ib { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 1.6vw, 22px); margin-top: clamp(36px, 4vw, 60px); }
@@ -383,6 +382,7 @@ export default function Environment() {
         .env-ib-media { position: relative; min-height: clamp(220px, 24vw, 320px); }
         .env-ib-card:not(.full) .env-ib-media { flex: none; height: clamp(220px, 24vw, 320px); }
         .env-ib-media .env-ph { position: absolute; inset: 0; width: 100%; height: 100%; }
+        .env-ib-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
         .env-ib-text { padding: clamp(24px, 2.6vw, 40px); }
         .env-ib-label { margin: 0 0 8px; font-size: clamp(15px, 1.4vw, 18px); font-weight: 600; color: #1a8f3c; }
         .env-ib-num { margin: 0 0 clamp(10px, 1.2vw, 16px); font-size: clamp(34px, 4.4vw, 56px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.04; color: #1d1d1f; }
@@ -468,12 +468,12 @@ export default function Environment() {
       {/* 2 — TWO PRODUCTS */}
       <section className="env-section">
         <div className="env-wrap">
-          <p className="env-eyebrow">Two Products, Every Space</p>
-          <h2 className="env-h2">One purifier for indoors. One for everywhere else.</h2>
-          <p className="env-sub">PureAir works inside. AirFINEry works where the air is open.</p>
+          <p className="env-eyebrow" data-reveal>Two Products, Every Space</p>
+          <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>One purifier for indoors. One for everywhere else.</h2>
+          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>PureAir works inside. AirFINEry works where the air is open.</p>
         </div>
         <div className="env-products">
-          <div className="env-prod">
+          <div className="env-prod" data-reveal style={{ ["--ri" as string]: 0 }}>
             <div className="env-prod-card env-prod-card--shop">
               <img className="env-prod-img" src="/spa.jpg" alt="PureAir" />
               <a className="env-prod-cta" href="/contact">Buy Now</a>
@@ -484,9 +484,9 @@ export default function Environment() {
               2,000 sq ft per unit.
             </p>
           </div>
-          <div className="env-prod">
+          <div className="env-prod" data-reveal style={{ ["--ri" as string]: 1 }}>
             <div className="env-prod-card env-prod-card--shop">
-              <Slot label="AirFINEry" />
+              <img className="env-prod-img" src="/afd.png" alt="AirFINEry" />
               <a className="env-prod-cta" href="/contact">Buy Now</a>
             </div>
             <p className="env-prod-cap">
@@ -508,30 +508,31 @@ export default function Environment() {
           { icon: "filter", num: "99.9%", unit: "", desc: "filter efficiency, capturing fine particles down to 0.3 microns." },
           { icon: "wind", num: "2,800", unit: "m³/h", desc: "Clean Air Delivery Rate (CADR) for rapid, whole-room purification." },
         ]}
+        cta={{ label: "Explore PureAir", href: "/products/pureair" }}
       />
-      <ExploreCTA label="Explore PureAir" href="/products/pureair" />
       <ImpactBlock
         reverse
         title="AirFINEry"
         imgLabel="AirFINEry image"
+        img="/afp.png"
         stats={[
           { icon: "frame", num: "4,000", unit: "sq ft.", desc: "of area coverage from a single unit, built for the largest open indoor spaces." },
           { icon: "filter", num: "99.9%", unit: "", desc: "filter efficiency, capturing fine particles down to 0.3 microns." },
           { icon: "wind", num: "3,500", unit: "m³/h", desc: "Clean Air Delivery Rate (CADR) for rapid, whole-room purification." },
         ]}
+        cta={{ label: "Explore AirFINEry", href: "/products/airfinery" }}
       />
-      <ExploreCTA label="Explore AirFINEry" href="/products/airfinery" />
 
       {/* 3 — STATS */}
       <section className="env-section" style={{ background: "#ffffff" }}>
         <div className="env-wrap">
-          <p className="env-eyebrow">Powered By MANN+HUMMEL</p>
-          <h2 className="env-h2 env-h2--nowrap">
+          <p className="env-eyebrow" data-reveal>Powered By MANN+HUMMEL</p>
+          <h2 className="env-h2 env-h2--nowrap" data-reveal style={{ ["--ri" as string]: 1 }}>
             80 years of German filtration<br />now made in India.
           </h2>
-          <p className="env-sub">The world&rsquo;s filtration benchmark, built for Indian air.</p>
+          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>The world&rsquo;s filtration benchmark, built for Indian air.</p>
           <div className="env-stats-row">
-            <div className="env-stats-media"><img className="env-stats-img" src="/mhh.jpg" alt="" /></div>
+            <div className="env-stats-media" data-reveal><img className="env-stats-img" src="/mhh.jpg" alt="" /></div>
             <svg width="0" height="0" aria-hidden style={{ position: "absolute" }}>
               <defs>
                 <linearGradient id="sb-grad" gradientUnits="userSpaceOnUse" x1="12" y1="0" x2="12" y2="24">
@@ -542,7 +543,7 @@ export default function Environment() {
             </svg>
             <div className="env-ub">
               <div className="env-ub-col">
-                <article className="env-ub-card env-ub-tall">
+                <article className="env-ub-card env-ub-tall" data-reveal style={{ ["--ri" as string]: 0 }}>
                   <img className="env-ub-photo" src="/h1.jpg" alt="" aria-hidden />
                   <div className="env-ub-blur" aria-hidden />
                   <div className="env-ub-scrim" aria-hidden />
@@ -554,7 +555,7 @@ export default function Environment() {
                     </div>
                   </div>
                 </article>
-                <article className="env-ub-card env-ub-short" style={{ background: "#0C6553" }}>
+                <article className="env-ub-card env-ub-short" data-reveal style={{ background: "#20CA9D", ["--ri" as string]: 1 }}>
                   <Globe className="env-ub-ic" strokeWidth={1.8} aria-hidden />
                   <div className="env-ub-text">
                     <p className="env-ub-num"><Counter to={80} suffix="+" /></p>
@@ -563,14 +564,14 @@ export default function Environment() {
                 </article>
               </div>
               <div className="env-ub-col">
-                <article className="env-ub-card env-ub-short">
+                <article className="env-ub-card env-ub-short" data-reveal style={{ background: "#0C6553", ["--ri" as string]: 2 }}>
                   <Award className="env-ub-ic" strokeWidth={1.8} aria-hidden />
                   <div className="env-ub-text">
                     <p className="env-ub-num"><Counter to={4700} suffix="+" /></p>
                     <p className="env-ub-label">Patents</p>
                   </div>
                 </article>
-                <article className="env-ub-card env-ub-tall">
+                <article className="env-ub-card env-ub-tall" data-reveal style={{ ["--ri" as string]: 3 }}>
                   <img className="env-ub-photo" src="/h2.jpg" alt="" aria-hidden />
                   <div className="env-ub-blur" aria-hidden />
                   <div className="env-ub-scrim" aria-hidden />
@@ -598,9 +599,9 @@ export default function Environment() {
       {/* 4 — WHERE MRH WORKS (6-image carousel) */}
       <section className="env-section">
         <div className="env-wrap">
-          <p className="env-eyebrow">Where MRH Works</p>
-          <h2 className="env-h2">From classrooms to courtyards.</h2>
-          <p className="env-sub">200+ spaces, and counting.</p>
+          <p className="env-eyebrow" data-reveal>Where MRH Works</p>
+          <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>From classrooms to courtyards.</h2>
+          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>200+ spaces, and counting.</p>
         </div>
         <Carousel cards={SPACES_CARDS} />
       </section>
@@ -608,31 +609,31 @@ export default function Environment() {
       {/* 5 — DESIGN (light) */}
       <section className="env-section" style={{ background: "#ffffff" }}>
         <div className="env-wrap">
-          <p className="env-eyebrow">The Technology Inside</p>
-          <h2 className="env-h2">Multi-Stage Filtration</h2>
-          <p className="env-sub">Catches the fine particles ordinary purifiers miss.</p>
-          <div className="env-design-media">
+          <p className="env-eyebrow" data-reveal>The Technology Inside</p>
+          <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>Multi-Stage Filtration</h2>
+          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>Catches the fine particles ordinary purifiers miss.</p>
+          <div className="env-design-media" data-reveal>
             <SectionVideo className="env-design-vid" src="/filtervid.mp4" />
           </div>
           <div className="env-stats3">
-            <div className="env-stat3">
+            <div className="env-stat3" data-reveal style={{ ["--ri" as string]: 0 }}>
               <p className="env-stat3-up">Up to</p>
               <p className="env-stat3-big">2,000 sq ft</p>
               <p className="env-stat3-desc">cleaned per unit, so you need fewer</p>
             </div>
-            <div className="env-stat3">
+            <div className="env-stat3" data-reveal style={{ ["--ri" as string]: 1 }}>
               <p className="env-stat3-up">Down to</p>
               <p className="env-stat3-big">0.3 microns</p>
               <p className="env-stat3-desc">captured, including ultrafine particles</p>
             </div>
-            <div className="env-stat3">
+            <div className="env-stat3" data-reveal style={{ ["--ri" as string]: 2 }}>
               <p className="env-stat3-up">Certified to</p>
               <p className="env-stat3-big">ISO 16890</p>
               <p className="env-stat3-desc">the global clean-air standard</p>
             </div>
           </div>
 
-          <div className="env-design-cta-row">
+          <div className="env-design-cta-row" data-reveal>
             <a className="env-design-cta" href="/technology">
               <span className="env-design-cta-label">Explore Technology</span>
             </a>
@@ -646,28 +647,20 @@ export default function Environment() {
       {/* 6b — SIMULATION (light) */}
       <section className="env-section" style={{ background: "#ffffff" }}>
         <div className="env-wrap">
-          <p className="env-eyebrow">Intelligent Space Planning</p>
-          <h2 className="env-h2" style={{ maxWidth: "none" }}>
+          <p className="env-eyebrow" data-reveal>Intelligent Space Planning</p>
+          <h2 className="env-h2" data-reveal style={{ maxWidth: "none", ["--ri" as string]: 1 }}>
             We don&rsquo;t guess where clean air goes.
             <br />
             We simulate it.
           </h2>
         </div>
-        <div className="env-sim-media">
+        <div className="env-sim-media" data-reveal>
           <div className="env-sim-frame">
-            <video
-              src="/classroom-air-simulation.mp4"
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="auto"
-              aria-label="Air simulation showing how fast one unit clears a classroom"
-            />
+            <SectionVideo src="/simvid.mp4" />
           </div>
         </div>
         <div className="env-wrap env-sim-foot">
-          <p className="env-sim-copy">
+          <p className="env-sim-copy" data-reveal>
             Before a single unit is installed,{" "}
             <b>
               our simulation engine maps your space and shows exactly how fast it
@@ -677,7 +670,7 @@ export default function Environment() {
             unit took the air from 100 µg/m³ to zero in 30 minutes. The simulation
             called the placement.
           </p>
-          <a className="env-sim-link" href="/technology">
+          <a className="env-sim-link" href="/technology" data-reveal style={{ ["--ri" as string]: 1 }}>
             Discover Simulation <span aria-hidden>→</span>
           </a>
         </div>
@@ -686,18 +679,18 @@ export default function Environment() {
       {/* 6c — INDEPENDENTLY VALIDATED (4-card bento) */}
       <section className="env-section">
         <div className="env-wrap">
-          <p className="env-eyebrow">Independently Validated</p>
-          <h2 className="env-h2" style={{ maxWidth: "none" }}>
+          <p className="env-eyebrow" data-reveal>Independently Validated</p>
+          <h2 className="env-h2" data-reveal style={{ maxWidth: "none", ["--ri" as string]: 1 }}>
             We didn&rsquo;t test it ourselves.
             <br />
             IIT Delhi did.
           </h2>
-          <p className="env-sub">60 days, real spaces, Delhi&rsquo;s worst air.</p>
+          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>60 days, real spaces, Delhi&rsquo;s worst air.</p>
 
           <div className="env-ib">
             {/* 1 — full width: image left, text right */}
-            <article className="env-ib-card full">
-              <div className="env-ib-media"><Slot label="IIT Delhi study" /></div>
+            <article className="env-ib-card full" data-reveal style={{ ["--ri" as string]: 0 }}>
+              <div className="env-ib-media"><img src="/IIIT.jpg" alt="IIT Delhi study" /></div>
               <div className="env-ib-text">
                 <p className="env-ib-label">The Duration</p>
                 <p className="env-ib-num">60 Days</p>
@@ -706,7 +699,7 @@ export default function Environment() {
             </article>
 
             {/* 2 */}
-            <article className="env-ib-card">
+            <article className="env-ib-card" data-reveal style={{ ["--ri" as string]: 1 }}>
               <div className="env-ib-media"><Slot /></div>
               <div className="env-ib-text">
                 <p className="env-ib-label">The PM2.5 Result</p>
@@ -716,7 +709,7 @@ export default function Environment() {
             </article>
 
             {/* 3 */}
-            <article className="env-ib-card">
+            <article className="env-ib-card" data-reveal style={{ ["--ri" as string]: 2 }}>
               <div className="env-ib-media"><Slot /></div>
               <div className="env-ib-text">
                 <p className="env-ib-label">The Best Result</p>
@@ -726,7 +719,7 @@ export default function Environment() {
             </article>
 
             {/* 4 */}
-            <article className="env-ib-card">
+            <article className="env-ib-card" data-reveal style={{ ["--ri" as string]: 3 }}>
               <div className="env-ib-media"><Slot /></div>
               <div className="env-ib-text">
                 <p className="env-ib-label">The Institution</p>
@@ -739,14 +732,14 @@ export default function Environment() {
       </section>
 
       {/* 6d — LOGO WALL (Trusted across India) */}
-      <section className="env-section">
+      <section className="env-section" style={{ background: "#ffffff" }}>
         <div className="env-wrap">
-          <p className="env-eyebrow">Trusted Across India</p>
-          <h2 className="env-h2">Schools, offices, hotels, and the Indian Army.</h2>
-          <p className="env-sub">The names that already run MRH.</p>
+          <p className="env-eyebrow" data-reveal>Trusted Across India</p>
+          <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>Trusted by the places people share.</h2>
+          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>The names that already run MRH.</p>
           <div className="env-logos">
             {LOGOS.map((logo, i) => (
-              <div className="env-logo-cell" key={i}>
+              <div className="env-logo-cell" key={i} data-reveal style={{ ["--ri" as string]: i }}>
                 <img className="env-logo-img" src={logo.src} alt={logo.name} />
                 {i < 3 ? (
                   <PlusIcon className="env-logo-plus" strokeWidth={1} />
@@ -801,32 +794,32 @@ function Reports() {
   return (
     <section className="env-section">
       <div className="env-wrap">
-        <p className="env-eyebrow">Connected Intelligence</p>
-        <h2 className="env-h2">See the air.<br />Control the unit.<br />Skip the maintenance.</h2>
-        <p className="env-sub">Every unit online, every reading in one place.</p>
+        <p className="env-eyebrow" data-reveal>Connected Intelligence</p>
+        <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>See the air.<br />Control the unit.<br />Skip the maintenance.</h2>
+        <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>Every unit online, every reading in one place.</p>
 
         <div className="env-bento">
           {/* 1 — top left: text on top, image below */}
-          <article className="env-bento-card">
+          <article className="env-bento-card" data-reveal style={{ ["--ri" as string]: 0 }}>
             <div className="env-bento-text">
               <p className="env-bento-label">Live AQI, everywhere</p>
               <p className="env-bento-body">Watch your air quality update in real time. PM2.5, PM10, and AQI for every unit, on one screen, from anywhere.</p>
             </div>
-            <div className="env-bento-media"><Slot /></div>
+            <div className="env-bento-media"><img src="/phone2.png" alt="Live AQI, everywhere" /></div>
           </article>
 
           {/* 2 — top right: text on top, image below */}
-          <article className="env-bento-card">
+          <article className="env-bento-card" data-reveal style={{ ["--ri" as string]: 1 }}>
             <div className="env-bento-text">
               <p className="env-bento-label">Every unit, one dashboard</p>
               <p className="env-bento-body">See all your purifiers in a single view. One room or two hundred, every reading sits in the same place.</p>
             </div>
-            <div className="env-bento-media"><Slot /></div>
+            <div className="env-bento-media"><img src="/phone4.png" alt="Every unit, one dashboard" /></div>
           </article>
 
           {/* 3 — full width: image left, text right */}
-          <article className="env-bento-card span2 split">
-            <div className="env-bento-media"><Slot /></div>
+          <article className="env-bento-card span2 split" data-reveal style={{ ["--ri" as string]: 2 }}>
+            <div className="env-bento-media"><img src="/icon.jpg" alt="Control from your phone" style={{ objectPosition: "center 22%" }} /></div>
             <div className="env-bento-text">
               <p className="env-bento-label">Control from your phone</p>
               <p className="env-bento-body">Set fan speed, modes, and schedules without leaving your desk. Full control of every unit, wherever you are.</p>
@@ -834,8 +827,8 @@ function Reports() {
           </article>
 
           {/* 4 — bottom left: image on top, text below */}
-          <article className="env-bento-card">
-            <div className="env-bento-media"><Slot /></div>
+          <article className="env-bento-card" data-reveal style={{ ["--ri" as string]: 3 }}>
+            <div className="env-bento-media"><img src="/phone1.png" alt="Filter health, tracked" /></div>
             <div className="env-bento-text">
               <p className="env-bento-label">Filter health, tracked</p>
               <p className="env-bento-body">Know exactly how much life each filter has left. No more guesswork, no more checking units by hand.</p>
@@ -843,10 +836,10 @@ function Reports() {
           </article>
 
           {/* 5 — bottom right: image on top, text below */}
-          <article className="env-bento-card">
-            <div className="env-bento-media"><Slot /></div>
+          <article className="env-bento-card" data-reveal style={{ ["--ri" as string]: 4 }}>
+            <div className="env-bento-media"><img src="/phone3.png" alt="Service on wheels" /></div>
             <div className="env-bento-text">
-              <p className="env-bento-label">It books its own service</p>
+              <p className="env-bento-label">Service on wheels</p>
               <p className="env-bento-body">When a filter nears the end, the unit tells us first. Service is scheduled before you ever notice a drop.</p>
             </div>
           </article>
@@ -886,14 +879,14 @@ function Testimonials() {
   return (
     <section className="env-section">
       <div className="env-wrap">
-        <p className="env-eyebrow">In Their Words</p>
-        <h2 className="env-h2">The people breathing it, on the difference.</h2>
-        <p className="env-sub">Real results, from the teams who deployed MRH.</p>
+        <p className="env-eyebrow" data-reveal>In Their Words</p>
+        <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>The people breathing it, on the difference.</h2>
+        <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>Real results, from the teams who deployed MRH.</p>
       </div>
 
       <div className="env-tm-track" ref={ref}>
         {REVIEWS.map((r, i) => (
-          <article className="env-tm-card" key={i}>
+          <article className="env-tm-card" key={i} data-reveal style={{ ["--ri" as string]: i }}>
             <p className="env-tm-quote">{r.quote}</p>
             <div className="env-tm-author">
               <span className="env-tm-avatar">{initials(r.name)}</span>
@@ -1022,32 +1015,6 @@ function ImpactIcon({ kind }: { kind: string }) {
   );
 }
 
-// Centered pill CTA that pops up when it scrolls into view.
-function ExploreCTA({ label, href }: { label: string; href: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [inView, setInView] = useState(false);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          setInView(true);
-          io.disconnect();
-        }
-      },
-      { threshold: 0.6, rootMargin: "0px 0px -10% 0px" }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-  return (
-    <div className={`env-xcta ${inView ? "is-in" : ""}`} ref={ref}>
-      <a className="env-xcta-pill" href={href}>{label}</a>
-    </div>
-  );
-}
-
 type ImpactStat = { icon: string; num: string; unit: string; desc: string };
 
 function ImpactBlock({
@@ -1056,23 +1023,25 @@ function ImpactBlock({
   imgLabel,
   img,
   stats,
+  cta,
 }: {
   reverse?: boolean;
   title: string;
   imgLabel: string;
   img?: string;
   stats: ImpactStat[];
+  cta?: { label: string; href: string };
 }) {
   const media = (
-    <div className="env-im-media">
+    <div className="env-im-media" data-reveal>
       {img ? <img className="env-im-img" src={img} alt="" /> : <Slot label={imgLabel} />}
     </div>
   );
   const text = (
     <div className="env-im-text">
-      <h3 className="env-im-head">{title}</h3>
+      <h3 className="env-im-head" data-reveal>{title}</h3>
       {stats.map((s, i) => (
-        <div className="env-im-stat" key={i}>
+        <div className="env-im-stat" key={i} data-reveal style={{ ["--ri" as string]: i + 1 }}>
           <div className="env-im-stat-top">
             <ImpactIcon kind={s.icon} />
             <span className="env-im-num">{s.num}</span>
@@ -1081,6 +1050,13 @@ function ImpactBlock({
           <p className="env-im-desc">{s.desc}</p>
         </div>
       ))}
+      {cta ? (
+        <div className="env-im-cta-wrap">
+          <a className="env-xcta-pill reveal-bubble" href={cta.href} data-reveal>
+            <span>{cta.label}</span>
+          </a>
+        </div>
+      ) : null}
     </div>
   );
   return (

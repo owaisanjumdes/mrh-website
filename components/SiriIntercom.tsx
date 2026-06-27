@@ -77,9 +77,9 @@ export default function SiriIntercom() {
       <div className="si-text" data-reveal>
         <p className="si-siri">Air Simulation Technology</p>
         <p className="si-line">
-          tell everyone,
+          Every room,
           <br />
-          Dinner is ready
+          calculated for full coverage
         </p>
       </div>
 
