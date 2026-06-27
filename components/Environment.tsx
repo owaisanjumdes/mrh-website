@@ -179,19 +179,6 @@ const SPACES_CARDS: CardItem[] = [
 /* ---------------------------------------------------------------- page ----- */
 
 export default function Environment() {
-  // Pull the hero up under the (sticky) nav by the nav's exact height, so the hero
-  // image sits behind the frosted nav instead of the page background.
-  const [navH, setNavH] = useState(0);
-  useEffect(() => {
-    const measure = () => {
-      const nav = document.querySelector(".mrh-nav") as HTMLElement | null;
-      setNavH(nav?.offsetHeight ?? 0);
-    };
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, []);
-
   return (
     <main className="env">
       <style>{`
@@ -205,7 +192,7 @@ export default function Environment() {
           margin-right: calc(50% - 50vw);
           color: #1d1d1f;
           font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
-          overflow-x: clip;
+          overflow-x: hidden;
         }
         .env-wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
         .env mark { background: #30d158; color: #1d1d1f; border-radius: 2px; padding: 0 0.06em; }
@@ -214,7 +201,7 @@ export default function Environment() {
         .env-ph { background: repeating-linear-gradient(135deg,#e3e3e6,#e3e3e6 18px,#dcdce0 18px,#dcdce0 36px); display: flex; align-items: center; justify-content: center; color: #8a8a8f; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
 
         /* ---------- 1. Hero (full-screen image) ---------- */
-        .env-hero { position: relative; height: 100svh; min-height: 100svh; overflow: hidden; padding: 0; background: #ffffff; margin-top: calc(-1 * clamp(64px, 7vw, 130px)); }
+        .env-hero { position: relative; height: 100svh; min-height: 100svh; overflow: hidden; padding: 0; background: #ffffff; }
         .env-hero-img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
         /* ---------- generic section heading ---------- */
@@ -429,8 +416,8 @@ export default function Environment() {
       `}</style>
 
       {/* 1 — HERO */}
-      <header className="env-hero" style={navH ? { marginTop: `-${navH}px` } : undefined}>
-        <img className="env-hero-img" src="/3pa.jpg" alt="" />
+      <header className="env-hero">
+        <img className="env-hero-img" src="/rghp.jpg" alt="" />
       </header>
 
       {/* 2 — TWO PRODUCTS */}
