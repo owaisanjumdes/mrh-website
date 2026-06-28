@@ -192,7 +192,7 @@ export default function CameraShowTell() {
             loop
             muted
             playsInline
-            preload="auto"
+            preload="none"
             aria-label="MANN+HUMMEL simulation of improving indoor air quality in a classroom"
           />
           <span className="cam-play" aria-label="Play Center Stage video" role="img">

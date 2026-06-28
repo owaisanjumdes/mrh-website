@@ -89,7 +89,7 @@ export default function ImpactHero() {
       </div>
 
       <div className="ie-forest">
-        <img
+        <img loading="lazy"
           className="ie-forest-img"
           src="/IIITTTT.jpg.jpeg"
           alt="IIT Delhi field evaluation of PureAir"

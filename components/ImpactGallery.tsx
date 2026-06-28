@@ -282,7 +282,7 @@ export default function ImpactGallery({
         {cards.map((c) => (
           <article className="ig-card" key={c.lead}>
             <div className="ig-media">
-              <img src={c.img} alt={c.title.join(" ")} />
+              <img loading="lazy" src={c.img} alt={c.title.join(" ")} />
               <p
                 className={`ig-card-title ${c.titlePos === "center" ? "is-center" : "is-bottom"} ${c.large ? "is-large" : ""}`}
                 style={{ color: c.titleColor }}

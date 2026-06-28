@@ -86,11 +86,11 @@ export default function PoweredByMannHummel() {
         </h2>
         <p className="pm-sub" data-reveal style={{ ["--ri" as string]: 2 }}>MANN+HUMMEL media, engineered for India&rsquo;s air.</p>
         <div className="pm-stats-row">
-          <div className="pm-stats-media" data-reveal><img className="pm-stats-img" src="/mhh.jpg" alt="" /></div>
+          <div className="pm-stats-media" data-reveal><img loading="lazy" className="pm-stats-img" src="/mhh.jpg" alt="" /></div>
           <div className="pm-ub">
             <div className="pm-ub-col">
               <article className="pm-ub-card pm-ub-tall" data-reveal style={{ ["--ri" as string]: 0 }}>
-                <img className="pm-ub-photo" src="/h1.jpg" alt="" aria-hidden />
+                <img loading="lazy" className="pm-ub-photo" src="/h1.jpg" alt="" aria-hidden />
                 <div className="pm-ub-blur" aria-hidden />
                 <div className="pm-ub-scrim" aria-hidden />
                 <div className="pm-ub-inner">
@@ -118,7 +118,7 @@ export default function PoweredByMannHummel() {
                 </div>
               </article>
               <article className="pm-ub-card pm-ub-tall" data-reveal style={{ ["--ri" as string]: 3 }}>
-                <img className="pm-ub-photo" src="/h2.jpg" alt="" aria-hidden />
+                <img loading="lazy" className="pm-ub-photo" src="/h2.jpg" alt="" aria-hidden />
                 <div className="pm-ub-blur" aria-hidden />
                 <div className="pm-ub-scrim" aria-hidden />
                 <div className="pm-ub-inner">

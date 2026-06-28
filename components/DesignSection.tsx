@@ -68,7 +68,7 @@ export default function DesignSection({
           text-wrap: balance;
         }
         .ds-media {
-          margin-top: clamp(20px, 2.6vw, 36px);
+          margin-top: clamp(44px, 5.2vw, 80px);
           width: min(1048px, 100%);
         }
         /* Distinct scale + fade reveal for the product render (overrides the
@@ -145,6 +145,7 @@ export default function DesignSection({
           width: 100%;
           height: auto;
           object-fit: contain;
+          border-radius: clamp(16px, 2vw, 28px);
         }
         .ds-cta {
           position: sticky;
@@ -213,8 +214,8 @@ export default function DesignSection({
       </p>
 
       <div className="ds-media" data-reveal style={{ ["--ri" as string]: 3 }}>
-        <img
-          src="/001.png"
+        <img loading="lazy"
+          src="/paf.jpg"
           alt="Exploded view of the PureAir shell and internal stack"
         />
       </div>

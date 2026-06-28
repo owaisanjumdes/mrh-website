@@ -5,6 +5,7 @@ import CloserLook from "@/components/CloserLook";
 import WorthUpgrade from "@/components/WorthUpgrade";
 import ComparePerformance from "@/components/ComparePerformance";
 import BatteryLife from "@/components/BatteryLife";
+import ProofDashboard from "@/components/ProofDashboard";
 import PureAirInAction from "@/components/PureAirInAction";
 import CenterStage from "@/components/CenterStage";
 import KeepExploringIPhone from "@/components/KeepExploringIPhone";
@@ -18,18 +19,17 @@ export default function ProductShowcase({ heroVideo }: { heroVideo?: string } = 
       <ProductsHero videoSrc={heroVideo} />
       <Highlights />
       <DesignSection
+        eyebrow="Why PureAir"
+        title={<>Clean air is the<br />original luxury.</>}
         copy={
           <>
-            Built tough in a powder-coated unibody, PureAir does more than clean.
-            It reads the whole room. A full sensor array tracks particulate matter,
-            VOCs, CO2, humidity, temperature, and ambient sound, then covers up to
-            2,000 sq ft from a single unit. No plastic creak, no blind spots, no
-            guesswork.
+            German filtration that turns any room into the cleanest air you&rsquo;ll
+            breathe all day.
           </>
         }
       />
       <CloserLook />
-      <WorthUpgrade />
+      <PureAirInAction sub="200+ spaces, and counting." />
       <ComparePerformance />
       <BatteryLife
         title={
@@ -68,6 +68,7 @@ export default function ProductShowcase({ heroVideo }: { heroVideo?: string } = 
         ]}
         centerStats
         link={{ label: "See the full study", href: "/proof" }}
+        media={<ProofDashboard />}
       />
       <CenterStage
         eyebrow="Connected Intelligence"
@@ -85,7 +86,7 @@ export default function ProductShowcase({ heroVideo }: { heroVideo?: string } = 
         }
         showBlocks
       />
-      <PureAirInAction sub="200+ spaces, and counting." />
+      <WorthUpgrade />
       <KeepExploringIPhone />
       <SiteFooter />
     </main>

@@ -125,13 +125,13 @@ export default function TwoLegacies() {
           {/* India — OK Play + MRH */}
           <div className="legacy-col">
             <FadeInOnView className="legacy-logos">
-              <img
+              <img loading="lazy"
                 src="/ok-play-logo.png"
                 alt="OK Play"
                 className="legacy-logo-lg"
               />
               <span className="legacy-div" aria-hidden />
-              <img src="/mrh-blacklogo.png" alt="MRH" className="legacy-logo-sm" />
+              <img loading="lazy" src="/mrh-blacklogo.png" alt="MRH" className="legacy-logo-sm" />
             </FadeInOnView>
             <p className="legacy-stat">
               <CountUp end={30} />+ Years
@@ -142,7 +142,7 @@ export default function TwoLegacies() {
           {/* Germany — MANN+HUMMEL */}
           <div className="legacy-col">
             <FadeInOnView className="legacy-logos" delayMs={150}>
-              <img
+              <img loading="lazy"
                 src="/mann-hummel-logo.svg"
                 alt="MANN+HUMMEL"
                 className="legacy-logo-lg"

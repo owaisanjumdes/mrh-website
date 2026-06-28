@@ -272,9 +272,9 @@ export default function CenterStage({
 
       <div className="cs-phone" data-reveal style={{ ["--ri" as string]: 2 }}>
         <div className="cs-screen">
-          <img key={active} src={TABS[active].screen} alt={`${TABS[active].l1} ${TABS[active].l2}`} />
+          <img loading="lazy" key={active} src={TABS[active].screen} alt={`${TABS[active].l1} ${TABS[active].l2}`} />
         </div>
-        <img className="cs-bezel" src="/cs-bezel.png" alt="" aria-hidden />
+        <img loading="lazy" className="cs-bezel" src="/cs-bezel.png" alt="" aria-hidden />
       </div>
 
       <div className="cs-tabs" role="tablist" data-reveal style={{ ["--ri" as string]: 3 }}>

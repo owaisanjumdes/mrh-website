@@ -53,7 +53,7 @@ const DARK_THEME = {
 
 function BrandMark({ light }: { light: boolean }) {
   return (
-    <img
+    <img loading="lazy"
       // Black logo over the light (white) nav; white logo over the dark nav.
       src={light ? "/mrh-blacklogo.png" : "/mrh-logo.png"}
       alt="MRH"
@@ -78,7 +78,7 @@ const LIGHT_HERO_ROUTES = new Set<string>([]);
 const DARK_HERO_ROUTES = new Set<string>(["/about", "/products/pureair"]);
 // Full light-mode pages — the nav is a persistent white bar with dark contents the
 // entire time (it never flips to the black bar).
-const LIGHT_PAGE_ROUTES = new Set<string>(["/", "/proof", "/contact"]);
+const LIGHT_PAGE_ROUTES = new Set<string>(["/", "/proof", "/contact", "/deployments"]);
 
 export default function Nav() {
   const pathname = usePathname();

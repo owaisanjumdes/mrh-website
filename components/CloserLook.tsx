@@ -26,13 +26,13 @@ const FEATURES: Feature[] = [
     title: "Colors",
     description:
       "Four powder-coated finishes built to fit the room. Pick one that disappears into your space, or match it to your brand.",
-    image: "/rgm.png",
+    image: "/rgm.webp",
     accent: "#f0a48c",
     colors: [
-      { name: "Rose Gold", swatch: "#eea487", image: "/rgm.png" },
-      { name: "Silver", swatch: "#c8c5c1", image: "/sm.png" },
-      { name: "Pearl White", swatch: "#f3f0ec", border: "#5a5a5e", image: "/pwm.png" },
-      { name: "Graphite Gray", swatch: "#343b47", image: "/ggm.png" },
+      { name: "Rose Gold", swatch: "#eea487", image: "/rgm.webp" },
+      { name: "Silver", swatch: "#c8c5c1", image: "/sm.webp" },
+      { name: "Pearl White", swatch: "#f3f0ec", border: "#5a5a5e", image: "/pwm.webp" },
+      { name: "Graphite Gray", swatch: "#343b47", image: "/ggm.webp" },
     ],
   },
   {
@@ -41,7 +41,7 @@ const FEATURES: Feature[] = [
     title: "Multi-stage filter",
     description:
       "Pre-filter, activated carbon, HEPA H13, and antimicrobial mesh, tuned for India's mix of dust, gases, and bioaerosols. Captures 99.97% of particles down to 0.3 microns.",
-    image: "/multi-stage-filter.png",
+    image: "/fmc.png",
   },
   {
     id: "sensor",
@@ -49,7 +49,7 @@ const FEATURES: Feature[] = [
     title: "Live AQI sensor",
     description:
       "Real-time PM2.5 and AQI right on the front panel. The same air you're breathing, read continuously, in plain numbers you can trust.",
-    image: "/am.png",
+    image: "/am.webp",
   },
   {
     id: "iot",
@@ -557,7 +557,7 @@ export default function CloserLook() {
       </div>
 
       <div className="cl-viewer" ref={viewerRef}>
-        <img
+        <img loading="lazy"
           className={`cl-img cl-img--${FEATURES[imgIndex].id} ${
             imgPhase === "out"
               ? swapMode === "fade"

@@ -39,7 +39,7 @@ export const TestimonialsColumn = (props: {
                 >
                   <div className="text-[15px] leading-relaxed text-ink">{text}</div>
                   <div className="flex items-center gap-3 mt-5">
-                    <img
+                    <img loading="lazy"
                       width={40}
                       height={40}
                       src={image}

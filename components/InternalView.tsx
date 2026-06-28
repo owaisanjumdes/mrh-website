@@ -93,9 +93,9 @@ export default function InternalView() {
       `}</style>
 
       <div className="iv-inner">
-        <img
+        <img loading="lazy"
           className="iv-img"
-          src="/internal.png"
+          src="/internal.webp"
           alt="PureAir internal filtration components"
         />
         <div className="iv-text">

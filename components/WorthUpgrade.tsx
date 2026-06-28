@@ -365,7 +365,7 @@ export default function WorthUpgrade() {
 
             {/* 6 — Live AQI sensor */}
             <article className="wtu-card wtu-card--aqi" data-reveal style={{ ["--ri" as string]: 2 }}>
-              <img className="wtu-aqi-img" src="/am.png" alt="" aria-hidden />
+              <img loading="lazy" className="wtu-aqi-img" src="/am.webp" alt="" aria-hidden />
               <p className="wtu-card-lead">
                 A live AQI sensor you can read at a glance.
               </p>

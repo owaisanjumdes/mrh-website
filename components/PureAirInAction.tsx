@@ -197,7 +197,7 @@ export default function PureAirInAction({
         <div className="pia-track" ref={trackRef}>
           {DEPLOYMENTS.map((d, i) => (
             <article className="pia-card" key={i}>
-              <img className="pia-card-img" src={d.image} alt={d.label} />
+              <img loading="lazy" className="pia-card-img" src={d.image} alt={d.label} />
               <span className={`pia-card-pill ${d.pillDark ? "pia-card-pill--dark" : ""}`}>{d.label}</span>
             </article>
           ))}

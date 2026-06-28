@@ -220,14 +220,14 @@ export default function M5Family({
           >
             <div className={`m5-imgcol ${i % 2 === 1 ? "m5-imgcol--right" : ""}`}>
               <div className="m5-device">
-                <img className="m5-base" src="/m5-base.jpg" alt="" aria-hidden />
-                <img className="m5-screen" src={c.img} alt={c.name} />
+                <img loading="lazy" className="m5-base" src="/m5-base.jpg" alt="" aria-hidden />
+                <img loading="lazy" className="m5-screen" src={c.img} alt={c.name} />
               </div>
             </div>
 
             <div className="m5-textcol">
               <div className="m5-chip" style={{ backgroundImage: c.chipGradient }}>
-                <img src={c.logo} alt={c.name} />
+                <img loading="lazy" src={c.logo} alt={c.name} />
               </div>
               <p className="m5-para">{c.para}</p>
               <div className="m5-list">

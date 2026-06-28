@@ -53,12 +53,14 @@ export default function BatteryLife({
   stats,
   centerStats = false,
   link,
+  media,
 }: {
   title?: ReactNode;
   text?: ReactNode;
   stats?: Stat[];
   centerStats?: boolean;
   link?: { label: string; href: string };
+  media?: ReactNode;
 } = {}) {
   const { ref, inView } = useInView<HTMLElement>();
   const items = stats ?? DEFAULT_STATS;
@@ -208,12 +210,18 @@ export default function BatteryLife({
         </div>
       </div>
 
-      <div className="bl-media" data-reveal style={{ ["--ri" as string]: 1 }}>
-        <img
-          src="/bl-silo.jpg"
-          alt="A hand holding iPhone 17 Pro displaying the Apple TV series Silo"
-        />
-      </div>
+      {media ? (
+        <div className="bl-wrap">
+          <div data-reveal style={{ ["--ri" as string]: 1 }}>{media}</div>
+        </div>
+      ) : (
+        <div className="bl-media" data-reveal style={{ ["--ri" as string]: 1 }}>
+          <img loading="lazy"
+            src="/bl-silo.jpg"
+            alt="A hand holding iPhone 17 Pro displaying the Apple TV series Silo"
+          />
+        </div>
+      )}
 
       <div className="bl-wrap">
         <div className={`bl-stats ${centerStats ? "bl-stats--center" : ""}`}>

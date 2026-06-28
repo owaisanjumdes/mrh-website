@@ -58,7 +58,7 @@ export default function PureAirShowcase() {
       <h2 className="pa-headline">PureAir®&nbsp;—&nbsp;PureAir®</h2>
 
       <div className="pa-product">
-        <img src="/HCC 3.png" alt="PureAir air purifier" />
+        <img loading="lazy" src="/HCC 3.png" alt="PureAir air purifier" />
       </div>
 
       <div className="pa-fade" aria-hidden />

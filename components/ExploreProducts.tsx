@@ -12,7 +12,7 @@ const PRODUCTS = [
     name: "PureAir",
     price: "from ₹24,999",
     href: "/products",
-    image: "/mrh-environment-02.png",
+    image: "/mrh-environment-02.webp",
   },
   {
     name: "AirFINEry",
@@ -196,7 +196,7 @@ export default function ExploreProducts() {
         <div className="xp-grid">
           {PRODUCTS.map((p) => (
             <Link key={p.name} href={p.href} className="xp-card">
-              <img src={p.image} alt={p.name} />
+              <img loading="lazy" src={p.image} alt={p.name} />
               <div className="xp-scrim" aria-hidden />
               <div className="xp-foot">
                 <div className="xp-info">

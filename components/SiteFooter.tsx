@@ -156,7 +156,7 @@ export default function SiteFooter({ light = false }: { light?: boolean } = {}) 
         <div className="ft-top">
           {/* Newsletter */}
           <div className="ft-news">
-            <img src={light ? "/mrh-blacklogo.png" : "/mrh-logo.png"} alt="MRH" className="ft-brand-logo" />
+            <img loading="lazy" src={light ? "/mrh-blacklogo.png" : "/mrh-logo.png"} alt="MRH" className="ft-brand-logo" />
             <p className="ft-news-text">
               Join our newsletter to stay up to date on features and releases.
             </p>

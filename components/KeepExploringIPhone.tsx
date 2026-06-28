@@ -1,76 +1,78 @@
 "use client";
 
+import {
+  Layers,
+  Filter,
+  Maximize2,
+  Wind,
+  RefreshCw,
+  Timer,
+  Volume1,
+  Zap,
+  Clock,
+  Wallet,
+  ShieldCheck,
+  Wrench,
+  Gauge,
+  Building2,
+  Factory,
+  type LucideIcon,
+} from "lucide-react";
 import { useInView } from "@/lib/useInView";
 
-// "Keep exploring iPhone." comparison — Figma node 4017:24633 (Apple Sept 2024).
-// #1d1d1f section, black rounded card with two product columns (iPhone 16 Pro /
-// iPhone 16): phone, swatches, name, price, CTA, then a divider and an aligned
-// spec list. Copy kept verbatim from the Figma design.
+// "Find your PureAir" spec sheet — Apple "Keep exploring" layout adapted to the
+// three MRH PureAir variants. #1d1d1f section, black rounded card with three
+// variant columns (PureAir / Pro / Max): render, swatches, name, price, then an
+// aligned, icon-led spec grid where every row lines up across the columns.
 
-type Spec = { icon: string; lines: string[]; fn?: string };
-type Product = {
-  phone: string;
-  swatches: string[];
-  name: string;
-  price: string;
-  cta: { kind: "viewing" | "learn"; label: string };
-  specs: Spec[];
-};
+type Variant = { phone: string; swatches: string[]; name: string; price: string };
+type Cell = { big?: string; unit?: string; text: string; small?: boolean };
+type SpecRow = { Icon: LucideIcon; cells: [Cell, Cell, Cell] };
 
-const PRODUCTS: Product[] = [
-  {
-    phone: "/ke-16pro.jpg",
-    swatches: ["#a8907e", "#a6a198", "#dbdad7", "#202121"],
-    name: "iPhone 16 Pro",
-    price: "From $999 or $41.62/mo. for 24 mo.",
-    cta: { kind: "viewing", label: "Currently viewing" },
-    specs: [
-      { icon: "/ke-ai.png", lines: ["Apple Intelligence"], fn: "2" },
-      { icon: "/ke-chippro.png", lines: ["A18 Pro chip", "with 6‑core GPU"] },
-      { icon: "/ke-camerabtn.png", lines: ["Camera Control"] },
-      {
-        icon: "/ke-campro.png",
-        lines: [
-          "Pro camera system",
-          "Our most advanced 48MP Fusion camera",
-          "5x Telephoto camera",
-          "48MP Ultra Wide camera",
-        ],
-      },
-      { icon: "/ke-battery.png", lines: ["Up to 33 hours video playback"], fn: "19" },
-    ],
-  },
-  {
-    phone: "/ke-16.jpg",
-    swatches: ["#6473b0", "#82a8a6", "#c981b0", "#e0e0e0", "#191b1c"],
-    name: "iPhone 16",
-    price: "From $799 or $33.29/mo. for 24 mo.",
-    cta: { kind: "learn", label: "Learn more" },
-    specs: [
-      { icon: "/ke-ai.png", lines: ["Apple Intelligence"], fn: "2" },
-      { icon: "/ke-chip.png", lines: ["A18 chip", "with 5‑core GPU"] },
-      { icon: "/ke-camerabtn.png", lines: ["Camera Control"] },
-      {
-        icon: "/ke-cam16.png",
-        lines: [
-          "Advanced dual‑camera system",
-          "Advanced 48MP Fusion camera",
-          "2x Telephoto",
-          "12MP Ultra Wide camera",
-        ],
-      },
-      { icon: "/ke-battery.png", lines: ["Up to 27 hours video playback"], fn: "19" },
-    ],
-  },
+// Shared finishes (Rose Gold, Silver, Pearl White, Graphite Gray).
+const SWATCHES = ["#eea487", "#c8c5c1", "#f3f0ec", "#343b47"];
+
+const VARIANTS: Variant[] = [
+  { phone: "/pwp.png", swatches: SWATCHES, name: "PureAir", price: "₹XX,XXX" },
+  { phone: "/rgp.webp", swatches: SWATCHES, name: "PureAir Pro", price: "₹XX,XXX" },
+  { phone: "/sp.png", swatches: SWATCHES, name: "PureAir Max", price: "₹XX,XXX" },
 ];
 
-function Chevron() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden style={{ width: "0.6em", height: "0.6em" }}>
-      <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
+// Same spec across all three variants.
+const same = (c: Cell): [Cell, Cell, Cell] => [c, c, c];
+
+// Apple tech-spec style: one row per category, fixed order so columns align.
+// Coverage leads. Number-led specs render a large figure + small unit with a
+// caption beneath; text-only specs render as a single lead line.
+const SPEC_ROWS: SpecRow[] = [
+  { Icon: Maximize2, cells: [
+    { big: "400", unit: "sq ft", text: "Coverage area" },
+    { big: "~2,000", unit: "sq ft", text: "Coverage area" },
+    { big: "~2,000", unit: "sq ft", text: "Coverage area" },
+  ] },
+  { Icon: Layers, cells: [
+    { big: "4-Stage", text: "Advanced filtration system" },
+    { big: "10-Stage", text: "Advanced filtration system" },
+    { big: "14-Stage", text: "Advanced filtration system" },
+  ] },
+  { Icon: Filter, cells: [
+    { big: "2 + 2", unit: "filters", text: "Pre-filters + Main-filters" },
+    { big: "4 + 6", unit: "filters", text: "Pre-filters + Main-filters" },
+    { big: "6 + 8", unit: "filters", text: "Pre-filters + Main-filters" },
+  ] },
+  { Icon: Wind, cells: same({ text: "Captures PM2.5, PM10, and NO2" }) },
+  { Icon: RefreshCw, cells: same({ big: "30", unit: "/hr", text: "Air exchanges, rated for 1,000 sq ft" }) },
+  { Icon: Timer, cells: same({ big: "4", unit: "min", text: "Full air recirculation, 1,000 sq ft" }) },
+  { Icon: Volume1, cells: same({ big: "<55", unit: "dB", text: "Low-noise operation" }) },
+  { Icon: Zap, cells: same({ big: "<80", unit: "W", text: "Energy-efficient" }) },
+  { Icon: Clock, cells: same({ big: "3,000–4,000", unit: "hrs", text: "≈ 18–24 months of use", small: true }) },
+  { Icon: Wallet, cells: same({ text: "Low operating cost. Highly effective against PM2.5, PM10, VOCs, and allergens." }) },
+  { Icon: ShieldCheck, cells: same({ big: "ISO 16890", text: "Clean-room certified" }) },
+  { Icon: Wrench, cells: same({ text: "Wall-mounted design" }) },
+  { Icon: Gauge, cells: same({ text: "Onboard AQI display" }) },
+  { Icon: Building2, cells: same({ text: "Schools, offices, meeting rooms, warehouses, residences, libraries, labs" }) },
+  { Icon: Factory, cells: same({ text: "Mass-production ready. Made in India." }) },
+];
 
 export default function KeepExploringIPhone() {
   const { ref, inView } = useInView<HTMLElement>();
@@ -78,7 +80,7 @@ export default function KeepExploringIPhone() {
     <section
       ref={ref}
       className={`kei ${inView ? "is-in" : ""}`}
-      aria-label="Keep exploring iPhone"
+      aria-label="Find your PureAir"
     >
       <style>{`
         .kei {
@@ -125,7 +127,7 @@ export default function KeepExploringIPhone() {
           border-radius: 28px;
           padding: clamp(56px, 8vw, 120px) clamp(16px, 3vw, 48px) clamp(56px, 8vw, 96px);
         }
-        .kei-list { width: min(764px, 100%); margin: 0 auto; }
+        .kei-list { width: min(1160px, 100%); margin: 0 auto; }
 
         .kei-products { display: flex; gap: clamp(16px, 2.6vw, 20px); }
         .kei-product {
@@ -136,7 +138,7 @@ export default function KeepExploringIPhone() {
           align-items: center;
           text-align: center;
         }
-        .kei-phone { display: block; width: clamp(150px, 62%, 232px); height: auto; }
+        .kei-phone { display: block; width: clamp(200px, 100%, 420px); height: auto; }
         .kei-swatches {
           display: flex;
           gap: 6px;
@@ -200,122 +202,108 @@ export default function KeepExploringIPhone() {
           margin: clamp(28px, 4vw, 48px) 0;
         }
 
-        .kei-specs { display: flex; gap: clamp(16px, 2.6vw, 20px); }
-        .kei-spec-col { flex: 1; min-width: 0; }
+        /* Row-major grid: each spec row's three cells share a grid track, so
+           rows line up across the three variant columns regardless of text
+           length. A border-top on every cell forms a continuous row rule. */
+        .kei-specs {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          column-gap: clamp(16px, 2.6vw, 20px);
+          margin-top: clamp(28px, 4vw, 48px);
+        }
         .kei-spec {
           display: flex;
           flex-direction: column;
           align-items: center;
           text-align: center;
+          gap: 12px;
+          padding: clamp(18px, 2vw, 24px) 8px;
+          border-top: 1px solid #2f2f31;
         }
-        .kei-spec:nth-child(1) { height: 126px; }
-        .kei-spec:nth-child(2) { height: 142px; }
-        .kei-spec:nth-child(3) { height: 126px; }
-        .kei-spec:nth-child(4) { height: 202px; }
-        .kei-spec:nth-child(5) { min-height: 96px; }
-        .kei-spec-icon { width: 56px; height: 56px; display: block; }
-        .kei-spec-label {
-          margin-top: 14px;
+        .kei-spec-icon { width: 26px; height: 26px; flex: none; color: #a1a1a6; }
+        /* Big lead figure with a small trailing unit, Apple tech-spec style. */
+        .kei-big {
+          margin: 0;
+          display: flex;
+          align-items: baseline;
+          justify-content: center;
+          gap: 4px;
           color: #f5f5f7;
-          font-size: 12px;
+          font-size: clamp(26px, 2.9vw, 40px);
+          font-weight: 600;
+          line-height: 1;
+          letter-spacing: -0.02em;
+          font-variant-numeric: tabular-nums;
+          white-space: nowrap;
+        }
+        /* Long figures (e.g. a range) shrink to stay on one line. */
+        .kei-big--sm { font-size: clamp(17px, 1.7vw, 24px); }
+        .kei-unit { font-size: 0.4em; font-weight: 500; letter-spacing: 0; color: #86868b; }
+        .kei-text {
+          margin: 8px 0 0;
+          color: #86868b;
+          font-size: clamp(12px, 1.05vw, 13.5px);
           font-weight: 400;
-          line-height: 1.33;
+          line-height: 1.4;
           letter-spacing: -0.01em;
         }
-        .kei-spec-label p { margin: 0; }
+        /* Text-only specs read as a lead line (no figure above them). */
+        .kei-text--lead { margin: 0; color: #f5f5f7; font-size: clamp(13px, 1.2vw, 15px); font-weight: 500; }
 
-        .kei-fn {
-          font-size: 0.62em;
-          vertical-align: super;
-          text-decoration: underline;
-          text-decoration-thickness: from-font;
-        }
-
-        /* On phones the fixed spec-row heights can clip wrapped text and the
-           62%/150px phone min can overflow the narrow columns — relax both. */
         @media (max-width: 700px) {
-          .kei-phone { width: 74%; }
-          .kei-spec:nth-child(1),
-          .kei-spec:nth-child(2),
-          .kei-spec:nth-child(3),
-          .kei-spec:nth-child(4),
-          .kei-spec:nth-child(5) {
-            height: auto;
-            min-height: 0;
-            margin-bottom: 24px;
-          }
-          .kei-spec-label { font-size: 11px; }
-          .kei-spec-icon { width: 48px; height: 48px; }
+          .kei-phone { width: 96%; }
+          .kei-spec { padding: 14px 4px; gap: 9px; }
+          .kei-spec-icon { width: 22px; height: 22px; }
+          .kei-big { font-size: clamp(17px, 4.6vw, 26px); }
+          .kei-big--sm { font-size: clamp(13px, 3.2vw, 18px); }
+          .kei-text { font-size: 11px; margin-top: 6px; }
+          .kei-text--lead { font-size: 12px; }
         }
         @media (max-width: 560px) {
           .kei-name { font-size: 20px; }
-          .kei-price, .kei-cta, .kei-viewpricing { font-size: 15px; }
+          .kei-price { font-size: 15px; }
         }
       `}</style>
 
       <div className="kei-wrap">
         <div className="kei-head" data-reveal>
-          <h2 className="kei-title">Keep exploring iPhone.</h2>
-          <a className="kei-explore" href="#">
-            Explore all iPhone <Chevron />
-          </a>
+          <h2 className="kei-title">Find your PureAir</h2>
         </div>
 
         <div className="kei-card" data-reveal style={{ ["--ri" as string]: 1 }}>
           <div className="kei-list">
-            {/* Product tops */}
+            {/* Variant tops */}
             <div className="kei-products">
-              {PRODUCTS.map((p) => (
+              {VARIANTS.map((p) => (
                 <div className="kei-product" key={p.name}>
-                  <img className="kei-phone" src={p.phone} alt={p.name} />
+                  <img loading="lazy" className="kei-phone" src={p.phone} alt={p.name} />
                   <div className="kei-swatches">
                     {p.swatches.map((c, i) => (
                       <span className="kei-swatch" key={i} style={{ background: c }} />
                     ))}
                   </div>
-                  <p className="kei-new">New</p>
                   <p className="kei-name">{p.name}</p>
-                  <p className="kei-price">
-                    {p.price}
-                    <span className="kei-fn">1</span>
-                  </p>
-                  {p.cta.kind === "viewing" ? (
-                    <span className="kei-cta kei-cta--viewing">{p.cta.label}</span>
-                  ) : (
-                    <a className="kei-cta kei-cta--learn" href="#">
-                      {p.cta.label}
-                    </a>
-                  )}
-                  <a className="kei-viewpricing" href="#">
-                    View pricing <Chevron />
-                  </a>
+                  <p className="kei-price">{p.price}</p>
                 </div>
               ))}
             </div>
 
-            <div className="kei-divider" />
-
-            {/* Spec columns */}
+            {/* Spec rows, aligned across the three variant columns */}
             <div className="kei-specs">
-              {PRODUCTS.map((p) => (
-                <div className="kei-spec-col" key={p.name}>
-                  {p.specs.map((s, i) => (
-                    <div className="kei-spec" key={i}>
-                      <img className="kei-spec-icon" src={s.icon} alt="" aria-hidden />
-                      <div className="kei-spec-label">
-                        {s.lines.map((line, j) => (
-                          <p key={j}>
-                            {line}
-                            {s.fn && j === s.lines.length - 1 ? (
-                              <span className="kei-fn">{s.fn}</span>
-                            ) : null}
-                          </p>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ))}
+              {SPEC_ROWS.map((row, i) =>
+                row.cells.map((cell, c) => (
+                  <div className="kei-spec" key={`${i}-${c}`}>
+                    <row.Icon className="kei-spec-icon" strokeWidth={1.5} aria-hidden />
+                    {cell.big ? (
+                      <p className={cell.small ? "kei-big kei-big--sm" : "kei-big"}>
+                        {cell.big}
+                        {cell.unit ? <span className="kei-unit">{cell.unit}</span> : null}
+                      </p>
+                    ) : null}
+                    <p className={cell.big ? "kei-text" : "kei-text kei-text--lead"}>{cell.text}</p>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>

@@ -165,7 +165,7 @@ function CardView({ card }: { card: Card }) {
   if (card.kind === "icon") {
     return (
       <div className="ub-card ub-short">
-        <img className="ub-card-icon" src={card.icon} alt="" aria-hidden />
+        <img loading="lazy" className="ub-card-icon" src={card.icon} alt="" aria-hidden />
         <p className="ub-card-text ub-text-sm">{card.text}</p>
       </div>
     );
@@ -174,10 +174,10 @@ function CardView({ card }: { card: Card }) {
   return (
     <div className={`ub-card ub-tall ${card.kind === "image" ? "ub-card--photo" : ""}`}>
       {card.kind === "image" ? (
-        <img className="ub-card-bg" src={card.photo} alt="" aria-hidden />
+        <img loading="lazy" className="ub-card-bg" src={card.photo} alt="" aria-hidden />
       ) : null}
       <div className="ub-card-inner">
-        <img className="ub-card-icon" src={card.icon} alt="" aria-hidden />
+        <img loading="lazy" className="ub-card-icon" src={card.icon} alt="" aria-hidden />
         <p className="ub-card-text ub-text-lg">{card.text}</p>
       </div>
     </div>
@@ -395,7 +395,7 @@ export default function UpgradeBento() {
         </div>
 
         <div className="ub-footer" data-reveal>
-          <img className="ub-tradein" src="/ub-tradein.jpg" alt="Apple Trade In" />
+          <img loading="lazy" className="ub-tradein" src="/ub-tradein.jpg" alt="Apple Trade In" />
           <span className="ub-footer-div" aria-hidden />
           <div className="ub-footer-text">
             <p>

@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from "react";
 const HEADING = "Leading the Way in Sustainable Air Purification";
 
 const TOP = {
-  image: "/mrh-environment-02.png",
+  image: "/mrh-environment-02.webp",
   title: "Premium Materials",
   body: "A sealed steel body, finished to last through years of daily commercial use. No plastic, no rattle, no early replacement.",
 };
@@ -22,7 +22,7 @@ const BOTTOM = [
     body: "Nano fiber–enhanced filters by MANN+HUMMEL, the same standard trusted in industry and healthcare across the world.",
   },
   {
-    image: "/mrh-environment-01.png",
+    image: "/mrh-environment-01.webp",
     title: "Made in India",
     body: "Manufactured, installed, and serviced locally. Filters and support are always within reach, never an import away.",
   },
@@ -190,7 +190,7 @@ export default function MaterialsBento() {
         <div className="mb-grid">
           {/* Wide card — caption overlaid bottom-left */}
           <div className="mb-card-top">
-            <img src={TOP.image} alt={TOP.title} />
+            <img loading="lazy" src={TOP.image} alt={TOP.title} />
             <div className="mb-scrim" aria-hidden />
             <div className="mb-overlay mb-cap">
               <h3 className="mb-title">{TOP.title}</h3>
@@ -203,7 +203,7 @@ export default function MaterialsBento() {
             {BOTTOM.map((c) => (
               <div className="mb-card" key={c.title}>
                 <div className="mb-imgbox">
-                  <img src={c.image} alt={c.title} />
+                  <img loading="lazy" src={c.image} alt={c.title} />
                 </div>
                 <div className="mb-cap">
                   <h3 className="mb-title">{c.title}</h3>

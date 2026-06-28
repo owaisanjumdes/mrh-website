@@ -167,7 +167,7 @@ export default function ImpactNews() {
             {row.map((a) => (
               <a className="mfm-item" href="#" key={a.title}>
                 <div className="mfm-thumb">
-                  <img src={a.img} alt="" aria-hidden />
+                  <img loading="lazy" src={a.img} alt="" aria-hidden />
                 </div>
                 <div className="mfm-body">
                   <p className="mfm-eyebrow">{a.label}</p>

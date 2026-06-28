@@ -379,7 +379,7 @@ export default function MacTahoe({
           {bannerImage ? (
             <div className="mt-banner" data-reveal>
               <div className="mt-banner-bleed">
-                <img src={bannerImage} alt="" aria-hidden />
+                <img loading="lazy" src={bannerImage} alt="" aria-hidden />
                 <span
                   className="mt-play mt-banner-play"
                   aria-label="Play video"
@@ -396,7 +396,7 @@ export default function MacTahoe({
       ) : (
       <div className="mt-banner" data-reveal>
         <div className="mt-banner-bleed">
-          <img src="/mh-ppt-headerimage.jpeg" alt="" aria-hidden />
+          <img loading="lazy" src="/mh-ppt-headerimage.jpeg" alt="" aria-hidden />
           <div className="mt-banner-scrim" aria-hidden />
           <div className="mt-banner-head">
             {bannerLabel ? <p className="mt-label">{bannerLabel}</p> : null}
@@ -420,7 +420,7 @@ export default function MacTahoe({
           {trio.slice(0, 3).map((c, i) => (
             <article className="mt-trio-card" key={i}>
               <div className="mt-card-media">
-                <img src={c.img} alt={c.title} />
+                <img loading="lazy" src={c.img} alt={c.title} />
               </div>
               <p className="mt-cap">
                 <b>{c.title}</b> {c.desc}
@@ -460,7 +460,7 @@ export default function MacTahoe({
               data-reveal
             >
               <div className={`mt-card-media${c.contain ? " is-contain" : ""}`}>
-                <img src={c.img} alt={c.title} />
+                <img loading="lazy" src={c.img} alt={c.title} />
                 {c.play ? <PlayBtn label={`Play ${c.title} animation`} /> : null}
               </div>
               <p className="mt-cap">

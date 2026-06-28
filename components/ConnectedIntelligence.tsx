@@ -89,7 +89,7 @@ export default function ConnectedIntelligence() {
               <p className="ci-label">Live AQI, everywhere</p>
               <p className="ci-body">Watch your air quality update in real time. PM2.5, PM10, and AQI for every unit, on one screen, from anywhere.</p>
             </div>
-            <div className="ci-media"><img src="/phone2.png" alt="Live AQI, everywhere" /></div>
+            <div className="ci-media"><img loading="lazy" src="/liveaqi.jpg" alt="Live AQI, everywhere" /></div>
           </article>
 
           <article className="ci-card" data-reveal style={{ ["--ri" as string]: 1 }}>
@@ -97,11 +97,11 @@ export default function ConnectedIntelligence() {
               <p className="ci-label">Every unit, one dashboard</p>
               <p className="ci-body">See all your purifiers in a single view. One room or two hundred, every reading sits in the same place.</p>
             </div>
-            <div className="ci-media"><img src="/phone4.png" alt="Every unit, one dashboard" /></div>
+            <div className="ci-media"><img loading="lazy" src="/timings.jpg" alt="Every unit, one dashboard" style={{ objectPosition: "center 35%" }} /></div>
           </article>
 
           <article className="ci-card span2 split" data-reveal style={{ ["--ri" as string]: 2 }}>
-            <div className="ci-media"><img src="/icon.jpg" alt="Control from your phone" style={{ objectPosition: "center 22%" }} /></div>
+            <div className="ci-media"><img loading="lazy" src="/Icon.jpg" alt="Control from your phone" style={{ objectPosition: "center 22%" }} /></div>
             <div className="ci-text">
               <p className="ci-label">Control from your phone</p>
               <p className="ci-body">Set fan speed, modes, and schedules without leaving your desk. Full control of every unit, wherever you are.</p>
@@ -109,7 +109,7 @@ export default function ConnectedIntelligence() {
           </article>
 
           <article className="ci-card" data-reveal style={{ ["--ri" as string]: 3 }}>
-            <div className="ci-media"><img src="/phone1.png" alt="Filter health, tracked" /></div>
+            <div className="ci-media"><img loading="lazy" src="/fhm.jpg" alt="Filter health, tracked" /></div>
             <div className="ci-text">
               <p className="ci-label">Filter health, tracked</p>
               <p className="ci-body">Know exactly how much life each filter has left. No more guesswork, no more checking units by hand.</p>
@@ -117,7 +117,7 @@ export default function ConnectedIntelligence() {
           </article>
 
           <article className="ci-card" data-reveal style={{ ["--ri" as string]: 4 }}>
-            <div className="ci-media"><img src="/phone3.png" alt="Service on wheels" /></div>
+            <div className="ci-media"><img loading="lazy" src="/sow.jpg" alt="Service on wheels" /></div>
             <div className="ci-text">
               <p className="ci-label">Service on wheels</p>
               <p className="ci-body">When a filter nears the end, the unit tells us first. Service is scheduled before you ever notice a drop.</p>

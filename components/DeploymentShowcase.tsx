@@ -165,14 +165,14 @@ export default function DeploymentShowcase() {
 
       <div className="ds-sticky">
         <div ref={cardRef} className="ds-card">
-          <img
+          <img loading="lazy"
             className="ds-hallway"
             src="/MRH-HALLWAY (1).png"
             alt=""
             aria-hidden
           />
           <div className="ds-scrim" aria-hidden />
-          <img
+          <img loading="lazy"
             ref={fullRef}
             className="ds-full"
             src="/MRH-FULL.png"

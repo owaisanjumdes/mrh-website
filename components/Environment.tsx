@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { PlusIcon, Flag, Globe, Award, GraduationCap } from "lucide-react";
 import ImpactDevices from "@/components/ImpactDevices";
+import ProofDashboard from "@/components/ProofDashboard";
 import SiteFooter from "@/components/SiteFooter";
 import VideoEmbed from "@/components/VideoEmbed";
 
@@ -151,7 +152,7 @@ function Carousel({ cards }: { cards: CardItem[] }) {
           <article className="env-card" key={i} style={{ background: "#000000" }}>
             {c.withImage ? (
               c.imgSrc ? (
-                <img className="env-card-img" src={c.imgSrc} alt={c.imgLabel ?? ""} />
+                <img loading="lazy" className="env-card-img" src={c.imgSrc} alt={c.imgLabel ?? ""} />
               ) : (
                 <Slot className="env-card-img" label={c.imgLabel ?? "Image"} />
               )
@@ -388,6 +389,23 @@ export default function Environment() {
         .env-ib-num { margin: 0 0 clamp(10px, 1.2vw, 16px); font-size: clamp(34px, 4.4vw, 56px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.04; color: #1d1d1f; }
         .env-ib-desc { margin: 0; font-size: clamp(15px, 1.4vw, 17px); font-weight: 500; line-height: 1.42; color: #6e6e73; max-width: 34ch; }
 
+        /* ---------- proof dashboard (metric cards, matched to the page) ---------- */
+        .env-dash { grid-column: 1 / -1; display: flex; flex-direction: column; gap: clamp(16px, 1.6vw, 22px); font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+        .env-dash-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 1.6vw, 22px); }
+        .env-dash-card { position: relative; display: flex; flex-direction: column; background: #ffffff; border-radius: 22px; padding: clamp(20px, 2vw, 28px); min-height: clamp(208px, 19vw, 260px); box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 12px 30px rgba(0,0,0,0.035); }
+        .env-dash-label { margin: 0 0 clamp(12px, 1.4vw, 18px); display: inline-flex; align-items: center; gap: 9px; font-size: clamp(15px, 1.4vw, 18px); font-weight: 600; color: #1a8f3c; }
+        .env-dash-label svg { color: #1a8f3c; flex: none; }
+        .env-dash-num { margin: 0; display: flex; align-items: baseline; gap: 7px; font-size: clamp(30px, 3.2vw, 44px); font-weight: 500; letter-spacing: -0.02em; line-height: 1; color: #1d1d1f; font-variant-numeric: tabular-nums; }
+        .env-dash-num .u { font-size: 0.42em; font-weight: 500; letter-spacing: 0; color: #6e6e73; }
+        .env-dash-num.gauge { font-size: clamp(24px, 2.4vw, 34px); }
+        .env-dash-cap { margin: clamp(7px, 0.9vw, 10px) 0 0; font-size: clamp(14px, 1.3vw, 16px); font-weight: 500; line-height: 1.4; color: #6e6e73; }
+        .env-dash-viz { margin-top: clamp(14px, 1.6vw, 20px); }
+        .env-dash-foot { margin-top: auto; padding-top: clamp(14px, 1.6vw, 20px); font-size: clamp(13px, 1.2vw, 15px); font-weight: 500; color: #86868b; }
+        .env-dash-gauge { position: relative; width: 240px; max-width: 100%; margin: clamp(4px, 0.8vw, 10px) auto clamp(12px, 1.6vw, 20px); }
+        @keyframes envPulseDot { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+        @media (max-width: 900px) { .env-dash-row { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 560px) { .env-dash-row { grid-template-columns: 1fr; } }
+
         /* ---------- 6d. logo wall ---------- */
         .env-logos { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid #d2d2d7; border-left: 1px solid #d2d2d7; margin-top: clamp(40px, 5vw, 64px); }
         .env-logo-cell { position: relative; display: flex; align-items: center; justify-content: center; min-height: clamp(110px, 12vw, 150px); padding: clamp(20px, 3vw, 40px); border-right: 1px solid #d2d2d7; border-bottom: 1px solid #d2d2d7; }
@@ -462,7 +480,7 @@ export default function Environment() {
 
       {/* 1 — HERO */}
       <header className="env-hero">
-        <img className="env-hero-img" src="/3pa.jpg" alt="" />
+        <img loading="lazy" className="env-hero-img" src="/3pa.webp" alt="" />
       </header>
 
       {/* 2 — TWO PRODUCTS */}
@@ -475,7 +493,7 @@ export default function Environment() {
         <div className="env-products">
           <div className="env-prod" data-reveal style={{ ["--ri" as string]: 0 }}>
             <div className="env-prod-card env-prod-card--shop">
-              <img className="env-prod-img" src="/spa.jpg" alt="PureAir" />
+              <img loading="lazy" className="env-prod-img" src="/spa.jpg" alt="PureAir" />
               <a className="env-prod-cta" href="/contact">Buy Now</a>
             </div>
             <p className="env-prod-cap">
@@ -486,7 +504,7 @@ export default function Environment() {
           </div>
           <div className="env-prod" data-reveal style={{ ["--ri" as string]: 1 }}>
             <div className="env-prod-card env-prod-card--shop">
-              <img className="env-prod-img" src="/afd.png" alt="AirFINEry" />
+              <img loading="lazy" className="env-prod-img" src="/afd.webp" alt="AirFINEry" />
               <a className="env-prod-cta" href="/contact">Buy Now</a>
             </div>
             <p className="env-prod-cap">
@@ -514,7 +532,7 @@ export default function Environment() {
         reverse
         title="AirFINEry"
         imgLabel="AirFINEry image"
-        img="/afp.png"
+        img="/afp.webp"
         stats={[
           { icon: "frame", num: "4,000", unit: "sq ft.", desc: "of area coverage from a single unit, built for the largest open indoor spaces." },
           { icon: "filter", num: "99.9%", unit: "", desc: "filter efficiency, capturing fine particles down to 0.3 microns." },
@@ -532,7 +550,7 @@ export default function Environment() {
           </h2>
           <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>The world&rsquo;s filtration benchmark, built for Indian air.</p>
           <div className="env-stats-row">
-            <div className="env-stats-media" data-reveal><img className="env-stats-img" src="/mhh.jpg" alt="" /></div>
+            <div className="env-stats-media" data-reveal><img loading="lazy" className="env-stats-img" src="/mhh.jpg" alt="" /></div>
             <svg width="0" height="0" aria-hidden style={{ position: "absolute" }}>
               <defs>
                 <linearGradient id="sb-grad" gradientUnits="userSpaceOnUse" x1="12" y1="0" x2="12" y2="24">
@@ -544,7 +562,7 @@ export default function Environment() {
             <div className="env-ub">
               <div className="env-ub-col">
                 <article className="env-ub-card env-ub-tall" data-reveal style={{ ["--ri" as string]: 0 }}>
-                  <img className="env-ub-photo" src="/h1.jpg" alt="" aria-hidden />
+                  <img loading="lazy" className="env-ub-photo" src="/h1.jpg" alt="" aria-hidden />
                   <div className="env-ub-blur" aria-hidden />
                   <div className="env-ub-scrim" aria-hidden />
                   <div className="env-ub-inner">
@@ -572,7 +590,7 @@ export default function Environment() {
                   </div>
                 </article>
                 <article className="env-ub-card env-ub-tall" data-reveal style={{ ["--ri" as string]: 3 }}>
-                  <img className="env-ub-photo" src="/h2.jpg" alt="" aria-hidden />
+                  <img loading="lazy" className="env-ub-photo" src="/h2.jpg" alt="" aria-hidden />
                   <div className="env-ub-blur" aria-hidden />
                   <div className="env-ub-scrim" aria-hidden />
                   <div className="env-ub-inner">
@@ -687,47 +705,7 @@ export default function Environment() {
           </h2>
           <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>60 days, real spaces, Delhi&rsquo;s worst air.</p>
 
-          <div className="env-ib">
-            {/* 1 — full width: image left, text right */}
-            <article className="env-ib-card full" data-reveal style={{ ["--ri" as string]: 0 }}>
-              <div className="env-ib-media"><img src="/IIIT.jpg" alt="IIT Delhi study" /></div>
-              <div className="env-ib-text">
-                <p className="env-ib-label">The Duration</p>
-                <p className="env-ib-num">60 Days</p>
-                <p className="env-ib-desc">Continuous field testing, not a lab simulation.</p>
-              </div>
-            </article>
-
-            {/* 2 */}
-            <article className="env-ib-card" data-reveal style={{ ["--ri" as string]: 1 }}>
-              <div className="env-ib-media"><Slot /></div>
-              <div className="env-ib-text">
-                <p className="env-ib-label">The PM2.5 Result</p>
-                <p className="env-ib-num">65%</p>
-                <p className="env-ib-desc">Average PM2.5 reduction across tested sites.</p>
-              </div>
-            </article>
-
-            {/* 3 */}
-            <article className="env-ib-card" data-reveal style={{ ["--ri" as string]: 2 }}>
-              <div className="env-ib-media"><Slot /></div>
-              <div className="env-ib-text">
-                <p className="env-ib-label">The Best Result</p>
-                <p className="env-ib-num">327 → 63</p>
-                <p className="env-ib-desc">AQI recorded at Indian Overseas Bank, Rajendra Place.</p>
-              </div>
-            </article>
-
-            {/* 4 */}
-            <article className="env-ib-card" data-reveal style={{ ["--ri" as string]: 3 }}>
-              <div className="env-ib-media"><Slot /></div>
-              <div className="env-ib-text">
-                <p className="env-ib-label">The Institution</p>
-                <p className="env-ib-num">IIT Delhi</p>
-                <p className="env-ib-desc">Department of Civil Engineering. Independent. Unsponsored findings.</p>
-              </div>
-            </article>
-          </div>
+          <ProofDashboard />
         </div>
       </section>
 
@@ -740,7 +718,7 @@ export default function Environment() {
           <div className="env-logos">
             {LOGOS.map((logo, i) => (
               <div className="env-logo-cell" key={i} data-reveal style={{ ["--ri" as string]: i }}>
-                <img className="env-logo-img" src={logo.src} alt={logo.name} />
+                <img loading="lazy" className="env-logo-img" src={logo.src} alt={logo.name} />
                 {i < 3 ? (
                   <PlusIcon className="env-logo-plus" strokeWidth={1} />
                 ) : null}
@@ -805,7 +783,7 @@ function Reports() {
               <p className="env-bento-label">Live AQI, everywhere</p>
               <p className="env-bento-body">Watch your air quality update in real time. PM2.5, PM10, and AQI for every unit, on one screen, from anywhere.</p>
             </div>
-            <div className="env-bento-media"><img src="/phone2.png" alt="Live AQI, everywhere" /></div>
+            <div className="env-bento-media"><img loading="lazy" src="/liveaqi.jpg" alt="Live AQI, everywhere" /></div>
           </article>
 
           {/* 2 — top right: text on top, image below */}
@@ -814,12 +792,12 @@ function Reports() {
               <p className="env-bento-label">Every unit, one dashboard</p>
               <p className="env-bento-body">See all your purifiers in a single view. One room or two hundred, every reading sits in the same place.</p>
             </div>
-            <div className="env-bento-media"><img src="/phone4.png" alt="Every unit, one dashboard" /></div>
+            <div className="env-bento-media"><img loading="lazy" src="/timings.jpg" alt="Every unit, one dashboard" style={{ objectPosition: "center 35%" }} /></div>
           </article>
 
           {/* 3 — full width: image left, text right */}
           <article className="env-bento-card span2 split" data-reveal style={{ ["--ri" as string]: 2 }}>
-            <div className="env-bento-media"><img src="/icon.jpg" alt="Control from your phone" style={{ objectPosition: "center 22%" }} /></div>
+            <div className="env-bento-media"><img loading="lazy" src="/Icon.jpg" alt="Control from your phone" style={{ objectPosition: "center 22%" }} /></div>
             <div className="env-bento-text">
               <p className="env-bento-label">Control from your phone</p>
               <p className="env-bento-body">Set fan speed, modes, and schedules without leaving your desk. Full control of every unit, wherever you are.</p>
@@ -828,7 +806,7 @@ function Reports() {
 
           {/* 4 — bottom left: image on top, text below */}
           <article className="env-bento-card" data-reveal style={{ ["--ri" as string]: 3 }}>
-            <div className="env-bento-media"><img src="/phone1.png" alt="Filter health, tracked" /></div>
+            <div className="env-bento-media"><img loading="lazy" src="/fhm.jpg" alt="Filter health, tracked" /></div>
             <div className="env-bento-text">
               <p className="env-bento-label">Filter health, tracked</p>
               <p className="env-bento-body">Know exactly how much life each filter has left. No more guesswork, no more checking units by hand.</p>
@@ -837,7 +815,7 @@ function Reports() {
 
           {/* 5 — bottom right: image on top, text below */}
           <article className="env-bento-card" data-reveal style={{ ["--ri" as string]: 4 }}>
-            <div className="env-bento-media"><img src="/phone3.png" alt="Service on wheels" /></div>
+            <div className="env-bento-media"><img loading="lazy" src="/sow.jpg" alt="Service on wheels" /></div>
             <div className="env-bento-text">
               <p className="env-bento-label">Service on wheels</p>
               <p className="env-bento-body">When a filter nears the end, the unit tells us first. Service is scheduled before you ever notice a drop.</p>
@@ -936,7 +914,7 @@ function SectionVideo({ src, className }: { src: string; className?: string }) {
       loop
       muted
       playsInline
-      preload="auto"
+      preload="none"
       aria-hidden
     />
   );
@@ -1034,7 +1012,7 @@ function ImpactBlock({
 }) {
   const media = (
     <div className="env-im-media" data-reveal>
-      {img ? <img className="env-im-img" src={img} alt="" /> : <Slot label={imgLabel} />}
+      {img ? <img loading="lazy" className="env-im-img" src={img} alt="" /> : <Slot label={imgLabel} />}
     </div>
   );
   const text = (

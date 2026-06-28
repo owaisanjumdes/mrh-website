@@ -85,7 +85,7 @@ export default function ImpactMaterials({
 
   const media = (
     <div className="dm-media" data-reveal>
-      <img src={image} alt={statsHeader} />
+      <img loading="lazy" src={image} alt={statsHeader} />
     </div>
   );
 

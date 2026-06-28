@@ -139,7 +139,7 @@ export default function Reviews() {
 
       <div className="rv-grid">
         <div className="rv-media">
-          <img src="/CLOSEUP-AQI MONITOR.png" alt="PureAir live AQI monitor" />
+          <img loading="lazy" src="/CLOSEUP-AQI MONITOR.png" alt="PureAir live AQI monitor" />
           <div className="rv-media-fade" aria-hidden />
         </div>
 

@@ -193,7 +193,7 @@ export default function ImpactValues() {
       >
         {VALUES.map((v) => (
           <article className="iv-card" key={v.title}>
-            <img className="iv-icon" src={v.icon} alt="" aria-hidden />
+            <img loading="lazy" className="iv-icon" src={v.icon} alt="" aria-hidden />
             <h3 className="iv-card-title">{v.title}</h3>
             <p className="iv-desc">{v.desc}</p>
             <a className="iv-more" href="#">

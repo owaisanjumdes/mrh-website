@@ -176,7 +176,7 @@ export default function ProductsBento() {
         }}
       >
         <div ref={setCardRef(0)} style={cardStyle}>
-          <img
+          <img loading="lazy"
             src="/HCC.png"
             alt=""
             aria-hidden
@@ -196,7 +196,7 @@ export default function ProductsBento() {
           />
         </div>
         <div ref={setCardRef(1)} style={cardStyle}>
-          <img
+          <img loading="lazy"
             src="/AQIMC.png"
             alt=""
             aria-hidden
@@ -216,7 +216,7 @@ export default function ProductsBento() {
           />
         </div>
         <div ref={setCardRef(2)} style={cardStyle}>
-          <img
+          <img loading="lazy"
             src="/SBC.png"
             alt=""
             aria-hidden
@@ -236,7 +236,7 @@ export default function ProductsBento() {
           />
         </div>
         <div ref={setCardRef(3)} style={cardStyle}>
-          <img
+          <img loading="lazy"
             src="/SVC.png"
             alt=""
             aria-hidden

@@ -19,10 +19,17 @@ const SLIDES: Slide[] = [
   { src: "/Closeup.png", title: "Close-up" },
 ];
 
-export default function WhereItWorks() {
+export default function WhereItWorks({ light = false }: { light?: boolean } = {}) {
   const [activeIdx, setActiveIdx] = useState(0);
   const sectionRef = useRef<HTMLElement | null>(null);
   const [inView, setInView] = useState(false);
+
+  // Light/dark color tokens. Dark is the default (home page); light is used on
+  // the Deployments page.
+  const fg = light ? "#1d1d1f" : "#ffffff";
+  const bg = light ? "#f5f5f7" : "#000000";
+  const dotActive = light ? "#1d1d1f" : "#ffffff";
+  const dotIdle = light ? "rgba(0,0,0,0.22)" : "rgba(255,255,255,0.3)";
 
   const goPrev = () => setActiveIdx((i) => (i - 1 + SLIDES.length) % SLIDES.length);
   const goNext = () => setActiveIdx((i) => (i + 1) % SLIDES.length);
@@ -56,15 +63,16 @@ export default function WhereItWorks() {
   return (
     <section
       ref={sectionRef}
+      className={light ? "wiw wiw-light" : "wiw"}
       style={{
-        background: "#000000",
+        background: bg,
         width: "100vw",
         marginLeft: "calc(50% - 50vw)",
         marginRight: "calc(50% - 50vw)",
         paddingTop: "clamp(140px, 16vh, 220px)",
         paddingBottom: "clamp(56px, 8vh, 110px)",
         fontFamily: "var(--font-sans), ui-sans-serif, system-ui, sans-serif",
-        color: "#ffffff",
+        color: fg,
       }}
     >
       <style>{`
@@ -114,6 +122,8 @@ export default function WhereItWorks() {
           transition: background 220ms ease;
         }
         .wiw-nav-btn:hover { background: rgba(255, 255, 255, 0.22); }
+        .wiw-light .wiw-nav-btn { background: rgba(0, 0, 0, 0.06); color: #1d1d1f; }
+        .wiw-light .wiw-nav-btn:hover { background: rgba(0, 0, 0, 0.12); }
         @media (prefers-reduced-motion: reduce) {
           .wiw-frame { transition-duration: 1ms !important; }
           .wiw-title-text { animation-duration: 1ms !important; }
@@ -129,7 +139,7 @@ export default function WhereItWorks() {
           lineHeight: 1.05,
           margin: 0,
           marginBottom: "clamp(40px, 6vh, 80px)",
-          color: "#ffffff",
+          color: fg,
         }}
       >
         Where it works
@@ -160,7 +170,7 @@ export default function WhereItWorks() {
                 className={`wiw-card ${i === activeIdx ? "is-active" : ""}`}
               >
                 <div className="wiw-frame">
-                  <img className="wiw-img" src={s.src} alt={s.title} />
+                  <img loading="lazy" className="wiw-img" src={s.src} alt={s.title} />
                 </div>
               </div>
             ))}
@@ -176,7 +186,7 @@ export default function WhereItWorks() {
             fontSize: "clamp(16px, 1.4vw, 22px)",
             fontWeight: 500,
             letterSpacing: "-0.005em",
-            color: "#ffffff",
+            color: fg,
           }}
         >
           <span key={activeIdx} className="wiw-title-text">
@@ -203,7 +213,7 @@ export default function WhereItWorks() {
                 width: "8px",
                 height: "8px",
                 borderRadius: "9999px",
-                background: i === activeIdx ? "#ffffff" : "rgba(255, 255, 255, 0.3)",
+                background: i === activeIdx ? dotActive : dotIdle,
                 border: "none",
                 padding: 0,
                 cursor: "pointer",

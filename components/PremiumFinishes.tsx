@@ -174,7 +174,7 @@ export default function PremiumFinishes() {
       <div className="pf-stage">
         <div ref={trackRef} className="pf-track" onTransitionEnd={handleEnd}>
           {TRACK.map((f, k) => (
-            <img key={k} className="pf-item" src={f.image} alt={f.name} />
+            <img loading="lazy" key={k} className="pf-item" src={f.image} alt={f.name} />
           ))}
         </div>
       </div>

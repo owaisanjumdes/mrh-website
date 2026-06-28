@@ -429,7 +429,7 @@ export default function ProvenOutput() {
               <path d="M6 6l12 12M18 6L6 18" />
             </svg>
           </button>
-          <img
+          <img loading="lazy"
             src={activeStat.image}
             alt={activeStat.metric}
             onClick={(e) => e.stopPropagation()}

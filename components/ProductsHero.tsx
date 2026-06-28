@@ -246,7 +246,7 @@ export default function ProductsHero({ videoSrc }: { videoSrc?: string } = {}) {
 
         {!videoSrc && (
           <div className="ph-media">
-            <img
+            <img loading="lazy"
               className="ph-shot"
               src="/productshot.png"
               alt="MRH PureAir air purifier — brushed-steel body with honeycomb grille"

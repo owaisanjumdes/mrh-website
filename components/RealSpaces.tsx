@@ -188,7 +188,7 @@ export default function RealSpaces() {
             }}
           >
             {SPACES.map((s) => (
-              <img
+              <img loading="lazy"
                 key={s.src}
                 src={s.src}
                 alt={s.alt}

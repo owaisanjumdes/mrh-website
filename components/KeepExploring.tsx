@@ -171,7 +171,7 @@ function ProductColumn({ product }: { product: Product }) {
           justifyContent: "center",
         }}
       >
-        <img
+        <img loading="lazy"
           src={product.image}
           alt={product.imageAlt}
           style={{

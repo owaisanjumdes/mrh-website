@@ -113,9 +113,9 @@ function HighlightVideo({
   };
   return (
     <div className="hl-card-vidwrap" ref={wrapRef} aria-hidden>
-      <video ref={v0} className="hl-card-video" style={{ ...vs, opacity: 1 }} src={src} muted playsInline preload="auto" />
+      <video ref={v0} className="hl-card-video" style={{ ...vs, opacity: 1 }} src={src} muted playsInline preload="none" />
       {!hardLoop ? (
-        <video ref={v1} className="hl-card-video" style={{ ...vs, opacity: 0 }} src={src} muted playsInline preload="auto" />
+        <video ref={v1} className="hl-card-video" style={{ ...vs, opacity: 0 }} src={src} muted playsInline preload="none" />
       ) : null}
     </div>
   );
@@ -144,7 +144,7 @@ const SLIDES: Slide[] = [
   {
     lead: "One PureAir for every space.",
     rest: "Three sizes, one standard of clean.",
-    image: "/trio.png",
+    image: "/trio.webp",
   },
   {
     lead: "14 stages of filtration.",
@@ -156,7 +156,7 @@ const SLIDES: Slide[] = [
   {
     lead: "The air, on the front panel.",
     rest: "A live AQI sensor you can read at a glance.",
-    image: "/am.png",
+    image: "/am.webp",
     imagePos: "left top",
   },
   {
@@ -499,7 +499,7 @@ export default function Highlights() {
                 </>
               ) : null}
               {s.image ? (
-                <img
+                <img loading="lazy"
                   className="hl-card-img"
                   src={s.image}
                   alt={s.lead}

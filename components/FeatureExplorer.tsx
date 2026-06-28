@@ -40,7 +40,7 @@ const features: Feature[] = [
     title: "Multi-stage filter",
     description:
       "Pre-filter, activated carbon, HEPA H13, and antimicrobial mesh tuned for India's particulate, gas, and bioaerosol mix.",
-    image: "/multi-stage-filter.png",
+    image: "/multi-stage-filter.webp",
   },
   {
     id: "media",
@@ -56,7 +56,7 @@ const features: Feature[] = [
     title: "Live AQI sensor",
     description:
       "Real-time PM 2.5 and AQI display on the front panel. The same air you're breathing, read continuously, surfaced in plain numbers.",
-    image: "/aqimeter.png",
+    image: "/aqimeter.webp",
   },
   {
     id: "quiet",
@@ -64,7 +64,7 @@ const features: Feature[] = [
     title: "Whisper-quiet motor",
     description:
       "Tuned for bedrooms, classrooms, and consultation rooms. Sleep mode drops below 28 dB — softer than a library.",
-    image: "/honeycomb-grill.png",
+    image: "/honeycomb-grill.webp",
   },
   {
     id: "chassis",
@@ -72,7 +72,7 @@ const features: Feature[] = [
     title: "Steel chassis",
     description:
       "Powder-coated steel built for institutional deployment cycles. No plastic creak. No warping. Field-serviceable.",
-    image: "/steelbody.png",
+    image: "/steelbody.webp",
   },
   {
     id: "smart",
@@ -514,7 +514,7 @@ export default function FeatureExplorer() {
 
           {/* Product image */}
           <div className="w-full md:flex-1 flex items-start justify-center">
-            <img
+            <img loading="lazy"
               className={`mrh-feat-img ${
                 imgPhase === "out"
                   ? "mrh-feat-img-out"

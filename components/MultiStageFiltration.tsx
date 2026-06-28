@@ -113,7 +113,7 @@ export default function MultiStageFiltration() {
             loop
             muted
             playsInline
-            preload="auto"
+            preload="none"
             aria-hidden
           />
         </div>
