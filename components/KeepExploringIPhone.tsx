@@ -2,7 +2,7 @@
 
 import {
   Layers,
-  Filter,
+  AirVent,
   Maximize2,
   Wind,
   RefreshCw,
@@ -34,7 +34,7 @@ const SWATCHES = ["#eea487", "#c8c5c1", "#f3f0ec", "#343b47"];
 
 const VARIANTS: Variant[] = [
   { phone: "/pwp.png", swatches: SWATCHES, name: "PureAir", price: "₹XX,XXX" },
-  { phone: "/rgp.webp", swatches: SWATCHES, name: "PureAir Pro", price: "₹XX,XXX" },
+  { phone: "/fronts.png", swatches: SWATCHES, name: "PureAir Pro", price: "₹XX,XXX" },
   { phone: "/sp.png", swatches: SWATCHES, name: "PureAir Max", price: "₹XX,XXX" },
 ];
 
@@ -55,7 +55,7 @@ const SPEC_ROWS: SpecRow[] = [
     { big: "10-Stage", text: "Advanced filtration system" },
     { big: "14-Stage", text: "Advanced filtration system" },
   ] },
-  { Icon: Filter, cells: [
+  { Icon: AirVent, cells: [
     { big: "2 + 2", unit: "filters", text: "Pre-filters + Main-filters" },
     { big: "4 + 6", unit: "filters", text: "Pre-filters + Main-filters" },
     { big: "6 + 8", unit: "filters", text: "Pre-filters + Main-filters" },

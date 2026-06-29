@@ -61,11 +61,11 @@ const FEATURES: Feature[] = [
   },
   {
     id: "engineering",
-    label: "German engineering, Indian reliability",
-    title: "German engineering, Indian reliability",
+    label: "Metal Unibody",
+    title: "Metal Unibody",
     description:
-      "Filters designed by MANN+HUMMEL in Germany, with 80 years of filtration science behind them. Built and serviced in India, for India's air.",
-    image: "/hepa-filter.png",
+      "A powder-coated metal unibody, not plastic. It stays rigid, runs cool and quiet, and shrugs off years of daily use without a creak or a warp.",
+    image: "/metalbody.png",
   },
   {
     id: "diagnostics",
@@ -73,7 +73,7 @@ const FEATURES: Feature[] = [
     title: "Self-diagnostic alerts",
     description:
       "PureAir tracks its own health and flags service before you notice a thing. We get the alert, and we handle it.",
-    image: "/iphonesow.png",
+    image: "/sow.jpg",
   },
 ];
 
@@ -245,12 +245,23 @@ export default function CloserLook() {
           padding: clamp(28px, 5vw, 80px);
           padding-left: clamp(220px, 30%, 420px);
         }
-        /* App control + Self-diagnostic images: centered naturally, a bit smaller */
-        .cl-img--iot,
-        .cl-img--diagnostics {
+        /* App control image: centered naturally, a bit smaller */
+        .cl-img--iot {
           padding: clamp(48px, 7vw, 110px);
           padding-left: clamp(220px, 30%, 420px);
           object-position: center;
+        }
+        /* Multi-stage filter image: nudged a bit right */
+        .cl-img--filtration {
+          padding-right: 0;
+          object-position: 100% center;
+        }
+        /* Self-diagnostic image (sow): larger, nudged right, pinned to the bottom edge */
+        .cl-img--diagnostics {
+          padding: 0;
+          padding-top: clamp(40px, 8vw, 140px);
+          padding-left: clamp(180px, 26%, 380px);
+          object-position: 66% bottom;
         }
         /* Live AQI sensor image: smaller, nudged right, top pinned to the card edge */
         .cl-img--sensor {

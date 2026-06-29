@@ -21,11 +21,12 @@ export default function ImpactPage() {
     >
       <ImpactHero />
       <ImpactDevices />
-      <ImpactMaterials statsHeader="PureAir" image="/rgp.webp" />
+      <ImpactMaterials statsHeader="PureAir" image="/frg.png" />
       <ImpactMaterials
         showHeader={false}
         reverse
         statsHeader="AirFINEry"
+        image="/fronts.png"
         stats={[
           {
             num: "4,000",
@@ -44,9 +45,24 @@ export default function ImpactPage() {
           },
         ]}
       />
-      <ImpactGallery />
+      <ImpactGallery
+        images={["/iit-8.jpg", "/iit-7.jpg", "/iit-6.jpg", "/iit-5.jpg"]}
+        titles={[
+          ["Up to 97%", "efficacy."],
+          ["~75% fewer", "particles."],
+          ["Below", "20 µg/m³."],
+          ["ISO 1000", "clean room."],
+        ]}
+      />
       <ImpactGallery
         showHeader={false}
+        images={["/iit-4.jpg", "/iit-3.jpg", "/iit-2.jpg", "/iit-1.jpg"]}
+        titles={[
+          ["Very Poor", "to Good."],
+          ["Strong removal", "efficiency."],
+          ["High particle", "reduction."],
+          ["61% PM mass", "reduction."],
+        ]}
         captions={[
           {
             lead: "AQI dropped from Very Poor to Good",

@@ -136,6 +136,7 @@ type Slide = {
   image?: string;
   imagePos?: string;
   capPos?: "br";
+  twoLine?: boolean;
   noScrim?: boolean;
   hardLoop?: boolean;
 };
@@ -144,7 +145,10 @@ const SLIDES: Slide[] = [
   {
     lead: "One PureAir for every space.",
     rest: "Three sizes, one standard of clean.",
-    image: "/trio.webp",
+    video: "/pa3a.mp4",
+    videoPos: "center 70%",
+    hardLoop: true,
+    twoLine: true,
   },
   {
     lead: "14 stages of filtration.",
@@ -152,12 +156,14 @@ const SLIDES: Slide[] = [
     video: "/filtervid.mp4",
     videoPos: "center 12%",
     hardLoop: true,
+    twoLine: true,
   },
   {
     lead: "The air, on the front panel.",
     rest: "A live AQI sensor you can read at a glance.",
     image: "/am.webp",
     imagePos: "left top",
+    twoLine: true,
   },
   {
     lead: "Proven across 200+ spaces.",
@@ -165,6 +171,7 @@ const SLIDES: Slide[] = [
     video: "/twos.mp4",
     noScrim: true,
     hardLoop: true,
+    twoLine: true,
   },
   {
     lead: "2,000 sq ft, cleared fast.",
@@ -509,7 +516,7 @@ export default function Highlights() {
               {s.lead || s.rest ? (
                 <p className={`hl-card-cap ${s.capPos === "br" ? "hl-card-cap--br" : ""}`}>
                   <b>{s.lead}</b>
-                  {s.capPos === "br" ? <br /> : " "}
+                  {s.capPos === "br" || s.twoLine ? <br /> : " "}
                   {s.rest}
                 </p>
               ) : null}

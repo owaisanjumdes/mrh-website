@@ -87,7 +87,11 @@ export default function CenterStage({
         }
         .cs-eyebrow {
           margin: 0 auto clamp(12px, 1.6vw, 20px);
-          color: #ff791b;
+          background: linear-gradient(90deg, #1D976C, #93F9B9);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          -webkit-text-fill-color: transparent;
           font-size: clamp(17px, 2vw, 24px);
           font-weight: 600;
           line-height: 1.17;

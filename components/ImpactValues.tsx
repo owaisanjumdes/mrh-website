@@ -1,47 +1,48 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Wind, ShieldCheck, Layers, Factory, Recycle, Activity, type LucideIcon } from "lucide-react";
 
 // Impact — "Our values lead the way." Figma node 794:12152. Light-gray section with
 // a left-aligned heading and a horizontal carousel of white value cards (icon +
 // title + description + "Learn more" link), scrolled with prev/next arrows.
 
 type Value = {
-  icon: string;
+  icon: LucideIcon;
   title: string;
   desc: string;
 };
 
 const VALUES: Value[] = [
   {
-    icon: "/impact-value-1.png",
-    title: "Accessibility",
-    desc: "Our products and services have built-in features to help you do what you love, your way.",
+    icon: Wind,
+    title: "Clean Air for All",
+    desc: "Clean air shouldn’t be a privilege. We engineer it for classrooms, clinics, offices, and homes alike.",
   },
   {
-    icon: "/impact-value-2.png",
-    title: "Education",
-    desc: "We empower students and educators to learn, create, and define their own success.",
+    icon: ShieldCheck,
+    title: "Proven, Not Promised",
+    desc: "Every performance claim is independently tested and validated by IIT Delhi, never just marketed.",
   },
   {
-    icon: "/impact-value-3.png",
-    title: "Inclusion and Diversity",
-    desc: "We’re holding ourselves accountable for creating a culture where everyone belongs.",
+    icon: Layers,
+    title: "German Filtration",
+    desc: "Filter media engineered by MANN+HUMMEL, with 80 years of filtration science behind it.",
   },
   {
-    icon: "/impact-value-4.png",
-    title: "Privacy",
-    desc: "We design every product and service to help keep your data safe and secure.",
+    icon: Factory,
+    title: "Made in India",
+    desc: "Designed for India’s air, and built, serviced, and supported locally.",
   },
   {
-    icon: "/impact-value-5.png",
-    title: "Racial Equity and Justice",
-    desc: "We’re addressing systemic racism by expanding opportunities for communities of color globally.",
+    icon: Recycle,
+    title: "Built to Last",
+    desc: "Long-life filters and a metal unibody mean less waste and a lower cost to run.",
   },
   {
-    icon: "/impact-value-6.png",
-    title: "Supply Chain Innovation",
-    desc: "We uphold high standards to safeguard people and the planet across our global supply chain.",
+    icon: Activity,
+    title: "Always Accountable",
+    desc: "Live AQI and self-diagnostics keep every unit honest, in real time.",
   },
 ];
 
@@ -121,9 +122,9 @@ export default function ImpactValues() {
         .iv-icon {
           display: block;
           align-self: flex-start;
-          height: clamp(40px, 4vw, 46px);
-          width: auto;
-          object-fit: contain;
+          height: clamp(38px, 3.8vw, 44px);
+          width: clamp(38px, 3.8vw, 44px);
+          color: #1a8f3c;
         }
         .iv-card-title {
           margin: clamp(14px, 1.6vw, 18px) 0 0;
@@ -193,7 +194,7 @@ export default function ImpactValues() {
       >
         {VALUES.map((v) => (
           <article className="iv-card" key={v.title}>
-            <img loading="lazy" className="iv-icon" src={v.icon} alt="" aria-hidden />
+            <v.icon className="iv-icon" strokeWidth={1.6} aria-hidden />
             <h3 className="iv-card-title">{v.title}</h3>
             <p className="iv-desc">{v.desc}</p>
             <a className="iv-more" href="#">

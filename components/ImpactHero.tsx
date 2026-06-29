@@ -4,7 +4,7 @@
 
 export default function ImpactHero() {
   return (
-    <section className="ie" aria-label="Products that are backed by data">
+    <section className="ie" aria-label="IIT Delhi field evaluation of PureAir">
       <style>{`
         .ie {
           --gutter: clamp(20px, 6vw, 126px);
@@ -78,15 +78,6 @@ export default function ImpactHero() {
           height: auto;
         }
       `}</style>
-
-      <div className="ie-top">
-        <div className="ie-glow" aria-hidden />
-        <div className="ie-top-content">
-          <h1 className="ie-headline" data-reveal>
-            Products that are backed by data
-          </h1>
-        </div>
-      </div>
 
       <div className="ie-forest">
         <img loading="lazy"

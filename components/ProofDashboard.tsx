@@ -2,16 +2,15 @@ import { Layers, Wind, BarChart3, Gauge, Waves, AudioLines, ShieldCheck } from "
 
 // "We didn't test it ourselves. IIT Delhi did." proof block — the full-width
 // "60 Days" hero card followed by the six-card PureAir metrics dashboard.
-// Self-contained (own scoped CSS + computed chart data) so it can sit on the
-// light home section and the dark product section alike; the cards are white
-// either way. Ported from the "PureAir Dashboard — Light" design.
+// Self-contained (own scoped CSS + computed chart data). Pass `dark` to render
+// dark cards (used on the black product-page section); default is light (home).
 
 const dashIcon = { size: 18, strokeWidth: 1.9 } as const;
 const GREEN = "#30d158";
 const GREEN_DEEP = "#1a8f3c";
 const TRACK = "#e8e8ed";
 
-function buildDashData() {
+function buildDashData(inactive: string) {
   const lerp = (a: number[], b: number[], f: number) => {
     const c = [0, 1, 2].map((k) => Math.round(a[k] + (b[k] - a[k]) * f));
     return `rgb(${c[0]},${c[1]},${c[2]})`;
@@ -30,7 +29,7 @@ function buildDashData() {
     const x2 = gcx + gR * Math.cos(ang), y2 = gcy - gR * Math.sin(ang);
     let color: string, w: number;
     if (f <= gActive) { color = lerp(gLight, gDark, f / gActive); w = 3; }
-    else { color = "rgba(0,0,0,0.07)"; w = 2.2; }
+    else { color = inactive; w = 2.2; }
     gaugeTicks.push({ x1: +x1.toFixed(1), y1: +y1.toFixed(1), x2: +x2.toFixed(1), y2: +y2.toFixed(1), color, w });
   }
   const aMid = (gr + gR) / 2, aAng = ((180 - gActive * 180) * Math.PI) / 180;
@@ -65,18 +64,29 @@ function buildDashData() {
   return { gaugeTicks, markerX, markerY, audioBars, playheadX, wfLine, wfFill };
 }
 
-const DASH = buildDashData();
+const DASH = buildDashData("rgba(0,0,0,0.07)");
+const DASH_DARK = buildDashData("rgba(255,255,255,0.12)");
 
-function DashBars({ rows }: { rows: { k: string; v: number }[] }) {
+function DashBars({
+  rows,
+  track,
+  nameColor,
+  valueColor,
+}: {
+  rows: { k: string; v: number }[];
+  track: string;
+  nameColor: string;
+  valueColor: string;
+}) {
   return (
     <div className="pd-viz" style={{ display: "flex", flexDirection: "column", gap: 15 }}>
       {rows.map((r) => (
         <div key={r.k}>
           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 7 }}>
-            <span style={{ fontSize: 14, color: "#6e6e73", fontWeight: 500 }}>{r.k}</span>
-            <span style={{ fontSize: 14, color: "#1d1d1f", fontWeight: 500, fontVariantNumeric: "tabular-nums" }}>{r.v}%</span>
+            <span style={{ fontSize: 14, color: nameColor, fontWeight: 500 }}>{r.k}</span>
+            <span style={{ fontSize: 14, color: valueColor, fontWeight: 500, fontVariantNumeric: "tabular-nums" }}>{r.v}%</span>
           </div>
-          <div style={{ height: 6, borderRadius: 999, background: TRACK, overflow: "hidden" }}>
+          <div style={{ height: 6, borderRadius: 999, background: track, overflow: "hidden" }}>
             <div style={{ height: "100%", width: `${r.v}%`, borderRadius: 999, background: GREEN }} />
           </div>
         </div>
@@ -85,9 +95,19 @@ function DashBars({ rows }: { rows: { k: string; v: number }[] }) {
   );
 }
 
-export default function ProofDashboard() {
+export default function ProofDashboard({ dark = false }: { dark?: boolean } = {}) {
+  // Color tokens for inline-styled chart bits (CSS handles the class-based ones).
+  const cardText = dark ? "#f5f5f7" : "#1d1d1f";
+  const muted = dark ? "#a1a1a6" : "#6e6e73";
+  const subtle = dark ? "#86868b" : "#86868b";
+  const track = dark ? "rgba(255,255,255,0.14)" : TRACK;
+  const accent = dark ? GREEN : GREEN_DEEP;
+  const gridLine = dark ? "rgba(255,255,255,0.16)" : "rgba(0,0,0,0.1)";
+  const offDot = dark ? "rgba(255,255,255,0.34)" : "#c7c7cc";
+  const dash = dark ? DASH_DARK : DASH;
+
   return (
-    <div className="pd">
+    <div className={dark ? "pd pd-dark" : "pd"}>
       <style>{`
         .pd { display: flex; flex-direction: column; gap: clamp(16px, 1.6vw, 22px); margin-top: clamp(36px, 4vw, 60px); }
 
@@ -114,6 +134,20 @@ export default function ProofDashboard() {
         .pd-foot { margin-top: auto; padding-top: clamp(14px, 1.6vw, 20px); font-size: clamp(13px, 1.2vw, 15px); font-weight: 500; color: #86868b; }
         .pd-gauge { position: relative; width: 240px; max-width: 100%; margin: clamp(4px, 0.8vw, 10px) auto clamp(12px, 1.6vw, 20px); }
         @keyframes pdPulseDot { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+
+        /* ---- dark variant (product page, black section) ---- */
+        .pd-dark .pd-hero,
+        .pd-dark .pd-card { background: #1c1c1e; box-shadow: none; border: 1px solid rgba(255,255,255,0.08); }
+        .pd-dark .pd-hero-label,
+        .pd-dark .pd-label,
+        .pd-dark .pd-label svg { color: #30d158; }
+        .pd-dark .pd-hero-num,
+        .pd-dark .pd-num { color: #f5f5f7; }
+        .pd-dark .pd-num .u { color: #a1a1a6; }
+        .pd-dark .pd-hero-desc,
+        .pd-dark .pd-cap { color: #a1a1a6; }
+        .pd-dark .pd-foot { color: #86868b; }
+
         @media (max-width: 900px) { .pd-row { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 860px) { .pd-hero { grid-template-columns: 1fr; } }
         @media (max-width: 560px) { .pd-row { grid-template-columns: 1fr; } }
@@ -138,7 +172,7 @@ export default function ProofDashboard() {
             <p className="pd-label"><Layers {...dashIcon} /> Particle removal</p>
             <p className="pd-num">99<span className="u">%</span></p>
             <p className="pd-cap">PM10 mass captured, broken down by particle size.</p>
-            <DashBars rows={[{ k: "PM10", v: 99 }, { k: "PM2.5", v: 95 }, { k: "PM0.1", v: 83 }]} />
+            <DashBars rows={[{ k: "PM10", v: 99 }, { k: "PM2.5", v: 95 }, { k: "PM0.1", v: 83 }]} track={track} nameColor={muted} valueColor={cardText} />
             <p className="pd-foot">60-day field mean</p>
           </div>
 
@@ -155,8 +189,8 @@ export default function ProofDashboard() {
                     <stop offset="1" stopColor={GREEN} stopOpacity="0" />
                   </linearGradient>
                 </defs>
-                <line x1="6" y1="66" x2="294" y2="66" stroke="rgba(0,0,0,0.1)" strokeWidth="1" strokeDasharray="2 5" />
-                <text x="294" y="60" textAnchor="end" fontSize="9" fill="#a0a0a6">WHO 20 µg/m³</text>
+                <line x1="6" y1="66" x2="294" y2="66" stroke={gridLine} strokeWidth="1" strokeDasharray="2 5" />
+                <text x="294" y="60" textAnchor="end" fontSize="9" fill={muted}>WHO 20 µg/m³</text>
                 <path d="M6,14 C46,26 80,58 120,72 C160,84 220,88 294,89 L294,92 L6,92 Z" fill="url(#pdAqF)" />
                 <path d="M6,14 C46,26 80,58 120,72 C160,84 220,88 294,89" fill="none" stroke={GREEN_DEEP} strokeWidth="2.4" strokeLinecap="round" />
                 <circle cx="294" cy="89" r="3" fill={GREEN_DEEP} />
@@ -181,13 +215,13 @@ export default function ProofDashboard() {
                 <div key={g.k} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, width: "18%" }}>
                   <div style={{ display: "flex", gap: 3, alignItems: "flex-end", height: 44 }}>
                     <div style={{ width: 8, height: `${g.on}%`, borderRadius: 3, background: GREEN }} />
-                    <div style={{ width: 8, height: `${g.off}%`, borderRadius: 3, background: TRACK }} />
+                    <div style={{ width: 8, height: `${g.off}%`, borderRadius: 3, background: track }} />
                   </div>
-                  <span style={{ fontSize: 11.5, color: "#86868b", fontWeight: 500 }}>{g.k}</span>
+                  <span style={{ fontSize: 11.5, color: subtle, fontWeight: 500 }}>{g.k}</span>
                 </div>
               ))}
             </div>
-            <p className="pd-foot"><span style={{ color: GREEN_DEEP }}>●</span> With purifier&nbsp;&nbsp;<span style={{ color: "#c7c7cc" }}>●</span> Without</p>
+            <p className="pd-foot"><span style={{ color: accent }}>●</span> With purifier&nbsp;&nbsp;<span style={{ color: offDot }}>●</span> Without</p>
           </div>
         </div>
 
@@ -198,10 +232,10 @@ export default function ProofDashboard() {
             <p className="pd-label"><Gauge {...dashIcon} /> Overall efficiency</p>
             <div className="pd-gauge">
               <svg viewBox="0 0 280 158" width="100%" style={{ display: "block" }}>
-                {DASH.gaugeTicks.map((t, i) => (
+                {dash.gaugeTicks.map((t, i) => (
                   <line key={i} x1={t.x1} y1={t.y1} x2={t.x2} y2={t.y2} stroke={t.color} strokeWidth={t.w} strokeLinecap="round" />
                 ))}
-                <circle cx={DASH.markerX} cy={DASH.markerY} r="4" fill={GREEN_DEEP} />
+                <circle cx={dash.markerX} cy={dash.markerY} r="4" fill={accent} />
               </svg>
               <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "flex-end", justifyContent: "center", paddingBottom: "7%" }}>
                 <p className="pd-num gauge" style={{ justifyContent: "center" }}>84-90<span className="u">%</span></p>
@@ -209,7 +243,7 @@ export default function ProofDashboard() {
             </div>
             <p className="pd-cap" style={{ textAlign: "center" }}>Overall reduction</p>
             <p className="pd-foot" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
-              <ShieldCheck size={15} strokeWidth={1.9} color={GREEN_DEEP} /> Verified to ISO Class 1000
+              <ShieldCheck size={15} strokeWidth={1.9} color={accent} /> Verified to ISO Class 1000
             </p>
           </div>
 
@@ -217,7 +251,7 @@ export default function ProofDashboard() {
           <div className="pd-card">
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
               <p className="pd-label" style={{ margin: 0 }}><Waves {...dashIcon} /> Air quality score</p>
-              <span style={{ fontSize: 12, fontWeight: 600, color: GREEN_DEEP, background: "rgba(48,209,88,0.12)", padding: "4px 11px", borderRadius: 999 }}>Good</span>
+              <span style={{ fontSize: 12, fontWeight: 600, color: accent, background: "rgba(48,209,88,0.12)", padding: "4px 11px", borderRadius: 999 }}>Good</span>
             </div>
             <p className="pd-num" style={{ marginTop: 22 }}>92</p>
             <p className="pd-cap">Average across tested indoor spaces.</p>
@@ -229,13 +263,13 @@ export default function ProofDashboard() {
                     <stop offset="1" stopColor={GREEN} stopOpacity="0" />
                   </linearGradient>
                 </defs>
-                <path d={DASH.wfFill} fill="url(#pdWfF)" />
-                <path d={DASH.wfLine} fill="none" stroke={GREEN_DEEP} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d={dash.wfFill} fill="url(#pdWfF)" />
+                <path d={dash.wfLine} fill="none" stroke={GREEN_DEEP} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </div>
             <p className="pd-foot" style={{ display: "flex", gap: 28 }}>
-              <span>Indoor <b style={{ color: "#1d1d1f", fontWeight: 500 }}>70–90%</b></span>
-              <span>Outdoor <b style={{ color: "#1d1d1f", fontWeight: 500 }}>70–97%</b></span>
+              <span>Indoor <b style={{ color: cardText, fontWeight: 500 }}>70–90%</b></span>
+              <span>Outdoor <b style={{ color: cardText, fontWeight: 500 }}>70–97%</b></span>
             </p>
           </div>
 
@@ -246,14 +280,14 @@ export default function ProofDashboard() {
             <p className="pd-cap">Fine particle capture, measured continuously.</p>
             <div className="pd-viz">
               <svg viewBox="0 0 300 100" width="100%" style={{ display: "block" }}>
-                {DASH.audioBars.map((b, i) => (
+                {dash.audioBars.map((b, i) => (
                   <rect key={i} x={b.x} y={b.y} width={b.w} height={b.h} rx="2" fill={b.color} />
                 ))}
-                <line x1={DASH.playheadX} y1="10" x2={DASH.playheadX} y2="98" stroke={GREEN_DEEP} strokeWidth="1.4" strokeDasharray="2 4" opacity="0.5" />
-                <circle cx={DASH.playheadX} cy="54" r="3.5" fill={GREEN_DEEP} style={{ animation: "pdPulseDot 2.4s ease-in-out infinite" }} />
+                <line x1={dash.playheadX} y1="10" x2={dash.playheadX} y2="98" stroke={GREEN_DEEP} strokeWidth="1.4" strokeDasharray="2 4" opacity="0.5" />
+                <circle cx={dash.playheadX} cy="54" r="3.5" fill={GREEN_DEEP} style={{ animation: "pdPulseDot 2.4s ease-in-out infinite" }} />
               </svg>
             </div>
-            <p className="pd-foot">Ultrafine <b style={{ color: "#1d1d1f", fontWeight: 500 }}>66%</b>&nbsp;&nbsp;Fine <b style={{ color: "#1d1d1f", fontWeight: 500 }}>83%</b></p>
+            <p className="pd-foot">Ultrafine <b style={{ color: cardText, fontWeight: 500 }}>66%</b>&nbsp;&nbsp;Fine <b style={{ color: cardText, fontWeight: 500 }}>83%</b></p>
           </div>
         </div>
       </div>

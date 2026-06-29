@@ -20,7 +20,7 @@ export default function ProductShowcase({ heroVideo }: { heroVideo?: string } = 
       <Highlights />
       <DesignSection
         eyebrow="Why PureAir"
-        title={<>Clean air is the<br />original luxury.</>}
+        title={<>Purity you can feel.</>}
         copy={
           <>
             German filtration that turns any room into the cleanest air you&rsquo;ll
@@ -68,7 +68,7 @@ export default function ProductShowcase({ heroVideo }: { heroVideo?: string } = 
         ]}
         centerStats
         link={{ label: "See the full study", href: "/proof" }}
-        media={<ProofDashboard />}
+        media={<ProofDashboard dark />}
       />
       <CenterStage
         eyebrow="Connected Intelligence"

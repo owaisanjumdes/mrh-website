@@ -60,6 +60,8 @@ type Caption = { lead: string; desc: string };
 export default function ImpactGallery({
   showHeader = true,
   captions,
+  images,
+  titles,
   eyebrow,
   heading,
   subheading,
@@ -67,15 +69,22 @@ export default function ImpactGallery({
 }: {
   showHeader?: boolean;
   captions?: Caption[];
+  images?: string[];
+  titles?: string[][];
   eyebrow?: string;
   heading?: ReactNode;
   subheading?: ReactNode;
   highlightHeading?: boolean;
 } = {}) {
-  // keep each card's image/title; optionally override the bold lead + caption text
-  const cards = captions
-    ? CARDS.map((c, i) => ({ ...c, lead: captions[i].lead, desc: captions[i].desc, fn: undefined }))
-    : CARDS;
+  // Optionally override each card's image, overlay title, and lead + caption text.
+  // Overlay titles render white (they sit on the photo) regardless of the card data.
+  const cards = CARDS.map((c, i) => ({
+    ...c,
+    titleColor: "#f5f5f7",
+    ...(captions?.[i] ? { lead: captions[i].lead, desc: captions[i].desc, fn: undefined } : {}),
+    ...(images?.[i] ? { img: images[i] } : {}),
+    ...(titles?.[i] ? { title: titles[i] } : {}),
+  }));
 
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [atStart, setAtStart] = useState(true);
@@ -206,6 +215,7 @@ export default function ImpactGallery({
           font-weight: 600;
           line-height: 1.14;
           letter-spacing: 0.007em;
+          text-shadow: 0 1px 14px rgba(0, 0, 0, 0.45);
         }
         .ig-card-title.is-bottom { bottom: clamp(24px, 3vw, 36px); }
         .ig-card-title.is-center { top: 35%; }
