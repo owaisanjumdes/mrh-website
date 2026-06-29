@@ -33,9 +33,9 @@ type SpecRow = { Icon: LucideIcon; cells: [Cell, Cell, Cell] };
 const SWATCHES = ["#eea487", "#c8c5c1", "#f3f0ec", "#343b47"];
 
 const VARIANTS: Variant[] = [
-  { phone: "/pwp.png", swatches: SWATCHES, name: "PureAir", price: "₹XX,XXX" },
-  { phone: "/fronts.png", swatches: SWATCHES, name: "PureAir Pro", price: "₹XX,XXX" },
-  { phone: "/sp.png", swatches: SWATCHES, name: "PureAir Max", price: "₹XX,XXX" },
+  { phone: "/pmm.png", swatches: SWATCHES, name: "PureAir", price: "₹XX,XXX" },
+  { phone: "/pap.png", swatches: SWATCHES, name: "PureAir Pro", price: "₹XX,XXX" },
+  { phone: "/frg.png", swatches: SWATCHES, name: "PureAir Max", price: "₹XX,XXX" },
 ];
 
 // Same spec across all three variants.
