@@ -67,7 +67,7 @@ export default function ProductShowcase({ heroVideo }: { heroVideo?: string } = 
           },
         ]}
         centerStats
-        link={{ label: "See the full study", href: "/proof" }}
+        link={{ label: "See the full study", href: "/validation" }}
         media={<ProofDashboard dark />}
       />
       <CenterStage

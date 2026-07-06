@@ -2,11 +2,11 @@ import Link from "next/link";
 
 const sitemap = [
   { href: "/products", label: "Products" },
-  { href: "/technology", label: "Technology" },
-  { href: "/proof", label: "Proof" },
-  { href: "/deployments", label: "Deployments" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/technology", label: "Our Technology" },
+  { href: "/validation", label: "Our IIT Validation" },
+  { href: "/projects", label: "Projects" },
+  { href: "/about", label: "About Us" },
+  { href: "/contact", label: "Contact Us" },
   { href: "/trust", label: "Trust" },
 ];
 

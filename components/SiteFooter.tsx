@@ -5,9 +5,9 @@ import Link from "next/link";
 
 const EXPLORE = [
   { label: "Products", href: "/products" },
-  { label: "Technology", href: "/technology" },
-  { label: "Proof", href: "/proof" },
-  { label: "Deployments", href: "/deployments" },
+  { label: "Our Technology", href: "/technology" },
+  { label: "Our IIT Validation", href: "/validation" },
+  { label: "Projects", href: "/projects" },
 ];
 
 const PRODUCTS = [

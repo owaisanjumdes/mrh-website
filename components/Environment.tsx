@@ -198,6 +198,17 @@ const SPACES_CARDS: CardItem[] = [
   { title: "", withImage: true, imgLabel: "Hotel", imgSrc: "/hlf.jpg" },
 ];
 
+// Hero banners, in order. Files live in /public.
+const BANNERS: { src: string; alt: string }[] = [
+  { src: "/b1.jpeg", alt: "MRH banner 1" },
+  { src: "/b2.jpeg", alt: "MRH banner 2" },
+  { src: "/b3.jpeg", alt: "MRH banner 3" },
+  { src: "/b4.jpeg", alt: "MRH banner 4" },
+  { src: "/b5.jpeg", alt: "MRH banner 5" },
+  { src: "/b6.jpeg", alt: "MRH banner 6" },
+  { src: "/b7.jpeg", alt: "MRH banner 7" },
+];
+
 const LOGOS = [
   { name: "Delhi Public School", src: "/logos/dps.png" },
   { name: "GD Goenka", src: "/logos/gdgoenka.png" },
@@ -233,9 +244,32 @@ export default function Environment() {
         /* gray image placeholder */
         .env-ph { background: repeating-linear-gradient(135deg,#e3e3e6,#e3e3e6 18px,#dcdce0 18px,#dcdce0 36px); display: flex; align-items: center; justify-content: center; color: #8a8a8f; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
 
-        /* ---------- 1. Hero (full-screen image) ---------- */
-        .env-hero { position: relative; overflow: hidden; padding: 0; background: #ffffff; }
+        /* ---------- 1. Hero (banner slider) ---------- */
+        /* The hero takes the banner's own size, so the banner shows in full with
+           no crop and no letterbox bars. The active slide sits in flow and sets
+           the height; extra slides overlay it and cross-fade. */
+        .env-hero { position: relative; overflow: hidden; padding: 0; width: 100%; }
+        .env-hero-track { position: relative; width: 100%; }
+        .env-hero-slide { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity 600ms ease; }
+        .env-hero-slide.is-active { position: relative; opacity: 1; pointer-events: auto; }
         .env-hero-img { display: block; width: 100%; height: auto; }
+        /* Prev / next arrows on either edge, vertically centered */
+        .env-hero-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3; width: clamp(40px, 4vw, 56px); height: clamp(40px, 4vw, 56px); border: none; border-radius: 50%; background: rgba(15, 15, 15, 0.36); color: #ffffff; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); transition: background 200ms ease, transform 200ms ease; }
+        .env-hero-arrow:hover { background: rgba(15, 15, 15, 0.6); }
+        .env-hero-arrow:active { transform: translateY(-50%) scale(0.92); }
+        .env-hero-arrow--prev { left: clamp(12px, 2vw, 28px); }
+        .env-hero-arrow--next { right: clamp(12px, 2vw, 28px); }
+        .env-hero-arrow svg { width: 46%; height: 46%; }
+
+        /* ---------- floating WhatsApp button (home only) ---------- */
+        .env-wa { position: fixed; right: clamp(16px, 2.4vw, 28px); bottom: clamp(16px, 2.4vw, 28px); z-index: 45; width: clamp(52px, 6vw, 62px); height: clamp(52px, 6vw, 62px); border-radius: 50%; background: #25d366; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 10px 26px rgba(0, 0, 0, 0.26); transition: transform 200ms ease, opacity 260ms ease, visibility 260ms ease; }
+        .env-wa:hover { transform: scale(1.06); }
+        /* Only shown while the hero is in view; fades out once scrolled past it */
+        .env-wa--hidden { opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(12px); }
+        .env-wa svg { width: 56%; height: 56%; fill: #ffffff; position: relative; z-index: 1; }
+        .env-wa-pulse { position: absolute; inset: 0; border-radius: 50%; background: #25d366; z-index: 0; animation: envWaPulse 2s ease-out infinite; }
+        @keyframes envWaPulse { 0% { transform: scale(1); opacity: 0.55; } 100% { transform: scale(1.9); opacity: 0; } }
+        @media (prefers-reduced-motion: reduce) { .env-wa-pulse { animation: none; opacity: 0; } }
 
         /* ---------- generic section heading ---------- */
         .env-section { padding: clamp(72px, 11vh, 150px) 0; }
@@ -252,11 +286,16 @@ export default function Environment() {
         .env-prod-img { display: block; width: 100%; height: 100%; object-fit: cover; transition: filter 300ms ease; }
         .env-prod-card--shop:hover .env-prod-img,
         .env-prod-card--shop:hover .env-ph { filter: brightness(0.5); }
-        .env-prod-cta { position: absolute; right: clamp(18px, 2vw, 28px); bottom: clamp(18px, 2vw, 28px); opacity: 0; pointer-events: none; background: #ffffff; color: #333336; font-size: clamp(14px, 1.3vw, 16px); font-weight: 600; letter-spacing: -0.01em; padding: 0.72em 1.6em; border-radius: 980px; text-decoration: none; white-space: nowrap; transform: translateY(8px); transition: opacity 300ms ease, transform 300ms ease, background 200ms ease; }
-        .env-prod-card--shop:hover .env-prod-cta { opacity: 1; pointer-events: auto; transform: translateY(0); }
-        .env-prod-cta:hover { background: #ececee; }
-        .env-prod-cap { margin: clamp(18px, 1.8vw, 26px) 0 0; font-size: clamp(15px, 1.4vw, 17px); font-weight: 500; line-height: 1.45; color: #6e6e73; max-width: 48ch; }
-        .env-prod-cap b { color: #1d1d1f; font-weight: 600; }
+        /* Hover text that fades in over the darkened card */
+        .env-prod-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: clamp(20px, 3vw, 40px); text-align: center; opacity: 0; pointer-events: none; transition: opacity 320ms ease; }
+        .env-prod-card--shop:hover .env-prod-overlay { opacity: 1; }
+        .env-prod-overlay p { margin: 0; color: #ffffff; font-size: clamp(22px, 2.8vw, 42px); line-height: 1.14; letter-spacing: -0.01em; text-wrap: balance; transform: translateY(clamp(56px, 12vw, 128px)); }
+        .env-prod-overlay .ov-solution { font-weight: 300; }
+        .env-prod-overlay .ov-for { font-weight: 500; font-style: italic; }
+        /* Buy Now CTA below each card, centered */
+        .env-prod-cta-row { display: flex; justify-content: center; margin-top: clamp(20px, 2vw, 30px); }
+        .env-prod-buy { display: inline-flex; align-items: center; height: 52px; padding: 0 clamp(28px, 3vw, 40px); border-radius: 980px; background: #1d1d1f; color: #ffffff; font-size: clamp(15px, 1.4vw, 17px); font-weight: 600; letter-spacing: -0.01em; text-decoration: none; white-space: nowrap; transition: background 200ms ease; }
+        .env-prod-buy:hover { background: #333335; }
 
         /* ---------- 2b. impact blocks (image + 3 stats) ---------- */
         .env-im { display: grid; grid-template-columns: 1fr 1fr; align-items: center; background: #ffffff; width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); }
@@ -478,10 +517,9 @@ export default function Environment() {
         }
       `}</style>
 
-      {/* 1 — HERO */}
-      <header className="env-hero">
-        <img loading="lazy" className="env-hero-img" src="/3pa.webp" alt="" />
-      </header>
+      {/* 1 — HERO (8-banner slider) */}
+      <HeroBanners />
+      <WhatsAppButton />
 
       {/* 2 — TWO PRODUCTS */}
       <section className="env-section">
@@ -494,24 +532,30 @@ export default function Environment() {
           <div className="env-prod" data-reveal style={{ ["--ri" as string]: 0 }}>
             <div className="env-prod-card env-prod-card--shop">
               <img loading="lazy" className="env-prod-img" src="/spa.jpg" alt="PureAir" />
-              <a className="env-prod-cta" href="/contact">Buy Now</a>
+              <div className="env-prod-overlay" aria-hidden>
+                <p>
+                  <span className="ov-solution">Solution</span>{" "}
+                  <span className="ov-for">For Indoor</span>
+                </p>
+              </div>
             </div>
-            <p className="env-prod-cap">
-              <b>PureAir.</b> Handles indoor and large indoor areas, schools,
-              offices, meeting rooms, warehouses, libraries, and labs, up to
-              2,000 sq ft per unit.
-            </p>
+            <div className="env-prod-cta-row">
+              <a className="env-prod-buy" href="/contact">Buy Now</a>
+            </div>
           </div>
           <div className="env-prod" data-reveal style={{ ["--ri" as string]: 1 }}>
             <div className="env-prod-card env-prod-card--shop">
               <img loading="lazy" className="env-prod-img" src="/afd.webp" alt="AirFINEry" />
-              <a className="env-prod-cta" href="/contact">Buy Now</a>
+              <div className="env-prod-overlay" aria-hidden>
+                <p>
+                  <span className="ov-solution">Solution</span>{" "}
+                  <span className="ov-for">For Semi-Outdoor &amp; Outdoor</span>
+                </p>
+              </div>
             </div>
-            <p className="env-prod-cap">
-              <b>AirFINEry.</b> Handles semi-outdoor and outdoor areas,
-              corridors, lobbies, playgrounds, courts, cafes, and gyms, up to
-              3,500 sq ft per unit.
-            </p>
+            <div className="env-prod-cta-row">
+              <a className="env-prod-buy" href="/contact">Buy Now</a>
+            </div>
           </div>
         </div>
       </section>
@@ -767,6 +811,120 @@ export default function Environment() {
 }
 
 /* ----------------------------------------------------------- sub-blocks --- */
+
+// Hero banner slider: 8 slides, prev/next arrows on either edge, dot indicators,
+// and auto-advance that only runs while the hero is on screen (pauses off-screen
+// and respects reduced-motion).
+function HeroBanners() {
+  const [active, setActive] = useState(0);
+  const [inView, setInView] = useState(true);
+  const rootRef = useRef<HTMLElement>(null);
+  const n = BANNERS.length;
+
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => setInView(e.isIntersecting),
+      { threshold: 0.2 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!inView) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = window.setInterval(() => setActive((i) => (i + 1) % n), 5500);
+    return () => clearInterval(id);
+  }, [inView, n]);
+
+  const go = (i: number) => setActive((i + n) % n);
+
+  return (
+    <header
+      className="env-hero"
+      ref={rootRef}
+      aria-roledescription="carousel"
+      aria-label="Hero banners"
+    >
+      <div className="env-hero-track">
+        {BANNERS.map((b, i) => (
+          <div
+            className={`env-hero-slide ${i === active ? "is-active" : ""}`}
+            key={i}
+            role="group"
+            aria-roledescription="slide"
+            aria-label={`${i + 1} of ${n}`}
+            aria-hidden={i !== active}
+          >
+            <img
+              className="env-hero-img"
+              src={b.src}
+              alt={b.alt}
+              loading={i === 0 ? "eager" : "lazy"}
+            />
+          </div>
+        ))}
+      </div>
+
+      <button
+        type="button"
+        className="env-hero-arrow env-hero-arrow--prev"
+        aria-label="Previous banner"
+        onClick={() => go(active - 1)}
+      >
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+          <path d="M15 6l-6 6 6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+      <button
+        type="button"
+        className="env-hero-arrow env-hero-arrow--next"
+        aria-label="Next banner"
+        onClick={() => go(active + 1)}
+      >
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+          <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+    </header>
+  );
+}
+
+// Floating "live" WhatsApp circle, pinned to the bottom-right — but only while
+// the hero is on screen. Once the hero scrolls out of view it fades away.
+function WhatsAppButton() {
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const hero = document.querySelector(".env-hero");
+    if (!hero) return;
+    const io = new IntersectionObserver(
+      ([e]) => setVisible(e.isIntersecting),
+      { threshold: 0 }
+    );
+    io.observe(hero);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <a
+      className={`env-wa ${visible ? "" : "env-wa--hidden"}`}
+      href="https://wa.me/919996999260?text=Hi%20MRH%2C%20I%27d%20like%20to%20know%20more%20about%20your%20air%20purifiers."
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Chat with us on WhatsApp"
+      aria-hidden={!visible}
+      tabIndex={visible ? undefined : -1}
+    >
+      <span className="env-wa-pulse" aria-hidden />
+      <svg viewBox="0 0 24 24" aria-hidden>
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .105 5.358.102 11.892c0 2.096.546 4.142 1.588 5.945L0 24l6.335-1.652a11.882 11.882 0 005.71 1.447h.005c6.585 0 11.946-5.359 11.949-11.893a11.821 11.821 0 00-3.479-8.443" />
+      </svg>
+    </a>
+  );
+}
 
 function Reports() {
   return (

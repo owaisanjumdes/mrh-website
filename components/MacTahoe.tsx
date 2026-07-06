@@ -443,7 +443,7 @@ export default function MacTahoe({
                 </>
               )}
             </p>
-            <Link className="mt-link" href="/proof">
+            <Link className="mt-link" href="/validation">
               Learn more about MRH ›
             </Link>
           </div>

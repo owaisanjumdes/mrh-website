@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import AnnouncementBar from "./AnnouncementBar";
 
 type NavLink = {
   href: string;
@@ -19,11 +20,11 @@ const links: NavLink[] = [
       { href: "/products/airfinery", label: "AirFINEry" },
     ],
   },
-  { href: "/technology", label: "Technology" },
-  { href: "/proof", label: "Proof" },
-  { href: "/deployments", label: "Deployments" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/technology", label: "Our Technology" },
+  { href: "/validation", label: "Our IIT Validation" },
+  { href: "/projects", label: "Projects" },
+  { href: "/about", label: "About Us" },
+  { href: "/contact", label: "Contact Us" },
 ];
 
 const SCROLL_THRESHOLD = 80;     // px scrolled before hide kicks in
@@ -78,10 +79,11 @@ const LIGHT_HERO_ROUTES = new Set<string>([]);
 const DARK_HERO_ROUTES = new Set<string>(["/about", "/products/pureair"]);
 // Full light-mode pages — the nav is a persistent white bar with dark contents the
 // entire time (it never flips to the black bar).
-const LIGHT_PAGE_ROUTES = new Set<string>(["/", "/proof", "/contact", "/deployments"]);
+const LIGHT_PAGE_ROUTES = new Set<string>(["/", "/validation", "/contact", "/projects"]);
 
 export default function Nav() {
   const pathname = usePathname();
+  const isHome = pathname === "/";
   const hasLightHero = LIGHT_HERO_ROUTES.has(pathname);
   const hasDarkHero = DARK_HERO_ROUTES.has(pathname);
   const isLightPage = LIGHT_PAGE_ROUTES.has(pathname);
@@ -158,6 +160,7 @@ export default function Nav() {
 
   return (
     <>
+      {isHome && <AnnouncementBar />}
       <div
         className={`mrh-mega-backdrop ${navOpen ? "is-open" : ""}`}
         aria-hidden
