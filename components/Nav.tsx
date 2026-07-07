@@ -52,14 +52,23 @@ const DARK_THEME = {
   "--nav-square-fg": "#ffffff",
 } as React.CSSProperties;
 
-function BrandMark({ light }: { light: boolean }) {
-  const logoStyle: React.CSSProperties = {
-    height: "clamp(20px, 1.8vw, 28px)",
-    width: "auto",
-    objectFit: "contain",
-    flex: "none",
-    display: "block",
-  };
+function BrandMark({ light, big }: { light: boolean; big?: boolean }) {
+  // `big` restores the original (larger) logo sizing, used only on the Products page.
+  const logoStyle: React.CSSProperties = big
+    ? {
+        width: "2.4em",
+        height: "2.4em",
+        objectFit: "contain",
+        flex: "none",
+        display: "block",
+      }
+    : {
+        height: "clamp(20px, 1.8vw, 28px)",
+        width: "auto",
+        objectFit: "contain",
+        flex: "none",
+        display: "block",
+      };
   return (
     <span style={{ display: "inline-flex", alignItems: "center", gap: "0.5em" }}>
       <img
@@ -99,6 +108,10 @@ const LIGHT_PAGE_ROUTES = new Set<string>(["/", "/validation", "/contact", "/pro
 export default function Nav() {
   const pathname = usePathname();
   const isHome = pathname === "/";
+  // The Products page keeps the original, larger nav content sizing.
+  const isProducts = pathname === "/products";
+  const brandFont = isProducts ? "clamp(22px, 2.35vw, 45px)" : "clamp(16px, 1.5vw, 24px)";
+  const navFont = isProducts ? "clamp(14px, 1.12vw, 22px)" : "clamp(12px, 0.9vw, 16px)";
   const hasLightHero = LIGHT_HERO_ROUTES.has(pathname);
   const hasDarkHero = DARK_HERO_ROUTES.has(pathname);
   const isLightPage = LIGHT_PAGE_ROUTES.has(pathname);
@@ -442,14 +455,14 @@ export default function Nav() {
           display: "flex",
           alignItems: "center",
           gap: "0.55em",
-          fontSize: "clamp(16px, 1.5vw, 24px)",
+          fontSize: brandFont,
           fontWeight: 500,
           letterSpacing: "-0.02em",
           color: "var(--nav-fg)",
           opacity: 1,
         }}
       >
-        <BrandMark light={mobileOpen || (lightNav && !navOpen)} />
+        <BrandMark light={mobileOpen || (lightNav && !navOpen)} big={isProducts} />
       </Link>
 
       {/* Center links */}
@@ -459,7 +472,7 @@ export default function Nav() {
           display: "flex",
           alignItems: "center",
           gap: "clamp(18px, 2.3vw, 44px)",
-          fontSize: "clamp(12px, 0.9vw, 16px)",
+          fontSize: navFont,
           fontWeight: 400,
           marginLeft: "auto",
           marginRight: "auto",
@@ -510,7 +523,7 @@ export default function Nav() {
           display: "flex",
           alignItems: "center",
           gap: "clamp(8px, 0.7vw, 14px)",
-          fontSize: "clamp(12px, 0.9vw, 16px)",
+          fontSize: navFont,
         }}
       >
         <Link href="/contact" className="mrh-nav-cta">

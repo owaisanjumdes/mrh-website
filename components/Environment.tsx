@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { PlusIcon, Flag, Globe, Award, GraduationCap } from "lucide-react";
+import ConnectedIntelligenceCarousel from "@/components/ConnectedIntelligenceCarousel";
 import ImpactDevices from "@/components/ImpactDevices";
 import ProofDashboard from "@/components/ProofDashboard";
 import SiteFooter from "@/components/SiteFooter";
@@ -930,53 +931,10 @@ function Reports() {
         <p className="env-eyebrow" data-reveal>Connected Intelligence</p>
         <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>See the air.<br />Control the unit.<br />Skip the maintenance.</h2>
         <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>Every unit online, every reading in one place.</p>
+      </div>
 
-        <div className="env-bento">
-          {/* 1 — top left: text on top, image below */}
-          <article className="env-bento-card" data-reveal style={{ ["--ri" as string]: 0 }}>
-            <div className="env-bento-text">
-              <p className="env-bento-label">Live AQI, everywhere</p>
-              <p className="env-bento-body">Watch your air quality update in real time. PM2.5, PM10, and AQI for every unit, on one screen, from anywhere.</p>
-            </div>
-            <div className="env-bento-media"><img loading="lazy" src="/liveaqi.jpg" alt="Live AQI, everywhere" /></div>
-          </article>
-
-          {/* 2 — top right: text on top, image below */}
-          <article className="env-bento-card" data-reveal style={{ ["--ri" as string]: 1 }}>
-            <div className="env-bento-text">
-              <p className="env-bento-label">Every unit, one dashboard</p>
-              <p className="env-bento-body">See all your purifiers in a single view. One room or two hundred, every reading sits in the same place.</p>
-            </div>
-            <div className="env-bento-media"><img loading="lazy" src="/timings.jpg" alt="Every unit, one dashboard" style={{ objectPosition: "center 35%" }} /></div>
-          </article>
-
-          {/* 3 — full width: image left, text right */}
-          <article className="env-bento-card span2 split" data-reveal style={{ ["--ri" as string]: 2 }}>
-            <div className="env-bento-media"><img loading="lazy" src="/Icon.jpg" alt="Control from your phone" style={{ objectPosition: "center 22%" }} /></div>
-            <div className="env-bento-text">
-              <p className="env-bento-label">Control from your phone</p>
-              <p className="env-bento-body">Set fan speed, modes, and schedules without leaving your desk. Full control of every unit, wherever you are.</p>
-            </div>
-          </article>
-
-          {/* 4 — bottom left: image on top, text below */}
-          <article className="env-bento-card" data-reveal style={{ ["--ri" as string]: 3 }}>
-            <div className="env-bento-media"><img loading="lazy" src="/fhm.jpg" alt="Filter health, tracked" /></div>
-            <div className="env-bento-text">
-              <p className="env-bento-label">Filter health, tracked</p>
-              <p className="env-bento-body">Know exactly how much life each filter has left. No more guesswork, no more checking units by hand.</p>
-            </div>
-          </article>
-
-          {/* 5 — bottom right: image on top, text below */}
-          <article className="env-bento-card" data-reveal style={{ ["--ri" as string]: 4 }}>
-            <div className="env-bento-media"><img loading="lazy" src="/sow.jpg" alt="Service on wheels" /></div>
-            <div className="env-bento-text">
-              <p className="env-bento-label">Service on wheels</p>
-              <p className="env-bento-body">When a filter nears the end, the unit tells us first. Service is scheduled before you ever notice a drop.</p>
-            </div>
-          </article>
-        </div>
+      <div data-reveal style={{ ["--ri" as string]: 3, marginTop: "clamp(36px, 4vw, 60px)" }}>
+        <ConnectedIntelligenceCarousel />
       </div>
     </section>
   );
