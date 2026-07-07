@@ -54,8 +54,8 @@ const DARK_THEME = {
 
 function BrandMark({ light }: { light: boolean }) {
   const logoStyle: React.CSSProperties = {
-    width: "2.4em",
-    height: "2.4em",
+    height: "clamp(20px, 1.8vw, 28px)",
+    width: "auto",
     objectFit: "contain",
     flex: "none",
     display: "block",
@@ -442,7 +442,7 @@ export default function Nav() {
           display: "flex",
           alignItems: "center",
           gap: "0.55em",
-          fontSize: "clamp(22px, 2.35vw, 45px)",
+          fontSize: "clamp(16px, 1.5vw, 24px)",
           fontWeight: 500,
           letterSpacing: "-0.02em",
           color: "var(--nav-fg)",
@@ -459,7 +459,7 @@ export default function Nav() {
           display: "flex",
           alignItems: "center",
           gap: "clamp(18px, 2.3vw, 44px)",
-          fontSize: "clamp(14px, 1.12vw, 22px)",
+          fontSize: "clamp(12px, 0.9vw, 16px)",
           fontWeight: 400,
           marginLeft: "auto",
           marginRight: "auto",
@@ -510,7 +510,7 @@ export default function Nav() {
           display: "flex",
           alignItems: "center",
           gap: "clamp(8px, 0.7vw, 14px)",
-          fontSize: "clamp(14px, 1.12vw, 22px)",
+          fontSize: "clamp(12px, 0.9vw, 16px)",
         }}
       >
         <Link href="/contact" className="mrh-nav-cta">

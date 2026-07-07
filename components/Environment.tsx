@@ -253,13 +253,15 @@ export default function Environment() {
         .env-hero-slide { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity 600ms ease; }
         .env-hero-slide.is-active { position: relative; opacity: 1; pointer-events: auto; }
         .env-hero-img { display: block; width: 100%; height: auto; }
-        /* Prev / next arrows on either edge, vertically centered */
-        .env-hero-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3; width: clamp(28px, 2.6vw, 38px); height: clamp(28px, 2.6vw, 38px); border: none; border-radius: 50%; background: rgba(15, 15, 15, 0.36); color: #ffffff; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); transition: background 200ms ease, transform 200ms ease; }
-        .env-hero-arrow:hover { background: rgba(15, 15, 15, 0.6); }
-        .env-hero-arrow:active { transform: translateY(-50%) scale(0.92); }
-        .env-hero-arrow--prev { left: clamp(12px, 2vw, 28px); }
-        .env-hero-arrow--next { right: clamp(12px, 2vw, 28px); }
-        .env-hero-arrow svg { width: 46%; height: 46%; }
+        /* Progress indicator matching the "Where MRH Works" carousel: dots that
+           expand into a filling pill for the active banner. Light palette so it
+           reads over the banner imagery. */
+        .env-hero-prog { position: absolute; left: 50%; bottom: clamp(14px, 2vw, 26px); transform: translateX(-50%); z-index: 3; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .env-hero-seg { position: relative; height: 8px; width: 8px; padding: 0; border: none; border-radius: 980px; background: rgba(255, 255, 255, 0.45); cursor: pointer; overflow: hidden; transition: width 480ms cubic-bezier(0.22, 1, 0.36, 1), background 300ms ease; }
+        .env-hero-seg.is-active { width: 52px; background: rgba(255, 255, 255, 0.4); }
+        @keyframes envHeroSeg { from { width: 0%; } to { width: 100%; } }
+        .env-hero-seg-fill { display: block; height: 100%; width: 0%; border-radius: 980px; background: #ffffff; animation: envHeroSeg 5500ms linear forwards; }
+        @media (prefers-reduced-motion: reduce) { .env-hero-seg-fill { animation: none; width: 100%; } }
 
         /* ---------- floating WhatsApp button (home only) ---------- */
         .env-wa { position: fixed; right: clamp(16px, 2.4vw, 28px); bottom: clamp(16px, 2.4vw, 28px); z-index: 45; width: clamp(52px, 6vw, 62px); height: clamp(52px, 6vw, 62px); border-radius: 50%; background: #25d366; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 10px 26px rgba(0, 0, 0, 0.26); transition: transform 200ms ease, opacity 260ms ease, visibility 260ms ease; }
@@ -812,9 +814,10 @@ export default function Environment() {
 
 /* ----------------------------------------------------------- sub-blocks --- */
 
-// Hero banner slider: 8 slides, prev/next arrows on either edge, dot indicators,
-// and auto-advance that only runs while the hero is on screen (pauses off-screen
-// and respects reduced-motion).
+// Hero banner slider: segmented progress bars along the bottom (one per banner).
+// The active bar fills over the banner's on-screen time and advances on completion.
+// It only runs while the hero is on screen (pauses off-screen, respects
+// reduced-motion), and clicking a bar jumps to that banner.
 function HeroBanners() {
   const [active, setActive] = useState(0);
   const [inView, setInView] = useState(true);
@@ -832,14 +835,7 @@ function HeroBanners() {
     return () => io.disconnect();
   }, []);
 
-  useEffect(() => {
-    if (!inView) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const id = window.setInterval(() => setActive((i) => (i + 1) % n), 5500);
-    return () => clearInterval(id);
-  }, [inView, n]);
-
-  const go = (i: number) => setActive((i + n) % n);
+  const advance = () => setActive((i) => (i + 1) % n);
 
   return (
     <header
@@ -868,26 +864,27 @@ function HeroBanners() {
         ))}
       </div>
 
-      <button
-        type="button"
-        className="env-hero-arrow env-hero-arrow--prev"
-        aria-label="Previous banner"
-        onClick={() => go(active - 1)}
-      >
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-          <path d="M15 6l-6 6 6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </button>
-      <button
-        type="button"
-        className="env-hero-arrow env-hero-arrow--next"
-        aria-label="Next banner"
-        onClick={() => go(active + 1)}
-      >
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-          <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </button>
+      <div className="env-hero-prog">
+        {BANNERS.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            className={`env-hero-seg ${i === active ? "is-active" : ""}`}
+            aria-label={`Go to banner ${i + 1}`}
+            aria-current={i === active}
+            onClick={() => setActive(i)}
+          >
+            {i === active && (
+              <span
+                key={active}
+                className="env-hero-seg-fill"
+                style={{ animationPlayState: inView ? "running" : "paused" }}
+                onAnimationEnd={advance}
+              />
+            )}
+          </button>
+        ))}
+      </div>
     </header>
   );
 }
