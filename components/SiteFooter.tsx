@@ -6,7 +6,7 @@ import Link from "next/link";
 const EXPLORE = [
   { label: "Products", href: "/products" },
   { label: "Our Technology", href: "/technology" },
-  { label: "Our IIT Validation", href: "/validation" },
+  { label: "IIT Delhi Validation", href: "/validation" },
   { label: "Projects", href: "/projects" },
 ];
 

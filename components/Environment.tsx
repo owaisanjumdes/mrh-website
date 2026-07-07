@@ -254,7 +254,7 @@ export default function Environment() {
         .env-hero-slide.is-active { position: relative; opacity: 1; pointer-events: auto; }
         .env-hero-img { display: block; width: 100%; height: auto; }
         /* Prev / next arrows on either edge, vertically centered */
-        .env-hero-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3; width: clamp(40px, 4vw, 56px); height: clamp(40px, 4vw, 56px); border: none; border-radius: 50%; background: rgba(15, 15, 15, 0.36); color: #ffffff; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); transition: background 200ms ease, transform 200ms ease; }
+        .env-hero-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3; width: clamp(28px, 2.6vw, 38px); height: clamp(28px, 2.6vw, 38px); border: none; border-radius: 50%; background: rgba(15, 15, 15, 0.36); color: #ffffff; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); transition: background 200ms ease, transform 200ms ease; }
         .env-hero-arrow:hover { background: rgba(15, 15, 15, 0.6); }
         .env-hero-arrow:active { transform: translateY(-50%) scale(0.92); }
         .env-hero-arrow--prev { left: clamp(12px, 2vw, 28px); }

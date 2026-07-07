@@ -21,7 +21,7 @@ const links: NavLink[] = [
     ],
   },
   { href: "/technology", label: "Our Technology" },
-  { href: "/validation", label: "Our IIT Validation" },
+  { href: "/validation", label: "IIT Delhi Validation" },
   { href: "/projects", label: "Projects" },
   { href: "/about", label: "About Us" },
   { href: "/contact", label: "Contact Us" },
@@ -53,19 +53,34 @@ const DARK_THEME = {
 } as React.CSSProperties;
 
 function BrandMark({ light }: { light: boolean }) {
+  const logoStyle: React.CSSProperties = {
+    width: "2.4em",
+    height: "2.4em",
+    objectFit: "contain",
+    flex: "none",
+    display: "block",
+  };
   return (
-    <img loading="lazy"
-      // Black logo over the light (white) nav; white logo over the dark nav.
-      src={light ? "/mrh-blacklogo.png" : "/mrh-logo.png"}
-      alt="MRH"
-      style={{
-        width: "2.4em",
-        height: "2.4em",
-        objectFit: "contain",
-        flex: "none",
-        display: "block",
-      }}
-    />
+    <span style={{ display: "inline-flex", alignItems: "center", gap: "0.5em" }}>
+      <img
+        loading="lazy"
+        // Black logo over the light (white) nav; white logo over the dark nav.
+        src={light ? "/mrh-blacklogo.png" : "/mrh-logo.png"}
+        alt="MRH"
+        style={logoStyle}
+      />
+      <img
+        loading="lazy"
+        src="/mhlogo.svg"
+        alt="MANN+HUMMEL"
+        // Recolored to match the MRH logo: black over the light nav, white over
+        // the dark nav.
+        style={{
+          ...logoStyle,
+          filter: light ? "brightness(0)" : "brightness(0) invert(1)",
+        }}
+      />
+    </span>
   );
 }
 
@@ -183,15 +198,17 @@ export default function Nav() {
             "clamp(4px, 0.6%, 10px) clamp(20px, 8.85%, 127px) clamp(6px, 0.9%, 14px)",
           color: "var(--nav-fg)",
           fontFamily: "var(--font-sans), ui-sans-serif, system-ui, sans-serif",
-          background: navOpen ? "#1d1d1f" : wrapperBg,
+          // Hamburger open → light bar to match its light panel; Products mega-menu
+          // open → dark gray bar to match its panel; otherwise the page treatment.
+          background: mobileOpen ? "#ffffff" : menuOpen ? "#1d1d1f" : wrapperBg,
           transform: hidden ? "translateY(-100%)" : "translateY(0)",
           // While a menu is open the background must snap (no transition) so the
-          // bar matches the panel's gray on the very first frame.
+          // bar matches the panel on the very first frame.
           transition: `transform 420ms cubic-bezier(0.65, 0, 0.35, 1), color 360ms ease${
             navOpen ? "" : ", background 360ms ease"
           }`,
           willChange: "transform, background",
-          ...(lightNav && !navOpen ? LIGHT_THEME : DARK_THEME),
+          ...(mobileOpen || (lightNav && !navOpen) ? LIGHT_THEME : DARK_THEME),
         }}
       >
       <style>{`
@@ -275,13 +292,13 @@ export default function Nav() {
         }
         .mrh-mega-backdrop.is-open { opacity: 1; visibility: visible; }
 
-        /* Mobile stacked menu */
+        /* Mobile stacked menu (light) */
         .mrh-mobile {
           position: absolute;
           top: 100%;
           left: 0;
           right: 0;
-          background: #1d1d1f;
+          background: #ffffff;
           padding: 8px clamp(20px, 8.85%, 127px) 28px;
           display: flex;
           flex-direction: column;
@@ -295,23 +312,57 @@ export default function Nav() {
           display: flex;
           flex-direction: column;
           padding: 4px 0;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
+        /* Links: light grey by default, no underline. On hover they darken to dark
+           grey and an underline wipes in beneath the text. */
         .mrh-mobile-link {
-          color: #f5f5f7;
+          position: relative;
+          width: fit-content;
+          color: #86868b;
           text-decoration: none;
           font-size: 22px;
           font-weight: 600;
           letter-spacing: -0.02em;
           padding: 12px 0;
+          transition: color 200ms ease;
         }
+        .mrh-mobile-link::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          bottom: 8px;
+          width: 100%;
+          height: 2px;
+          background: currentColor;
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .mrh-mobile-link:hover { color: #1d1d1f; }
+        .mrh-mobile-link:hover::after { transform: scaleX(1); }
         .mrh-mobile-sublink {
+          position: relative;
+          width: fit-content;
           color: #86868b;
           text-decoration: none;
           font-size: 17px;
           padding: 7px 0 7px 16px;
+          transition: color 200ms ease;
         }
-        .mrh-mobile-sublink:active { color: #f5f5f7; }
+        .mrh-mobile-sublink::after {
+          content: "";
+          position: absolute;
+          left: 16px;
+          bottom: 4px;
+          width: calc(100% - 16px);
+          height: 2px;
+          background: currentColor;
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .mrh-mobile-sublink:hover { color: #1d1d1f; }
+        .mrh-mobile-sublink:hover::after { transform: scaleX(1); }
         .mrh-mobile-quote {
           margin-top: 20px;
           background: #148042;
@@ -398,7 +449,7 @@ export default function Nav() {
           opacity: 1,
         }}
       >
-        <BrandMark light={lightNav && !navOpen} />
+        <BrandMark light={mobileOpen || (lightNav && !navOpen)} />
       </Link>
 
       {/* Center links */}

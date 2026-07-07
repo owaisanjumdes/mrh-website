@@ -3,7 +3,7 @@ import Link from "next/link";
 const sitemap = [
   { href: "/products", label: "Products" },
   { href: "/technology", label: "Our Technology" },
-  { href: "/validation", label: "Our IIT Validation" },
+  { href: "/validation", label: "IIT Delhi Validation" },
   { href: "/projects", label: "Projects" },
   { href: "/about", label: "About Us" },
   { href: "/contact", label: "Contact Us" },
