@@ -200,13 +200,13 @@ const SPACES_CARDS: CardItem[] = [
 
 // Hero banners, in order. Files live in /public.
 const BANNERS: { src: string; alt: string }[] = [
-  { src: "/b1.jpeg", alt: "MRH banner 1" },
-  { src: "/b2.jpeg", alt: "MRH banner 2" },
-  { src: "/b3.jpeg", alt: "MRH banner 3" },
-  { src: "/b4.jpeg", alt: "MRH banner 4" },
-  { src: "/b5.jpeg", alt: "MRH banner 5" },
-  { src: "/b6.jpeg", alt: "MRH banner 6" },
-  { src: "/b7.jpeg", alt: "MRH banner 7" },
+  { src: "/ub1.jpeg", alt: "MRH banner 1" },
+  { src: "/ub2.jpeg", alt: "MRH banner 2" },
+  { src: "/ub3.jpeg", alt: "MRH banner 3" },
+  { src: "/ub4.jpeg", alt: "MRH banner 4" },
+  { src: "/ub5.jpeg", alt: "MRH banner 5" },
+  { src: "/ub6.jpeg", alt: "MRH banner 6" },
+  { src: "/ub7.jpeg", alt: "MRH banner 7" },
 ];
 
 const LOGOS = [
