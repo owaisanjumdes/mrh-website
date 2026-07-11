@@ -316,10 +316,10 @@ export default function WorthUpgrade() {
           </p>
 
           <div className="wtu-grid">
-            {/* 1 — 14-stage filtration */}
+            {/* 1 — multi-stage filtration */}
             <article className="wtu-card wtu-card--center" data-reveal style={{ ["--ri" as string]: 0 }}>
               <p className="wtu-card-lead">
-                14-stage
+                Multi-stage
                 <br />
                 filtration.
               </p>

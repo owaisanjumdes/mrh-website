@@ -67,12 +67,12 @@ export default function SolutionsBanner() {
         .sb-arrow {
           position: absolute; top: 50%; transform: translateY(-50%); z-index: 5;
           width: clamp(38px, 3.4vw, 48px); height: clamp(38px, 3.4vw, 48px);
-          border: none; border-radius: 50%; background: #1d1d1f; color: #ffffff;
+          border: none; border-radius: 50%; background: #ffffff; color: #333336;
           display: inline-flex; align-items: center; justify-content: center;
-          cursor: pointer; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.20);
+          cursor: pointer; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
           transition: background 200ms ease, opacity 200ms ease, transform 150ms ease;
         }
-        .sb-arrow:hover { background: #333335; }
+        .sb-arrow:hover { background: #f0f0f2; }
         .sb-arrow:active { transform: translateY(-50%) scale(0.92); }
         .sb-arrow--prev { left: clamp(2px, 1vw, 14px); }
         .sb-arrow--next { right: clamp(2px, 1vw, 14px); }
@@ -112,8 +112,8 @@ export default function SolutionsBanner() {
           slidesPerView="auto"
           centeredSlides
           centeredSlidesBounds
-          slidesOffsetBefore={48}
-          slidesOffsetAfter={48}
+          slidesOffsetBefore={24}
+          slidesOffsetAfter={24}
           speed={650}
           spaceBetween={24}
           className="sb-swiper"

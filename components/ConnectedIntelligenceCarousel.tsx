@@ -14,30 +14,31 @@ import "swiper/css/pagination";
 // overlaid at the bottom.
 const CARDS: { label: string; body: string; img: string; pos?: string }[] = [
   {
-    label: "Live AQI, everywhere",
-    body: "Watch your air quality update in real time. PM2.5, PM10, and AQI for every unit, on one screen, from anywhere.",
+    label: "Every Unit. Every Reading. One Dashboard",
+    body: "Monitor PM2.5, PM10, and AQI in real time for every unit, all from a centralized dashboard, accessible anytime, anywhere.",
     img: "/liveaqi.jpg",
   },
   {
-    label: "Every unit, one dashboard",
-    body: "See all your purifiers in a single view. One room or two hundred, every reading sits in the same place.",
+    label: "Centralized Control",
+    body: "Whether it's a single room or hundreds of locations, monitor every unit from one intelligent platform.",
     img: "/timings.jpg",
     pos: "center 28%",
   },
   {
-    label: "Control from your phone",
-    body: "Set fan speed, modes, and schedules without leaving your desk. Full control of every unit, wherever you are.",
+    label: "Intelligent Control",
+    body: "Adjust fan speed, modes and schedules for every unit remotely.",
     img: "/Icon.jpg",
+    pos: "center 25%",
   },
   {
-    label: "Filter health, tracked",
-    body: "Know exactly how much life each filter has left. No more guesswork, no more checking units by hand.",
+    label: "Intelligent Filter Health Monitoring",
+    body: "Monitor filter life, eliminate manual inspections, and stay ahead of maintenance.",
     img: "/fhm.jpg",
   },
   {
-    label: "Service on wheels",
-    body: "When a filter nears the end, the unit tells us first. Service is scheduled before you ever notice a drop.",
-    img: "/sow.jpg",
+    label: "Service on Wheels",
+    body: "As filters approach the end of their service life, the system automatically alerts our team. We schedule maintenance proactively, before performance is affected.",
+    img: "/sown.jpeg",
   },
 ];
 

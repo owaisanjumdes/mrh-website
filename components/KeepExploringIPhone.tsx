@@ -53,7 +53,7 @@ const SPEC_ROWS: SpecRow[] = [
   { Icon: Layers, cells: [
     { big: "4-Stage", text: "Advanced filtration system" },
     { big: "10-Stage", text: "Advanced filtration system" },
-    { big: "14-Stage", text: "Advanced filtration system" },
+    { big: "Multi-Stage", text: "Advanced filtration system" },
   ] },
   { Icon: AirVent, cells: [
     { big: "2 + 2", unit: "filters", text: "Pre-filters + Main-filters" },

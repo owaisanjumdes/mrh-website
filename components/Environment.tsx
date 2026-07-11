@@ -2,12 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import { PlusIcon } from "lucide-react";
+import ClientStories from "@/components/ClientStories";
 import ConnectedIntelligenceCarousel from "@/components/ConnectedIntelligenceCarousel";
 import MannHummelSlider from "@/components/MannHummelSlider";
+import NewsStrip from "@/components/NewsStrip";
 import SolutionsBanner from "@/components/SolutionsBanner";
-import ImpactDevices from "@/components/ImpactDevices";
 import ProofDashboard from "@/components/ProofDashboard";
 import SiteFooter from "@/components/SiteFooter";
+import UnitCalculator from "@/components/UnitCalculator";
 import VideoEmbed from "@/components/VideoEmbed";
 
 // Neutral page template — layout and design system only.
@@ -203,8 +205,8 @@ const SPACES_CARDS: CardItem[] = [
 
 // Hero banners, in order. Files live in /public.
 const BANNERS: { src: string; alt: string }[] = [
-  { src: "/ub1.jpeg", alt: "MRH banner 1" },
   { src: "/ub2.jpeg", alt: "MRH banner 2" },
+  { src: "/ub1.jpeg", alt: "MRH banner 1" },
   { src: "/ub3.jpeg", alt: "MRH banner 3" },
   { src: "/ub4.jpeg", alt: "MRH banner 4" },
   { src: "/ub5.jpeg", alt: "MRH banner 5" },
@@ -259,11 +261,11 @@ export default function Environment() {
         /* Progress indicator matching the "Where MRH Works" carousel: dots that
            expand into a filling pill for the active banner. Light palette so it
            reads over the banner imagery. */
-        .env-hero-prog { position: absolute; left: 50%; bottom: clamp(14px, 2vw, 26px); transform: translateX(-50%); z-index: 3; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .env-hero-seg { position: relative; height: 8px; width: 8px; padding: 0; border: none; border-radius: 980px; background: rgba(255, 255, 255, 0.45); cursor: pointer; overflow: hidden; transition: width 480ms cubic-bezier(0.22, 1, 0.36, 1), background 300ms ease; }
-        .env-hero-seg.is-active { width: 52px; background: rgba(255, 255, 255, 0.4); }
+        .env-hero-prog { display: flex; align-items: center; justify-content: center; gap: 10px; margin: clamp(20px, 2.6vw, 34px) auto clamp(2px, 0.4vw, 6px); padding: 0 var(--gutter); }
+        .env-hero-seg { position: relative; height: 8px; width: 8px; padding: 0; border: none; border-radius: 980px; background: rgba(0, 0, 0, 0.18); cursor: pointer; overflow: hidden; transition: width 480ms cubic-bezier(0.22, 1, 0.36, 1), background 300ms ease; }
+        .env-hero-seg.is-active { width: 52px; background: rgba(0, 0, 0, 0.14); }
         @keyframes envHeroSeg { from { width: 0%; } to { width: 100%; } }
-        .env-hero-seg-fill { display: block; height: 100%; width: 0%; border-radius: 980px; background: #ffffff; animation: envHeroSeg 5500ms linear forwards; }
+        .env-hero-seg-fill { display: block; height: 100%; width: 0%; border-radius: 980px; background: #1d1d1f; animation: envHeroSeg 5500ms linear forwards; }
         @media (prefers-reduced-motion: reduce) { .env-hero-seg-fill { animation: none; width: 100%; } }
 
         /* ---------- floating WhatsApp button (home only) ---------- */
@@ -292,9 +294,9 @@ export default function Environment() {
         .env-prod-card--shop:hover .env-prod-img,
         .env-prod-card--shop:hover .env-ph { filter: brightness(0.5); }
         /* Hover text that fades in over the darkened card */
-        .env-prod-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: clamp(20px, 3vw, 40px); text-align: center; opacity: 0; pointer-events: none; transition: opacity 320ms ease; }
+        .env-prod-overlay { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: flex-start; padding: clamp(22px, 3vw, 44px); text-align: left; opacity: 0; pointer-events: none; transition: opacity 320ms ease; }
         .env-prod-card--shop:hover .env-prod-overlay { opacity: 1; }
-        .env-prod-overlay p { margin: 0; color: #ffffff; font-size: clamp(22px, 2.8vw, 42px); line-height: 1.14; letter-spacing: -0.01em; text-wrap: balance; transform: translateY(clamp(56px, 12vw, 128px)); }
+        .env-prod-overlay p { margin: 0; color: #ffffff; font-size: clamp(22px, 2.8vw, 42px); line-height: 1.16; letter-spacing: -0.01em; }
         .env-prod-overlay .ov-solution { font-weight: 300; }
         .env-prod-overlay .ov-for { font-weight: 500; font-style: italic; }
         /* Buy Now CTA below each card, centered */
@@ -326,6 +328,10 @@ export default function Environment() {
         .env-design-media { position: relative; margin: clamp(40px, 5vw, 64px) auto 0; width: min(1048px, 100%); aspect-ratio: 16 / 9; border-radius: 20px; overflow: hidden; }
         .env-design-media .env-ph { width: 100%; height: 100%; }
         .env-design-vid { display: block; width: 100%; height: 100%; object-fit: cover; }
+        .env-design-duo { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2vw, 28px); width: min(1048px, 100%); margin: clamp(40px, 5vw, 64px) auto 0; }
+        .env-design-duo-item { border-radius: 20px; overflow: hidden; }
+        .env-design-duo-item img { display: block; width: 100%; height: auto; }
+        @media (max-width: 640px) { .env-design-duo { grid-template-columns: 1fr; } }
         .env-design-cta-row { display: flex; justify-content: center; margin-top: clamp(40px, 5vw, 64px); }
         .env-design-cta { display: inline-flex; align-items: center; height: 56px; padding: 0 32px; border-radius: 28px; background: #1d1d1f; text-decoration: none; cursor: pointer; transition: background 200ms ease; }
         .env-design-cta:hover { background: #333335; }
@@ -476,7 +482,11 @@ export default function Environment() {
         .env-sim-foot { text-align: center; margin-top: clamp(36px, 5vw, 64px); }
         .env-sim-copy { max-width: 840px; margin: 0 auto; font-size: clamp(17px, 1.5vw, 21px); font-weight: 500; line-height: 1.4; letter-spacing: 0.011em; color: #6e6e73; }
         .env-sim-copy b { color: #1d1d1f; font-weight: 600; }
-        .env-sim-link { display: inline-flex; align-items: center; gap: 6px; margin-top: clamp(18px, 2vw, 28px); color: #0066cc; font-size: clamp(16px, 1.4vw, 19px); font-weight: 600; letter-spacing: -0.01em; text-decoration: none; transition: color 200ms ease; }
+        .env-sim-cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 4vw, 64px); max-width: 980px; margin: 0 auto; text-align: left; }
+        .env-sim-col-title { margin: 0 0 clamp(8px, 1vw, 12px); font-size: clamp(18px, 1.6vw, 22px); font-weight: 600; line-height: 1.25; letter-spacing: -0.01em; color: #1d1d1f; }
+        .env-sim-col-body { margin: 0; font-size: clamp(15px, 1.4vw, 18px); font-weight: 500; line-height: 1.45; letter-spacing: 0.011em; color: #6e6e73; }
+        @media (max-width: 700px) { .env-sim-cols { grid-template-columns: 1fr; gap: clamp(22px, 5vw, 32px); } }
+        .env-sim-link { display: inline-flex; align-items: center; gap: 6px; margin-top: clamp(34px, 4.5vw, 60px); color: #0066cc; font-size: clamp(16px, 1.4vw, 19px); font-weight: 600; letter-spacing: -0.01em; text-decoration: none; transition: color 200ms ease; }
         .env-sim-link:hover { color: #0a84ff; }
         .env-sim-link span { display: inline-block; transition: transform 200ms ease; }
         .env-sim-link:hover span { transform: translateX(3px); }
@@ -526,20 +536,35 @@ export default function Environment() {
       <HeroBanners />
       <WhatsAppButton />
 
-      {/* 2 — TWO PRODUCTS */}
+      {/* OUR SOLUTIONS intro + banner gallery */}
       <section className="env-section">
         <div className="env-wrap">
-          <p className="env-eyebrow" data-reveal>Two Products, Every Space</p>
-          <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>One purifier for indoors. One for everywhere else.</h2>
-          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>PureAir works inside. AirFINEry works where the air is open.</p>
+          <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1, maxWidth: "none" }}>
+            Discover the world of MRH
+            <br />
+            MANN+HUMMEL filtered air
+            <br />
+            purification solutions
+          </h2>
+          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>
+            Solution for indoor, semi-outdoor, and outdoor environments.
+          </p>
         </div>
+        <div data-reveal style={{ ["--ri" as string]: 3, marginTop: "clamp(32px, 4vw, 56px)" }}>
+          <SolutionsBanner />
+        </div>
+      </section>
+
+      {/* 2 — TWO PRODUCTS */}
+      <section className="env-section">
         <div className="env-products">
           <div className="env-prod" data-reveal style={{ ["--ri" as string]: 0 }}>
             <div className="env-prod-card env-prod-card--shop">
               <img loading="lazy" className="env-prod-img" src="/pastand.jpeg" alt="PureAir" />
               <div className="env-prod-overlay" aria-hidden>
                 <p>
-                  <span className="ov-solution">Solution</span>{" "}
+                  <span className="ov-solution">Solution</span>
+                  <br />
                   <span className="ov-for">For Indoor</span>
                 </p>
               </div>
@@ -553,7 +578,8 @@ export default function Environment() {
               <img loading="lazy" className="env-prod-img" src="/afstand.jpeg" alt="AirFINEry" />
               <div className="env-prod-overlay" aria-hidden>
                 <p>
-                  <span className="ov-solution">Solution</span>{" "}
+                  <span className="ov-solution">Solution</span>
+                  <br />
                   <span className="ov-for">For Semi-Outdoor &amp; Outdoor</span>
                 </p>
               </div>
@@ -562,26 +588,6 @@ export default function Environment() {
               <a className="env-prod-buy" href="/contact">Buy Now</a>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* 2a — OUR SOLUTIONS intro + banner gallery */}
-      <section className="env-section">
-        <div className="env-wrap">
-          <p className="env-eyebrow" data-reveal>Our Solutions</p>
-          <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1, maxWidth: "none" }}>
-            Discover the world of MRH
-            <br />
-            MANN+HUMMEL filtered air
-            <br />
-            purification solutions
-          </h2>
-          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>
-            Built for indoor, semi-outdoor, and outdoor environments.
-          </p>
-        </div>
-        <div data-reveal style={{ ["--ri" as string]: 3, marginTop: "clamp(32px, 4vw, 56px)" }}>
-          <SolutionsBanner />
         </div>
       </section>
 
@@ -643,10 +649,15 @@ export default function Environment() {
       <section className="env-section" style={{ background: "#ffffff" }}>
         <div className="env-wrap">
           <p className="env-eyebrow" data-reveal>The Technology Inside</p>
-          <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>Multi-Stage Filtration</h2>
+          <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>Inside the Advanced Air Purification System</h2>
           <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>Catches the fine particles ordinary purifiers miss.</p>
-          <div className="env-design-media" data-reveal>
-            <SectionVideo className="env-design-vid" src="/filtervid.mp4" />
+          <div className="env-design-duo" data-reveal>
+            <div className="env-design-duo-item">
+              <img loading="lazy" src="/pafs.jpeg" alt="PureAir filtration system" />
+            </div>
+            <div className="env-design-duo-item">
+              <img loading="lazy" src="/affs.jpeg" alt="AirFINEry filtration system" />
+            </div>
           </div>
           <div className="env-stats3">
             <div className="env-stat3" data-reveal style={{ ["--ri" as string]: 0 }}>
@@ -682,10 +693,11 @@ export default function Environment() {
         <div className="env-wrap">
           <p className="env-eyebrow" data-reveal>Intelligent Space Planning</p>
           <h2 className="env-h2" data-reveal style={{ maxWidth: "none", ["--ri" as string]: 1 }}>
-            We don&rsquo;t guess where clean air goes.
-            <br />
-            We simulate it.
+            The World&rsquo;s Most Advanced Simulation Software
           </h2>
+          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>
+            Before a single unit is installed, our simulation engine maps your space and shows exactly how fast it reaches clean air, and where every purifier should sit.
+          </p>
         </div>
         <div className="env-sim-media" data-reveal>
           <div className="env-sim-frame">
@@ -693,17 +705,17 @@ export default function Environment() {
           </div>
         </div>
         <div className="env-wrap env-sim-foot">
-          <p className="env-sim-copy" data-reveal>
-            Before a single unit is installed,{" "}
-            <b>
-              our simulation engine maps your space and shows exactly how fast it
-              reaches clean air
-            </b>
-            , and where every purifier should sit. In a real classroom test, one
-            unit took the air from 100 µg/m³ to zero in 30 minutes. The simulation
-            called the placement.
-          </p>
-          <a className="env-sim-link" href="/technology" data-reveal style={{ ["--ri" as string]: 1 }}>
+          <div className="env-sim-cols">
+            <div className="env-sim-col" data-reveal>
+              <p className="env-sim-col-title">Know the Results Before You Invest</p>
+              <p className="env-sim-col-body">Using advanced simulation technology, we predict the expected air quality improvements before installation, so you invest with confidence.</p>
+            </div>
+            <div className="env-sim-col" data-reveal style={{ ["--ri" as string]: 1 }}>
+              <p className="env-sim-col-title">The Right Solution for Every Space</p>
+              <p className="env-sim-col-body">Our engineers assess your site, analyze ambient pollution levels, and use advanced modelling to determine the optimal number and placement of air purifiers for maximum performance.</p>
+            </div>
+          </div>
+          <a className="env-sim-link" href="/technology" data-reveal style={{ ["--ri" as string]: 2 }}>
             Discover Simulation <span aria-hidden>→</span>
           </a>
         </div>
@@ -721,6 +733,13 @@ export default function Environment() {
           <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>60 days, real spaces, Delhi&rsquo;s worst air.</p>
 
           <ProofDashboard />
+        </div>
+      </section>
+
+      {/* 6c2 — OUR VALUED CLIENTS (testimonial stories coverflow) */}
+      <section className="env-section" style={{ background: "#ffffff" }}>
+        <div className="env-wrap">
+          <ClientStories />
         </div>
       </section>
 
@@ -744,34 +763,14 @@ export default function Environment() {
       </section>
 
 
-      {/* 7 — ASSESSMENT CTA CARD (from Proof page) */}
-      <ImpactDevices
-        title={<>Find out what your<br />air is hiding.</>}
-        sub="Tell us about your space and we return a coverage plan, the number of units you need, and the AQI you can expect."
-        cta={{ label: "Get a free assessment", href: "/contact" }}
-        art={
-          <svg viewBox="0 0 1310 500" fill="none" aria-hidden xmlns="http://www.w3.org/2000/svg">
-            <g stroke="#4ade80" strokeWidth={7} strokeLinecap="round" strokeLinejoin="round">
-              {/* PureAir — compact indoor unit */}
-              <rect x={690} y={182} width={208} height={228} rx={24} />
-              <circle cx={794} cy={300} r={80} />
-              <circle cx={794} cy={300} r={52} strokeWidth={6} />
-              <circle cx={794} cy={300} r={20} strokeWidth={6} />
-              <rect x={712} y={202} width={52} height={20} rx={6} strokeWidth={5} />
-              <rect x={826} y={352} width={48} height={36} rx={6} strokeWidth={5} />
-              <path d="M716 410v20M872 410v20" />
-              {/* AirFINEry — large-space unit */}
-              <rect x={952} y={110} width={262} height={300} rx={28} />
-              <circle cx={1083} cy={248} r={98} />
-              <circle cx={1083} cy={248} r={64} strokeWidth={6} />
-              <circle cx={1083} cy={248} r={26} strokeWidth={6} />
-              <rect x={978} y={132} width={64} height={22} rx={6} strokeWidth={5} />
-              <rect x={1134} y={352} width={54} height={38} rx={6} strokeWidth={5} />
-              <path d="M982 410v20M1182 410v20" />
-            </g>
-          </svg>
-        }
-      />
+      {/* 7 — TELL US ABOUT YOUR SPACE (assessment strip) */}
+      <AssessmentStrip />
+
+      {/* 7b — UNIT CALCULATOR */}
+      <UnitCalculator />
+
+      {/* 7c — IN THE NEWS (press strip) */}
+      <NewsStrip />
 
       {/* 8 — FOOTER (light) */}
       <SiteFooter light />
@@ -780,6 +779,48 @@ export default function Environment() {
 }
 
 /* ----------------------------------------------------------- sub-blocks --- */
+
+// "Tell Us About Your Space" — a clean light strip with a gold purifier icon,
+// heading and lead. The unit-calculator formula gets added here later.
+function AssessmentStrip() {
+  return (
+    <section className="tas" aria-label="Tell us about your space">
+      <style>{`
+        .tas {
+          width: 100vw;
+          margin-left: calc(50% - 50vw);
+          margin-right: calc(50% - 50vw);
+          background: #f5f5f7;
+          padding: clamp(52px, 8vw, 104px) clamp(20px, 6vw, 88px);
+          font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+        }
+        .tas-inner { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .tas-icon { color: #b8934a; display: inline-flex; }
+        .tas-icon svg { width: clamp(52px, 6vw, 78px); height: auto; }
+        .tas-title { margin: clamp(20px, 2.6vw, 34px) 0 0; color: #1d1d1f; font-size: clamp(30px, 4.6vw, 58px); font-weight: 600; line-height: 1.06; letter-spacing: -0.02em; text-wrap: balance; }
+        .tas-body { margin: clamp(14px, 1.8vw, 24px) 0 0; color: #6e6e73; font-size: clamp(15px, 1.5vw, 20px); font-weight: 500; line-height: 1.45; letter-spacing: -0.006em; max-width: 48ch; }
+      `}</style>
+      <div className="tas-inner" data-reveal>
+        <span className="tas-icon" aria-hidden>
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+            <rect x={14} y={11} width={20} height={29} rx={4} />
+            <circle cx={24} cy={27} r={7} />
+            <circle cx={24} cy={27} r={2.4} />
+            <line x1={18.5} y1={16} x2={24} y2={16} />
+            <path d="M20.5 7c1.2 1.4 4.8 1.4 6 0" />
+            <path d="M22 4c0.9 1 2.9 1 3.8 0" />
+          </svg>
+        </span>
+        <h2 className="tas-title">Tell Us About Your Space</h2>
+        <p className="tas-body">
+          Tell us about your premises, and we will calculate the number of units
+          and incorporate the formula.
+        </p>
+        {/* Unit-calculator formula / form goes here — pending the formula. */}
+      </div>
+    </section>
+  );
+}
 
 // Hero banner slider: segmented progress bars along the bottom (one per banner).
 // The active bar fills over the banner's on-screen time and advances on completion.
@@ -818,15 +859,16 @@ function HeroBanners() {
   };
 
   return (
-    <header
-      className="env-hero"
-      ref={rootRef}
-      aria-roledescription="carousel"
-      aria-label="Hero banners"
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
-    >
-      <div className="env-hero-track">
+    <>
+      <header
+        className="env-hero"
+        ref={rootRef}
+        aria-roledescription="carousel"
+        aria-label="Hero banners"
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
+        <div className="env-hero-track">
         {BANNERS.map((b, i) => (
           <div
             className={`env-hero-slide ${i === active ? "is-active" : ""}`}
@@ -844,7 +886,8 @@ function HeroBanners() {
             />
           </div>
         ))}
-      </div>
+        </div>
+      </header>
 
       <div className="env-hero-prog">
         {BANNERS.map((_, i) => (
@@ -867,7 +910,7 @@ function HeroBanners() {
           </button>
         ))}
       </div>
-    </header>
+    </>
   );
 }
 
@@ -909,8 +952,7 @@ function Reports() {
   return (
     <section className="env-section">
       <div className="env-wrap">
-        <p className="env-eyebrow" data-reveal>Connected Intelligence</p>
-        <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>See the air.<br />Control the unit.<br />Skip the maintenance.</h2>
+        <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>Discover the Technology That Thinks Ahead</h2>
         <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>Every unit online, every reading in one place.</p>
       </div>
 

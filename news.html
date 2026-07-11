@@ -1,0 +1,510 @@
+<!--
+  ============================================================================
+  MRH — IN THE NEWS  (media / press strip)
+  ----------------------------------------------------------------------------
+  Drop-in section. No dependencies, no build step.
+
+  ┌── LOGO ASSETS — READ THIS ───────────────────────────────────────────────┐
+  │ Publisher logos are trademarks. Do NOT trace or recreate them. Download  │
+  │ the official file from each outlet's press/brand kit and drop it in:     │
+  │                                                                          │
+  │     /assets/press/mann-hummel.svg                                        │
+  │     /assets/press/business-wire-india.svg                                │
+  │     /assets/press/facebook.svg                                           │
+  │     /assets/press/yourstory.svg          (existing strip)                │
+  │     /assets/press/vccircle.svg           (existing strip)                │
+  │     /assets/press/cnbc.svg               (existing strip)                │
+  │     /assets/press/free-press-journal.svg (existing strip)                │
+  │                                                                          │
+  │ Until a file exists, each tile falls back to a clean typographic         │
+  │ wordmark, so the section never renders broken. Nothing to wire up —      │
+  │ the fallback is automatic (see `onerror` on each <img>).                 │
+  └──────────────────────────────────────────────────────────────────────────┘
+
+  To add / remove / reorder an outlet: copy one <a class="press__item"> block.
+  That's the only thing you need to touch.
+  ============================================================================
+-->
+
+<section class="press" id="in-the-news" aria-labelledby="press-heading">
+  <div class="press__inner">
+
+    <header class="press__head">
+      <p class="press__eyebrow">In the news</p>
+      <h2 class="press__heading" id="press-heading">
+        The MANN+HUMMEL partnership, covered
+      </h2>
+    </header>
+
+    <div class="press__rail-wrap">
+
+      <button class="press__nav press__nav--prev" type="button" aria-label="Previous" data-prev>
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor"
+                stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <ul class="press__rail" data-rail role="list">
+
+        <!-- ── 1. MANN+HUMMEL newsroom ───────────────────────────────── -->
+        <li class="press__cell">
+          <a class="press__item"
+             href="https://www.mann-hummel.com/en/filtration-company/news-press/2026/mann-hummel-launches-global-technology-and-innovation-center-in-karnataka.html"
+             target="_blank" rel="noopener noreferrer">
+            <span class="press__logo">
+              <img src="/assets/press/mann-hummel.svg"
+                   alt="MANN+HUMMEL"
+                   loading="lazy"
+                   onerror="this.remove()">
+              <span class="press__wordmark press__wordmark--mh" aria-hidden="true">MANN+HUMMEL</span>
+            </span>
+            <span class="press__meta">
+              <span class="press__date">21 May 2026</span>
+              <span class="press__title">Global Technology &amp; Innovation Center opens in Karnataka</span>
+            </span>
+            <span class="press__go" aria-hidden="true">
+              <svg viewBox="0 0 16 16" width="11" height="11">
+                <path d="M4 12L12 4M12 4H5.5M12 4v6.5" fill="none" stroke="currentColor"
+                      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </a>
+        </li>
+
+        <!-- ── 2. Business Wire India ────────────────────────────────── -->
+        <li class="press__cell">
+          <a class="press__item"
+             href="https://www.businesswireindia.com/hindware-teams-up-with-ok-play-and-mannhummel-to-address-rising-air-pollution-88798.html"
+             target="_blank" rel="noopener noreferrer">
+            <span class="press__logo">
+              <img src="/assets/press/business-wire-india.svg"
+                   alt="Business Wire India"
+                   loading="lazy"
+                   onerror="this.remove()">
+              <span class="press__wordmark press__wordmark--bw" aria-hidden="true">
+                Business<b>Wire</b><i>India</i>
+              </span>
+            </span>
+            <span class="press__meta">
+              <span class="press__date">20 Feb 2024</span>
+              <span class="press__title">Hindware teams up with OK Play and MANN+HUMMEL on air pollution</span>
+            </span>
+            <span class="press__go" aria-hidden="true">
+              <svg viewBox="0 0 16 16" width="11" height="11">
+                <path d="M4 12L12 4M12 4H5.5M12 4v6.5" fill="none" stroke="currentColor"
+                      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </a>
+        </li>
+
+        <!-- ── 3. MANN+HUMMEL on Facebook ────────────────────────────── -->
+        <li class="press__cell">
+          <a class="press__item"
+             href="https://www.facebook.com/mannhummelofficial/posts/together-for-cleaner-air-in-indiawe-are-excited-to-announce-our-exclusive-partne/1197775092351291/"
+             target="_blank" rel="noopener noreferrer">
+            <span class="press__logo">
+              <img src="/assets/press/facebook.svg"
+                   alt="Facebook"
+                   loading="lazy"
+                   onerror="this.remove()">
+              <span class="press__wordmark press__wordmark--fb" aria-hidden="true">facebook</span>
+            </span>
+            <span class="press__meta">
+              <span class="press__date">Announcement</span>
+              <span class="press__title">Together for cleaner air in India — the exclusive partnership</span>
+            </span>
+            <span class="press__go" aria-hidden="true">
+              <svg viewBox="0 0 16 16" width="11" height="11">
+                <path d="M4 12L12 4M12 4H5.5M12 4v6.5" fill="none" stroke="currentColor"
+                      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </a>
+        </li>
+
+        <!--
+          ── SLOTS FOR THE EXISTING STRIP ────────────────────────────────
+          Uncomment and paste the real article URL into href. Same shape.
+
+        <li class="press__cell">
+          <a class="press__item" href="REPLACE_WITH_ARTICLE_URL" target="_blank" rel="noopener noreferrer">
+            <span class="press__logo">
+              <img src="/assets/press/yourstory.svg" alt="YourStory" loading="lazy" onerror="this.remove()">
+              <span class="press__wordmark" aria-hidden="true">YOURSTORY</span>
+            </span>
+            <span class="press__meta">
+              <span class="press__date">DATE</span>
+              <span class="press__title">HEADLINE</span>
+            </span>
+            <span class="press__go" aria-hidden="true">
+              <svg viewBox="0 0 16 16" width="11" height="11">
+                <path d="M4 12L12 4M12 4H5.5M12 4v6.5" fill="none" stroke="currentColor"
+                      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </a>
+        </li>
+        -->
+
+      </ul>
+
+      <button class="press__nav press__nav--next" type="button" aria-label="Next" data-next>
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <path d="M9 5l7 7-7 7" fill="none" stroke="currentColor"
+                stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <span class="press__fade press__fade--l" aria-hidden="true"></span>
+      <span class="press__fade press__fade--r" aria-hidden="true"></span>
+    </div>
+  </div>
+</section>
+
+
+<style>
+/* ══════════════════════════════════════════════════════════════════════════
+   PRESS STRIP
+   ══════════════════════════════════════════════════════════════════════════ */
+.press {
+  --p-bg:        #FFFFFF;
+  --p-ink:       #0B0C0E;
+  --p-ink-soft:  #6B7076;
+  --p-ink-faint: #A2A7AD;
+  --p-line:      #E8EAED;
+  --p-rule:      #F1F2F4;
+
+  --p-font: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Inter",
+            "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --p-ease: cubic-bezier(0.32, 0.72, 0, 1);
+
+  position: relative;
+  padding: clamp(56px, 6vw, 88px) 24px;
+  background: var(--p-bg);
+  color: var(--p-ink);
+  font-family: var(--p-font);
+  -webkit-font-smoothing: antialiased;
+  border-top: 1px solid var(--p-rule);
+  border-bottom: 1px solid var(--p-rule);
+}
+
+.press *,
+.press *::before,
+.press *::after { box-sizing: border-box; }
+
+.press__inner {
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
+/* ── Header ────────────────────────────────────────────────────────────── */
+.press__head {
+  text-align: center;
+  margin-bottom: clamp(30px, 3.4vw, 46px);
+}
+
+.press__eyebrow {
+  margin: 0 0 12px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--p-ink-faint);
+}
+
+.press__heading {
+  margin: 0;
+  font-size: clamp(21px, 2.2vw, 28px);
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  line-height: 1.25;
+  color: var(--p-ink);
+}
+
+/* ── Rail ──────────────────────────────────────────────────────────────── */
+.press__rail-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.press__rail {
+  display: flex;
+  gap: 0;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.press__rail::-webkit-scrollbar { display: none; }
+
+.press__cell {
+  flex: 0 0 25%;
+  min-width: 0;
+  scroll-snap-align: start;
+  border-right: 1px solid var(--p-rule);
+}
+.press__cell:last-child { border-right: 0; }
+
+/* ── Item ──────────────────────────────────────────────────────────────── */
+.press__item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0;
+  height: 100%;
+  padding: 26px 22px 24px;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.35s var(--p-ease);
+}
+.press__item:hover { background: #FAFBFC; }
+.press__item:focus-visible {
+  outline: 2px solid var(--p-ink);
+  outline-offset: -2px;
+  border-radius: 4px;
+}
+
+/* Logo — greyscale at rest, true colour on hover (the standard press-wall move) */
+.press__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  margin-bottom: 18px;
+}
+
+.press__logo img {
+  max-height: 100%;
+  max-width: 175px;
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(1) contrast(1.05);
+  opacity: 0.62;
+  transition:
+    filter 0.4s var(--p-ease),
+    opacity 0.4s var(--p-ease),
+    transform 0.4s var(--p-ease);
+}
+.press__item:hover .press__logo img {
+  filter: grayscale(0);
+  opacity: 1;
+  transform: scale(1.03);
+}
+
+/* Typographic fallback — only visible if the <img> removed itself */
+.press__wordmark {
+  display: none;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--p-ink);
+  opacity: 0.62;
+  transition: opacity 0.4s var(--p-ease);
+  white-space: nowrap;
+}
+.press__logo img + .press__wordmark { display: none; }
+.press__logo:not(:has(img)) .press__wordmark { display: block; }
+.press__item:hover .press__wordmark { opacity: 1; }
+
+/* Per-outlet fallback treatments — plain type, not logo reproductions */
+.press__wordmark--mh { letter-spacing: -0.01em; font-weight: 700; }
+.press__wordmark--bw { font-weight: 400; letter-spacing: -0.005em; }
+.press__wordmark--bw b { font-weight: 700; }
+.press__wordmark--bw i {
+  font-style: normal;
+  font-weight: 400;
+  margin-left: 5px;
+  padding-left: 6px;
+  border-left: 1px solid currentColor;
+  font-size: 13px;
+}
+.press__wordmark--fb { text-transform: lowercase; letter-spacing: -0.04em; }
+
+/* Meta */
+.press__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.press__date {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--p-ink-faint);
+}
+
+.press__title {
+  font-size: 13px;
+  line-height: 1.45;
+  font-weight: 450;
+  letter-spacing: -0.006em;
+  color: var(--p-ink-soft);
+  max-width: 24ch;
+  transition: color 0.3s var(--p-ease);
+}
+.press__item:hover .press__title { color: var(--p-ink); }
+
+/* Outbound arrow */
+.press__go {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  color: var(--p-ink-faint);
+  opacity: 0;
+  transform: translate(-3px, 3px);
+  transition:
+    opacity 0.32s var(--p-ease),
+    transform 0.32s var(--p-ease);
+}
+.press__item:hover .press__go {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+/* ── Nav buttons ───────────────────────────────────────────────────────── */
+.press__nav {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 50%;
+  color: var(--p-ink-faint);
+  cursor: pointer;
+  transition:
+    color 0.28s var(--p-ease),
+    background 0.28s var(--p-ease),
+    opacity 0.28s var(--p-ease);
+}
+.press__nav:hover { color: var(--p-ink); background: #F2F3F5; }
+.press__nav:focus-visible { outline: 2px solid var(--p-ink); outline-offset: 2px; }
+.press__nav[disabled] {
+  opacity: 0.22;
+  cursor: default;
+  background: none;
+  color: var(--p-ink-faint);
+}
+
+/* ── Edge fades ────────────────────────────────────────────────────────── */
+.press__fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 44px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s var(--p-ease);
+  z-index: 1;
+}
+.press__fade--l {
+  left: 44px;
+  background: linear-gradient(90deg, var(--p-bg), transparent);
+}
+.press__fade--r {
+  right: 44px;
+  background: linear-gradient(270deg, var(--p-bg), transparent);
+}
+.press__rail-wrap.can-prev .press__fade--l { opacity: 1; }
+.press__rail-wrap.can-next .press__fade--r { opacity: 1; }
+
+/* ── Responsive ────────────────────────────────────────────────────────── */
+@media (max-width: 1024px) { .press__cell { flex-basis: 33.333%; } }
+@media (max-width: 760px)  { .press__cell { flex-basis: 50%; } }
+
+@media (max-width: 520px) {
+  .press { padding-left: 12px; padding-right: 12px; }
+  .press__cell { flex-basis: 78%; }
+  .press__nav { display: none; }
+  .press__fade { display: none; }
+  .press__rail { gap: 0; }
+  .press__item { padding: 22px 16px 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .press__rail { scroll-behavior: auto; }
+  .press *,
+  .press *::before,
+  .press *::after {
+    transition-duration: 0.001ms !important;
+    animation-duration: 0.001ms !important;
+  }
+}
+</style>
+
+
+<script>
+(function () {
+  "use strict";
+
+  const section = document.getElementById("in-the-news");
+  if (!section) return;
+
+  const wrap = section.querySelector(".press__rail-wrap");
+  const rail = section.querySelector("[data-rail]");
+  const prev = section.querySelector("[data-prev]");
+  const next = section.querySelector("[data-next]");
+
+  /* Scroll by one full cell, whatever the current breakpoint makes that */
+  function step() {
+    const cell = rail.querySelector(".press__cell");
+    return cell ? cell.getBoundingClientRect().width : rail.clientWidth * 0.25;
+  }
+
+  /* Enable/disable arrows and edge fades against real scroll position */
+  function sync() {
+    const max = rail.scrollWidth - rail.clientWidth;
+    const x = rail.scrollLeft;
+    const atStart = x <= 1;
+    const atEnd = x >= max - 1;
+    const overflows = max > 1;
+
+    prev.disabled = atStart || !overflows;
+    next.disabled = atEnd || !overflows;
+
+    wrap.classList.toggle("can-prev", overflows && !atStart);
+    wrap.classList.toggle("can-next", overflows && !atEnd);
+  }
+
+  prev.addEventListener("click", () => rail.scrollBy({ left: -step(), behavior: "smooth" }));
+  next.addEventListener("click", () => rail.scrollBy({ left:  step(), behavior: "smooth" }));
+
+  rail.addEventListener("scroll", sync, { passive: true });
+  window.addEventListener("resize", sync);
+
+  /* Fallback wordmarks: :has() isn't everywhere yet — belt and braces */
+  section.querySelectorAll(".press__logo").forEach((logo) => {
+    const img = logo.querySelector("img");
+    const mark = logo.querySelector(".press__wordmark");
+    if (!mark) return;
+    const showMark = () => { mark.style.display = "block"; };
+    if (!img) return showMark();
+    img.addEventListener("error", showMark);
+    // Already failed before JS ran?
+    if (img.complete && img.naturalWidth === 0) showMark();
+  });
+
+  sync();
+})();
+</script>

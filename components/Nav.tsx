@@ -16,8 +16,8 @@ const links: NavLink[] = [
     href: "/products",
     label: "Products",
     children: [
-      { href: "/products/pureair", label: "PureAir" },
-      { href: "/products/airfinery", label: "AirFINEry" },
+      { href: "/products/pureair", label: "PureAir · Indoor" },
+      { href: "/products/airfinery", label: "AirFINEry · Semi-Outdoor & Outdoor" },
     ],
   },
   { href: "/technology", label: "Our Technology" },
@@ -52,44 +52,11 @@ const DARK_THEME = {
   "--nav-square-fg": "#ffffff",
 } as React.CSSProperties;
 
-function BrandMark({ light, big }: { light: boolean; big?: boolean }) {
-  // `big` restores the original (larger) logo sizing, used only on the Products page.
-  const logoStyle: React.CSSProperties = big
-    ? {
-        width: "2.4em",
-        height: "2.4em",
-        objectFit: "contain",
-        flex: "none",
-        display: "block",
-      }
-    : {
-        height: "clamp(20px, 1.8vw, 28px)",
-        width: "auto",
-        objectFit: "contain",
-        flex: "none",
-        display: "block",
-      };
+function BrandMark() {
+  // Only the MRH logo lives on the left; the MANN+HUMMEL mark is pinned to the
+  // far right of the nav. Green logos read on both light and dark nav.
   return (
-    <span style={{ display: "inline-flex", alignItems: "center", gap: "0.5em" }}>
-      <img
-        loading="lazy"
-        // Black logo over the light (white) nav; white logo over the dark nav.
-        src={light ? "/mrh-blacklogo.png" : "/mrh-logo.png"}
-        alt="MRH"
-        style={logoStyle}
-      />
-      <img
-        loading="lazy"
-        src="/mhlogo.svg"
-        alt="MANN+HUMMEL"
-        // Recolored to match the MRH logo: black over the light nav, white over
-        // the dark nav.
-        style={{
-          ...logoStyle,
-          filter: light ? "brightness(0)" : "brightness(0) invert(1)",
-        }}
-      />
-    </span>
+    <img loading="lazy" className="mrh-brand-logo mrh-nav-mrh" src="/mrhgreenlogo.png" alt="MRH" />
   );
 }
 
@@ -198,7 +165,7 @@ export default function Nav() {
         }}
       />
       <nav
-        className={`sticky top-0 z-50 mrh-nav ${menuOpen ? "is-menu-open" : ""}`}
+        className={`sticky top-0 z-50 mrh-nav ${menuOpen ? "is-menu-open" : ""} ${isProducts ? "is-products" : ""}`}
         onMouseLeave={() => setMenuOpen(false)}
         style={{
           width: "100%",
@@ -208,7 +175,7 @@ export default function Nav() {
           // Horizontal padding matches the hero gutter so the logo aligns with the
           // hero text (and the CTA + menu shift left by the same amount).
           padding:
-            "clamp(4px, 0.6%, 10px) clamp(20px, 8.85%, 127px) clamp(6px, 0.9%, 14px)",
+            "clamp(6px, 0.8%, 12px) clamp(20px, 8.85%, 127px)",
           color: "var(--nav-fg)",
           fontFamily: "var(--font-sans), ui-sans-serif, system-ui, sans-serif",
           // Hamburger open → light bar to match its light panel; Products mega-menu
@@ -233,10 +200,25 @@ export default function Nav() {
           opacity: 0;
           animation: mrhNavIn 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
+        /* Brand logos: MRH pinned left, MANN+HUMMEL pinned right (mirrored). */
+        .mrh-brand-logo {
+          height: clamp(28px, 2.8vw, 40px);
+          width: auto;
+          object-fit: contain;
+          flex: none;
+          display: block;
+        }
+        .mrh-nav.is-products .mrh-brand-logo { height: clamp(38px, 3.8vw, 56px); }
+        .mrh-nav-mh { margin-left: clamp(12px, 1.6vw, 26px); }
+        /* The MRH logo art sits high in its own PNG padding; nudge it down so the
+           visible mark is centered in the nav. */
+        .mrh-nav-mrh { transform: translateY(10%); }
         .mrh-nav-link {
           color: var(--nav-fg);
           text-decoration: none;
           opacity: 0.95;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
           transition: opacity 0.2s ease, color 360ms ease;
         }
         .mrh-nav-link:hover { opacity: 0.6; }
@@ -335,7 +317,8 @@ export default function Nav() {
           text-decoration: none;
           font-size: 22px;
           font-weight: 600;
-          letter-spacing: -0.02em;
+          text-transform: uppercase;
+          letter-spacing: 0.03em;
           padding: 12px 0;
           transition: color 200ms ease;
         }
@@ -383,7 +366,7 @@ export default function Nav() {
           text-decoration: none;
           text-align: center;
           padding: 15px;
-          border-radius: 10px;
+          border-radius: 980px;
           font-size: 17px;
           font-weight: 600;
         }
@@ -402,8 +385,10 @@ export default function Nav() {
           background: var(--nav-cta-bg);
           color: var(--nav-cta-fg);
           border: none;
-          border-radius: 7px;
+          border-radius: 980px;
           font-weight: 400;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
           padding: 0.62em 1.05em;
           text-decoration: none;
           display: inline-flex;
@@ -462,7 +447,7 @@ export default function Nav() {
           opacity: 1,
         }}
       >
-        <BrandMark light={mobileOpen || (lightNav && !navOpen)} big={isProducts} />
+        <BrandMark />
       </Link>
 
       {/* Center links */}
@@ -527,22 +512,7 @@ export default function Nav() {
         }}
       >
         <Link href="/contact" className="mrh-nav-cta">
-          <span>Get a Quote</span>
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="none"
-            aria-hidden
-          >
-            <path
-              d="M3 7h8M7.5 3.5L11 7l-3.5 3.5"
-              stroke="currentColor"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <span>Request Pricing</span>
         </Link>
         <button
           type="button"
@@ -571,6 +541,14 @@ export default function Nav() {
           </svg>
         </button>
       </div>
+
+      {/* MANN+HUMMEL logo — pinned to the far right, mirroring the MRH logo on the left */}
+      <img
+        loading="lazy"
+        className="mrh-nav-row mrh-brand-logo mrh-nav-mh"
+        src="/mhgreenlogo.png"
+        alt="MANN+HUMMEL"
+      />
 
       {/* Full-width mega-menu panel (Products) */}
       <div className={`mrh-mega ${menuOpen ? "is-open" : ""}`} role="menu">
@@ -618,7 +596,7 @@ export default function Nav() {
           className="mrh-mobile-quote"
           onClick={() => setMobileOpen(false)}
         >
-          Get a Quote
+          Request Pricing
         </Link>
       </div>
       </nav>

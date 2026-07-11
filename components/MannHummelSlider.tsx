@@ -26,6 +26,7 @@ const CARDS: Card[] = [
     tag: "Legacy",
     year: "Since 1941",
     title: "MANN+HUMMEL legacy",
+    type: "stats",
     img: "/mh2.png",
   },
   {
@@ -33,7 +34,7 @@ const CARDS: Card[] = [
     year: "Symposium",
     title: "A perpetual exclusive manufacturing and distribution license agreement",
     copy: "MRH and MANN+HUMMEL formalise a partnership built to last, signed at the Air Pollution Symposium.",
-    img: "/mht.jpeg",
+    img: "/mh4.jpeg",
   },
   {
     tag: "Manufacturing",
@@ -61,15 +62,15 @@ const CARDS: Card[] = [
     year: "New Delhi",
     title: "Symposium on Air Pollution",
     copy: "Shri Tarun Kapoor, Advisor to the Prime Minister's Office, on India's clean air imperative.",
-    img: "/mh4.jpeg",
+    img: "/mht.jpeg",
   },
 ];
 
 export default function MannHummelSlider() {
   const railRef = useRef<HTMLDivElement>(null);
 
-  // Live "filters produced" counter (32/sec since the page opened), exactly as
-  // the source HTML. Falls back to a static value under reduced-motion.
+  // Live "filters produced" counter (32/sec). Starts counting only once the
+  // section scrolls into view. Falls back to a static value under reduced-motion.
   const [count, setCount] = useState(0);
   const [reduced, setReduced] = useState(false);
   useEffect(() => {
@@ -77,11 +78,25 @@ export default function MannHummelSlider() {
       setReduced(true);
       return;
     }
-    const t0 = Date.now();
-    const id = window.setInterval(() => {
-      setCount(Math.floor(((Date.now() - t0) / 1000) * 32));
-    }, 90);
-    return () => clearInterval(id);
+    const el = railRef.current;
+    if (!el) return;
+    let intervalId = 0;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting && !intervalId) {
+          const t0 = Date.now();
+          intervalId = window.setInterval(() => {
+            setCount(Math.floor(((Date.now() - t0) / 1000) * 32));
+          }, 90);
+        }
+      },
+      { threshold: 0.2 }
+    );
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      if (intervalId) clearInterval(intervalId);
+    };
   }, []);
 
   const step = () => {
@@ -129,7 +144,7 @@ export default function MannHummelSlider() {
   }, []);
 
   return (
-    <div className="mh" data-reveal style={{ ["--ri" as string]: 3 }}>
+    <div className="mh">
       <style>{`
         .mh { width: 100%; margin-top: clamp(32px, 4vw, 56px); }
         .mh-rail {
@@ -230,15 +245,39 @@ export default function MannHummelSlider() {
            bottom-anchored text keeps a balanced gap (matching the copy cards). */
         .mh-top-img--tall { height: 64%; }
 
-        /* ---- Stats / live-counter card (card 2) — boxless, hairline-only ---- */
-        .mh-stats {
-          position: absolute;
-          inset: 0;
-          z-index: 2;
+        /* ---- Stats / live-counter card (card 2): image on top, stats below ---- */
+        .mh-si {
           display: flex;
           flex-direction: column;
-          gap: clamp(14px, 1.5vw, 20px);
-          padding: clamp(20px, 1.9vw, 26px);
+          background:
+            repeating-linear-gradient(135deg, #20272400 0 11px, #ffffff0a 11px 12px),
+            linear-gradient(160deg, #1c2320 0%, #0b0f0d 38%);
+        }
+        .mh-si-media { position: relative; flex: none; height: 33%; }
+        .mh-si-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .mh-si-scrim {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to top,
+            rgba(6, 9, 8, 0.9) 0%,
+            rgba(6, 9, 8, 0.5) 32%,
+            rgba(6, 9, 8, 0) 62%);
+        }
+        .mh-si-label {
+          position: absolute;
+          left: 0; right: 0; bottom: 0;
+          padding: clamp(16px, 1.5vw, 22px);
+          display: flex;
+          flex-direction: column;
+          gap: clamp(7px, 0.7vw, 9px);
+          color: #ffffff;
+        }
+        .mh-si-stats {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: clamp(11px, 1.3vw, 15px);
+          padding: clamp(16px, 1.6vw, 22px) clamp(15px, 1.5vw, 21px) clamp(22px, 2.2vw, 30px);
         }
         .mh-live {
           display: inline-flex;
@@ -263,8 +302,8 @@ export default function MannHummelSlider() {
         }
         @media (prefers-reduced-motion: reduce) { .mh-dot { animation: none; } }
         .mh-count {
-          margin: clamp(10px, 1vw, 13px) 0 0;
-          font-size: clamp(32px, 3.6vw, 42px);
+          margin: clamp(7px, 0.8vw, 10px) 0 0;
+          font-size: clamp(27px, 2.9vw, 34px);
           font-weight: 600;
           letter-spacing: -0.035em;
           line-height: 1;
@@ -272,9 +311,9 @@ export default function MannHummelSlider() {
           font-variant-numeric: tabular-nums;
         }
         .mh-ticker-sub {
-          margin: clamp(9px, 1vw, 12px) 0 0;
-          font-size: 12.5px;
-          line-height: 1.5;
+          margin: clamp(6px, 0.7vw, 8px) 0 0;
+          font-size: 12px;
+          line-height: 1.45;
           color: rgba(255, 255, 255, 0.5);
           max-width: 28ch;
         }
@@ -286,8 +325,8 @@ export default function MannHummelSlider() {
         .mh-fig {
           display: flex;
           flex-direction: column;
-          gap: 6px;
-          padding: clamp(11px, 1.15vw, 14px) 0;
+          gap: 5px;
+          padding: clamp(8px, 0.9vw, 11px) 0;
         }
         .mh-fig:nth-child(odd) { padding-right: clamp(14px, 1.5vw, 20px); }
         .mh-fig:nth-child(even) {
@@ -296,7 +335,7 @@ export default function MannHummelSlider() {
         }
         .mh-fig:nth-child(n + 3) { border-top: 1px solid rgba(255, 255, 255, 0.09); }
         .mh-fig-n {
-          font-size: clamp(20px, 2vw, 25px);
+          font-size: clamp(19px, 1.9vw, 23px);
           font-weight: 600;
           letter-spacing: -0.025em;
           line-height: 1;
@@ -309,13 +348,6 @@ export default function MannHummelSlider() {
           font-weight: 500;
           letter-spacing: 0.01em;
           color: rgba(255, 255, 255, 0.48);
-        }
-        .mh-stats-foot {
-          margin-top: auto;
-          display: flex;
-          flex-direction: column;
-          gap: clamp(8px, 0.8vw, 11px);
-          color: #ffffff;
         }
       `}</style>
 
@@ -336,9 +368,23 @@ export default function MannHummelSlider() {
       >
         {CARDS.map((c, i) =>
           c.type === "stats" ? (
-            <article className="mh-card" key={i}>
-              <div className="mh-ph" aria-hidden />
-              <div className="mh-stats">
+            <article
+              className="mh-card mh-si"
+              key={i}
+              data-reveal
+              style={{ ["--ri" as string]: i }}
+            >
+              <div className="mh-si-media">
+                {c.img ? <img src={c.img} alt={c.title} /> : null}
+                <div className="mh-si-scrim" aria-hidden />
+                <div className="mh-si-label">
+                  <span className="mh-tag">
+                    {c.tag} <b>· {c.year}</b>
+                  </span>
+                  <h3 className="mh-title">{c.title}</h3>
+                </div>
+              </div>
+              <div className="mh-si-stats">
                 <div className="mh-lead">
                   <div className="mh-live">
                     <span className="mh-dot" aria-hidden />
@@ -348,7 +394,7 @@ export default function MannHummelSlider() {
                     {reduced ? "32/sec" : count.toLocaleString("en-IN")}
                   </div>
                   <p className="mh-ticker-sub">
-                    Filters produced since you opened this page, at 32 a second.
+                    Filters produced while you&rsquo;ve been here, at 32 a second.
                   </p>
                 </div>
                 <div className="mh-figs">
@@ -371,16 +417,15 @@ export default function MannHummelSlider() {
                     <span className="mh-fig-l">Filters made</span>
                   </div>
                 </div>
-                <div className="mh-stats-foot">
-                  <span className="mh-tag">
-                    {c.tag} <b>· {c.year}</b>
-                  </span>
-                  <h3 className="mh-title">{c.title}</h3>
-                </div>
               </div>
             </article>
           ) : (
-            <article className="mh-card" key={i}>
+            <article
+              className="mh-card"
+              key={i}
+              data-reveal
+              style={{ ["--ri" as string]: i }}
+            >
               <div className="mh-ph" aria-hidden />
               {c.img ? (
                 <img

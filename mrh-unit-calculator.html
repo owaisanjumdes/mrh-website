@@ -1,0 +1,1363 @@
+<!--
+  ============================================================================
+  MRH — UNIT CALCULATOR SECTION
+  ----------------------------------------------------------------------------
+  Self-contained section. Drop into the site, or hand to Claude Code to port
+  into a component. No dependencies, no build step.
+
+  CALCULATION LOGIC (mirrors Unit_Calculation_Sheet.xlsx exactly)
+    volume        = length × width × height                     [ft³]
+    requiredCFM   = (volume × ACH) / 60        where ACH = 5    [CFM]
+    unitCFM       = CFM_TABLE[product][mode]                    [CFM]
+    unitsNeeded   = ceil(requiredCFM / unitCFM)                 [ROUNDUP]
+
+  All tunable values live in the CONFIG object at the top of the <script>.
+  ============================================================================
+-->
+
+<section class="mrh-calc" id="unit-calculator">
+  <!-- Ambient background: a slow-drifting field, sitting behind the glass -->
+  <div class="mrh-calc__atmosphere" aria-hidden="true">
+    <span class="mrh-calc__orb mrh-calc__orb--a"></span>
+    <span class="mrh-calc__orb mrh-calc__orb--b"></span>
+    <span class="mrh-calc__orb mrh-calc__orb--c"></span>
+    <span class="mrh-calc__grid"></span>
+  </div>
+
+  <div class="mrh-calc__inner">
+
+    <!-- ── Section header ─────────────────────────────────────────────── -->
+    <header class="mrh-calc__head">
+      <p class="mrh-calc__eyebrow">Unit Calculator</p>
+      <h2 class="mrh-calc__title">
+        How many units<br>does your space need?
+      </h2>
+      <p class="mrh-calc__lede">
+        Enter your dimensions. We size the system to five complete air changes
+        every hour — the standard our engineers design to.
+      </p>
+    </header>
+
+    <!-- ── Main grid: controls (left) · outcome (right) ───────────────── -->
+    <div class="mrh-calc__grid-layout">
+
+      <!-- ═══════════ CONTROLS ═══════════ -->
+      <div class="glass mrh-calc__panel mrh-calc__panel--controls">
+
+        <!-- Product -->
+        <fieldset class="field">
+          <legend class="field__label">Product</legend>
+          <div class="segmented" role="radiogroup" aria-label="Product" data-segmented="product">
+            <span class="segmented__thumb" aria-hidden="true"></span>
+            <button type="button" class="segmented__opt is-active" role="radio" aria-checked="true"  data-value="AirFINEry">AirFINEry</button>
+            <button type="button" class="segmented__opt"           role="radio" aria-checked="false" data-value="PureAir">PureAir</button>
+          </div>
+        </fieldset>
+
+        <!-- Dimensions -->
+        <fieldset class="field">
+          <legend class="field__label">
+            Dimensions
+            <span class="field__unit">feet</span>
+          </legend>
+
+          <div class="dims">
+            <!-- Length -->
+            <div class="dim" data-dim="length">
+              <div class="dim__row">
+                <label class="dim__name" for="dim-length">Length</label>
+                <div class="dim__entry">
+                  <input class="dim__input" id="dim-length" type="number" inputmode="numeric"
+                         min="10" max="500" step="1" value="100" aria-describedby="dim-length-hint">
+                  <span class="dim__suffix">ft</span>
+                </div>
+              </div>
+              <input class="slider" type="range" min="10" max="500" step="1" value="100"
+                     aria-label="Length in feet" tabindex="-1">
+              <span class="dim__hint" id="dim-length-hint" hidden>10–500 ft</span>
+            </div>
+
+            <!-- Width -->
+            <div class="dim" data-dim="width">
+              <div class="dim__row">
+                <label class="dim__name" for="dim-width">Width</label>
+                <div class="dim__entry">
+                  <input class="dim__input" id="dim-width" type="number" inputmode="numeric"
+                         min="10" max="500" step="1" value="50" aria-describedby="dim-width-hint">
+                  <span class="dim__suffix">ft</span>
+                </div>
+              </div>
+              <input class="slider" type="range" min="10" max="500" step="1" value="50"
+                     aria-label="Width in feet" tabindex="-1">
+              <span class="dim__hint" id="dim-width-hint" hidden>10–500 ft</span>
+            </div>
+
+            <!-- Height -->
+            <div class="dim" data-dim="height">
+              <div class="dim__row">
+                <label class="dim__name" for="dim-height">Height</label>
+                <div class="dim__entry">
+                  <input class="dim__input" id="dim-height" type="number" inputmode="numeric"
+                         min="6" max="60" step="1" value="10" aria-describedby="dim-height-hint">
+                  <span class="dim__suffix">ft</span>
+                </div>
+              </div>
+              <input class="slider" type="range" min="6" max="60" step="1" value="10"
+                     aria-label="Height in feet" tabindex="-1">
+              <span class="dim__hint" id="dim-height-hint" hidden>6–60 ft</span>
+            </div>
+          </div>
+
+          <div class="volume-readout">
+            <span class="volume-readout__label">Volume</span>
+            <span class="volume-readout__value"><output data-out="volume">50,000</output> ft³</span>
+          </div>
+        </fieldset>
+
+        <!-- Mode -->
+        <fieldset class="field field--last">
+          <legend class="field__label">
+            Operating mode
+            <span class="field__unit" data-out="unitCfmChip">1,810 CFM / unit</span>
+          </legend>
+          <div class="segmented segmented--quad" role="radiogroup" aria-label="Operating mode" data-segmented="mode">
+            <span class="segmented__thumb" aria-hidden="true"></span>
+            <button type="button" class="segmented__opt is-active" role="radio" aria-checked="true"  data-value="Low">Low</button>
+            <button type="button" class="segmented__opt"           role="radio" aria-checked="false" data-value="Medium">Medium</button>
+            <button type="button" class="segmented__opt"           role="radio" aria-checked="false" data-value="High">High</button>
+            <button type="button" class="segmented__opt"           role="radio" aria-checked="false" data-value="Turbo">Turbo</button>
+          </div>
+          <p class="field__note">
+            Higher modes move more air, so fewer units cover the same space.
+          </p>
+        </fieldset>
+      </div>
+
+      <!-- ═══════════ OUTCOME ═══════════ -->
+      <div class="glass mrh-calc__panel mrh-calc__panel--result">
+
+        <!-- Signature element: the room, drawn live -->
+        <div class="stage" data-stage>
+          <div class="stage__scene">
+            <div class="room" data-room>
+              <div class="room__face room__face--floor"></div>
+              <div class="room__face room__face--ceiling"></div>
+              <div class="room__face room__face--back"></div>
+              <div class="room__face room__face--left"></div>
+              <div class="room__face room__face--right"></div>
+              <div class="room__units" data-units-layer></div>
+              <div class="room__flow" data-flow></div>
+            </div>
+          </div>
+          <p class="stage__caption">Drag to rotate</p>
+        </div>
+
+        <!-- The answer -->
+        <div class="answer">
+          <p class="answer__label">Units recommended</p>
+          <div class="answer__value">
+            <output class="answer__number" data-out="units" aria-live="polite">3</output>
+            <span class="answer__suffix" data-out="unitsWord">units</span>
+          </div>
+          <p class="answer__product">
+            <span data-out="productLabel">AirFINEry</span>
+            <span class="answer__dot" aria-hidden="true">·</span>
+            <span data-out="modeLabel">Low</span>
+          </p>
+        </div>
+
+        <!-- Working -->
+        <dl class="metrics">
+          <div class="metric">
+            <dt class="metric__key">Air changes / hour</dt>
+            <dd class="metric__val">5</dd>
+          </div>
+          <div class="metric">
+            <dt class="metric__key">Airflow required</dt>
+            <dd class="metric__val"><output data-out="required">4,167</output> <i>CFM</i></dd>
+          </div>
+          <div class="metric">
+            <dt class="metric__key">Airflow per unit</dt>
+            <dd class="metric__val"><output data-out="unitCfm">1,810</output> <i>CFM</i></dd>
+          </div>
+          <div class="metric metric--accent">
+            <dt class="metric__key">Airflow delivered</dt>
+            <dd class="metric__val"><output data-out="delivered">5,430</output> <i>CFM</i></dd>
+          </div>
+        </dl>
+
+        <!-- Coverage bar -->
+        <div class="coverage">
+          <div class="coverage__track">
+            <span class="coverage__need" data-coverage-need></span>
+            <span class="coverage__fill" data-coverage-fill></span>
+          </div>
+          <p class="coverage__note">
+            <output data-out="headroom">30</output>% headroom above requirement
+          </p>
+        </div>
+
+        <div class="mrh-calc__cta">
+          <a class="btn" href="#contact">
+            Get a detailed assessment
+            <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+              <path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor"
+                    stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <p class="mrh-calc__disclaimer">
+            Indicative sizing based on volume and air changes. A site survey confirms
+            final placement, filtration grade and unit count.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<style>
+/* ══════════════════════════════════════════════════════════════════════════
+   TOKENS
+   ══════════════════════════════════════════════════════════════════════════ */
+.mrh-calc {
+  /* Surface */
+  --c-void:        #06070A;
+  --c-deep:        #0C0E14;
+  --c-ink:         #F5F7FA;
+  --c-ink-dim:     rgba(245, 247, 250, 0.62);
+  --c-ink-faint:   rgba(245, 247, 250, 0.38);
+
+  /* Accent — cool, clinical, "filtered air" */
+  --c-air:         #5AC8FA;
+  --c-air-deep:    #0A84FF;
+  --c-violet:      #9F7DF2;
+  --c-mint:        #64E4C0;
+
+  /* Glass */
+  --glass-bg:      rgba(255, 255, 255, 0.045);
+  --glass-bg-2:    rgba(255, 255, 255, 0.028);
+  --glass-line:    rgba(255, 255, 255, 0.10);
+  --glass-lit:     rgba(255, 255, 255, 0.30);
+  --glass-blur:    blur(44px) saturate(170%);
+
+  /* Type */
+  --f-display: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter",
+               "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --f-text:    "SF Pro Text", -apple-system, BlinkMacSystemFont, "Inter",
+               "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* Motion */
+  --ease:      cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-out:  cubic-bezier(0.16, 1, 0.3, 1);
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(72px, 9vw, 140px) 24px clamp(80px, 10vw, 150px);
+  background: var(--c-void);
+  color: var(--c-ink);
+  font-family: var(--f-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.mrh-calc *,
+.mrh-calc *::before,
+.mrh-calc *::after { box-sizing: border-box; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ATMOSPHERE
+   ══════════════════════════════════════════════════════════════════════════ */
+.mrh-calc__atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.mrh-calc__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.5;
+}
+.mrh-calc__orb--a {
+  width: 46vw; height: 46vw;
+  top: -14vw; left: -8vw;
+  background: radial-gradient(circle, rgba(10,132,255,0.42) 0%, transparent 68%);
+  animation: drift-a 26s var(--ease) infinite alternate;
+}
+.mrh-calc__orb--b {
+  width: 40vw; height: 40vw;
+  bottom: -14vw; right: -6vw;
+  background: radial-gradient(circle, rgba(159,125,242,0.36) 0%, transparent 68%);
+  animation: drift-b 32s var(--ease) infinite alternate;
+}
+.mrh-calc__orb--c {
+  width: 30vw; height: 30vw;
+  top: 42%; left: 46%;
+  background: radial-gradient(circle, rgba(100,228,192,0.16) 0%, transparent 70%);
+  animation: drift-c 38s var(--ease) infinite alternate;
+}
+
+@keyframes drift-a { to { transform: translate3d(7vw,  5vw, 0) scale(1.14); } }
+@keyframes drift-b { to { transform: translate3d(-6vw, -5vw, 0) scale(1.10); } }
+@keyframes drift-c { to { transform: translate3d(-9vw,  6vw, 0) scale(0.88); } }
+
+/* Faint measurement grid — a nod to the survey drawing */
+.mrh-calc__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.030) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.030) 1px, transparent 1px);
+  background-size: 68px 68px;
+  mask-image: radial-gradient(ellipse 90% 65% at 50% 42%, #000 20%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 65% at 50% 42%, #000 20%, transparent 100%);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   LAYOUT
+   ══════════════════════════════════════════════════════════════════════════ */
+.mrh-calc__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1160px;
+  margin-inline: auto;
+}
+
+.mrh-calc__head {
+  max-width: 640px;
+  margin-bottom: clamp(40px, 5vw, 68px);
+}
+
+.mrh-calc__eyebrow {
+  margin: 0 0 20px;
+  font-size: 12px;
+  font-weight: 590;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-air);
+}
+
+.mrh-calc__title {
+  margin: 0 0 22px;
+  font-family: var(--f-display);
+  font-size: clamp(34px, 4.6vw, 60px);
+  font-weight: 640;
+  line-height: 1.06;
+  letter-spacing: -0.032em;
+  color: var(--c-ink);
+}
+
+.mrh-calc__lede {
+  margin: 0;
+  max-width: 48ch;
+  font-size: clamp(15px, 1.25vw, 17px);
+  line-height: 1.6;
+  color: var(--c-ink-dim);
+}
+
+.mrh-calc__grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: stretch;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   GLASS
+   ══════════════════════════════════════════════════════════════════════════ */
+.glass {
+  position: relative;
+  background:
+    linear-gradient(158deg, var(--glass-bg) 0%, var(--glass-bg-2) 100%);
+  border: 1px solid var(--glass-line);
+  border-radius: 26px;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow:
+    0 1px 0 0 rgba(255,255,255,0.07) inset,
+    0 24px 70px -20px rgba(0,0,0,0.72);
+}
+
+/* Specular edge — the highlight that sells the material */
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(150deg,
+    var(--glass-lit) 0%,
+    transparent 34%,
+    transparent 66%,
+    rgba(255,255,255,0.10) 100%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+
+.mrh-calc__panel {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(26px, 2.6vw, 38px);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   FIELDS
+   ══════════════════════════════════════════════════════════════════════════ */
+.field {
+  margin: 0 0 34px;
+  padding: 0;
+  border: 0;
+}
+.field--last { margin-bottom: 0; margin-top: auto; }
+
+.field__label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 0 0 14px;
+  font-size: 12px;
+  font-weight: 590;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--c-ink-faint);
+}
+
+.field__unit {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--c-air);
+  font-variant-numeric: tabular-nums;
+  transition: opacity 0.3s var(--ease);
+}
+
+.field__note {
+  margin: 14px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--c-ink-faint);
+}
+
+/* ── Segmented control (Apple) ─────────────────────────────────────────── */
+.segmented {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  padding: 3px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 13px;
+}
+.segmented--quad { grid-template-columns: repeat(4, 1fr); }
+
+.segmented__thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  height: calc(100% - 6px);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.10);
+  border: 0.5px solid rgba(255,255,255,0.16);
+  box-shadow:
+    0 1px 0 0 rgba(255,255,255,0.16) inset,
+    0 3px 10px -2px rgba(0,0,0,0.5);
+  transition:
+    transform 0.42s var(--ease),
+    width 0.42s var(--ease);
+  will-change: transform, width;
+  pointer-events: none;
+}
+
+.segmented__opt {
+  position: relative;
+  z-index: 1;
+  appearance: none;
+  -webkit-appearance: none;
+  background: none;
+  border: 0;
+  padding: 11px 6px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 510;
+  letter-spacing: -0.005em;
+  color: var(--c-ink-dim);
+  cursor: pointer;
+  border-radius: 10px;
+  transition: color 0.28s var(--ease);
+  white-space: nowrap;
+}
+.segmented__opt:hover { color: var(--c-ink); }
+.segmented__opt.is-active { color: var(--c-ink); font-weight: 590; }
+.segmented__opt:focus-visible {
+  outline: 2px solid var(--c-air);
+  outline-offset: 2px;
+}
+
+/* ── Dimensions ────────────────────────────────────────────────────────── */
+.dims {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.dim__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.dim__name {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--c-ink);
+  letter-spacing: -0.01em;
+}
+
+.dim__entry {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  padding: 5px 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 9px;
+  transition: border-color 0.25s var(--ease), background 0.25s var(--ease);
+}
+.dim__entry:focus-within {
+  border-color: rgba(90,200,250,0.55);
+  background: rgba(90,200,250,0.07);
+}
+.dim.is-invalid .dim__entry {
+  border-color: rgba(255,105,97,0.6);
+  background: rgba(255,105,97,0.07);
+}
+
+.dim__input {
+  width: 4ch;
+  appearance: none;
+  -webkit-appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  font-family: var(--f-display);
+  font-size: 17px;
+  font-weight: 590;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  color: var(--c-ink);
+  text-align: right;
+}
+.dim__input::-webkit-outer-spin-button,
+.dim__input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.dim__input[type="number"] { -moz-appearance: textfield; }
+.dim__input:focus { outline: none; }
+
+.dim__suffix {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--c-ink-faint);
+}
+
+.dim__hint {
+  display: block;
+  margin-top: 7px;
+  font-size: 12px;
+  color: #FF8A80;
+}
+
+/* ── Slider ────────────────────────────────────────────────────────────── */
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 22px;
+  background: none;
+  cursor: grab;
+  display: block;
+}
+.slider:active { cursor: grabbing; }
+
+.slider::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, var(--c-air-deep), var(--c-air))
+      0 / var(--fill, 20%) 100% no-repeat,
+    rgba(255,255,255,0.10);
+}
+.slider::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.10);
+}
+.slider::-moz-range-progress {
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--c-air-deep), var(--c-air));
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  margin-top: -7px;
+  border-radius: 50%;
+  background: #FFF;
+  border: 0;
+  box-shadow:
+    0 1px 3px rgba(0,0,0,0.4),
+    0 0 0 0 rgba(90,200,250,0.25);
+  transition: box-shadow 0.25s var(--ease), transform 0.18s var(--ease);
+}
+.slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #FFF;
+  border: 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+.slider:hover::-webkit-slider-thumb   { transform: scale(1.1); }
+.slider:active::-webkit-slider-thumb  {
+  transform: scale(1.16);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4), 0 0 0 9px rgba(90,200,250,0.16);
+}
+.slider:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4), 0 0 0 5px rgba(90,200,250,0.4);
+}
+.slider:focus { outline: none; }
+
+/* ── Volume readout ────────────────────────────────────────────────────── */
+.volume-readout {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+.volume-readout__label {
+  font-size: 12px;
+  font-weight: 590;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--c-ink-faint);
+}
+.volume-readout__value {
+  font-family: var(--f-display);
+  font-size: 17px;
+  font-weight: 590;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  color: var(--c-ink);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   STAGE — the room, drawn live  [SIGNATURE ELEMENT]
+   ══════════════════════════════════════════════════════════════════════════ */
+.stage {
+  position: relative;
+  height: 250px;
+  margin: -8px 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.stage:active { cursor: grabbing; }
+
+.stage__scene {
+  perspective: 1100px;
+  perspective-origin: 50% 46%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.room {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s var(--ease-out);
+  will-change: transform;
+}
+.room.is-dragging { transition: none; }
+
+.room__face {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-style: preserve-3d;
+  border: 1px solid rgba(90,200,250,0.30);
+  background: rgba(90,200,250,0.035);
+  transition:
+    width 0.55s var(--ease-out),
+    height 0.55s var(--ease-out),
+    transform 0.55s var(--ease-out);
+}
+
+.room__face--floor {
+  background:
+    linear-gradient(rgba(90,200,250,0.10), rgba(90,200,250,0.10)),
+    repeating-linear-gradient(0deg,   rgba(90,200,250,0.16) 0 1px, transparent 1px 26px),
+    repeating-linear-gradient(90deg,  rgba(90,200,250,0.16) 0 1px, transparent 1px 26px);
+  border-color: rgba(90,200,250,0.5);
+}
+.room__face--ceiling { background: rgba(159,125,242,0.05); border-color: rgba(159,125,242,0.24); }
+.room__face--back    { background: rgba(255,255,255,0.028); }
+.room__face--left,
+.room__face--right   { background: rgba(255,255,255,0.020); }
+
+/* Units sitting on the floor */
+.room__units {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.unit-mark {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  margin: -6.5px 0 0 -6.5px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #FFFFFF, var(--c-air));
+  box-shadow:
+    0 0 14px 3px rgba(90,200,250,0.65),
+    0 0 3px 0 rgba(255,255,255,0.9);
+  transform-style: preserve-3d;
+  animation: unit-in 0.5s var(--ease-out) backwards;
+}
+@keyframes unit-in {
+  from { opacity: 0; transform: translateZ(26px) scale(0.3); }
+  to   { opacity: 1; transform: translateZ(0)    scale(1);   }
+}
+
+/* Airflow particles */
+.room__flow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+.mote {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.85);
+  box-shadow: 0 0 6px 1px rgba(90,200,250,0.7);
+  animation: mote-rise linear infinite;
+}
+@keyframes mote-rise {
+  0%   { opacity: 0; transform: translate3d(0, 0, 0); }
+  12%  { opacity: 0.9; }
+  88%  { opacity: 0.9; }
+  100% { opacity: 0; transform: translate3d(0, var(--rise, -90px), 0); }
+}
+
+.stage__caption {
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-ink-faint);
+  opacity: 0.55;
+  transition: opacity 0.4s var(--ease);
+}
+.stage:hover .stage__caption { opacity: 0.9; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ANSWER
+   ══════════════════════════════════════════════════════════════════════════ */
+.answer {
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+.answer__label {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 590;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--c-ink-faint);
+}
+
+.answer__value {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.answer__number {
+  font-family: var(--f-display);
+  font-size: clamp(56px, 6.4vw, 82px);
+  font-weight: 680;
+  line-height: 0.94;
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(170deg, #FFFFFF 20%, var(--c-air) 130%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+  transition: opacity 0.2s var(--ease), transform 0.2s var(--ease);
+}
+.answer__number.is-swapping {
+  opacity: 0;
+  transform: translateY(-7px);
+}
+
+.answer__suffix {
+  font-family: var(--f-display);
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--c-ink-dim);
+  letter-spacing: -0.01em;
+}
+
+.answer__product {
+  margin: 12px 0 0;
+  font-size: 14px;
+  color: var(--c-ink-dim);
+}
+.answer__dot { margin: 0 6px; color: var(--c-ink-faint); }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   METRICS
+   ══════════════════════════════════════════════════════════════════════════ */
+.metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  margin: 26px 0 0;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.metric {
+  padding: 15px 16px;
+  background: rgba(10,12,18,0.35);
+}
+.metric--accent { background: rgba(90,200,250,0.07); }
+
+.metric__key {
+  margin: 0 0 5px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--c-ink-faint);
+}
+
+.metric__val {
+  margin: 0;
+  font-family: var(--f-display);
+  font-size: 19px;
+  font-weight: 590;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.015em;
+  color: var(--c-ink);
+}
+.metric__val i {
+  font-style: normal;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--c-ink-faint);
+  margin-left: 2px;
+}
+.metric--accent .metric__val { color: var(--c-air); }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   COVERAGE
+   ══════════════════════════════════════════════════════════════════════════ */
+.coverage { margin-top: 20px; }
+
+.coverage__track {
+  position: relative;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  overflow: hidden;
+}
+
+.coverage__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--c-air-deep), var(--c-air), var(--c-mint));
+  transition: width 0.7s var(--ease-out);
+}
+
+.coverage__need {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 2px;
+  background: rgba(255,255,255,0.85);
+  border-radius: 2px;
+  z-index: 2;
+  transition: left 0.7s var(--ease-out);
+}
+
+.coverage__note {
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: var(--c-ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   CTA
+   ══════════════════════════════════════════════════════════════════════════ */
+.mrh-calc__cta { margin-top: auto; padding-top: 26px; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 22px;
+  border-radius: 999px;
+  background: #FFFFFF;
+  color: #0A0B0F;
+  font-size: 14px;
+  font-weight: 590;
+  letter-spacing: -0.008em;
+  text-decoration: none;
+  transition: transform 0.28s var(--ease), box-shadow 0.28s var(--ease);
+  box-shadow: 0 4px 18px -6px rgba(255,255,255,0.35);
+}
+.btn:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 0 10px 30px -8px rgba(255,255,255,0.45);
+}
+.btn svg { transition: transform 0.28s var(--ease); }
+.btn:hover svg { transform: translateX(3px); }
+.btn:focus-visible { outline: 2px solid var(--c-air); outline-offset: 3px; }
+
+.mrh-calc__disclaimer {
+  margin: 16px 0 0;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--c-ink-faint);
+  max-width: 44ch;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .mrh-calc__grid-layout { grid-template-columns: 1fr; }
+  .field--last { margin-top: 0; }
+}
+
+@media (max-width: 560px) {
+  .mrh-calc { padding-left: 16px; padding-right: 16px; }
+  .mrh-calc__panel { padding: 24px 20px; }
+  .segmented--quad { grid-template-columns: repeat(2, 1fr); }
+  .segmented--quad .segmented__thumb { display: none; }
+  .segmented--quad .segmented__opt.is-active {
+    background: rgba(255,255,255,0.10);
+    border-radius: 10px;
+  }
+  .metrics { grid-template-columns: 1fr; }
+  .stage { height: 210px; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ══════════════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .mrh-calc *,
+  .mrh-calc *::before,
+  .mrh-calc *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .mote { display: none; }
+}
+</style>
+
+
+<script>
+(function () {
+  "use strict";
+
+  /* ════════════════════════════════════════════════════════════════════════
+     CONFIG — every number the calculator depends on. Source: Unit_Calculation_Sheet.xlsx
+     ════════════════════════════════════════════════════════════════════════ */
+  const CONFIG = {
+    ACH: 5,                       // Recommended air changes per hour (sheet: B6)
+    CFM_TABLE: {                  // Airflow per unit, in CFM, by product × mode
+      AirFINEry: { Low: 1810, Medium: 2475, High: 2980, Turbo: 3600 },
+      PureAir:   { Low:  706, Medium: 1059, High: 1667, Turbo: 2000 }
+    },
+    LIMITS: {
+      length: { min: 10, max: 500 },
+      width:  { min: 10, max: 500 },
+      height: { min:  6, max:  60 }
+    },
+    MAX_UNIT_MARKS: 24            // Cap on drawn markers (the number is still exact)
+  };
+
+  /* ── State ───────────────────────────────────────────────────────────── */
+  const state = {
+    product: "AirFINEry",
+    mode:    "Low",
+    length:  100,
+    width:   50,
+    height:  10
+  };
+
+  const root = document.getElementById("unit-calculator");
+  if (!root) return;
+
+  const $  = (sel) => root.querySelector(sel);
+  const $$ = (sel) => Array.from(root.querySelectorAll(sel));
+
+  const out = {
+    volume:      $('[data-out="volume"]'),
+    units:       $('[data-out="units"]'),
+    unitsWord:   $('[data-out="unitsWord"]'),
+    required:    $('[data-out="required"]'),
+    unitCfm:     $('[data-out="unitCfm"]'),
+    unitCfmChip: $('[data-out="unitCfmChip"]'),
+    delivered:   $('[data-out="delivered"]'),
+    headroom:    $('[data-out="headroom"]'),
+    productLabel:$('[data-out="productLabel"]'),
+    modeLabel:   $('[data-out="modeLabel"]')
+  };
+
+  const roomEl     = $("[data-room]");
+  const unitsLayer = $("[data-units-layer]");
+  const flowLayer  = $("[data-flow]");
+  const covFill    = $("[data-coverage-fill]");
+  const covNeed    = $("[data-coverage-need]");
+
+  const nf = new Intl.NumberFormat("en-US");
+
+  /* ════════════════════════════════════════════════════════════════════════
+     THE MATH  (mirrors the spreadsheet, one-for-one)
+     ════════════════════════════════════════════════════════════════════════ */
+  function compute(s) {
+    const volume      = s.length * s.width * s.height;          // ft³
+    const requiredCFM = (volume * CONFIG.ACH) / 60;             // CFM
+    const unitCFM     = CONFIG.CFM_TABLE[s.product][s.mode];    // CFM
+    const units       = Math.max(1, Math.ceil(requiredCFM / unitCFM));
+    const delivered   = units * unitCFM;                        // CFM
+    const headroom    = requiredCFM > 0
+      ? ((delivered - requiredCFM) / requiredCFM) * 100
+      : 0;
+    return { volume, requiredCFM, unitCFM, units, delivered, headroom };
+  }
+
+  /* ── Odometer-ish number swap on the headline figure ─────────────────── */
+  let lastUnits = null;
+  function setUnits(n) {
+    if (n === lastUnits) return;
+    lastUnits = n;
+    out.units.classList.add("is-swapping");
+    setTimeout(() => {
+      out.units.textContent = n;
+      out.unitsWord.textContent = n === 1 ? "unit" : "units";
+      out.units.classList.remove("is-swapping");
+    }, 130);
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+     RENDER
+     ════════════════════════════════════════════════════════════════════════ */
+  function render() {
+    const r = compute(state);
+
+    out.volume.textContent      = nf.format(r.volume);
+    out.required.textContent    = nf.format(Math.round(r.requiredCFM));
+    out.unitCfm.textContent     = nf.format(r.unitCFM);
+    out.unitCfmChip.textContent = nf.format(r.unitCFM) + " CFM / unit";
+    out.delivered.textContent   = nf.format(r.delivered);
+    out.headroom.textContent    = Math.round(r.headroom);
+    out.productLabel.textContent= state.product;
+    out.modeLabel.textContent   = state.mode;
+    setUnits(r.units);
+
+    // Coverage: required marker vs delivered fill, scaled to the larger of the two
+    const ceiling = Math.max(r.delivered, r.requiredCFM) * 1.06;
+    covFill.style.width = ((r.delivered / ceiling) * 100).toFixed(2) + "%";
+    covNeed.style.left  = ((r.requiredCFM / ceiling) * 100).toFixed(2) + "%";
+
+    drawRoom(r);
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+     ROOM — six faces, scaled to the real proportions
+     ════════════════════════════════════════════════════════════════════════ */
+  const rot = { x: -18, y: -32 };
+
+  function drawRoom(r) {
+    const { length: L, width: W, height: H } = state;
+
+    // Normalise so the largest dimension reads at a fixed on-screen size
+    const SCREEN_MAX = window.innerWidth < 560 ? 150 : 190;
+    const scale = SCREEN_MAX / Math.max(L, W, H);
+
+    const w = Math.max(26, L * scale);   // x — length
+    const d = Math.max(26, W * scale);   // z — width
+    const h = Math.max(16, H * scale);   // y — height
+
+    const face = (cls) => roomEl.querySelector(".room__face--" + cls);
+
+    // floor / ceiling: w × d, lying flat
+    setFace(face("floor"),   w, d, `rotateX(90deg) translateZ(${-h / 2}px)`);
+    setFace(face("ceiling"), w, d, `rotateX(90deg) translateZ(${ h / 2}px)`);
+    // back wall: w × h
+    setFace(face("back"),    w, h, `translateZ(${-d / 2}px)`);
+    // side walls: d × h
+    setFace(face("left"),    d, h, `rotateY(90deg) translateZ(${-w / 2}px)`);
+    setFace(face("right"),   d, h, `rotateY(90deg) translateZ(${ w / 2}px)`);
+
+    roomEl.style.transform = `rotateX(${rot.x}deg) rotateY(${rot.y}deg)`;
+
+    drawUnits(r.units, w, d, h);
+    drawFlow(h);
+  }
+
+  function setFace(el, fw, fh, transform) {
+    if (!el) return;
+    el.style.width  = fw + "px";
+    el.style.height = fh + "px";
+    el.style.marginLeft = (-fw / 2) + "px";
+    el.style.marginTop  = (-fh / 2) + "px";
+    el.style.transform  = transform;
+  }
+
+  /* Units laid out on the floor in as square a grid as the count allows */
+  function drawUnits(count, w, d, h) {
+    const shown = Math.min(count, CONFIG.MAX_UNIT_MARKS);
+    unitsLayer.innerHTML = "";
+    unitsLayer.style.transform = `rotateX(90deg) translateZ(${-h / 2 + 3}px)`;
+
+    const cols = Math.ceil(Math.sqrt(shown * (w / d)));
+    const rows = Math.ceil(shown / cols);
+
+    for (let i = 0; i < shown; i++) {
+      const c = i % cols;
+      const rw = Math.floor(i / cols);
+      const x = ((c + 0.5) / cols - 0.5) * w * 0.82;
+      const y = ((rw + 0.5) / rows - 0.5) * d * 0.82;
+
+      const mark = document.createElement("span");
+      mark.className = "unit-mark";
+      mark.style.left = x + "px";
+      mark.style.top  = y + "px";
+      mark.style.animationDelay = (i * 32) + "ms";
+      unitsLayer.appendChild(mark);
+    }
+  }
+
+  /* Ambient motes rising through the volume */
+  let flowDrawn = false;
+  function drawFlow(h) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (flowDrawn) {
+      flowLayer.querySelectorAll(".mote").forEach((m) => {
+        m.style.setProperty("--rise", (-h * 0.9) + "px");
+      });
+      return;
+    }
+    for (let i = 0; i < 14; i++) {
+      const m = document.createElement("span");
+      m.className = "mote";
+      m.style.left = (Math.random() * 150 - 75) + "px";
+      m.style.top  = (h / 2) + "px";
+      m.style.setProperty("--rise", (-h * 0.9) + "px");
+      m.style.animationDuration = (3.4 + Math.random() * 3.4) + "s";
+      m.style.animationDelay    = (Math.random() * 4) + "s";
+      m.style.transform = `translateZ(${Math.random() * 120 - 60}px)`;
+      flowLayer.appendChild(m);
+    }
+    flowDrawn = true;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+     SEGMENTED CONTROLS
+     ════════════════════════════════════════════════════════════════════════ */
+  $$("[data-segmented]").forEach((group) => {
+    const key   = group.dataset.segmented;   // "product" | "mode"
+    const thumb = group.querySelector(".segmented__thumb");
+    const opts  = Array.from(group.querySelectorAll(".segmented__opt"));
+
+    function moveThumb() {
+      const active = group.querySelector(".is-active");
+      if (!active || !thumb) return;
+      thumb.style.width     = active.offsetWidth + "px";
+      thumb.style.transform = `translateX(${active.offsetLeft - 3}px)`;
+    }
+
+    function select(btn) {
+      opts.forEach((o) => {
+        const on = o === btn;
+        o.classList.toggle("is-active", on);
+        o.setAttribute("aria-checked", String(on));
+      });
+      state[key] = btn.dataset.value;
+      moveThumb();
+      render();
+    }
+
+    opts.forEach((btn) => {
+      btn.addEventListener("click", () => select(btn));
+      btn.addEventListener("keydown", (e) => {
+        const i = opts.indexOf(btn);
+        if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+          e.preventDefault();
+          const next = opts[(i + 1) % opts.length];
+          next.focus(); select(next);
+        }
+        if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+          e.preventDefault();
+          const prev = opts[(i - 1 + opts.length) % opts.length];
+          prev.focus(); select(prev);
+        }
+      });
+    });
+
+    // Position the thumb once fonts have settled, and on resize
+    requestAnimationFrame(moveThumb);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(moveThumb);
+    window.addEventListener("resize", moveThumb);
+    group._moveThumb = moveThumb;
+  });
+
+  /* ════════════════════════════════════════════════════════════════════════
+     DIMENSION INPUTS  (number ⇄ slider, kept in lockstep)
+     ════════════════════════════════════════════════════════════════════════ */
+  $$(".dim").forEach((dim) => {
+    const key    = dim.dataset.dim;                  // length | width | height
+    const num    = dim.querySelector(".dim__input");
+    const slider = dim.querySelector(".slider");
+    const hint   = dim.querySelector(".dim__hint");
+    const { min, max } = CONFIG.LIMITS[key];
+
+    function paintSlider() {
+      const pct = ((slider.value - min) / (max - min)) * 100;
+      slider.style.setProperty("--fill", pct + "%");
+    }
+
+    // Slider drives the number
+    slider.addEventListener("input", () => {
+      state[key]  = Number(slider.value);
+      num.value   = slider.value;
+      dim.classList.remove("is-invalid");
+      hint.hidden = true;
+      paintSlider();
+      render();
+    });
+
+    // Typing drives the slider — validate, but don't fight the user mid-keystroke
+    num.addEventListener("input", () => {
+      const v = Number(num.value);
+      if (num.value === "" || Number.isNaN(v) || v < min || v > max) {
+        dim.classList.add("is-invalid");
+        hint.hidden = false;
+        return;
+      }
+      dim.classList.remove("is-invalid");
+      hint.hidden  = true;
+      state[key]   = v;
+      slider.value = v;
+      paintSlider();
+      render();
+    });
+
+    // Snap back to a legal value once they leave the field
+    num.addEventListener("blur", () => {
+      let v = Number(num.value);
+      if (num.value === "" || Number.isNaN(v)) v = state[key];
+      v = Math.min(max, Math.max(min, Math.round(v)));
+      num.value    = v;
+      slider.value = v;
+      state[key]   = v;
+      dim.classList.remove("is-invalid");
+      hint.hidden  = true;
+      paintSlider();
+      render();
+    });
+
+    paintSlider();
+  });
+
+  /* ════════════════════════════════════════════════════════════════════════
+     DRAG TO ROTATE THE ROOM
+     ════════════════════════════════════════════════════════════════════════ */
+  (function enableDrag() {
+    const stage = $("[data-stage]");
+    let dragging = false, sx = 0, sy = 0, rx = rot.x, ry = rot.y;
+
+    const down = (e) => {
+      dragging = true;
+      roomEl.classList.add("is-dragging");
+      const p = e.touches ? e.touches[0] : e;
+      sx = p.clientX; sy = p.clientY;
+      rx = rot.x; ry = rot.y;
+    };
+
+    const move = (e) => {
+      if (!dragging) return;
+      const p = e.touches ? e.touches[0] : e;
+      rot.y = ry + (p.clientX - sx) * 0.42;
+      rot.x = Math.max(-72, Math.min(28, rx - (p.clientY - sy) * 0.32));
+      roomEl.style.transform = `rotateX(${rot.x}deg) rotateY(${rot.y}deg)`;
+    };
+
+    const up = () => {
+      dragging = false;
+      roomEl.classList.remove("is-dragging");
+    };
+
+    stage.addEventListener("mousedown", down);
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mouseup", up);
+    stage.addEventListener("touchstart", down, { passive: true });
+    window.addEventListener("touchmove", move, { passive: true });
+    window.addEventListener("touchend", up);
+  })();
+
+  /* ── Redraw the room on resize (scale is viewport-dependent) ─────────── */
+  let rt;
+  window.addEventListener("resize", () => {
+    clearTimeout(rt);
+    rt = setTimeout(render, 120);
+  });
+
+  /* ── Go ──────────────────────────────────────────────────────────────── */
+  render();
+})();
+</script>

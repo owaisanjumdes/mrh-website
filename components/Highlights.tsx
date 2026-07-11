@@ -151,7 +151,7 @@ const SLIDES: Slide[] = [
     twoLine: true,
   },
   {
-    lead: "14 stages of filtration.",
+    lead: "Multi-stage filtration.",
     rest: "Captures up to 99.97% of particles, down to 0.3 microns.",
     video: "/filtervid.mp4",
     videoPos: "center 12%",
