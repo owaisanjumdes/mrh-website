@@ -26,43 +26,42 @@ const CARDS: Card[] = [
     tag: "Legacy",
     year: "Since 1941",
     title: "MANN+HUMMEL legacy",
-    type: "stats",
+    img: "/mh2.png",
   },
   {
     tag: "Agreement",
     year: "Symposium",
     title: "A perpetual exclusive manufacturing and distribution license agreement",
     copy: "MRH and MANN+HUMMEL formalise a partnership built to last, signed at the Air Pollution Symposium.",
+    img: "/mht.jpeg",
   },
   {
     tag: "Manufacturing",
     year: "India",
     title: "Aligned with Make in India",
     copy: "German filtration technology, manufactured on Indian soil, for Indian air.",
+    img: "/mh5.png",
   },
   {
     tag: "Validation",
     year: "Automotive",
     title: "Proven with leading OEMs",
     copy: "The same filtration trusted by the world's leading automotive manufacturers.",
+    img: "/mhs2.jpeg",
   },
   {
     tag: "Partnership",
     year: "MRH",
     title: "Strategic partnership with MRH",
     copy: "Two engineering teams, one standard, bringing clean air technology to market across India.",
+    img: "/mhx.jpeg",
   },
   {
     tag: "Symposium",
     year: "New Delhi",
     title: "Symposium on Air Pollution",
     copy: "Shri Tarun Kapoor, Advisor to the Prime Minister's Office, on India's clean air imperative.",
-  },
-  {
-    tag: "Film",
-    year: "02:14",
-    title: "85+ years of global filtration leadership",
-    copy: "Watch how a MANN+HUMMEL filter is made.",
+    img: "/mh4.jpeg",
   },
 ];
 
@@ -227,6 +226,9 @@ export default function MannHummelSlider() {
           color: rgba(255, 255, 255, 0.74);
           max-width: 32ch;
         }
+        /* Image cards with no body copy: a taller image fills the space so the
+           bottom-anchored text keeps a balanced gap (matching the copy cards). */
+        .mh-top-img--tall { height: 64%; }
 
         /* ---- Stats / live-counter card (card 2) — boxless, hairline-only ---- */
         .mh-stats {
@@ -321,7 +323,7 @@ export default function MannHummelSlider() {
         className="mh-rail"
         ref={railRef}
         tabIndex={0}
-        aria-label="MANN+HUMMEL brand story, 8 slides"
+        aria-label={`MANN+HUMMEL brand story, ${CARDS.length} slides`}
         onKeyDown={(e) => {
           if (e.key === "ArrowRight") {
             e.preventDefault();
@@ -381,7 +383,11 @@ export default function MannHummelSlider() {
             <article className="mh-card" key={i}>
               <div className="mh-ph" aria-hidden />
               {c.img ? (
-                <img className="mh-top-img" src={c.img} alt={c.title} />
+                <img
+                  className={`mh-top-img${c.copy ? "" : " mh-top-img--tall"}`}
+                  src={c.img}
+                  alt={c.title}
+                />
               ) : null}
               <div className="mh-scrim" aria-hidden />
               <div className="mh-body">
