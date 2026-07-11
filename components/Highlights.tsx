@@ -194,6 +194,21 @@ export default function Highlights() {
   const n = SLIDES.length;
 
   const next = () => setActive((i) => (i + 1) % n);
+  const prev = () => setActive((i) => (i - 1 + n) % n);
+
+  // Touch swipe (mobile): swipe left → next, swipe right → previous.
+  const touchX = useRef<number | null>(null);
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchX.current = e.touches[0].clientX;
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchX.current == null) return;
+    const dx = e.changedTouches[0].clientX - touchX.current;
+    touchX.current = null;
+    if (Math.abs(dx) < 40) return;
+    if (dx < 0) next();
+    else prev();
+  };
 
   const { ref, inView } = useInView<HTMLElement>();
 
@@ -495,7 +510,13 @@ export default function Highlights() {
         </a>
       </div>
 
-      <div className="hl-viewport" data-reveal style={{ ["--ri" as string]: 1 }}>
+      <div
+        className="hl-viewport"
+        data-reveal
+        style={{ ["--ri" as string]: 1 }}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
         <div className="hl-track" style={{ ["--active" as string]: active }}>
           {SLIDES.map((s, i) => (
             <article className="hl-card" key={i}>

@@ -34,6 +34,20 @@ export default function WhereItWorks({ light = false }: { light?: boolean } = {}
   const goPrev = () => setActiveIdx((i) => (i - 1 + SLIDES.length) % SLIDES.length);
   const goNext = () => setActiveIdx((i) => (i + 1) % SLIDES.length);
 
+  // Touch swipe (mobile): swipe left → next, swipe right → previous.
+  const touchX = useRef<number | null>(null);
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchX.current = e.touches[0].clientX;
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchX.current == null) return;
+    const dx = e.changedTouches[0].clientX - touchX.current;
+    touchX.current = null;
+    if (Math.abs(dx) < 40) return;
+    if (dx < 0) goNext();
+    else goPrev();
+  };
+
   // Detect when the section is on screen — drives the auto-advance loop.
   useEffect(() => {
     const el = sectionRef.current;
@@ -154,7 +168,11 @@ export default function WhereItWorks({ light = false }: { light?: boolean } = {}
         }}
       >
         {/* Carousel viewport */}
-        <div style={{ overflow: "hidden", width: "100%" }}>
+        <div
+          style={{ overflow: "hidden", width: "100%", touchAction: "pan-y" }}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+        >
           <div
             style={{
               display: "flex",

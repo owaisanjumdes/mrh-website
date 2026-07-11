@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { PlusIcon, Flag, Globe, Award, GraduationCap } from "lucide-react";
+import { PlusIcon } from "lucide-react";
 import ConnectedIntelligenceCarousel from "@/components/ConnectedIntelligenceCarousel";
+import MannHummelSlider from "@/components/MannHummelSlider";
 import SolutionsBanner from "@/components/SolutionsBanner";
 import ImpactDevices from "@/components/ImpactDevices";
 import ProofDashboard from "@/components/ProofDashboard";
@@ -535,7 +536,7 @@ export default function Environment() {
         <div className="env-products">
           <div className="env-prod" data-reveal style={{ ["--ri" as string]: 0 }}>
             <div className="env-prod-card env-prod-card--shop">
-              <img loading="lazy" className="env-prod-img" src="/spa.jpg" alt="PureAir" />
+              <img loading="lazy" className="env-prod-img" src="/pastand.jpeg" alt="PureAir" />
               <div className="env-prod-overlay" aria-hidden>
                 <p>
                   <span className="ov-solution">Solution</span>{" "}
@@ -549,7 +550,7 @@ export default function Environment() {
           </div>
           <div className="env-prod" data-reveal style={{ ["--ri" as string]: 1 }}>
             <div className="env-prod-card env-prod-card--shop">
-              <img loading="lazy" className="env-prod-img" src="/afd.webp" alt="AirFINEry" />
+              <img loading="lazy" className="env-prod-img" src="/afstand.jpeg" alt="AirFINEry" />
               <div className="env-prod-overlay" aria-hidden>
                 <p>
                   <span className="ov-solution">Solution</span>{" "}
@@ -617,62 +618,8 @@ export default function Environment() {
             80 years of German filtration<br />now made in India.
           </h2>
           <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>The world&rsquo;s filtration benchmark, built for Indian air.</p>
-          <div className="env-stats-row">
-            <div className="env-stats-media" data-reveal><img loading="lazy" className="env-stats-img" src="/mhh.jpg" alt="" /></div>
-            <svg width="0" height="0" aria-hidden style={{ position: "absolute" }}>
-              <defs>
-                <linearGradient id="sb-grad" gradientUnits="userSpaceOnUse" x1="12" y1="0" x2="12" y2="24">
-                  <stop offset="0%" stopColor="#6cb8ff" />
-                  <stop offset="100%" stopColor="#0a84ff" />
-                </linearGradient>
-              </defs>
-            </svg>
-            <div className="env-ub">
-              <div className="env-ub-col">
-                <article className="env-ub-card env-ub-tall" data-reveal style={{ ["--ri" as string]: 0 }}>
-                  <img loading="lazy" className="env-ub-photo" src="/h1.jpg" alt="" aria-hidden />
-                  <div className="env-ub-blur" aria-hidden />
-                  <div className="env-ub-scrim" aria-hidden />
-                  <div className="env-ub-inner">
-                    <Flag className="env-ub-ic" strokeWidth={1.8} aria-hidden />
-                    <div className="env-ub-text">
-                      <p className="env-ub-num"><Counter to={1941} group={false} /></p>
-                      <p className="env-ub-label">Founded</p>
-                    </div>
-                  </div>
-                </article>
-                <article className="env-ub-card env-ub-short" data-reveal style={{ background: "#20CA9D", ["--ri" as string]: 1 }}>
-                  <Globe className="env-ub-ic" strokeWidth={1.8} aria-hidden />
-                  <div className="env-ub-text">
-                    <p className="env-ub-num"><Counter to={80} suffix="+" /></p>
-                    <p className="env-ub-label">Countries</p>
-                  </div>
-                </article>
-              </div>
-              <div className="env-ub-col">
-                <article className="env-ub-card env-ub-short" data-reveal style={{ background: "#0C6553", ["--ri" as string]: 2 }}>
-                  <Award className="env-ub-ic" strokeWidth={1.8} aria-hidden />
-                  <div className="env-ub-text">
-                    <p className="env-ub-num"><Counter to={4700} suffix="+" /></p>
-                    <p className="env-ub-label">Patents</p>
-                  </div>
-                </article>
-                <article className="env-ub-card env-ub-tall" data-reveal style={{ ["--ri" as string]: 3 }}>
-                  <img loading="lazy" className="env-ub-photo" src="/h2.jpg" alt="" aria-hidden />
-                  <div className="env-ub-blur" aria-hidden />
-                  <div className="env-ub-scrim" aria-hidden />
-                  <div className="env-ub-inner">
-                    <GraduationCap className="env-ub-ic" strokeWidth={1.8} aria-hidden />
-                    <div className="env-ub-text">
-                      <p className="env-ub-num"><Counter to={60} suffix="+" /></p>
-                      <p className="env-ub-label">University partnerships</p>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </div>
-          </div>
         </div>
+        <MannHummelSlider />
       </section>
 
       {/* 3b — VIDEO */}
@@ -796,8 +743,6 @@ export default function Environment() {
         </div>
       </section>
 
-      {/* 6e — TESTIMONIALS */}
-      <Testimonials />
 
       {/* 7 — ASSESSMENT CTA CARD (from Proof page) */}
       <ImpactDevices
@@ -859,12 +804,27 @@ function HeroBanners() {
 
   const advance = () => setActive((i) => (i + 1) % n);
 
+  // Touch swipe (mobile): swipe left → next banner, swipe right → previous.
+  const touchX = useRef<number | null>(null);
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchX.current = e.touches[0].clientX;
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchX.current == null) return;
+    const dx = e.changedTouches[0].clientX - touchX.current;
+    touchX.current = null;
+    if (Math.abs(dx) < 40) return;
+    setActive((i) => (dx < 0 ? (i + 1) % n : (i - 1 + n) % n));
+  };
+
   return (
     <header
       className="env-hero"
       ref={rootRef}
       aria-roledescription="carousel"
       aria-label="Hero banners"
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
     >
       <div className="env-hero-track">
         {BANNERS.map((b, i) => (
@@ -956,68 +916,6 @@ function Reports() {
 
       <div data-reveal style={{ ["--ri" as string]: 3, marginTop: "clamp(36px, 4vw, 60px)" }}>
         <ConnectedIntelligenceCarousel />
-      </div>
-    </section>
-  );
-}
-
-const REVIEWS = [
-  { quote: "Our classrooms used to smell of the road outside. Now the AQI board stays green all day, and the parents notice.", name: "Anjali Mehta", role: "Principal, Delhi Public School" },
-  { quote: "One unit covers our whole floor. We replaced three old purifiers with a single PureAir, and the readings are better.", name: "Rohan Kapoor", role: "Facilities Head, Corporate Office" },
-  { quote: "Reliable in the harshest conditions. The team deployed fast and the units have run without a hitch.", name: "Col. Vikram Singh", role: "Indian Army" },
-  { quote: "Guests comment on how fresh the lobby feels. AirFINEry handles our open atrium that nothing else could.", name: "Priya Nair", role: "General Manager, The Grand Hotel" },
-  { quote: "In our wards, clean air is not optional. The independent IIT data is what convinced our board.", name: "Dr. Sameer Rao", role: "Administrator, City Hospital" },
-  { quote: "The app flags filter health before we ever think about it. Service just happens. We never chase it.", name: "Neha Gupta", role: "Operations Manager, WorkHub" },
-  { quote: "We deployed across six campuses. One dashboard, every reading in one place. It made the rollout simple.", name: "Arjun Desai", role: "Trustee, Vidya Schools" },
-  { quote: "Quiet, efficient, and it actually works. The PM2.5 numbers dropped within the first hour.", name: "Meera Iyer", role: "Office Admin, Lumen Labs" },
-];
-
-function initials(name: string) {
-  return name
-    .split(" ")
-    .filter((w) => /[a-z]/i.test(w))
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join("")
-    .toUpperCase();
-}
-
-function Testimonials() {
-  const ref = useRef<HTMLDivElement>(null);
-  const scroll = (dir: number) => {
-    const el = ref.current;
-    if (el) el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: "smooth" });
-  };
-  return (
-    <section className="env-section">
-      <div className="env-wrap">
-        <p className="env-eyebrow" data-reveal>In Their Words</p>
-        <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>The people breathing it, on the difference.</h2>
-        <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>Real results, from the teams who deployed MRH.</p>
-      </div>
-
-      <div className="env-tm-track" ref={ref}>
-        {REVIEWS.map((r, i) => (
-          <article className="env-tm-card" key={i} data-reveal style={{ ["--ri" as string]: i }}>
-            <p className="env-tm-quote">{r.quote}</p>
-            <div className="env-tm-author">
-              <span className="env-tm-avatar">{initials(r.name)}</span>
-              <span className="env-tm-meta">
-                <span className="env-tm-name">{r.name}</span>
-                <span className="env-tm-role">{r.role}</span>
-              </span>
-            </div>
-          </article>
-        ))}
-      </div>
-
-      <div className="env-tm-nav">
-        <button type="button" className="env-arrow" aria-label="Previous" onClick={() => scroll(-1)}>
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M15 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-        </button>
-        <button type="button" className="env-arrow" aria-label="Next" onClick={() => scroll(1)}>
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-        </button>
       </div>
     </section>
   );

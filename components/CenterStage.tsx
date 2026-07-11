@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import { useInView } from "@/lib/useInView";
 
 // "18MP Center Stage front camera." — Figma node 707:4137.
@@ -65,6 +65,21 @@ export default function CenterStage({
 } = {}) {
   const [active, setActive] = useState(0);
   const { ref, inView } = useInView<HTMLElement>();
+
+  // Touch swipe (mobile): swipe the phone screen to move between the tabs.
+  const touchX = useRef<number | null>(null);
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchX.current = e.touches[0].clientX;
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchX.current == null) return;
+    const dx = e.changedTouches[0].clientX - touchX.current;
+    touchX.current = null;
+    if (Math.abs(dx) < 40) return;
+    setActive((i) =>
+      dx < 0 ? (i + 1) % TABS.length : (i - 1 + TABS.length) % TABS.length
+    );
+  };
 
   return (
     <section
@@ -274,7 +289,13 @@ export default function CenterStage({
         )}
       </p>
 
-      <div className="cs-phone" data-reveal style={{ ["--ri" as string]: 2 }}>
+      <div
+        className="cs-phone"
+        data-reveal
+        style={{ ["--ri" as string]: 2 }}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
         <div className="cs-screen">
           <img loading="lazy" key={active} src={TABS[active].screen} alt={`${TABS[active].l1} ${TABS[active].l2}`} />
         </div>

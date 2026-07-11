@@ -56,7 +56,7 @@ export default function ConnectedIntelligenceCarousel() {
         if (e.isIntersecting) sw.autoplay.start();
         else sw.autoplay.stop();
       },
-      { threshold: 0.35 }
+      { threshold: 0.15 }
     );
     io.observe(el);
     return () => io.disconnect();
@@ -120,7 +120,7 @@ export default function ConnectedIntelligenceCarousel() {
         rewind
         speed={800}
         spaceBetween={40}
-        autoplay={{ delay: 3500, disableOnInteraction: true }}
+        autoplay={{ delay: 3500, disableOnInteraction: false }}
         pagination={{ clickable: true }}
         className="ci-swiper"
       >
