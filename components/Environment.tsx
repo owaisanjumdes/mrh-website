@@ -619,7 +619,6 @@ export default function Environment() {
       {/* 3 — STATS */}
       <section className="env-section" style={{ background: "#ffffff" }}>
         <div className="env-wrap">
-          <p className="env-eyebrow" data-reveal>Powered By MANN+HUMMEL</p>
           <h2 className="env-h2 env-h2--nowrap" data-reveal style={{ ["--ri" as string]: 1 }}>
             80 years of German filtration<br />now made in India.
           </h2>
