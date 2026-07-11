@@ -110,8 +110,6 @@ export default function SolutionsBanner() {
           mousewheel={{ forceToAxis: false, releaseOnEdges: true }}
           grabCursor
           slidesPerView="auto"
-          centeredSlides
-          centeredSlidesBounds
           slidesOffsetBefore={24}
           slidesOffsetAfter={24}
           speed={650}
