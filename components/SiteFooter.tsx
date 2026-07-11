@@ -142,7 +142,13 @@ export default function SiteFooter({ light = false }: { light?: boolean } = {}) 
           line-height: 1;
           white-space: nowrap;
           color: var(--ft-fg);
+          display: flex;
+          align-items: center;
+          gap: 0.3em;
         }
+        /* MANN+HUMMEL mark beside MRH, matching the wordmark's color per theme */
+        .ft-wordmark-mh { height: 0.74em; width: auto; flex: none; filter: brightness(0) invert(1); }
+        .ft--light .ft-wordmark-mh { filter: brightness(0); }
         @media (max-width: 900px) {
           .ft-top { grid-template-columns: 1fr 1fr; gap: clamp(28px, 6vw, 48px); }
           .ft-news { grid-column: 1 / -1; }
@@ -236,7 +242,10 @@ export default function SiteFooter({ light = false }: { light?: boolean } = {}) 
           </div>
         </div>
 
-        <p className="ft-wordmark">MRH by OK Play®</p>
+        <p className="ft-wordmark">
+          MRH
+          <img loading="lazy" className="ft-wordmark-mh" src="/mhlogo.svg" alt="MANN+HUMMEL" />
+        </p>
       </div>
     </footer>
   );

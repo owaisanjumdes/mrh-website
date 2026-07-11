@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { PlusIcon, Flag, Globe, Award, GraduationCap } from "lucide-react";
 import ConnectedIntelligenceCarousel from "@/components/ConnectedIntelligenceCarousel";
+import SolutionsBanner from "@/components/SolutionsBanner";
 import ImpactDevices from "@/components/ImpactDevices";
 import ProofDashboard from "@/components/ProofDashboard";
 import SiteFooter from "@/components/SiteFooter";
@@ -560,6 +561,26 @@ export default function Environment() {
               <a className="env-prod-buy" href="/contact">Buy Now</a>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* 2a — OUR SOLUTIONS intro + banner gallery */}
+      <section className="env-section">
+        <div className="env-wrap">
+          <p className="env-eyebrow" data-reveal>Our Solutions</p>
+          <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1, maxWidth: "none" }}>
+            Discover the world of MRH
+            <br />
+            MANN+HUMMEL filtered air
+            <br />
+            purification solutions
+          </h2>
+          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>
+            Built for indoor, semi-outdoor, and outdoor environments.
+          </p>
+        </div>
+        <div data-reveal style={{ ["--ri" as string]: 3, marginTop: "clamp(32px, 4vw, 56px)" }}>
+          <SolutionsBanner />
         </div>
       </section>
 

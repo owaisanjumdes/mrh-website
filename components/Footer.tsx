@@ -66,7 +66,7 @@ export default function Footer() {
               lineHeight: 1.1,
             }}
           >
-            MRH by OK Play
+            MRH
           </p>
           <p className="text-paper-3 micro-label">&copy; 2026 OK Play India Ltd.</p>
         </div>
