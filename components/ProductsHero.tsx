@@ -61,8 +61,11 @@ export default function ProductsHero({ videoSrc }: { videoSrc?: string } = {}) {
           --ph-nav: clamp(64px, 7vw, 130px);
           position: relative;
           margin-top: calc(-1 * var(--ph-nav));
-          min-height: 100svh;
+          /* Add the nav pull-up back into the height (and bottom padding) so the
+             video always reaches the viewport bottom instead of leaving a gap. */
+          min-height: calc(100svh + var(--ph-nav));
           padding-top: calc(var(--ph-nav) + clamp(28px, 5vh, 64px));
+          padding-bottom: calc(var(--ph-nav) + clamp(40px, 6vh, 80px));
           display: flex;
           align-items: flex-end;
         }

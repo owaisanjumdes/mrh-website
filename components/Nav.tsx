@@ -70,7 +70,7 @@ const LIGHT_HERO_ROUTES = new Set<string>([]);
 const DARK_HERO_ROUTES = new Set<string>(["/about", "/products/pureair"]);
 // Full light-mode pages — the nav is a persistent white bar with dark contents the
 // entire time (it never flips to the black bar).
-const LIGHT_PAGE_ROUTES = new Set<string>(["/", "/validation", "/contact", "/projects"]);
+const LIGHT_PAGE_ROUTES = new Set<string>(["/", "/validation", "/contact", "/projects", "/products/airfinery"]);
 
 export default function Nav() {
   const pathname = usePathname();

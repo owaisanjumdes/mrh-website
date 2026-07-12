@@ -303,16 +303,14 @@ export default function Environment() {
         .env-prod-buy { display: inline-flex; align-items: center; height: 52px; padding: 0 clamp(28px, 3vw, 40px); border-radius: 980px; background: #1d1d1f; color: #ffffff; font-size: clamp(15px, 1.4vw, 17px); font-weight: 600; letter-spacing: -0.01em; text-decoration: none; white-space: nowrap; transition: background 200ms ease; }
         .env-prod-buy:hover { background: #333335; }
 
-        /* ---------- 2b. impact blocks (image + 3 stats) ---------- */
-        .env-im { display: grid; grid-template-columns: 1fr 1fr; align-items: center; background: #ffffff; width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); }
-        .env-im + .env-im { border-top: 0; }
-        .env-im-media { align-self: stretch; min-height: clamp(360px, 44vw, 640px); }
+        /* ---------- 2b. impact blocks (16:9 video, then 3 stats below) ---------- */
+        .env-im { background: #ffffff; width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); padding: clamp(48px, 7vh, 100px) 0; }
+        .env-im-inner { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
+        .env-im-media { aspect-ratio: 16 / 9; border-radius: clamp(16px, 2vw, 24px); overflow: hidden; }
         .env-im-media .env-ph { width: 100%; height: 100%; }
         .env-im-img { display: block; width: 100%; height: 100%; object-fit: cover; }
-        .env-im-text { padding: clamp(48px, 7vh, 100px) clamp(28px, 6vw, 96px); }
-        .env-im-head { margin: 0 0 clamp(22px, 3vw, 38px); font-size: clamp(20px, 1.8vw, 24px); font-weight: 600; color: #1d1d1f; }
-        .env-im-stat { margin-bottom: clamp(22px, 3vw, 38px); }
-        .env-im-stat:last-child { margin-bottom: 0; }
+        .env-im-head { margin: 0 0 clamp(20px, 2.6vw, 34px); font-size: clamp(22px, 2.4vw, 34px); font-weight: 600; letter-spacing: -0.01em; color: #1d1d1f; }
+        .env-im-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 3vw, 56px); margin-top: clamp(28px, 3.4vw, 48px); }
         .env-im-stat-top { display: flex; align-items: flex-end; gap: 12px; }
         .env-im-icon { width: clamp(26px, 2.2vw, 32px); height: clamp(26px, 2.2vw, 32px); color: #1a8f3c; flex: none; align-self: center; }
         .env-im-num { font-size: clamp(28px, 3.4vw, 44px); font-weight: 600; letter-spacing: -0.02em; color: #1d1d1f; line-height: 1; }
@@ -517,8 +515,7 @@ export default function Environment() {
         @media (max-width: 860px) {
           .env-products { grid-template-columns: 1fr; }
           .env-stats3 { grid-template-columns: 1fr; }
-          .env-im { grid-template-columns: 1fr; }
-          .env-im--rev .env-im-media { order: -1; }
+          .env-im-stats { grid-template-columns: 1fr; gap: clamp(20px, 5vw, 32px); }
           .env-ub { grid-template-columns: 1fr; }
           .env-bento { grid-template-columns: 1fr; }
           .env-bento-card { min-height: clamp(320px, 70vw, 460px); }
@@ -598,7 +595,7 @@ export default function Environment() {
       <ImpactBlock
         title="PureAir"
         imgLabel="PureAir image"
-        video="/compa.mp4"
+        video="/CLIP3.mp4"
         stats={[
           { icon: "frame", num: "2,000", unit: "sq ft.", desc: "of area coverage from a single unit, built for large, open indoor spaces." },
           { icon: "filter", num: "99.9%", unit: "", desc: "filter efficiency, capturing fine particles down to 0.3 microns." },
@@ -607,10 +604,9 @@ export default function Environment() {
         cta={{ label: "Explore PureAir", href: "/products/pureair" }}
       />
       <ImpactBlock
-        reverse
         title="AirFINEry"
         imgLabel="AirFINEry image"
-        img="/afp.webp"
+        video="/clip7.mp4"
         stats={[
           { icon: "frame", num: "4,000", unit: "sq ft.", desc: "of area coverage from a single unit, built for the largest open indoor spaces." },
           { icon: "filter", num: "99.9%", unit: "", desc: "filter efficiency, capturing fine particles down to 0.3 microns." },
@@ -1108,7 +1104,6 @@ function ImpactIcon({ kind }: { kind: string }) {
 type ImpactStat = { icon: string; num: string; unit: string; desc: string };
 
 function ImpactBlock({
-  reverse = false,
   title,
   imgLabel,
   img,
@@ -1116,7 +1111,6 @@ function ImpactBlock({
   stats,
   cta,
 }: {
-  reverse?: boolean;
   title: string;
   imgLabel: string;
   img?: string;
@@ -1124,52 +1118,39 @@ function ImpactBlock({
   stats: ImpactStat[];
   cta?: { label: string; href: string };
 }) {
-  const media = (
-    <div className="env-im-media" data-reveal>
-      {video ? (
-        <SectionVideo className="env-im-img" src={video} />
-      ) : img ? (
-        <img loading="lazy" className="env-im-img" src={img} alt="" />
-      ) : (
-        <Slot label={imgLabel} />
-      )}
-    </div>
-  );
-  const text = (
-    <div className="env-im-text">
-      <h3 className="env-im-head" data-reveal>{title}</h3>
-      {stats.map((s, i) => (
-        <div className="env-im-stat" key={i} data-reveal style={{ ["--ri" as string]: i + 1 }}>
-          <div className="env-im-stat-top">
-            <ImpactIcon kind={s.icon} />
-            <span className="env-im-num">{s.num}</span>
-            {s.unit ? <span className="env-im-unit">{s.unit}</span> : null}
-          </div>
-          <p className="env-im-desc">{s.desc}</p>
-        </div>
-      ))}
-      {cta ? (
-        <div className="env-im-cta-wrap">
-          <a className="env-xcta-pill reveal-bubble" href={cta.href} data-reveal>
-            <span>{cta.label}</span>
-          </a>
-        </div>
-      ) : null}
-    </div>
-  );
   return (
-    <section className={`env-im ${reverse ? "env-im--rev" : ""}`}>
-      {reverse ? (
-        <>
-          {text}
-          {media}
-        </>
-      ) : (
-        <>
-          {media}
-          {text}
-        </>
-      )}
+    <section className="env-im">
+      <div className="env-im-inner">
+        <h3 className="env-im-head" data-reveal>{title}</h3>
+        <div className="env-im-media" data-reveal>
+          {video ? (
+            <SectionVideo className="env-im-img" src={video} />
+          ) : img ? (
+            <img loading="lazy" className="env-im-img" src={img} alt="" />
+          ) : (
+            <Slot label={imgLabel} />
+          )}
+        </div>
+        <div className="env-im-stats">
+          {stats.map((s, i) => (
+            <div className="env-im-stat" key={i} data-reveal style={{ ["--ri" as string]: i + 1 }}>
+              <div className="env-im-stat-top">
+                <ImpactIcon kind={s.icon} />
+                <span className="env-im-num">{s.num}</span>
+                {s.unit ? <span className="env-im-unit">{s.unit}</span> : null}
+              </div>
+              <p className="env-im-desc">{s.desc}</p>
+            </div>
+          ))}
+        </div>
+        {cta ? (
+          <div className="env-im-cta-wrap" data-reveal>
+            <a className="env-xcta-pill reveal-bubble" href={cta.href}>
+              <span>{cta.label}</span>
+            </a>
+          </div>
+        ) : null}
+      </div>
     </section>
   );
 }

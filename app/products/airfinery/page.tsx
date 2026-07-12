@@ -1,5 +1,5 @@
-import ProductShowcase from "@/components/ProductShowcase";
+import ComingSoon from "@/components/ComingSoon";
 
 export default function AirFINEryPage() {
-  return <ProductShowcase />;
+  return <ComingSoon />;
 }
