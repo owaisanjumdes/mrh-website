@@ -11,13 +11,12 @@ import "swiper/css/navigation";
 // and no looping — the images move on swipe/drag, the prev/next arrows, or the
 // mouse wheel (wheel control activates only once the carousel fills the viewport).
 const BANNERS = [
-  "/pb1.jpeg",
-  "/pb2.jpeg",
-  "/pb3.jpeg",
-  "/pb4.jpeg",
-  "/pb5.jpeg",
-  "/pb6.jpeg",
-  "/pb7.jpeg",
+  "/np1.jpeg",
+  "/np2.jpeg",
+  "/np3.jpeg",
+  "/np4.jpeg",
+  "/np5.jpeg",
+  "/np6.jpeg",
 ];
 
 export default function SolutionsBanner() {

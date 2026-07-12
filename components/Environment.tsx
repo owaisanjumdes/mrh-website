@@ -637,7 +637,6 @@ export default function Environment() {
       {/* 4 — WHERE MRH WORKS (6-image carousel) */}
       <section className="env-section">
         <div className="env-wrap">
-          <p className="env-eyebrow" data-reveal>Where MRH Works</p>
           <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>From classrooms to courtyards.</h2>
           <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>200+ spaces, and counting.</p>
         </div>
@@ -647,7 +646,6 @@ export default function Environment() {
       {/* 5 — DESIGN (light) */}
       <section className="env-section" style={{ background: "#ffffff" }}>
         <div className="env-wrap">
-          <p className="env-eyebrow" data-reveal>The Technology Inside</p>
           <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>Inside the Advanced Air Purification System</h2>
           <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>Catches the fine particles ordinary purifiers miss.</p>
           <div className="env-design-duo" data-reveal>
@@ -690,7 +688,6 @@ export default function Environment() {
       {/* 6b — SIMULATION (light) */}
       <section className="env-section" style={{ background: "#ffffff" }}>
         <div className="env-wrap">
-          <p className="env-eyebrow" data-reveal>Intelligent Space Planning</p>
           <h2 className="env-h2" data-reveal style={{ maxWidth: "none", ["--ri" as string]: 1 }}>
             The World&rsquo;s Most Advanced Simulation Software
           </h2>
@@ -723,7 +720,6 @@ export default function Environment() {
       {/* 6c — INDEPENDENTLY VALIDATED (4-card bento) */}
       <section className="env-section">
         <div className="env-wrap">
-          <p className="env-eyebrow" data-reveal>Independently Validated</p>
           <h2 className="env-h2" data-reveal style={{ maxWidth: "none", ["--ri" as string]: 1 }}>
             We didn&rsquo;t test it ourselves.
             <br />
@@ -745,7 +741,6 @@ export default function Environment() {
       {/* 6d — LOGO WALL (Trusted across India) */}
       <section className="env-section" style={{ background: "#ffffff" }}>
         <div className="env-wrap">
-          <p className="env-eyebrow" data-reveal>Trusted Across India</p>
           <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>Trusted by the places people share.</h2>
           <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>The names that already run MRH.</p>
           <div className="env-logos">
