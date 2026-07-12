@@ -213,7 +213,7 @@ const BANNERS: { src: string; alt: string }[] = [
   { src: "/ub1.jpeg", alt: "MRH banner 1" },
 ];
 
-const LOGOS = [
+const LOGOS: { name: string; src: string; fill?: boolean }[] = [
   { name: "Delhi Public School", src: "/logos/dps.png" },
   { name: "GD Goenka", src: "/logos/gdgoenka.png" },
   { name: "Birla Estates", src: "/logos/birlaestates.png" },
@@ -222,6 +222,13 @@ const LOGOS = [
   { name: "Forest Essentials", src: "/logos/forestessentials.png" },
   { name: "Unox", src: "/logos/unox.png" },
   { name: "Bal Bharati", src: "/logos/balbharti.png" },
+  { name: "Dharav High School", src: "/images%20(4).png" },
+  { name: "Authum Investment", src: "/images%20(2).jpg", fill: true },
+  { name: "Maxop", src: "/maxoplogofoot.webp" },
+  { name: "Bajaj Alloys", src: "/bf68bc_c1dd072109d143bf8b0e028d90f94d40~mv2.png" },
+  { name: "Sundaram", src: "/sundaram-way.png" },
+  { name: "Indian Army", src: "/Indian_Army_Circular_Insignia.svg.webp", fill: true },
+  { name: "Rukma Café", src: "/300782765_1140619429866290_4061227762187207572_n.jpg", fill: true },
 ];
 
 /* ---------------------------------------------------------------- page ----- */
@@ -295,6 +302,12 @@ export default function Environment() {
         /* Hover text that fades in over the darkened card */
         .env-prod-overlay { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: flex-start; padding: clamp(22px, 3vw, 44px) clamp(22px, 3vw, 44px) clamp(10px, 1.4vw, 20px) clamp(10px, 1.4vw, 20px); text-align: left; opacity: 0; pointer-events: none; transition: opacity 320ms ease; }
         .env-prod-card--shop:hover .env-prod-overlay { opacity: 1; }
+        /* Touch devices (phones) can't hover, so keep the darkened card + text on */
+        @media (hover: none) {
+          .env-prod-card--shop .env-prod-img,
+          .env-prod-card--shop .env-ph { filter: brightness(0.5); }
+          .env-prod-overlay { opacity: 1; }
+        }
         .env-prod-overlay p { margin: 0; color: #ffffff; font-size: clamp(22px, 2.8vw, 42px); line-height: 1.16; letter-spacing: -0.01em; }
         .env-prod-overlay .ov-solution { font-weight: 300; }
         .env-prod-overlay .ov-for { font-weight: 500; font-style: italic; }
@@ -311,9 +324,9 @@ export default function Environment() {
         .env-im-img { display: block; width: 100%; height: 100%; object-fit: cover; }
         .env-im-head { margin: 0 0 clamp(20px, 2.6vw, 34px); font-size: clamp(22px, 2.4vw, 34px); font-weight: 600; letter-spacing: -0.01em; color: #1d1d1f; }
         .env-im-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 3vw, 56px); margin-top: clamp(28px, 3.4vw, 48px); }
-        .env-im-stat-top { display: flex; align-items: flex-end; gap: 12px; }
+        .env-im-stat-top { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 4px 12px; }
         .env-im-icon { width: clamp(26px, 2.2vw, 32px); height: clamp(26px, 2.2vw, 32px); color: #1a8f3c; flex: none; align-self: center; }
-        .env-im-num { font-size: clamp(28px, 3.4vw, 44px); font-weight: 600; letter-spacing: -0.02em; color: #1d1d1f; line-height: 1; }
+        .env-im-num { font-size: clamp(28px, 3.4vw, 44px); font-weight: 600; letter-spacing: -0.02em; color: #1d1d1f; line-height: 1.08; }
         .env-im-unit { font-size: clamp(14px, 1.3vw, 17px); font-weight: 600; color: #1d1d1f; padding-bottom: 0.35em; }
         .env-im-desc { margin: clamp(8px, 1vw, 12px) 0 0; font-size: clamp(15px, 1.4vw, 18px); font-weight: 500; color: #6e6e73; line-height: 1.4; max-width: 34ch; }
         /* "Explore X" pill (reveal-bubble animation), placed below the stats */
@@ -337,6 +350,7 @@ export default function Environment() {
         .env-stat3-up { margin: 0; font-size: clamp(15px, 1.4vw, 17px); font-weight: 500; color: #6e6e73; line-height: 1.4; }
         .env-stat3-big { margin: 4px 0; font-size: clamp(30px, 3.4vw, 46px); font-weight: 600; letter-spacing: -0.01em; line-height: 1.12; background: linear-gradient(180deg, #2a2a2c 0%, #1d1d1f 100%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
         .env-stat3-desc { margin: 0; font-size: clamp(14px, 1.3vw, 16px); font-weight: 500; color: #6e6e73; line-height: 1.38; }
+        .env-stat-line { max-width: 980px; margin: clamp(48px, 6vw, 80px) auto 0; text-align: center; font-size: clamp(26px, 3.2vw, 44px); font-weight: 600; letter-spacing: -0.01em; line-height: 1.15; background: linear-gradient(180deg, #2a2a2c 0%, #1d1d1f 100%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
 
         /* ---------- carousel ---------- */
         .env-carousel { margin-top: clamp(36px, 4vw, 60px); }
@@ -460,8 +474,10 @@ export default function Environment() {
            track loops seamlessly. Each badge carries its gap as margin-right so
            the -50% offset lands on a perfect boundary. */
         @keyframes envMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-        .env-logo-circle { flex: none; width: clamp(104px, 12vw, 150px); height: clamp(104px, 12vw, 150px); margin-right: clamp(20px, 3vw, 48px); border-radius: 50%; background: #ffffff; border: 2px solid #c7c7cc; display: flex; align-items: center; justify-content: center; padding: clamp(18px, 2vw, 30px); }
+        .env-logo-circle { flex: none; width: clamp(104px, 12vw, 150px); height: clamp(104px, 12vw, 150px); margin-right: clamp(20px, 3vw, 48px); border-radius: 50%; background: #ffffff; border: 2px solid #c7c7cc; display: flex; align-items: center; justify-content: center; padding: clamp(18px, 2vw, 30px); overflow: hidden; }
+        .env-logo-circle.fill { padding: 0; }
         .env-logo-img { max-width: 100%; max-height: clamp(46px, 6vw, 72px); width: auto; height: auto; object-fit: contain; }
+        .env-logo-img.fill { width: 100%; height: 100%; max-width: none; max-height: none; object-fit: cover; }
         @media (prefers-reduced-motion: reduce) { .env-marquee-track { animation: none; } }
 
         /* ---------- 6e. testimonials ---------- */
@@ -597,9 +613,9 @@ export default function Environment() {
         imgLabel="PureAir image"
         video="/CLIP3.mp4"
         stats={[
-          { icon: "frame", num: "2,000", unit: "sq ft.", desc: "of area coverage from a single unit, built for large, open indoor spaces." },
-          { icon: "filter", num: "99.9%", unit: "", desc: "filter efficiency, capturing fine particles down to 0.3 microns." },
-          { icon: "wind", num: "2,800", unit: "m³/h", desc: "Clean Air Delivery Rate (CADR) for rapid, whole-room purification." },
+          { icon: "frame", num: "2,000", unit: "sq ft.", desc: "of area coverage from a single unit, built for large indoor spaces." },
+          { icon: "filter", num: "PM10, PM2.5", unit: "", desc: "Advanced multi-stage filtration for fine particles and nanoparticles." },
+          { icon: "layers", num: "14", unit: "Stage Filtration", desc: "6 pre-filters and 8 main filters, at combined ISO 16890 efficiency." },
         ]}
         cta={{ label: "Explore PureAir", href: "/products/pureair" }}
       />
@@ -608,9 +624,9 @@ export default function Environment() {
         imgLabel="AirFINEry image"
         video="/clip7.mp4"
         stats={[
-          { icon: "frame", num: "4,000", unit: "sq ft.", desc: "of area coverage from a single unit, built for the largest open indoor spaces." },
-          { icon: "filter", num: "99.9%", unit: "", desc: "filter efficiency, capturing fine particles down to 0.3 microns." },
-          { icon: "wind", num: "3,500", unit: "m³/h", desc: "Clean Air Delivery Rate (CADR) for rapid, whole-room purification." },
+          { icon: "frame", num: "4,000", unit: "sq ft.", desc: "of area coverage from a single unit, built for the largest indoor spaces." },
+          { icon: "filter", num: "PM10, PM2.5", unit: "", desc: "Advanced multi-stage filtration for fine particles and NOx gases." },
+          { icon: "layers", num: "16", unit: "Stage Filtration", desc: "8 pre-filters and 8 main filters, at combined ISO 16890 efficiency." },
         ]}
         cta={{ label: "Explore AirFINEry", href: "/products/airfinery" }}
       />
@@ -618,10 +634,10 @@ export default function Environment() {
       {/* 3 — STATS */}
       <section className="env-section" style={{ background: "#ffffff" }}>
         <div className="env-wrap">
-          <h2 className="env-h2 env-h2--nowrap" data-reveal style={{ ["--ri" as string]: 1 }}>
-            80 Years of German Filtration<br />Now Made in India
+          <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1, maxWidth: "none", fontSize: "clamp(24px, 3.6vw, 48px)" }}>
+            Global Leaders in Filtration Technology<br />with over 85 Years of Expertise<br />Now Proudly Manufactured in India
           </h2>
-          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>The World&rsquo;s Filtration Benchmark, Built for Indian Air</p>
+          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>MRH, Exclusive Partners of MANN+HUMMEL</p>
         </div>
         <MannHummelSlider />
       </section>
@@ -646,7 +662,7 @@ export default function Environment() {
       <section className="env-section" style={{ background: "#ffffff" }}>
         <div className="env-wrap">
           <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>Inside the Advanced Air Purification System</h2>
-          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>Catches the Fine Particles Ordinary Purifiers Miss</p>
+          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>Discover how each filtration layer captures different pollutants</p>
           <div className="env-design-duo" data-reveal>
             <div className="env-design-duo-item">
               <img loading="lazy" src="/pafn.jpeg" alt="PureAir filtration system" />
@@ -655,29 +671,9 @@ export default function Environment() {
               <img loading="lazy" src="/affs.jpeg" alt="AirFINEry filtration system" />
             </div>
           </div>
-          <div className="env-stats3">
-            <div className="env-stat3" data-reveal style={{ ["--ri" as string]: 0 }}>
-              <p className="env-stat3-up">Up to</p>
-              <p className="env-stat3-big">2,000 sq ft</p>
-              <p className="env-stat3-desc">cleaned per unit, so you need fewer</p>
-            </div>
-            <div className="env-stat3" data-reveal style={{ ["--ri" as string]: 1 }}>
-              <p className="env-stat3-up">Down to</p>
-              <p className="env-stat3-big">0.3 microns</p>
-              <p className="env-stat3-desc">captured, including ultrafine particles</p>
-            </div>
-            <div className="env-stat3" data-reveal style={{ ["--ri" as string]: 2 }}>
-              <p className="env-stat3-up">Certified to</p>
-              <p className="env-stat3-big">ISO 16890</p>
-              <p className="env-stat3-desc">the global clean-air standard</p>
-            </div>
-          </div>
-
-          <div className="env-design-cta-row" data-reveal>
-            <a className="env-design-cta" href="/technology">
-              <span className="env-design-cta-label">Explore Technology</span>
-            </a>
-          </div>
+          <p className="env-stat-line" data-reveal style={{ ["--ri" as string]: 0 }}>
+            Combined Efficiency of Pre and<br />Main Filter ISO 16890
+          </p>
         </div>
       </section>
 
@@ -691,7 +687,7 @@ export default function Environment() {
             The World&rsquo;s Most Advanced Simulation Software
           </h2>
           <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>
-            Before a Single Unit Is Installed, Our Simulation Engine Maps Your Space and Shows Exactly How Fast It Reaches Clean Air, and Where Every Purifier Should Sit
+            Before a purifier is installed, our simulation software maps your space, predicts air quality improvement, and identifies the optimal location for every purifier
           </p>
         </div>
         <div className="env-sim-media" data-reveal>
@@ -722,7 +718,7 @@ export default function Environment() {
           <h2 className="env-h2" data-reveal style={{ maxWidth: "none", ["--ri" as string]: 1 }}>
             Proof of Concept
           </h2>
-          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>60 Days, Real Spaces, Delhi&rsquo;s Worst Air</p>
+          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>IIT Delhi Validates Indoor &amp; Outdoor Purifier Performance</p>
 
           <ProofDashboard />
         </div>
@@ -788,10 +784,10 @@ function LogoMarquee() {
         style={{ animationPlayState: inView ? "running" : "paused" }}
       >
         {row.map((logo, i) => (
-          <div className="env-logo-circle" key={i} aria-hidden={i >= LOGOS.length}>
+          <div className={`env-logo-circle${logo.fill ? " fill" : ""}`} key={i} aria-hidden={i >= LOGOS.length}>
             <img
               loading="lazy"
-              className="env-logo-img"
+              className={`env-logo-img${logo.fill ? " fill" : ""}`}
               src={logo.src}
               alt={i < LOGOS.length ? logo.name : ""}
             />
@@ -987,7 +983,7 @@ function Reports() {
     <section className="env-section">
       <div className="env-wrap">
         <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>Discover the Technology That Thinks Ahead</h2>
-        <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>Every Unit Online, Every Reading in One Place</p>
+        <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>IoT-Enabled, Service on Wheels</p>
       </div>
 
       <div data-reveal style={{ ["--ri" as string]: 3, marginTop: "clamp(36px, 4vw, 60px)" }}>
@@ -1090,6 +1086,13 @@ function ImpactIcon({ kind }: { kind: string }) {
         </>
       )}
       {kind === "filter" && <path d="M3 5h18l-7 8v5l-4 2v-7L3 5Z" {...p} />}
+      {kind === "layers" && (
+        <>
+          <path d="M12 3 3 8l9 5 9-5-9-5Z" {...p} />
+          <path d="M3 12l9 5 9-5" {...p} />
+          <path d="M3 16l9 5 9-5" {...p} />
+        </>
+      )}
       {kind === "wind" && (
         <>
           <path d="M3 8h10a2.5 2.5 0 1 0-2.5-2.5" {...p} />

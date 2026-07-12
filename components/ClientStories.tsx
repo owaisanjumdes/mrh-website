@@ -9,11 +9,31 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 
-// The 22 recently added client stories: IMG-20260616-WA0017 .. WA0038.
-const IMAGES = Array.from(
-  { length: 22 },
-  (_, i) => `/IMG-20260616-WA${String(17 + i).padStart(4, "0")}.jpg`
-);
+// The recently added client stories.
+const CLIENTS = [
+  "Residential AF2",
+  "Dharav",
+  "OP Jindal University",
+  "Residential AF3",
+  "GD Goenka Vasant Kunj",
+  "Unox",
+  "Forest Essential",
+  "Rukma Cafe",
+  "Maxop",
+  "Bal Bharti",
+  "Everest 1",
+  "Everest 2",
+  "Residential AF",
+  "GD Goenka Bareilly",
+  "Ad Factor",
+  "Birla Estate",
+  "Residential PA",
+  "Bajaj Alloys",
+];
+const IMAGES = CLIENTS.map((name) => ({
+  src: `/${encodeURIComponent(name)}.jpeg`,
+  alt: name,
+}));
 
 export default function ClientStories() {
   const swiperRef = useRef<SwiperClass | null>(null);
@@ -86,10 +106,10 @@ export default function ClientStories() {
         }}
         className="cs-swiper"
       >
-        {IMAGES.map((src, i) => (
-          <SwiperSlide key={src} className="cs-slide">
+        {IMAGES.map((img) => (
+          <SwiperSlide key={img.src} className="cs-slide">
             <div className="cs-card">
-              <img loading="lazy" src={src} alt={`Client story ${i + 1}`} />
+              <img loading="lazy" src={img.src} alt={img.alt} />
             </div>
           </SwiperSlide>
         ))}

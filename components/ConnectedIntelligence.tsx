@@ -80,7 +80,7 @@ export default function ConnectedIntelligence() {
           See the Air<br />Control the Unit<br />Skip the Maintenance
         </h2>
         <p className="ci-sub" data-reveal style={{ ["--ri" as string]: 2 }}>
-          Every Unit Online, Every Reading in One Place
+          IoT-Enabled, Service on Wheels
         </p>
 
         <div className="ci-bento">

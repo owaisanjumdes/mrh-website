@@ -102,7 +102,7 @@ export default function MultiStageFiltration() {
         <p className="msf-eyebrow" data-reveal>The Technology Inside</p>
         <h2 className="msf-title" data-reveal style={{ ["--ri" as string]: 1 }}>Multi-Stage Filtration</h2>
         <p className="msf-sub" data-reveal style={{ ["--ri" as string]: 2 }}>
-          Catches the Fine Particles Ordinary Purifiers Miss
+          Discover how each filtration layer captures different pollutants
         </p>
 
         <div className="msf-media" data-reveal>
