@@ -8,21 +8,21 @@ import { Mail, Phone } from "lucide-react";
 
 const CONTACTS = [
   {
-    title: "General inquiries",
+    title: "General Inquiries",
     desc: "Email us, we'll get back to you as soon as possible.",
     icon: "mail" as const,
     value: "info@mrhtech.in",
     href: "mailto:info@mrhtech.in",
   },
   {
-    title: "Sales support",
+    title: "Sales Support",
     desc: "Speak with our experts for a free consultation.",
     icon: "phone" as const,
     value: "+91 9996-999-260",
     href: "tel:+919996999260",
   },
   {
-    title: "WhatsApp support",
+    title: "WhatsApp Support",
     desc: "Message us anytime, we usually reply within minutes.",
     icon: "whatsapp" as const,
     value: "Chat on WhatsApp",
@@ -210,7 +210,7 @@ export default function SiteFooter({ light = false }: { light?: boolean } = {}) 
           alt="MRH"
           className="ft-logo"
         />
-        <h2 className="ft-heading">Contact details for MRH</h2>
+        <h2 className="ft-heading">Contact Details for MRH</h2>
 
         <div className="ft-cards">
           {CONTACTS.map((c) => (

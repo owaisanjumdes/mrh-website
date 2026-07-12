@@ -5,8 +5,8 @@ export default function RefundPolicyPage() {
     <main>
       <SectionBlock
         number="01"
-        microLabel="LEGAL"
-        title="Refund policy"
+        microLabel="Legal"
+        title="Refund Policy"
         description="Conditions and process for refunds. Legal copy goes here."
         surface="paper"
       />

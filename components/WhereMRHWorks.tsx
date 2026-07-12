@@ -86,8 +86,8 @@ export default function WhereMRHWorks() {
 
       <div className="wmw-wrap">
         <p className="wmw-eyebrow" data-reveal>Where MRH Works</p>
-        <h2 className="wmw-h2" data-reveal style={{ ["--ri" as string]: 1 }}>From classrooms to courtyards.</h2>
-        <p className="wmw-sub" data-reveal style={{ ["--ri" as string]: 2 }}>200+ spaces, and counting.</p>
+        <h2 className="wmw-h2" data-reveal style={{ ["--ri" as string]: 1 }}>From Classrooms to Courtyards</h2>
+        <p className="wmw-sub" data-reveal style={{ ["--ri" as string]: 2 }}>200+ Spaces, and Counting</p>
       </div>
 
       <div className="wmw-carousel" ref={rootRef}>

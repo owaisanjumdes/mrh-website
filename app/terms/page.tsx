@@ -5,8 +5,8 @@ export default function TermsPage() {
     <main>
       <SectionBlock
         number="01"
-        microLabel="LEGAL"
-        title="Terms of service"
+        microLabel="Legal"
+        title="Terms of Service"
         description="Service terms and conditions. Legal copy goes here."
         surface="paper"
       />

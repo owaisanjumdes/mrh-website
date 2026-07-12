@@ -202,17 +202,22 @@ export default function Nav() {
         }
         /* Brand logos: MRH pinned left, MANN+HUMMEL pinned right (mirrored). */
         .mrh-brand-logo {
-          height: clamp(28px, 2.8vw, 40px);
+          height: clamp(34px, 3.3vw, 48px);
           width: auto;
           object-fit: contain;
           flex: none;
           display: block;
         }
-        .mrh-nav.is-products .mrh-brand-logo { height: clamp(38px, 3.8vw, 56px); }
-        .mrh-nav-mh { margin-left: clamp(12px, 1.6vw, 26px); }
-        /* The MRH logo art sits high in its own PNG padding; nudge it down so the
-           visible mark is centered in the nav. */
-        .mrh-nav-mrh { transform: translateY(10%); }
+        .mrh-nav.is-products .mrh-brand-logo { height: clamp(44px, 4.3vw, 64px); }
+        /* Pull each brand mark outward past the nav gutter so MRH sits nearer the
+           left edge and MANN+HUMMEL nearer the right, without moving the links/CTA
+           (which stay aligned to the gutter). */
+        .mrh-nav-mh { margin-left: clamp(12px, 1.6vw, 26px); margin-right: clamp(-44px, -3vw, -14px); }
+        /* The MRH mark fills only ~60% of its PNG canvas (vs ~75% for MANN+HUMMEL),
+           so at equal CSS height it renders smaller. Give it a larger height to
+           match the visible size, and nudge it down to optically center the mark. */
+        .mrh-nav-mrh { transform: translateY(8%); margin-left: clamp(-44px, -3vw, -14px); height: clamp(43px, 4.2vw, 61px); }
+        .mrh-nav.is-products .mrh-nav-mrh { height: clamp(56px, 5.5vw, 81px); }
         .mrh-nav-link {
           color: var(--nav-fg);
           text-decoration: none;

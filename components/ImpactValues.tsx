@@ -182,7 +182,7 @@ export default function ImpactValues() {
       `}</style>
 
       <div className="iv-head" data-reveal>
-        <h2 className="iv-title">Our values lead the way.</h2>
+        <h2 className="iv-title">Our Values Lead the Way</h2>
       </div>
 
       <div

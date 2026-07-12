@@ -14,7 +14,7 @@ import "swiper/css/pagination";
 // overlaid at the bottom.
 const CARDS: { label: string; body: string; img: string; pos?: string }[] = [
   {
-    label: "Every Unit. Every Reading. One Dashboard",
+    label: "Every Unit Every Reading One Dashboard",
     body: "Monitor PM2.5, PM10, and AQI in real time for every unit, all from a centralized dashboard, accessible anytime, anywhere.",
     img: "/liveaqi.jpg",
   },

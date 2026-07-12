@@ -5,8 +5,8 @@ export default function PrivacyPage() {
     <main>
       <SectionBlock
         number="01"
-        microLabel="LEGAL"
-        title="Privacy policy"
+        microLabel="Legal"
+        title="Privacy Policy"
         description="Data collection, processing, and rights. Legal copy goes here."
         surface="paper"
       />

@@ -22,7 +22,7 @@ type Card = {
 const CARDS: Card[] = [
   {
     img: "/impact-gallery-1.jpg",
-    title: ["Products that", "pass the test."],
+    title: ["Products That", "Pass the Test"],
     titlePos: "bottom",
     titleColor: "#f5f5f7",
     lead: "High efficacy, ranging from 70% to 90%, was observed indoors",
@@ -30,7 +30,7 @@ const CARDS: Card[] = [
   },
   {
     img: "/impact-gallery-2.jpg",
-    title: ["Chipping away", "at emissions."],
+    title: ["Chipping Away", "at Emissions"],
     titlePos: "center",
     titleColor: "#1d1d1f",
     large: true,
@@ -39,7 +39,7 @@ const CARDS: Card[] = [
   },
   {
     img: "/impact-gallery-3.jpg",
-    title: ["Disassembly done", "differently."],
+    title: ["Disassembly Done", "Differently"],
     titlePos: "bottom",
     titleColor: "#f5f5f7",
     lead: "After the reduction, the purifier can maintain safe levels and even reduce the concentration to below 20 µg/m³",
@@ -47,7 +47,7 @@ const CARDS: Card[] = [
   },
   {
     img: "/impact-gallery-4.jpg",
-    title: ["Renewable energy.", "Remarkable scale."],
+    title: ["Renewable Energy", "Remarkable Scale"],
     titlePos: "bottom",
     titleColor: "#1d1d1f",
     lead: "Continuous use in a controlled environment can help achieve an ISO 1000 clean room standard",
@@ -268,7 +268,7 @@ export default function ImpactGallery({
             {heading ? (
               highlightHeading ? <span className="ig-hl">{heading}</span> : heading
             ) : (
-              <span className="ig-hl">Our IIT results</span>
+              <span className="ig-hl">Our IIT Results</span>
             )}
           </h2>
           <p className="ig-sub" data-reveal style={{ ["--ri" as string]: 1 }}>

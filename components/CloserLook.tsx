@@ -564,7 +564,7 @@ export default function CloserLook() {
       `}</style>
 
       <div className="cl-head">
-        <h2 className="cl-title" data-reveal>Take a closer look.</h2>
+        <h2 className="cl-title" data-reveal>Take a Closer Look</h2>
       </div>
 
       <div className="cl-viewer" ref={viewerRef}>

@@ -23,7 +23,7 @@ const TABS: Tab[] = [
 
 const BLOCKS = [
   {
-    title: "See everything",
+    title: "See Everything",
     desc: (
       <>
         Connect every unit and see it all in one place. One dashboard, whether
@@ -32,7 +32,7 @@ const BLOCKS = [
     ),
   },
   {
-    title: "Control in real time",
+    title: "Control in Real Time",
     desc: (
       <>
         Live AQI, filter health, and fan speed, adjustable from your phone,
@@ -41,7 +41,7 @@ const BLOCKS = [
     ),
   },
   {
-    title: "It services itself",
+    title: "It Services Itself",
     desc: (
       <>
         Your purifier knows when it needs service and tells us before you notice.
@@ -270,9 +270,9 @@ export default function CenterStage({
       <h2 className="cs-title" data-reveal>
         {heading ?? (
           <>
-            18MP Center Stage front camera.
+            18MP Center Stage Front Camera
             <br />
-            It’s a total frame changer.
+            It’s a Total Frame Changer
           </>
         )}
       </h2>

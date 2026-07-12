@@ -48,20 +48,20 @@ export default function ImpactPage() {
       <ImpactGallery
         images={["/iit-8.jpg", "/iit-7.jpg", "/iit-6.jpg", "/iit-5.jpg"]}
         titles={[
-          ["Up to 97%", "efficacy."],
-          ["~75% fewer", "particles."],
-          ["Below", "20 µg/m³."],
-          ["ISO 1000", "clean room."],
+          ["Up to 97%", "Efficacy"],
+          ["~75% Fewer", "Particles"],
+          ["Below", "20 µg/m³"],
+          ["ISO 1000", "Clean Room"],
         ]}
       />
       <ImpactGallery
         showHeader={false}
         images={["/iit-4.jpg", "/iit-3.jpg", "/iit-2.jpg", "/iit-1.jpg"]}
         titles={[
-          ["Very Poor", "to Good."],
-          ["Strong removal", "efficiency."],
-          ["High particle", "reduction."],
-          ["61% PM mass", "reduction."],
+          ["Very Poor", "to Good"],
+          ["Strong Removal", "Efficiency"],
+          ["High Particle", "Reduction"],
+          ["61% PM Mass", "Reduction"],
         ]}
         captions={[
           {

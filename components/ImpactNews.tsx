@@ -13,37 +13,37 @@ type Article = {
 const ARTICLES: Article[] = [
   {
     img: "/impact-news-1.jpg",
-    label: "UPDATE",
+    label: "Update",
     title: "Apple accelerates progress with highest-ever recycled material in its products",
     date: "April 16, 2026",
   },
   {
     img: "/impact-news-2.jpg",
-    label: "UPDATE",
+    label: "Update",
     title: "Apple launches new project to protect and restore California redwood forest",
     date: "September 23, 2025",
   },
   {
     img: "/impact-news-3.jpg",
-    label: "PRESS RELEASE",
+    label: "Press Release",
     title: "The all-new Apple Ginza opens this Friday, September 26, in Tokyo",
     date: "September 23, 2025",
   },
   {
     img: "/impact-news-4.jpg",
-    label: "PRESS RELEASE",
+    label: "Press Release",
     title: "Apple Koregaon Park opens to customers this Thursday, September 4, in Pune",
     date: "September 2, 2025",
   },
   {
     img: "/impact-news-5.jpg",
-    label: "UPDATE",
+    label: "Update",
     title: "Apple expands U.S. supply chain with $500 million commitment",
     date: "July 15, 2025",
   },
   {
     img: "/impact-news-6.jpg",
-    label: "UPDATE",
+    label: "Update",
     title: "Apple surpasses 60 percent reduction in global greenhouse gas emissions",
     date: "April 16, 2025",
   },

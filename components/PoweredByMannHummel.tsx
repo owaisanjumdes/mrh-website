@@ -80,11 +80,11 @@ export default function PoweredByMannHummel() {
         }
       `}</style>
       <div className="pm-wrap">
-        <p className="pm-eyebrow" data-reveal>Core technology</p>
+        <p className="pm-eyebrow" data-reveal>Core Technology</p>
         <h2 className="pm-title" data-reveal style={{ ["--ri" as string]: 1 }}>
-          German filtration science,<br />in every unit.
+          German Filtration Science,<br />in Every Unit
         </h2>
-        <p className="pm-sub" data-reveal style={{ ["--ri" as string]: 2 }}>MANN+HUMMEL media, engineered for India&rsquo;s air.</p>
+        <p className="pm-sub" data-reveal style={{ ["--ri" as string]: 2 }}>MANN+HUMMEL Media, Engineered for India&rsquo;s Air</p>
         <div className="pm-stats-row">
           <div className="pm-stats-media" data-reveal><img loading="lazy" className="pm-stats-img" src="/mhh.jpg" alt="" /></div>
           <div className="pm-ub">

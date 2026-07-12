@@ -172,7 +172,7 @@ export default function ProofDashboard({ dark = false }: { dark?: boolean } = {}
           <div className="pd2-card pd2-aqi" style={acStyle(AC.cyan)}>
             <div className="pd2-wide">
               <div className="pd2-wide-info">
-                <p className="pd2-label"><span className="pd2-ic"><Wind {...dashIcon} /></span> AQI recovery</p>
+                <p className="pd2-label"><span className="pd2-ic"><Wind {...dashIcon} /></span> AQI Recovery</p>
                 <p className="pd2-num"><CountUp to={3} run={run} />-<CountUp to={6} run={run} /><span className="u">hrs</span></p>
                 <p className="pd2-cap">Severe air back to Good, held there.</p>
                 <p className="pd2-foot">Held below the WHO guideline</p>
@@ -197,7 +197,7 @@ export default function ProofDashboard({ dark = false }: { dark?: boolean } = {}
 
           {/* Overall efficiency — tall left (brand green) */}
           <div className="pd2-card pd2-overall" style={acStyle(AC.brand)}>
-            <p className="pd2-label"><span className="pd2-ic"><Gauge {...dashIcon} /></span> Overall efficiency</p>
+            <p className="pd2-label"><span className="pd2-ic"><Gauge {...dashIcon} /></span> Overall Efficiency</p>
             <div className="pd2-overall-mid">
               <div className="pd2-gauge">
                 <svg viewBox="0 0 280 158" width="100%" style={{ display: "block" }}>
@@ -219,7 +219,7 @@ export default function ProofDashboard({ dark = false }: { dark?: boolean } = {}
 
           {/* Particle removal (green) */}
           <div className="pd2-card pd2-particle" style={acStyle(AC.green)}>
-            <p className="pd2-label"><span className="pd2-ic"><Layers {...dashIcon} /></span> Particle removal</p>
+            <p className="pd2-label"><span className="pd2-ic"><Layers {...dashIcon} /></span> Particle Removal</p>
             <p className="pd2-num"><CountUp to={99} run={run} /><span className="u">%</span></p>
             <p className="pd2-cap">PM10 mass captured, by particle size.</p>
             <div className="pd2-bars">
@@ -241,7 +241,7 @@ export default function ProofDashboard({ dark = false }: { dark?: boolean } = {}
           {/* Air quality score (violet) */}
           <div className="pd2-card pd2-airq" style={acStyle(AC.violet)}>
             <div className="pd2-airq-head">
-              <p className="pd2-label" style={{ margin: 0 }}><span className="pd2-ic"><Waves {...dashIcon} /></span> Air quality score</p>
+              <p className="pd2-label" style={{ margin: 0 }}><span className="pd2-ic"><Waves {...dashIcon} /></span> Air Quality Score</p>
               <span className="pd2-badge">Good</span>
             </div>
             <p className="pd2-num" style={{ marginTop: 20 }}><CountUp to={92} run={run} /></p>
@@ -266,7 +266,7 @@ export default function ProofDashboard({ dark = false }: { dark?: boolean } = {}
 
           {/* Removal efficiency (blue) */}
           <div className="pd2-card pd2-removal" style={acStyle(AC.blue)}>
-            <p className="pd2-label"><span className="pd2-ic"><BarChart3 {...dashIcon} /></span> Removal efficiency</p>
+            <p className="pd2-label"><span className="pd2-ic"><BarChart3 {...dashIcon} /></span> Removal Efficiency</p>
             <p className="pd2-num"><CountUp to={83} run={run} /><span className="u">%</span></p>
             <p className="pd2-cap">Sustained mean reduction.</p>
             <div className="pd2-groups">
@@ -291,7 +291,7 @@ export default function ProofDashboard({ dark = false }: { dark?: boolean } = {}
 
           {/* Filtration performance (orange) */}
           <div className="pd2-card pd2-filtration" style={acStyle(AC.orange)}>
-            <p className="pd2-label"><span className="pd2-ic"><AudioLines {...dashIcon} /></span> Filtration performance</p>
+            <p className="pd2-label"><span className="pd2-ic"><AudioLines {...dashIcon} /></span> Filtration Performance</p>
             <p className="pd2-num"><CountUp to={83} run={run} /><span className="u">%</span></p>
             <p className="pd2-cap">Fine particle capture, measured continuously.</p>
             <div className="pd2-viz">

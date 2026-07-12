@@ -97,7 +97,7 @@ export default function CompareLineup() {
 
       <div className="ct-grid">
         <p className="ct-head ct-head--bad" data-reveal>
-          Ordinary purifiers
+          Ordinary Purifiers
         </p>
         <p
           className="ct-head ct-head--good"

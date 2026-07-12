@@ -52,7 +52,7 @@ export default function UnfairAdvantage() {
           Our Unfair Advantage
         </p>
         <h2 className="ua-title" data-reveal style={{ ["--ri" as string]: 1 }}>
-          A fancy design doesn&rsquo;t clean the air. The right filter does.
+          A Fancy Design Doesn&rsquo;t Clean the Air The Right Filter Does
         </h2>
         <p className="ua-lead" data-reveal style={{ ["--ri" as string]: 2 }}>
           Most purifiers are built for small, sealed rooms and ideal lab

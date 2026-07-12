@@ -286,9 +286,9 @@ export default function ImpactMaterials({
       {showHeader && (
         <div className="dm-head">
           <h2 className="dm-title" data-reveal>
-            <span className="dm-hl">Products that speak</span>
+            <span className="dm-hl">Products That Speak</span>
             <br />
-            for itself
+            for Itself
           </h2>
           <p className="dm-sub" data-reveal style={{ ["--ri" as string]: 1 }}>
             We design our products with the environment in mind. That starts by using

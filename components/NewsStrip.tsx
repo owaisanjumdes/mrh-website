@@ -131,9 +131,9 @@ export default function NewsStrip() {
 
       <div className="press__inner">
         <header className="press__head">
-          <p className="press__eyebrow">In the news</p>
+          <p className="press__eyebrow">In the News</p>
           <h2 className="press__heading" id="press-heading">
-            The MANN+HUMMEL partnership, covered
+            The MANN+HUMMEL Partnership, Covered
           </h2>
         </header>
 

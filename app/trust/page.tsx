@@ -5,28 +5,28 @@ export default function TrustPage() {
     <main>
       <SectionBlock
         number="01"
-        microLabel="HERO"
-        title="Trust and certifications"
+        microLabel="Hero"
+        title="Trust and Certifications"
         description="Every claim we make, with the document that backs it."
         surface="paper"
       />
       <SectionBlock
         number="02"
-        microLabel="PRESS"
+        microLabel="Press"
         title="Certifications"
         description="BIS, ISO, NABL, IIT Delhi validation marks."
         surface="paper"
       />
       <SectionBlock
         number="03"
-        microLabel="BRAND"
+        microLabel="Brand"
         title="Partners"
         description="MANN+HUMMEL and OK Play partnership credentials."
         surface="paper"
       />
       <SectionBlock
         number="04"
-        microLabel="PROOF"
+        microLabel="Proof"
         title="Downloads"
         description="Datasheets, test reports, certificate downloads."
         surface="deep"

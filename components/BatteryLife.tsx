@@ -189,9 +189,9 @@ export default function BatteryLife({
           <h2 className="bl-title">
             {title ?? (
               <>
-                Battery life.
+                Battery Life
                 <br />
-                All-time high.
+                All-Time High
               </>
             )}
           </h2>

@@ -169,11 +169,11 @@ export default function CameraShowTell() {
         <div className="cam-head-inner">
           <p className="cam-eyebrow" data-reveal>Intelligent Space Planning</p>
           <h2 className="cam-title" data-reveal style={{ ["--ri" as string]: 1 }}>
-            We don&rsquo;t guess
+            We Don&rsquo;t Guess
             <br />
-            where clean air goes.
+            Where Clean Air Goes
             <br />
-            We simulate it.
+            We Simulate It
           </h2>
           <p className="cam-copy" data-reveal style={{ ["--ri" as string]: 2 }}>
             Before a single unit is installed, our simulation engine maps your

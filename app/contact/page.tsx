@@ -160,7 +160,7 @@ export default function ContactPage() {
         <p className="cu-eyebrow">Contact Us</p>
         <h1 className="cu-title">Looking to Order or Customize?</h1>
         <p className="cu-sub">
-          Tell us your requirement and our team will reach out to you on priority
+          Tell Us Your Requirement and Our Team Will Reach Out to You on Priority
         </p>
 
         <form className="cu-form" onSubmit={(e) => e.preventDefault()}>

@@ -97,8 +97,8 @@ export default function IoTMonitoring() {
 
       <div className="iot-head" data-reveal>
         <h2 className="iot-title">
-          Air pollution isn&rsquo;t just an indoor problem anymore. Every space is
-          contaminated.
+          Air Pollution Isn&rsquo;t Just an Indoor Problem Anymore Every Space Is
+          Contaminated
         </h2>
       </div>
 

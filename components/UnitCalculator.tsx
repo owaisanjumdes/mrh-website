@@ -348,7 +348,7 @@ export default function UnitCalculator() {
         <header className="mrh-calc__head">
           <p className="mrh-calc__eyebrow">Unit Calculator</p>
           <h2 className="mrh-calc__title">
-            How many units<br />does your space need?
+            How Many Units<br />Does Your Space Need?
           </h2>
           <p className="mrh-calc__lede">
             Enter your dimensions. We size the system to five complete air changes

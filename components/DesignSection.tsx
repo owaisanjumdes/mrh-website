@@ -199,9 +199,9 @@ export default function DesignSection({
       <h2 className="ds-title" data-reveal style={{ ["--ri" as string]: 1 }}>
         {title ?? (
           <>
-            Unibody enclosure.
+            Unibody Enclosure
             <br />
-            Makes a strong case for itself.
+            Makes a Strong Case for Itself
           </>
         )}
       </h2>

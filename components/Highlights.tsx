@@ -501,7 +501,7 @@ export default function Highlights() {
       `}</style>
 
       <div className="hl-head" data-reveal>
-        <h2 className="hl-title">Get the highlights.</h2>
+        <h2 className="hl-title">Get the Highlights</h2>
         <a className="hl-watch" href="#highlights">
           Watch the film
           <svg viewBox="0 0 24 24" fill="none" aria-hidden>

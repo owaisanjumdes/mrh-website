@@ -305,23 +305,23 @@ export default function WorthUpgrade() {
         <div className="wtu-inner">
           <div className="wtu-top" data-reveal>
             <h2 className="wtu-title">
-              Worth the upgrade?
+              Worth the Upgrade?
               <br />
-              &nbsp;100 percent.
+              &nbsp;100 Percent
             </h2>
           </div>
 
           <p className="wtu-sub" data-reveal>
-            A few ways <b>PureAir</b> gives you more.
+            A Few Ways <b>PureAir</b> Gives You More
           </p>
 
           <div className="wtu-grid">
             {/* 1 — multi-stage filtration */}
             <article className="wtu-card wtu-card--center" data-reveal style={{ ["--ri" as string]: 0 }}>
               <p className="wtu-card-lead">
-                Multi-stage
+                Multi-Stage
                 <br />
-                filtration.
+                Filtration
               </p>
             </article>
 
@@ -339,7 +339,7 @@ export default function WorthUpgrade() {
 
             {/* 3 — Independently validated */}
             <article className="wtu-card wtu-card--center" data-reveal style={{ ["--ri" as string]: 2 }}>
-              <p className="wtu-card-lead">Independently validated.</p>
+              <p className="wtu-card-lead">Independently Validated</p>
               <p className="wtu-card-note">
                 ISO 16890 certified, proven by IIT Delhi.
               </p>
@@ -359,7 +359,7 @@ export default function WorthUpgrade() {
 
             {/* 5 — Quiet and efficient */}
             <article className="wtu-card wtu-card--center" data-reveal style={{ ["--ri" as string]: 1 }}>
-              <p className="wtu-card-lead">Quiet and efficient.</p>
+              <p className="wtu-card-lead">Quiet and Efficient</p>
               <p className="wtu-card-note">Under 55 dB, under 80W.</p>
             </article>
 
@@ -367,7 +367,7 @@ export default function WorthUpgrade() {
             <article className="wtu-card wtu-card--aqi" data-reveal style={{ ["--ri" as string]: 2 }}>
               <img loading="lazy" className="wtu-aqi-img" src="/am.webp" alt="" aria-hidden />
               <p className="wtu-card-lead">
-                A live AQI sensor you can read at a glance.
+                A Live AQI Sensor You Can Read at a Glance
               </p>
             </article>
           </div>

@@ -33,7 +33,7 @@ export default function AboutPage() {
         <MacTahoe
           eyebrow="Powered by MANN+HUMMEL"
           bannerLabel={null}
-          bannerHeading="80 years of German filtration science, now built for India."
+          bannerHeading="80 Years of German Filtration Science, Now Built for India"
           bannerHeadingSentence
           headingJustify
           showBanner={false}

@@ -5,35 +5,35 @@ export default function FiltrationPage() {
     <main>
       <SectionBlock
         number="01"
-        microLabel="HERO"
-        title="Filtration technology"
+        microLabel="Hero"
+        title="Filtration Technology"
         description="Multi-stage filtration headline and lineage."
         surface="paper"
       />
       <SectionBlock
         number="02"
-        microLabel="PRODUCT"
-        title="The stack"
+        microLabel="Product"
+        title="The Stack"
         description="Pre-filter, activated carbon, HEPA H13, antimicrobial."
         surface="paper"
       />
       <SectionBlock
         number="03"
-        microLabel="PROOF"
-        title="Filter media"
+        microLabel="Proof"
+        title="Filter Media"
         description="MANN+HUMMEL media partnership and sourcing."
         surface="deep"
       />
       <SectionBlock
         number="04"
-        microLabel="SPECS"
+        microLabel="Specs"
         title="Performance"
         description="Capture efficiency curves, pressure drop, service life."
         surface="deep"
       />
       <SectionBlock
         number="05"
-        microLabel="PRESS"
+        microLabel="Press"
         title="Certifications"
         description="BIS, ISO, NABL, IIT Delhi validation marks."
         surface="paper"

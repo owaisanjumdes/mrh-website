@@ -106,7 +106,7 @@ export default function ImpactDevices({
           <h2 className="idev-title">
             {title ?? (
               <>
-                Our Products are Validated
+                Our Products Are Validated
                 <br />
                 by IIT Delhi
               </>

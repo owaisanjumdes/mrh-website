@@ -20,7 +20,7 @@ export default function ProductShowcase({ heroVideo }: { heroVideo?: string } = 
       <Highlights />
       <DesignSection
         eyebrow="Why PureAir"
-        title={<>Purity you can feel.</>}
+        title={<>Purity You Can Feel</>}
         copy={
           <>
             German filtration that turns any room into the cleanest air you&rsquo;ll
@@ -29,14 +29,14 @@ export default function ProductShowcase({ heroVideo }: { heroVideo?: string } = 
         }
       />
       <CloserLook />
-      <PureAirInAction sub="200+ spaces, and counting." />
+      <PureAirInAction sub="200+ Spaces, and Counting" />
       <ComparePerformance />
       <BatteryLife
         title={
           <>
-            We didn&rsquo;t test it ourselves.
+            We Didn&rsquo;t Test It Ourselves
             <br />
-            IIT Delhi did.
+            IIT Delhi Did
           </>
         }
         text={
@@ -72,7 +72,7 @@ export default function ProductShowcase({ heroVideo }: { heroVideo?: string } = 
       />
       <CenterStage
         eyebrow="Connected Intelligence"
-        heading="The smartest thing in the room."
+        heading="The Smartest Thing in the Room"
         body={
           <>
             Every MRH unit is online. Open the app and the air becomes a number

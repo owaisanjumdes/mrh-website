@@ -54,7 +54,7 @@ function PlayBtn({ label }: { label: string }) {
 
 export default function MacTahoe({
   eyebrow = "The Breakthrough",
-  bannerLabel = "Partners with",
+  bannerLabel = "Partners With",
   bannerHeading = "MANN+HUMMEL",
   bannerHeadingSentence = false,
   bodyCopy,

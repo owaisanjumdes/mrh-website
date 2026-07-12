@@ -11,50 +11,50 @@ export default async function DeploymentPage({
     <main>
       <SectionBlock
         number="01"
-        microLabel="HEADER"
+        microLabel="Header"
         title={slug}
         description="Deployment name, sector, location, year. Hero numeral for AQI delta."
         surface="paper"
       />
       <SectionBlock
         number="02"
-        microLabel="BRAND"
+        microLabel="Brand"
         title="Context"
         description="Site profile, occupants, why this deployment mattered."
         surface="paper"
       />
       <SectionBlock
         number="03"
-        microLabel="PROBLEM"
+        microLabel="Problem"
         title="Challenge"
         description="Pre-deployment AQI data, source profile, constraints."
         surface="deep"
       />
       <SectionBlock
         number="04"
-        microLabel="SIMULATION"
+        microLabel="Simulation"
         title="Simulation"
         description="CFD output for this site, placements considered."
         surface="paper"
       />
       <SectionBlock
         number="05"
-        microLabel="PROOF"
+        microLabel="Proof"
         title="Deployment"
         description="Units installed, placement diagram, commissioning steps."
         surface="deep"
       />
       <SectionBlock
         number="06"
-        microLabel="PROOF"
+        microLabel="Proof"
         title="Results"
         description="Before and after AQI, with measurement methodology."
         surface="deep"
       />
       <SectionBlock
         number="07"
-        microLabel="CONVERSION"
-        title="Next study"
+        microLabel="Conversion"
+        title="Next Study"
         description="Related deployments and link to the index."
         surface="paper"
       />

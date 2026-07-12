@@ -7,7 +7,7 @@ import Link from "next/link";
 // the transparent nav). Headline left-aligned, materializing letter by letter with
 // a smoke-like fade in an Apple-style white gradient.
 
-const LINES = ["The Best Air You Will Ever Breathe."];
+const LINES = ["The Best Air You Will Ever Breathe"];
 const STEP_MS = 42; // per-letter stagger
 
 export default function HomeHero() {
@@ -256,7 +256,7 @@ export default function HomeHero() {
         </h1>
 
         <p className="hh-sub">
-          German-engineered purification, built for India’s air.
+          German-Engineered Purification, Built for India’s Air
         </p>
 
         <div className="hh-cta-row">

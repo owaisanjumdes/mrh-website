@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { PlusIcon } from "lucide-react";
 import ClientStories from "@/components/ClientStories";
 import ConnectedIntelligenceCarousel from "@/components/ConnectedIntelligenceCarousel";
 import MannHummelSlider from "@/components/MannHummelSlider";
@@ -206,12 +205,12 @@ const SPACES_CARDS: CardItem[] = [
 // Hero banners, in order. Files live in /public.
 const BANNERS: { src: string; alt: string }[] = [
   { src: "/ub2.jpeg", alt: "MRH banner 2" },
-  { src: "/ub1.jpeg", alt: "MRH banner 1" },
   { src: "/ub3.jpeg", alt: "MRH banner 3" },
   { src: "/ub4.jpeg", alt: "MRH banner 4" },
   { src: "/ub5.jpeg", alt: "MRH banner 5" },
   { src: "/ub6.jpeg", alt: "MRH banner 6" },
   { src: "/ub7.jpeg", alt: "MRH banner 7" },
+  { src: "/ub1.jpeg", alt: "MRH banner 1" },
 ];
 
 const LOGOS = [
@@ -287,14 +286,14 @@ export default function Environment() {
         .env-h2--nowrap { max-width: none; white-space: nowrap; }
 
         /* ---------- 2. two product cards (large split, Apple-style) ---------- */
-        .env-products { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 2.4vw, 44px); width: min(1600px, 92vw); margin: clamp(40px, 5vw, 72px) auto 0; }
+        .env-products { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 2.4vw, 44px); width: min(1600px, 92vw); margin: clamp(12px, 1.6vw, 24px) auto 0; }
         .env-prod-card { position: relative; border-radius: clamp(22px, 2vw, 30px); overflow: hidden; aspect-ratio: 7 / 5; background: #ffffff; }
         .env-prod-card .env-ph { width: 100%; height: 100%; transition: filter 300ms ease; }
         .env-prod-img { display: block; width: 100%; height: 100%; object-fit: cover; transition: filter 300ms ease; }
         .env-prod-card--shop:hover .env-prod-img,
         .env-prod-card--shop:hover .env-ph { filter: brightness(0.5); }
         /* Hover text that fades in over the darkened card */
-        .env-prod-overlay { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: flex-start; padding: clamp(22px, 3vw, 44px); text-align: left; opacity: 0; pointer-events: none; transition: opacity 320ms ease; }
+        .env-prod-overlay { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: flex-start; padding: clamp(22px, 3vw, 44px) clamp(22px, 3vw, 44px) clamp(10px, 1.4vw, 20px) clamp(10px, 1.4vw, 20px); text-align: left; opacity: 0; pointer-events: none; transition: opacity 320ms ease; }
         .env-prod-card--shop:hover .env-prod-overlay { opacity: 1; }
         .env-prod-overlay p { margin: 0; color: #ffffff; font-size: clamp(22px, 2.8vw, 42px); line-height: 1.16; letter-spacing: -0.01em; }
         .env-prod-overlay .ov-solution { font-weight: 300; }
@@ -456,12 +455,16 @@ export default function Environment() {
         @media (max-width: 900px) { .env-dash-row { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 560px) { .env-dash-row { grid-template-columns: 1fr; } }
 
-        /* ---------- 6d. logo wall ---------- */
-        .env-logos { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid #d2d2d7; border-left: 1px solid #d2d2d7; margin-top: clamp(40px, 5vw, 64px); }
-        .env-logo-cell { position: relative; display: flex; align-items: center; justify-content: center; min-height: clamp(110px, 12vw, 150px); padding: clamp(20px, 3vw, 40px); border-right: 1px solid #d2d2d7; border-bottom: 1px solid #d2d2d7; }
-        .env-logo-ph { color: #b4b4b9; font-size: clamp(16px, 1.7vw, 22px); font-weight: 700; letter-spacing: -0.01em; }
-        .env-logo-img { max-width: 100%; max-height: clamp(46px, 6vw, 76px); width: auto; height: auto; object-fit: contain; }
-        .env-logo-plus { position: absolute; right: -12.5px; bottom: -12.5px; width: 24px; height: 24px; color: #9a9aa0; z-index: 1; }
+        /* ---------- 6d. logo wall (infinite marquee of circular badges) ---------- */
+        .env-marquee { position: relative; width: 100vw; margin-left: calc(50% - 50vw); margin-top: clamp(12px, 1.5vw, 22px); padding: clamp(8px, 1vw, 14px) 0; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
+        .env-marquee-track { display: flex; width: max-content; animation: envMarquee 42s linear infinite; will-change: transform; }
+        /* Two identical logo sets sit end to end; shifting by exactly half the
+           track loops seamlessly. Each badge carries its gap as margin-right so
+           the -50% offset lands on a perfect boundary. */
+        @keyframes envMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        .env-logo-circle { flex: none; width: clamp(104px, 12vw, 150px); height: clamp(104px, 12vw, 150px); margin-right: clamp(20px, 3vw, 48px); border-radius: 50%; background: #ffffff; border: 2px solid #c7c7cc; display: flex; align-items: center; justify-content: center; padding: clamp(18px, 2vw, 30px); }
+        .env-logo-img { max-width: 100%; max-height: clamp(46px, 6vw, 72px); width: auto; height: auto; object-fit: contain; }
+        @media (prefers-reduced-motion: reduce) { .env-marquee-track { animation: none; } }
 
         /* ---------- 6e. testimonials ---------- */
         .env-tm-track { margin-top: clamp(36px, 4vw, 60px); display: flex; gap: clamp(16px, 1.6vw, 22px); padding: 4px 0 4px var(--gutter); scroll-padding-left: var(--gutter); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
@@ -540,14 +543,14 @@ export default function Environment() {
       <section className="env-section">
         <div className="env-wrap">
           <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1, maxWidth: "none" }}>
-            Discover the world of MRH
+            Discover the World of MRH
             <br />
-            MANN+HUMMEL filtered air
+            MANN+HUMMEL Filtered Air
             <br />
-            purification solutions
+            Purification Solutions
           </h2>
           <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>
-            Solution for indoor, semi-outdoor, and outdoor environments.
+            Solution for Indoor, Semi-Outdoor, and Outdoor Environments
           </p>
         </div>
         <div data-reveal style={{ ["--ri" as string]: 3, marginTop: "clamp(32px, 4vw, 56px)" }}>
@@ -556,7 +559,7 @@ export default function Environment() {
       </section>
 
       {/* 2 — TWO PRODUCTS */}
-      <section className="env-section">
+      <section className="env-section" style={{ paddingTop: 0 }}>
         <div className="env-products">
           <div className="env-prod" data-reveal style={{ ["--ri" as string]: 0 }}>
             <div className="env-prod-card env-prod-card--shop">
@@ -595,7 +598,7 @@ export default function Environment() {
       <ImpactBlock
         title="PureAir"
         imgLabel="PureAir image"
-        img="/pa3.jpg"
+        video="/compa.mp4"
         stats={[
           { icon: "frame", num: "2,000", unit: "sq ft.", desc: "of area coverage from a single unit, built for large, open indoor spaces." },
           { icon: "filter", num: "99.9%", unit: "", desc: "filter efficiency, capturing fine particles down to 0.3 microns." },
@@ -620,9 +623,9 @@ export default function Environment() {
       <section className="env-section" style={{ background: "#ffffff" }}>
         <div className="env-wrap">
           <h2 className="env-h2 env-h2--nowrap" data-reveal style={{ ["--ri" as string]: 1 }}>
-            80 years of German filtration<br />now made in India.
+            80 Years of German Filtration<br />Now Made in India
           </h2>
-          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>The world&rsquo;s filtration benchmark, built for Indian air.</p>
+          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>The World&rsquo;s Filtration Benchmark, Built for Indian Air</p>
         </div>
         <MannHummelSlider />
       </section>
@@ -637,8 +640,8 @@ export default function Environment() {
       {/* 4 — WHERE MRH WORKS (6-image carousel) */}
       <section className="env-section">
         <div className="env-wrap">
-          <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>From classrooms to courtyards.</h2>
-          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>200+ spaces, and counting.</p>
+          <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>From Classrooms to Courtyards</h2>
+          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>200+ Spaces, and Counting</p>
         </div>
         <Carousel cards={SPACES_CARDS} />
       </section>
@@ -647,10 +650,10 @@ export default function Environment() {
       <section className="env-section" style={{ background: "#ffffff" }}>
         <div className="env-wrap">
           <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>Inside the Advanced Air Purification System</h2>
-          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>Catches the fine particles ordinary purifiers miss.</p>
+          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>Catches the Fine Particles Ordinary Purifiers Miss</p>
           <div className="env-design-duo" data-reveal>
             <div className="env-design-duo-item">
-              <img loading="lazy" src="/pafs.jpeg" alt="PureAir filtration system" />
+              <img loading="lazy" src="/pafn.jpeg" alt="PureAir filtration system" />
             </div>
             <div className="env-design-duo-item">
               <img loading="lazy" src="/affs.jpeg" alt="AirFINEry filtration system" />
@@ -692,7 +695,7 @@ export default function Environment() {
             The World&rsquo;s Most Advanced Simulation Software
           </h2>
           <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>
-            Before a single unit is installed, our simulation engine maps your space and shows exactly how fast it reaches clean air, and where every purifier should sit.
+            Before a Single Unit Is Installed, Our Simulation Engine Maps Your Space and Shows Exactly How Fast It Reaches Clean Air, and Where Every Purifier Should Sit
           </p>
         </div>
         <div className="env-sim-media" data-reveal>
@@ -721,11 +724,9 @@ export default function Environment() {
       <section className="env-section">
         <div className="env-wrap">
           <h2 className="env-h2" data-reveal style={{ maxWidth: "none", ["--ri" as string]: 1 }}>
-            We didn&rsquo;t test it ourselves.
-            <br />
-            IIT Delhi did.
+            Proof of Concept
           </h2>
-          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>60 days, real spaces, Delhi&rsquo;s worst air.</p>
+          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>60 Days, Real Spaces, Delhi&rsquo;s Worst Air</p>
 
           <ProofDashboard />
         </div>
@@ -741,19 +742,10 @@ export default function Environment() {
       {/* 6d — LOGO WALL (Trusted across India) */}
       <section className="env-section" style={{ background: "#ffffff" }}>
         <div className="env-wrap">
-          <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>Trusted by the places people share.</h2>
-          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>The names that already run MRH.</p>
-          <div className="env-logos">
-            {LOGOS.map((logo, i) => (
-              <div className="env-logo-cell" key={i} data-reveal style={{ ["--ri" as string]: i }}>
-                <img loading="lazy" className="env-logo-img" src={logo.src} alt={logo.name} />
-                {i < 3 ? (
-                  <PlusIcon className="env-logo-plus" strokeWidth={1} />
-                ) : null}
-              </div>
-            ))}
-          </div>
+          <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>Trusted by the Places People Share</h2>
+          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>The Names That Already Run MRH</p>
         </div>
+        <LogoMarquee />
       </section>
 
 
@@ -774,6 +766,46 @@ export default function Environment() {
 
 /* ----------------------------------------------------------- sub-blocks --- */
 
+// Infinite, single-line marquee of the client logos, each in a white circle.
+// The set is rendered twice so the track loops seamlessly, and the animation
+// only runs while the strip is on screen (pauses when scrolled away).
+function LogoMarquee() {
+  const [inView, setInView] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => setInView(e.isIntersecting),
+      { threshold: 0 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const row = [...LOGOS, ...LOGOS];
+  return (
+    <div className="env-marquee" ref={ref} data-reveal>
+      <div
+        className="env-marquee-track"
+        style={{ animationPlayState: inView ? "running" : "paused" }}
+      >
+        {row.map((logo, i) => (
+          <div className="env-logo-circle" key={i} aria-hidden={i >= LOGOS.length}>
+            <img
+              loading="lazy"
+              className="env-logo-img"
+              src={logo.src}
+              alt={i < LOGOS.length ? logo.name : ""}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // "Tell Us About Your Space" — a clean light strip with a gold purifier icon,
 // heading and lead. The unit-calculator formula gets added here later.
 function AssessmentStrip() {
@@ -784,17 +816,34 @@ function AssessmentStrip() {
           width: 100vw;
           margin-left: calc(50% - 50vw);
           margin-right: calc(50% - 50vw);
-          background: #f5f5f7;
-          padding: clamp(52px, 8vw, 104px) clamp(20px, 6vw, 88px);
+          background: #ffffff;
+          padding: clamp(40px, 6vw, 88px) clamp(20px, 6vw, 126px);
           font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
         }
-        .tas-inner { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; }
-        .tas-icon { color: #b8934a; display: inline-flex; }
-        .tas-icon svg { width: clamp(52px, 6vw, 78px); height: auto; }
-        .tas-title { margin: clamp(20px, 2.6vw, 34px) 0 0; color: #1d1d1f; font-size: clamp(30px, 4.6vw, 58px); font-weight: 600; line-height: 1.06; letter-spacing: -0.02em; text-wrap: balance; }
-        .tas-body { margin: clamp(14px, 1.8vw, 24px) 0 0; color: #6e6e73; font-size: clamp(15px, 1.5vw, 20px); font-weight: 500; line-height: 1.45; letter-spacing: -0.006em; max-width: 48ch; }
+        /* Light-gray rounded card — text left, large purifier icon right.
+           Matches the IIT Delhi validation card. */
+        .tas-inner { max-width: 1260px; margin: 0 auto; background: #f5f5f5; border-radius: clamp(20px, 2vw, 28px); padding: clamp(40px, 6vw, 80px) clamp(28px, 4.4vw, 72px); display: flex; align-items: center; justify-content: space-between; gap: clamp(28px, 5vw, 80px); text-align: left; }
+        .tas-text { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; }
+        .tas-title { margin: 0; color: #1d1d1f; font-size: clamp(20px, 2.4vw, 32px); font-weight: 600; line-height: 1.125; letter-spacing: -0.01em; }
+        .tas-body { margin: clamp(10px, 1.4vw, 18px) 0 0; color: #6e6e73; font-size: clamp(13px, 1.1vw, 16px); font-weight: 500; line-height: 1.45; letter-spacing: -0.006em; max-width: 56ch; }
+        .tas-cta { display: inline-flex; align-items: center; margin-top: clamp(16px, 2.4vw, 30px); padding: 10px 22px; border-radius: 980px; background: #0071e3; color: #ffffff; font-size: clamp(13px, 1.1vw, 16px); font-weight: 500; text-decoration: none; transition: background 200ms ease; }
+        .tas-cta:hover { background: #0077ed; }
+        .tas-icon { color: #b8934a; display: inline-flex; flex: none; }
+        .tas-icon svg { width: clamp(120px, 20vw, 260px); height: auto; }
+        @media (max-width: 760px) {
+          .tas-inner { flex-direction: column; align-items: flex-start; }
+          .tas-icon svg { width: clamp(110px, 34vw, 180px); }
+        }
       `}</style>
       <div className="tas-inner" data-reveal>
+        <div className="tas-text">
+          <h2 className="tas-title">Tell Us About Your Space</h2>
+          <p className="tas-body">
+            Tell us about your premises, and we will calculate the number of units
+            and incorporate the formula.
+          </p>
+          <a className="tas-cta" href="/contact">Get a free air assessment</a>
+        </div>
         <span className="tas-icon" aria-hidden>
           <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
             <rect x={14} y={11} width={20} height={29} rx={4} />
@@ -805,11 +854,6 @@ function AssessmentStrip() {
             <path d="M22 4c0.9 1 2.9 1 3.8 0" />
           </svg>
         </span>
-        <h2 className="tas-title">Tell Us About Your Space</h2>
-        <p className="tas-body">
-          Tell us about your premises, and we will calculate the number of units
-          and incorporate the formula.
-        </p>
         {/* Unit-calculator formula / form goes here — pending the formula. */}
       </div>
     </section>
@@ -947,7 +991,7 @@ function Reports() {
     <section className="env-section">
       <div className="env-wrap">
         <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>Discover the Technology That Thinks Ahead</h2>
-        <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>Every unit online, every reading in one place.</p>
+        <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>Every Unit Online, Every Reading in One Place</p>
       </div>
 
       <div data-reveal style={{ ["--ri" as string]: 3, marginTop: "clamp(36px, 4vw, 60px)" }}>
@@ -1068,6 +1112,7 @@ function ImpactBlock({
   title,
   imgLabel,
   img,
+  video,
   stats,
   cta,
 }: {
@@ -1075,12 +1120,19 @@ function ImpactBlock({
   title: string;
   imgLabel: string;
   img?: string;
+  video?: string;
   stats: ImpactStat[];
   cta?: { label: string; href: string };
 }) {
   const media = (
     <div className="env-im-media" data-reveal>
-      {img ? <img loading="lazy" className="env-im-img" src={img} alt="" /> : <Slot label={imgLabel} />}
+      {video ? (
+        <SectionVideo className="env-im-img" src={video} />
+      ) : img ? (
+        <img loading="lazy" className="env-im-img" src={img} alt="" />
+      ) : (
+        <Slot label={imgLabel} />
+      )}
     </div>
   );
   const text = (

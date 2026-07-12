@@ -267,7 +267,7 @@ export default function KeepExploringIPhone() {
 
       <div className="kei-wrap">
         <div className="kei-head" data-reveal>
-          <h2 className="kei-title">Find your PureAir</h2>
+          <h2 className="kei-title">Find Your PureAir</h2>
         </div>
 
         <div className="kei-card" data-reveal style={{ ["--ri" as string]: 1 }}>

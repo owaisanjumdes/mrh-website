@@ -46,7 +46,7 @@ export default function ScrollConverge() {
     offset: ["start start", "end end"],
   });
 
-  const text = "Until now";
+  const text = "Until Now";
   const chars = [...text];
   const center = (chars.length - 1) / 2;
 

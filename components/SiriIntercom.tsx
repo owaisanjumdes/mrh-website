@@ -77,9 +77,9 @@ export default function SiriIntercom() {
       <div className="si-text" data-reveal>
         <p className="si-siri">Air Simulation Technology</p>
         <p className="si-line">
-          Every room,
+          Every Room,
           <br />
-          calculated for full coverage
+          Calculated for Full Coverage
         </p>
       </div>
 

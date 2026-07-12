@@ -77,10 +77,10 @@ export default function ConnectedIntelligence() {
       <div className="ci-wrap">
         <p className="ci-eyebrow" data-reveal>Connected Intelligence</p>
         <h2 className="ci-title" data-reveal style={{ ["--ri" as string]: 1 }}>
-          See the air.<br />Control the unit.<br />Skip the maintenance.
+          See the Air<br />Control the Unit<br />Skip the Maintenance
         </h2>
         <p className="ci-sub" data-reveal style={{ ["--ri" as string]: 2 }}>
-          Every unit online, every reading in one place.
+          Every Unit Online, Every Reading in One Place
         </p>
 
         <div className="ci-bento">
