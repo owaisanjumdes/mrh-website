@@ -474,7 +474,7 @@ export default function Environment() {
 
         /* ---------- 6d. logo wall (infinite marquee of circular badges) ---------- */
         .env-marquee { position: relative; width: 100vw; margin-left: calc(50% - 50vw); margin-top: clamp(12px, 1.5vw, 22px); padding: clamp(8px, 1vw, 14px) 0; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
-        .env-marquee-track { display: flex; width: max-content; animation: envMarquee 34s linear infinite; will-change: transform; }
+        .env-marquee-track { display: flex; width: max-content; animation: envMarquee 17s linear infinite; will-change: transform; }
         /* Pause the scroll on hover. !important beats the inline play-state that
            gates the animation to when the strip is on screen. */
         .env-marquee:hover .env-marquee-track { animation-play-state: paused !important; }

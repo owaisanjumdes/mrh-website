@@ -147,6 +147,21 @@ export default function MannHummelSlider() {
     <div className="mh">
       <style>{`
         .mh { width: 100%; margin-top: clamp(32px, 4vw, 56px); }
+        .mh-inner { position: relative; }
+        /* Prev / next arrows on either end (match the site's other carousels) */
+        .mh-arrow {
+          position: absolute; top: 50%; transform: translateY(-50%); z-index: 5;
+          width: clamp(38px, 3.4vw, 48px); height: clamp(38px, 3.4vw, 48px);
+          border: none; border-radius: 50%; background: #ffffff; color: #333336;
+          display: inline-flex; align-items: center; justify-content: center;
+          cursor: pointer; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+          transition: background 200ms ease, transform 150ms ease;
+        }
+        .mh-arrow:hover { background: #f0f0f2; }
+        .mh-arrow:active { transform: translateY(-50%) scale(0.92); }
+        .mh-arrow--prev { left: clamp(8px, 2vw, 20px); }
+        .mh-arrow--next { right: clamp(8px, 2vw, 20px); }
+        .mh-arrow svg { width: 44%; height: 44%; }
         .mh-rail {
           display: flex;
           gap: clamp(14px, 1.4vw, 20px);
@@ -351,6 +366,18 @@ export default function MannHummelSlider() {
         }
       `}</style>
 
+      <div className="mh-inner">
+      <button type="button" className="mh-arrow mh-arrow--prev" aria-label="Previous" onClick={() => go(-1)}>
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+          <path d="M15 6l-6 6 6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+      <button type="button" className="mh-arrow mh-arrow--next" aria-label="Next" onClick={() => go(1)}>
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+          <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+
       <div
         className="mh-rail"
         ref={railRef}
@@ -445,6 +472,7 @@ export default function MannHummelSlider() {
             </article>
           )
         )}
+      </div>
       </div>
     </div>
   );
