@@ -410,12 +410,17 @@ export default function UnitCalculator() {
                   <span className="dim__hint" id="dim-height-hint" hidden>6–60 ft</span>
                 </div>
               </div>
-
-              <div className="volume-readout">
-                <span className="volume-readout__label">Volume</span>
-                <span className="volume-readout__value"><output data-out="volume">50,000</output> ft³</span>
-              </div>
             </fieldset>
+
+            {/* Volume — a hero readout that grows to fill the card, so the controls
+                panel matches the result panel's height with no dead space. */}
+            <div className="field volume-hero">
+              <p className="volume-hero__label">Volume</p>
+              <p className="volume-hero__value">
+                <output data-out="volume">50,000</output>
+                <span className="volume-hero__unit">ft³</span>
+              </p>
+            </div>
 
             <fieldset className="field field--last">
               <legend className="field__label">
@@ -563,7 +568,15 @@ const CALC_CSS = `
   .mrh-calc__panel { display: flex; flex-direction: column; padding: clamp(26px, 2.6vw, 38px); }
 
   .field { margin: 0 0 34px; padding: 0; border: 0; }
-  .field--last { margin-bottom: 0; margin-top: auto; }
+  .field--last { margin-bottom: 0; }
+
+  /* Volume hero — the one flexible region. It grows to absorb the height the
+     result card gets from its 3D stage/metrics, so both cards match with no gap.
+     The large figure mirrors the "units" number on the result side. */
+  .volume-hero { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: center; gap: 8px; margin: 0 0 34px; padding: clamp(20px, 2.6vw, 32px) 0; border-top: 1px solid rgba(0,0,0,0.08); border-bottom: 1px solid rgba(0,0,0,0.08); }
+  .volume-hero__label { margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--c-ink-faint); }
+  .volume-hero__value { margin: 0; display: flex; align-items: baseline; gap: 8px; font-family: var(--f-display); font-size: clamp(40px, 4.8vw, 64px); font-weight: 680; line-height: 0.96; letter-spacing: -0.035em; font-variant-numeric: tabular-nums; background: linear-gradient(170deg, #1d1d1f 22%, var(--c-air) 130%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .volume-hero__unit { font-size: 0.32em; font-weight: 600; letter-spacing: 0; -webkit-text-fill-color: var(--c-ink-dim); }
   .field__label { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; width: 100%; padding: 0 0 14px; font-size: 12px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--c-ink-faint); }
   .field__unit { font-size: 11px; font-weight: 500; letter-spacing: 0.04em; text-transform: none; color: var(--c-air); font-variant-numeric: tabular-nums; transition: opacity 0.3s var(--ease); }
   .field__note { margin: 14px 0 0; font-size: 13px; line-height: 1.5; color: var(--c-ink-faint); }
