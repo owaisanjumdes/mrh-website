@@ -376,9 +376,15 @@ export default function Nav() {
           font-weight: 600;
         }
 
-        /* On phones/tablets the inline links collapse into the hamburger menu */
+        /* On phones/tablets the inline links collapse into the hamburger menu.
+           Both brand logos group together on the left; the CTA + hamburger sit on
+           the right. (The desktop edge-pull negative margins are reset here.) */
         @media (max-width: 820px) {
           .mrh-nav-center { display: none !important; }
+          .mrh-nav { justify-content: flex-start !important; }
+          .mrh-nav-mrh { margin-left: 0 !important; }
+          .mrh-nav-mh { order: 1; margin-left: clamp(8px, 2.4vw, 16px) !important; margin-right: 0 !important; }
+          .mrh-nav-actions { order: 2; margin-left: auto !important; }
         }
         @media (max-width: 480px) {
           .mrh-nav-cta { display: none; }
@@ -508,7 +514,7 @@ export default function Nav() {
 
       {/* Actions (right) */}
       <div
-        className="mrh-nav-row"
+        className="mrh-nav-row mrh-nav-actions"
         style={{
           display: "flex",
           alignItems: "center",
