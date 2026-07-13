@@ -165,7 +165,7 @@ const PRESS_CSS = `
     -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
     mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
   }
-  .press__track { display: flex; width: max-content; margin: 0; padding: 0; list-style: none; animation: pressMarquee 70s linear infinite; will-change: transform; }
+  .press__track { display: flex; width: max-content; margin: 0; padding: 0; list-style: none; animation: pressMarquee 17.5s linear infinite; will-change: transform; }
   @keyframes pressMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   .press__track.is-stopped { animation-play-state: paused; }
   .press__marquee:hover .press__track { animation-play-state: paused; }

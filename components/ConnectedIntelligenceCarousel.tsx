@@ -121,7 +121,7 @@ export default function ConnectedIntelligenceCarousel() {
         rewind
         speed={800}
         spaceBetween={40}
-        autoplay={{ delay: 3500, disableOnInteraction: false }}
+        autoplay={{ delay: 1750, disableOnInteraction: false }}
         pagination={{ clickable: true }}
         className="ci-swiper"
       >
