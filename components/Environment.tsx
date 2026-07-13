@@ -746,8 +746,8 @@ export default function Environment() {
       {/* 6d — LOGO WALL (Trusted across India) */}
       <section className="env-section" style={{ background: "#ffffff" }}>
         <div className="env-wrap">
-          <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>Trusted by the Places People Share</h2>
-          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>The Names That Already Run MRH</p>
+          <h2 className="env-h2" data-reveal style={{ ["--ri" as string]: 1 }}>Trusted Across Industries</h2>
+          <p className="env-sub" data-reveal style={{ ["--ri" as string]: 2 }}>Creating healthier spaces across India</p>
         </div>
         <LogoMarquee />
       </section>

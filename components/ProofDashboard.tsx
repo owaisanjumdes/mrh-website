@@ -115,7 +115,19 @@ function CountUp({ to, run, className }: { to: number; run: boolean; className?:
 
 export default function ProofDashboard({ dark = false }: { dark?: boolean } = {}) {
   const rootRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
+
+  // On phones the metric cards become a horizontal slider; the arrows step it by
+  // exactly one card (measured from the pitch between the first two cards).
+  const scrollByCard = (dir: number) => {
+    const el = trackRef.current;
+    if (!el) return;
+    const cards = el.querySelectorAll<HTMLElement>(".pd2-card");
+    const pitch =
+      cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : el.clientWidth;
+    el.scrollBy({ left: dir * pitch, behavior: "smooth" });
+  };
 
   useEffect(() => {
     const el = rootRef.current;
@@ -167,7 +179,19 @@ export default function ProofDashboard({ dark = false }: { dark?: boolean } = {}
           <span className="pd2-orb pd2-orb--c" />
         </div>
 
-        <div className="pd2-grid">
+        {/* Prev / next arrows — only shown on phones, where the grid becomes a slider */}
+        <button type="button" className="pd2-arrow pd2-arrow--prev" aria-label="Previous" onClick={() => scrollByCard(-1)}>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path d="M15 6l-6 6 6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+        <button type="button" className="pd2-arrow pd2-arrow--next" aria-label="Next" onClick={() => scrollByCard(1)}>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+
+        <div className="pd2-grid" ref={trackRef}>
           {/* AQI recovery — wide top banner (cyan) */}
           <div className="pd2-card pd2-aqi" style={acStyle(AC.cyan)}>
             <div className="pd2-wide">
@@ -333,6 +357,9 @@ const CSS = `
   @keyframes pdOrb { to { transform: translate3d(4%, 5%, 0) scale(1.12); } }
 
   .pd2-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 1.5vw, 20px); }
+
+  /* Prev/next arrows: hidden on desktop, shown only when the grid is a phone slider */
+  .pd2-arrow { display: none; }
   .pd2-aqi { grid-column: 1 / -1; }
   .pd2-overall { grid-column: 1; grid-row: 2 / span 2; }
   .pd2-particle { grid-column: 2; grid-row: 2; }
@@ -467,8 +494,37 @@ const CSS = `
     .pd2-wide { grid-template-columns: 1fr; gap: 18px; }
   }
   @media (max-width: 560px) {
-    .pd2-grid { grid-template-columns: 1fr; }
-    .pd2-aqi, .pd2-overall { grid-column: auto; }
+    /* Cards become a horizontal, snap-scrolling slider driven by the arrows.
+       The track is full-bleed (100vw) so the vw-based sizing centers correctly:
+       9vw side padding + half of an 82vw card lands the active card at 50vw. */
+    .pd2-grid {
+      display: flex;
+      grid-template-columns: none;
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+      gap: 14px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding: 4px 9vw 10px;
+    }
+    .pd2-grid::-webkit-scrollbar { display: none; }
+    .pd2-card { flex: 0 0 82vw; scroll-snap-align: center; grid-column: auto !important; grid-row: auto !important; min-height: 300px; }
+
+    .pd2-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%); z-index: 6;
+      width: 42px; height: 42px; border: none; border-radius: 50%;
+      background: #ffffff; color: #333336;
+      display: inline-flex; align-items: center; justify-content: center;
+      cursor: pointer; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+      transition: background 200ms ease, transform 150ms ease;
+    }
+    .pd2-arrow:active { transform: translateY(-50%) scale(0.92); }
+    .pd2-arrow svg { width: 44%; height: 44%; }
+    .pd2-arrow--prev { left: 4px; }
+    .pd2-arrow--next { right: 4px; }
+    .pd-dark .pd2-arrow { background: #2a2a2c; color: #f5f5f7; }
   }
   @media (prefers-reduced-motion: reduce) {
     .pd2-card { opacity: 1; transform: none; transition: none; }

@@ -381,13 +381,17 @@ export default function Nav() {
            the right. (The desktop edge-pull negative margins are reset here.) */
         @media (max-width: 820px) {
           .mrh-nav-center { display: none !important; }
-          .mrh-nav { justify-content: flex-start !important; }
-          .mrh-nav-mrh { margin-left: 0 !important; }
-          .mrh-nav-mh { order: 1; margin-left: clamp(8px, 2.4vw, 16px) !important; margin-right: 0 !important; }
-          .mrh-nav-actions { order: 2; margin-left: auto !important; }
+          .mrh-nav { justify-content: flex-start !important; padding-left: clamp(14px, 4.5vw, 24px) !important; padding-right: clamp(14px, 4.5vw, 24px) !important; }
+          .mrh-nav-mrh { margin-left: 0 !important; height: clamp(34px, 8.5vw, 44px) !important; }
+          .mrh-nav-mh { order: 1; margin-left: clamp(8px, 2.4vw, 16px) !important; margin-right: 0 !important; height: clamp(26px, 6.5vw, 34px) !important; }
+          .mrh-nav-actions { order: 2; margin-left: auto !important; gap: 8px !important; }
+          /* Keep the CTA on one line and compact so it never wraps or squeezes. */
+          .mrh-nav .mrh-nav-cta { flex: none; font-size: 11px; letter-spacing: 0.03em; padding: 0.55em 0.85em; }
         }
-        @media (max-width: 480px) {
-          .mrh-nav-cta { display: none; }
+        /* Only the very narrowest phones drop the CTA to the hamburger alone. The
+           descendant selector outranks the base rule below, so this actually wins. */
+        @media (max-width: 360px) {
+          .mrh-nav .mrh-nav-cta { display: none; }
         }
         .mrh-nav-cta {
           position: relative;
@@ -402,6 +406,7 @@ export default function Nav() {
           letter-spacing: 0.05em;
           padding: 0.62em 1.05em;
           text-decoration: none;
+          white-space: nowrap;
           display: inline-flex;
           align-items: center;
           gap: 0.45em;
