@@ -87,9 +87,8 @@ export default function NewsStrip() {
 
       <div className="press__inner">
         <header className="press__head">
-          <p className="press__eyebrow">In the News</p>
           <h2 className="press__heading" id="press-heading">
-            The MANN+HUMMEL Partnership, Covered
+            Featured in the News
           </h2>
         </header>
       </div>
@@ -142,7 +141,7 @@ const PRESS_CSS = `
     width: 100vw;
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
-    padding: clamp(56px, 6vw, 88px) 0;
+    padding: clamp(44px, 6vw, 96px) 0;
     background: var(--p-bg);
     color: var(--p-ink);
     font-family: var(--p-font);
@@ -163,8 +162,6 @@ const PRESS_CSS = `
     width: 100vw;
     margin-left: calc(50% - 50vw);
     overflow: hidden;
-    border-top: 1px solid var(--p-rule);
-    border-bottom: 1px solid var(--p-rule);
     -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
     mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
   }
@@ -173,7 +170,7 @@ const PRESS_CSS = `
   .press__track.is-stopped { animation-play-state: paused; }
   .press__marquee:hover .press__track { animation-play-state: paused; }
 
-  .press__cell { flex: 0 0 clamp(258px, 25vw, 320px); border-right: 1px solid var(--p-rule); }
+  .press__cell { flex: 0 0 clamp(258px, 25vw, 320px); }
 
   .press__item { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 0; height: 100%; padding: 30px 26px 28px; text-decoration: none; color: inherit; transition: background 0.35s var(--p-ease); }
   a.press__item:hover { background: #FAFBFC; }

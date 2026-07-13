@@ -534,7 +534,7 @@ const CALC_CSS = `
     width: 100vw;
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
-    padding: clamp(64px, 8vw, 120px) clamp(20px, 6vw, 88px) clamp(72px, 9vw, 140px);
+    padding: clamp(44px, 6vw, 96px) clamp(20px, 6vw, 88px);
     background: var(--c-bg);
     color: var(--c-ink);
     font-family: var(--f-text);

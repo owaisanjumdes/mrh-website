@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import ClientStories from "@/components/ClientStories";
 import ConnectedIntelligenceCarousel from "@/components/ConnectedIntelligenceCarousel";
 import MannHummelSlider from "@/components/MannHummelSlider";
@@ -213,20 +213,23 @@ const BANNERS: { src: string; alt: string }[] = [
   { src: "/ub1.jpeg", alt: "MRH banner 1" },
 ];
 
-const LOGOS: { name: string; src: string; fill?: boolean }[] = [
-  { name: "Delhi Public School", src: "/logos/dps.png" },
+// `fill` = logo already carries its own solid bg, so it covers the whole circle.
+// `bg`   = logo is transparent; give the circle this solid contrast colour and
+//          size the logo up (it still stays inside the circle).
+const LOGOS: { name: string; src: string; fill?: boolean; bg?: string }[] = [
+  { name: "Delhi Public School", src: "/logos/dps.png", bg: "#DDEEE1" },
   { name: "GD Goenka", src: "/logos/gdgoenka.png" },
-  { name: "Birla Estates", src: "/logos/birlaestates.png" },
-  { name: "O.P. Jindal", src: "/logos/opjindal.png" },
-  { name: "Isparva", src: "/logos/isparva.png" },
-  { name: "Forest Essentials", src: "/logos/forestessentials.png" },
-  { name: "Unox", src: "/logos/unox.png" },
-  { name: "Bal Bharati", src: "/logos/balbharti.png" },
+  { name: "Birla Estates", src: "/logos/birlaestates.png", bg: "#EDDCEB" },
+  { name: "O.P. Jindal", src: "/logos/opjindal.png", bg: "#DBE7F8" },
+  { name: "Isparva", src: "/logos/isparva.png", bg: "#EADFC6" },
+  { name: "Forest Essentials", src: "/logos/forestessentials.png", bg: "#16352B" },
+  { name: "Unox", src: "/logos/unox.png", bg: "#E7E7EC" },
+  { name: "Bal Bharati", src: "/logos/balbharti.png", bg: "#D6EEF3" },
   { name: "Dharav High School", src: "/images%20(4).png" },
   { name: "Authum Investment", src: "/images%20(2).jpg", fill: true },
-  { name: "Maxop", src: "/maxoplogofoot.webp" },
-  { name: "Bajaj Alloys", src: "/bf68bc_c1dd072109d143bf8b0e028d90f94d40~mv2.png" },
-  { name: "Sundaram", src: "/sundaram-way.png" },
+  { name: "Maxop", src: "/maxoplogofoot.webp", bg: "#E3EAF4" },
+  { name: "Bajaj Alloys", src: "/bf68bc_c1dd072109d143bf8b0e028d90f94d40~mv2.png", bg: "#F0E7D6" },
+  { name: "Sundaram", src: "/sundaram-way.png", bg: "#DEE7F1" },
   { name: "Indian Army", src: "/Indian_Army_Circular_Insignia.svg.webp", fill: true },
   { name: "Rukma Café", src: "/300782765_1140619429866290_4061227762187207572_n.jpg", fill: true },
 ];
@@ -271,7 +274,7 @@ export default function Environment() {
         .env-hero-seg { position: relative; height: 8px; width: 8px; padding: 0; border: none; border-radius: 980px; background: rgba(0, 0, 0, 0.18); cursor: pointer; overflow: hidden; transition: width 480ms cubic-bezier(0.22, 1, 0.36, 1), background 300ms ease; }
         .env-hero-seg.is-active { width: 52px; background: rgba(0, 0, 0, 0.14); }
         @keyframes envHeroSeg { from { width: 0%; } to { width: 100%; } }
-        .env-hero-seg-fill { display: block; height: 100%; width: 0%; border-radius: 980px; background: #1d1d1f; animation: envHeroSeg 5500ms linear forwards; }
+        .env-hero-seg-fill { display: block; height: 100%; width: 0%; border-radius: 980px; background: #1d1d1f; animation: envHeroSeg 2750ms linear forwards; }
         @media (prefers-reduced-motion: reduce) { .env-hero-seg-fill { animation: none; width: 100%; } }
 
         /* ---------- floating WhatsApp button (home only) ---------- */
@@ -285,7 +288,9 @@ export default function Environment() {
         @media (prefers-reduced-motion: reduce) { .env-wa-pulse { animation: none; opacity: 0; } }
 
         /* ---------- generic section heading ---------- */
-        .env-section { padding: clamp(72px, 11vh, 150px) 0; }
+        /* One width-based rhythm for every section. vw (not vh) keeps the gap
+           consistent across phones, whose height + dynamic toolbars vary. */
+        .env-section { padding: clamp(44px, 6vw, 96px) 0; }
         .env-eyebrow { margin: 0 0 clamp(10px, 1.4vw, 16px); text-align: center; font-size: clamp(17px, 2vw, 24px); font-weight: 600; letter-spacing: 0.01em; background: linear-gradient(90deg, #1D976C, #93F9B9); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
         .env-h2 { margin: 0 auto; max-width: 18ch; text-align: center; font-size: clamp(32px, 5.2vw, 76px); font-weight: 600; line-height: 1.07; letter-spacing: -0.02em; text-wrap: balance; }
         .env-sub { margin: clamp(18px, 2vw, 28px) auto 0; max-width: 52ch; text-align: center; font-size: clamp(15px, 1.4vw, 19px); font-weight: 500; line-height: 1.45; color: #6e6e73; }
@@ -317,7 +322,7 @@ export default function Environment() {
         .env-prod-buy:hover { background: #333335; }
 
         /* ---------- 2b. impact blocks (16:9 video, then 3 stats below) ---------- */
-        .env-im { background: #ffffff; width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); padding: clamp(48px, 7vh, 100px) 0; }
+        .env-im { background: #ffffff; width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); padding: clamp(44px, 6vw, 96px) 0; }
         .env-im-inner { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
         .env-im-media { aspect-ratio: 16 / 9; border-radius: clamp(16px, 2vw, 24px); overflow: hidden; }
         .env-im-media .env-ph { width: 100%; height: 100%; }
@@ -469,15 +474,22 @@ export default function Environment() {
 
         /* ---------- 6d. logo wall (infinite marquee of circular badges) ---------- */
         .env-marquee { position: relative; width: 100vw; margin-left: calc(50% - 50vw); margin-top: clamp(12px, 1.5vw, 22px); padding: clamp(8px, 1vw, 14px) 0; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
-        .env-marquee-track { display: flex; width: max-content; animation: envMarquee 42s linear infinite; will-change: transform; }
+        .env-marquee-track { display: flex; width: max-content; animation: envMarquee 34s linear infinite; will-change: transform; }
+        /* Pause the scroll on hover. !important beats the inline play-state that
+           gates the animation to when the strip is on screen. */
+        .env-marquee:hover .env-marquee-track { animation-play-state: paused !important; }
         /* Two identical logo sets sit end to end; shifting by exactly half the
            track loops seamlessly. Each badge carries its gap as margin-right so
            the -50% offset lands on a perfect boundary. */
         @keyframes envMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         .env-logo-circle { flex: none; width: clamp(104px, 12vw, 150px); height: clamp(104px, 12vw, 150px); margin-right: clamp(20px, 3vw, 48px); border-radius: 50%; background: #ffffff; border: 2px solid #c7c7cc; display: flex; align-items: center; justify-content: center; padding: clamp(18px, 2vw, 30px); overflow: hidden; }
         .env-logo-circle.fill { padding: 0; }
+        /* Transparent logos get a solid contrast bg and a size bump. Padding is
+           held to the circle's inscribed square so the logo never clips an edge. */
+        .env-logo-circle.tint { padding: clamp(16px, 1.7vw, 22px); border-color: rgba(0,0,0,0.08); }
         .env-logo-img { max-width: 100%; max-height: clamp(46px, 6vw, 72px); width: auto; height: auto; object-fit: contain; }
         .env-logo-img.fill { width: 100%; height: 100%; max-width: none; max-height: none; object-fit: cover; }
+        .env-logo-img.big { max-height: clamp(56px, 7vw, 94px); }
         @media (prefers-reduced-motion: reduce) { .env-marquee-track { animation: none; } }
 
         /* ---------- 6e. testimonials ---------- */
@@ -509,7 +521,7 @@ export default function Environment() {
         .env-sim-link:hover span { transform: translateX(3px); }
 
         /* ---------- 7/8 link sections ---------- */
-        .env-closer { padding: clamp(56px, 8vh, 110px) 0; }
+        .env-closer { padding: clamp(44px, 6vw, 96px) 0; }
         .env-link { color: #0066cc; font-size: clamp(15px, 1.3vw, 17px); font-weight: 500; text-decoration: none; cursor: pointer; }
         .env-link:hover { text-decoration: underline; }
         .env-divider { border: none; border-top: 1px solid #d2d2d7; margin: clamp(28px, 3vw, 44px) 0 0; }
@@ -626,7 +638,7 @@ export default function Environment() {
         stats={[
           { icon: "frame", num: "4,000", unit: "sq ft.", desc: "of area coverage from a single unit, built for the largest indoor spaces." },
           { icon: "filter", num: "PM10, PM2.5", unit: "", desc: "Advanced multi-stage filtration for fine particles and NOx gases." },
-          { icon: "layers", num: "16", unit: "Stage Filtration", desc: "8 pre-filters and 8 main filters, at combined ISO 16890 efficiency." },
+          { icon: "layers", num: "16", unit: "Advanced Combi Filters", desc: <>with an Activated Carbon Layer<br />and Pre Filters.</> },
         ]}
         cta={{ label: "Explore AirFINEry", href: "/products/airfinery" }}
       />
@@ -784,10 +796,15 @@ function LogoMarquee() {
         style={{ animationPlayState: inView ? "running" : "paused" }}
       >
         {row.map((logo, i) => (
-          <div className={`env-logo-circle${logo.fill ? " fill" : ""}`} key={i} aria-hidden={i >= LOGOS.length}>
+          <div
+            className={`env-logo-circle${logo.fill ? " fill" : ""}${logo.bg ? " tint" : ""}`}
+            key={i}
+            aria-hidden={i >= LOGOS.length}
+            style={logo.bg ? { background: logo.bg } : undefined}
+          >
             <img
               loading="lazy"
-              className={`env-logo-img${logo.fill ? " fill" : ""}`}
+              className={`env-logo-img${logo.fill ? " fill" : ""}${logo.bg ? " big" : ""}`}
               src={logo.src}
               alt={i < LOGOS.length ? logo.name : ""}
             />
@@ -809,7 +826,7 @@ function AssessmentStrip() {
           margin-left: calc(50% - 50vw);
           margin-right: calc(50% - 50vw);
           background: #ffffff;
-          padding: clamp(40px, 6vw, 88px) clamp(20px, 6vw, 126px);
+          padding: clamp(44px, 6vw, 96px) clamp(20px, 6vw, 126px);
           font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
         }
         /* Light-gray rounded card — text left, large purifier icon right.
@@ -888,6 +905,24 @@ function HeroBanners() {
     setActive((i) => (dx < 0 ? (i + 1) % n : (i - 1 + n) % n));
   };
 
+  // Mouse drag (desktop): press and drag left/right to change banner. We only
+  // read the horizontal delta on release and never call preventDefault, so
+  // vertical page scrolling (wheel/trackpad) is never intercepted.
+  const dragX = useRef<number | null>(null);
+  const onMouseDown = (e: React.MouseEvent) => {
+    dragX.current = e.clientX;
+  };
+  const onMouseUp = (e: React.MouseEvent) => {
+    if (dragX.current == null) return;
+    const dx = e.clientX - dragX.current;
+    dragX.current = null;
+    if (Math.abs(dx) < 40) return;
+    setActive((i) => (dx < 0 ? (i + 1) % n : (i - 1 + n) % n));
+  };
+  const onMouseLeave = () => {
+    dragX.current = null;
+  };
+
   return (
     <>
       <header
@@ -897,6 +932,11 @@ function HeroBanners() {
         aria-label="Hero banners"
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
+        onMouseLeave={onMouseLeave}
+        onDragStart={(e) => e.preventDefault()}
+        style={{ cursor: "grab" }}
       >
         <div className="env-hero-track">
         {BANNERS.map((b, i) => (
@@ -913,6 +953,7 @@ function HeroBanners() {
               src={b.src}
               alt={b.alt}
               loading={i === 0 ? "eager" : "lazy"}
+              draggable={false}
             />
           </div>
         ))}
@@ -944,16 +985,17 @@ function HeroBanners() {
   );
 }
 
-// Floating "live" WhatsApp circle, pinned to the bottom-right — but only while
-// the hero is on screen. Once the hero scrolls out of view it fades away.
+// Floating "live" WhatsApp circle, pinned to the bottom-right. It stays visible
+// the whole way down the page; only the pulsing ring is gated to the hero — it
+// stops once the hero scrolls out of view.
 function WhatsAppButton() {
-  const [visible, setVisible] = useState(true);
+  const [heroInView, setHeroInView] = useState(true);
 
   useEffect(() => {
     const hero = document.querySelector(".env-hero");
     if (!hero) return;
     const io = new IntersectionObserver(
-      ([e]) => setVisible(e.isIntersecting),
+      ([e]) => setHeroInView(e.isIntersecting),
       { threshold: 0 }
     );
     io.observe(hero);
@@ -962,15 +1004,13 @@ function WhatsAppButton() {
 
   return (
     <a
-      className={`env-wa ${visible ? "" : "env-wa--hidden"}`}
+      className="env-wa"
       href="https://wa.me/919996999260?text=Hi%20MRH%2C%20I%27d%20like%20to%20know%20more%20about%20your%20air%20purifiers."
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with us on WhatsApp"
-      aria-hidden={!visible}
-      tabIndex={visible ? undefined : -1}
     >
-      <span className="env-wa-pulse" aria-hidden />
+      {heroInView && <span className="env-wa-pulse" aria-hidden />}
       <svg viewBox="0 0 24 24" aria-hidden>
         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .105 5.358.102 11.892c0 2.096.546 4.142 1.588 5.945L0 24l6.335-1.652a11.882 11.882 0 005.71 1.447h.005c6.585 0 11.946-5.359 11.949-11.893a11.821 11.821 0 00-3.479-8.443" />
       </svg>
@@ -1104,7 +1144,7 @@ function ImpactIcon({ kind }: { kind: string }) {
   );
 }
 
-type ImpactStat = { icon: string; num: string; unit: string; desc: string };
+type ImpactStat = { icon: string; num: string; unit: string; desc: ReactNode };
 
 function ImpactBlock({
   title,
