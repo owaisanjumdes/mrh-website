@@ -1083,6 +1083,7 @@ function Counter({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    let raf = 0;
     const io = new IntersectionObserver(
       (entries) => {
         if (entries[0]?.isIntersecting && !started.current) {
@@ -1093,16 +1094,19 @@ function Counter({
             const p = Math.min(1, (now - startTime) / duration);
             const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
             setVal(Math.round(to * eased));
-            if (p < 1) requestAnimationFrame(tick);
+            if (p < 1) raf = requestAnimationFrame(tick);
           };
-          requestAnimationFrame(tick);
+          raf = requestAnimationFrame(tick);
           io.disconnect();
         }
       },
       { threshold: 0.4 }
     );
     io.observe(el);
-    return () => io.disconnect();
+    return () => {
+      io.disconnect();
+      cancelAnimationFrame(raf);
+    };
   }, [to, duration]);
 
   return (

@@ -93,8 +93,8 @@ function CountUp({ to, run, className }: { to: number; run: boolean; className?:
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
-      setN(to);
-      return;
+      const raf = requestAnimationFrame(() => setN(to));
+      return () => cancelAnimationFrame(raf);
     }
     if (!run) return;
     let raf = 0;
@@ -133,8 +133,8 @@ export default function ProofDashboard({ dark = false }: { dark?: boolean } = {}
     const el = rootRef.current;
     if (!el) return;
     if (typeof IntersectionObserver === "undefined") {
-      setInView(true);
-      return;
+      const raf = requestAnimationFrame(() => setInView(true));
+      return () => cancelAnimationFrame(raf);
     }
     const io = new IntersectionObserver(
       ([e]) => {

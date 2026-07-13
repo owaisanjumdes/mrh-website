@@ -1,5 +1,15 @@
 import SectionBlock from "../../components/SectionBlock";
 
+// Published case-study slugs. Add slugs here as studies go live; every other
+// /projects/* URL returns 404 instead of echoing the URL back into the page.
+const PUBLISHED_SLUGS: string[] = [];
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return PUBLISHED_SLUGS.map((slug) => ({ slug }));
+}
+
 export default async function DeploymentPage({
   params,
 }: {

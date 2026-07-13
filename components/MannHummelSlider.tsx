@@ -75,8 +75,8 @@ export default function MannHummelSlider() {
   const [reduced, setReduced] = useState(false);
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setReduced(true);
-      return;
+      const raf = requestAnimationFrame(() => setReduced(true));
+      return () => cancelAnimationFrame(raf);
     }
     const el = railRef.current;
     if (!el) return;

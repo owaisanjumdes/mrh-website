@@ -105,7 +105,7 @@ export default function SolutionsBanner() {
               nav.nextEl = nextRef.current;
             }
           }}
-          navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
+          navigation={{ prevEl: null, nextEl: null }}
           mousewheel={{ forceToAxis: false, releaseOnEdges: true }}
           grabCursor
           slidesPerView="auto"
