@@ -139,24 +139,26 @@ type Slide = {
   twoLine?: boolean;
   noScrim?: boolean;
   hardLoop?: boolean;
+  wrap?: boolean;
 };
 
 const SLIDES: Slide[] = [
   {
-    lead: "One PureAir for every space.",
-    rest: "Three sizes, one standard of clean.",
+    lead: "Engineered with German Filtration",
+    rest: "Made in India",
     video: "/pa3a.mp4",
     videoPos: "center 70%",
     hardLoop: true,
     twoLine: true,
   },
   {
-    lead: "Multi-stage filtration.",
-    rest: "Captures up to 99.97% of particles, down to 0.3 microns.",
+    lead: "Nanofiber-enhanced filter element",
+    rest: "PM10 >95%, PM2.5 >80% efficiency. 6 pre + 8 main filters, combined ISO 16890.",
     video: "/filtervid.mp4",
     videoPos: "center 12%",
     hardLoop: true,
     twoLine: true,
+    wrap: true,
   },
   {
     lead: "The air, on the front panel.",
@@ -166,16 +168,16 @@ const SLIDES: Slide[] = [
     twoLine: true,
   },
   {
-    lead: "Proven across 200+ spaces.",
-    rest: "Schools, offices, hotels, hospitals, homes.",
+    lead: "Trusted Across Every Space",
+    rest: "Schools. Offices. Banks. Hotels. Hospitals. Homes and More",
     video: "/twos.mp4",
     noScrim: true,
     hardLoop: true,
     twoLine: true,
   },
   {
-    lead: "2,000 sq ft, cleared fast.",
-    rest: "A full classroom of clean air in minutes.",
+    lead: "",
+    rest: "Rapidly delivers clean, filtered air across large indoor environments.",
     video: "/twot.mp4",
     videoFit: "contain",
     capPos: "br",
@@ -322,14 +324,24 @@ export default function Highlights() {
         }
         .hl-card-cap b { color: #ffffff; font-weight: 600; }
         .hl-card-cap { position: relative; z-index: 2; }
+        /* longer captions wrap onto two balanced lines instead of a tall stack */
+        .hl-card-cap--wrap {
+          white-space: normal;
+          text-wrap: balance;
+          max-width: min(100%, 48ch);
+          margin-inline: auto;
+        }
+        .hl-card-cap--wrap b { display: block; margin-bottom: 4px; }
         /* one card: caption pinned to the bottom-right corner, two lines */
         .hl-card-cap--br {
           position: absolute;
-          inset: auto clamp(26px, 3vw, 44px) clamp(28px, 3.4vw, 44px) auto;
+          /* lifted above the sticky progress pill that floats over the card bottom */
+          inset: auto clamp(26px, 3vw, 44px) clamp(72px, 11vh, 120px) auto;
           width: auto;
-          max-width: 60%;
+          max-width: 52%;
           padding: 0;
           text-align: right;
+          text-wrap: balance;
           white-space: normal;
         }
 
@@ -535,10 +547,10 @@ export default function Highlights() {
                 />
               ) : null}
               {s.lead || s.rest ? (
-                <p className={`hl-card-cap ${s.capPos === "br" ? "hl-card-cap--br" : ""}`}>
-                  <b>{s.lead}</b>
-                  {s.capPos === "br" || s.twoLine ? <br /> : " "}
-                  {s.rest}
+                <p className={`hl-card-cap ${s.capPos === "br" ? "hl-card-cap--br" : ""} ${s.wrap ? "hl-card-cap--wrap" : ""}`}>
+                  {s.lead ? <b>{s.lead}</b> : null}
+                  {s.lead && !s.wrap ? (s.capPos === "br" || s.twoLine ? <br /> : " ") : null}
+                  {s.rest ? <span className="hl-sub">{s.rest}</span> : null}
                 </p>
               ) : null}
             </article>

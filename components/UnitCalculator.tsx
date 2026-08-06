@@ -500,7 +500,7 @@ export default function UnitCalculator() {
             </div>
 
             <div className="mrh-calc__cta">
-              <a className="btn" href="/contact">
+              <a className="btn cta-wipe" href="/contact">
                 Get a detailed assessment
                 <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden>
                   <path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
@@ -662,7 +662,7 @@ const CALC_CSS = `
 
   .mrh-calc__cta { margin-top: auto; padding-top: 26px; }
   .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 22px; border-radius: 999px; background: #1d1d1f; color: #ffffff; font-size: 14px; font-weight: 600; letter-spacing: -0.008em; text-decoration: none; transition: transform 0.28s var(--ease), background 0.28s var(--ease); }
-  .btn:hover { transform: translateY(-1.5px); background: #333335; }
+  .btn:hover { transform: translateY(-1.5px); background: #1d1d1f; }
   .btn svg { transition: transform 0.28s var(--ease); }
   .btn:hover svg { transform: translateX(3px); }
   .btn:focus-visible { outline: 2px solid var(--c-air); outline-offset: 3px; }

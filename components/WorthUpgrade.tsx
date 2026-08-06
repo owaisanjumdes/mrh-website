@@ -172,6 +172,51 @@ export default function WorthUpgrade() {
           padding: clamp(20px, 2.4vw, 32px);
         }
 
+        /* German Filtration card: MRH + MANN+HUMMEL logo row */
+        .wtu-logos {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: clamp(20px, 2.6vw, 34px);
+          margin-top: clamp(22px, 2.6vw, 32px);
+        }
+        .wtu-logo { height: clamp(34px, 3.8vw, 50px); width: auto; object-fit: contain; display: block; }
+
+        /* Full-bleed background-image cards (Customizable / Service on Wheels) */
+        .wtu-card--bg {
+          justify-content: flex-end;
+          align-items: stretch;
+          text-align: left;
+          padding: 0;
+        }
+        .wtu-bg-img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+          z-index: 0;
+        }
+        .wtu-bg-scrim {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.82) 0%,
+            rgba(0, 0, 0, 0.35) 46%,
+            rgba(0, 0, 0, 0.12) 100%
+          );
+          pointer-events: none;
+        }
+        .wtu-card--bg .wtu-card-lead {
+          position: relative;
+          z-index: 2;
+          max-width: none;
+          padding: clamp(20px, 2.4vw, 32px);
+        }
+
         .wtu-card-title {
           margin: 0;
           max-width: 280px;
@@ -276,6 +321,12 @@ export default function WorthUpgrade() {
           line-height: 1.19;
           letter-spacing: 0.011em;
         }
+        .wtu-footer-text b {
+          display: inline-block;
+          margin-bottom: 8px;
+          color: #f5f5f7;
+          font-weight: 600;
+        }
         .wtu-footer-link {
           display: inline-flex;
           align-items: center;
@@ -304,45 +355,35 @@ export default function WorthUpgrade() {
       <div className="wtu-panel">
         <div className="wtu-inner">
           <div className="wtu-top" data-reveal>
-            <h2 className="wtu-title">
-              Worth the Upgrade?
-              <br />
-              &nbsp;100 Percent
-            </h2>
+            <h2 className="wtu-title">What Sets PureAir Apart</h2>
           </div>
 
           <p className="wtu-sub" data-reveal>
-            A Few Ways <b>PureAir</b> Gives You More
+            Reasons to Choose <b>PureAir</b>
           </p>
 
           <div className="wtu-grid">
-            {/* 1 — multi-stage filtration */}
+            {/* 1 — German filtration (MRH + MANN+HUMMEL) */}
             <article className="wtu-card wtu-card--center" data-reveal style={{ ["--ri" as string]: 0 }}>
-              <p className="wtu-card-lead">
-                Multi-Stage
-                <br />
-                Filtration
-              </p>
-            </article>
-
-            {/* 2 — Capture rate */}
-            <article className="wtu-card wtu-card--center" data-reveal style={{ ["--ri" as string]: 1 }}>
-              <div className="wtu-card-big">
-                <span>99.97%</span>
+              <p className="wtu-card-lead">German Filtration</p>
+              <div className="wtu-logos">
+                <img loading="lazy" className="wtu-logo" src="/mrhgreenlogo.png" alt="MRH" />
+                <img loading="lazy" className="wtu-logo" src="/mhgreenlogo.png" alt="MANN+HUMMEL" />
               </div>
-              <p className="wtu-card-label">
-                captured.
-                <br />
-                Down to 0.3 microns.
-              </p>
+              <p className="wtu-card-note">Made in India</p>
             </article>
 
-            {/* 3 — Independently validated */}
+            {/* 2 — Customizable for every space (background image) */}
+            <article className="wtu-card wtu-card--bg" data-reveal style={{ ["--ri" as string]: 1 }}>
+              <img loading="lazy" className="wtu-bg-img" src="/pao.jpg" alt="" aria-hidden />
+              <div className="wtu-bg-scrim" aria-hidden />
+              <p className="wtu-card-lead">Customizable for Every Space</p>
+            </article>
+
+            {/* 3 — IIT Delhi validated */}
             <article className="wtu-card wtu-card--center" data-reveal style={{ ["--ri" as string]: 2 }}>
-              <p className="wtu-card-lead">Independently Validated</p>
-              <p className="wtu-card-note">
-                ISO 16890 certified, proven by IIT Delhi.
-              </p>
+              <p className="wtu-card-lead">IIT Delhi Validated Performance</p>
+              <p className="wtu-card-note">ISO 16890 certified.</p>
             </article>
 
             {/* 4 — Coverage */}
@@ -357,10 +398,11 @@ export default function WorthUpgrade() {
               </p>
             </article>
 
-            {/* 5 — Quiet and efficient */}
-            <article className="wtu-card wtu-card--center" data-reveal style={{ ["--ri" as string]: 1 }}>
-              <p className="wtu-card-lead">Quiet and Efficient</p>
-              <p className="wtu-card-note">Under 55 dB, under 80W.</p>
+            {/* 5 — Service on Wheels (background image) */}
+            <article className="wtu-card wtu-card--bg" data-reveal style={{ ["--ri" as string]: 1 }}>
+              <img loading="lazy" className="wtu-bg-img" src="/ub8.jpeg" alt="" aria-hidden />
+              <div className="wtu-bg-scrim" aria-hidden />
+              <p className="wtu-card-lead">Service on Wheels</p>
             </article>
 
             {/* 6 — Live AQI sensor */}
@@ -375,9 +417,11 @@ export default function WorthUpgrade() {
 
         <div className="wtu-footer" data-reveal>
           <p className="wtu-footer-text">
-            More coverage from fewer units, filters built to last, and service
-            handled for you. PureAir delivers cleaner air at a lower cost per
-            square foot, year after year.
+            <b>Built for Long-Term Value.</b>
+            <br />
+            Cover larger spaces with fewer units, extended filter life, and
+            intelligent maintenance help lower operating costs and maximize
+            performance throughout the product&rsquo;s lifecycle.
           </p>
           <Link className="wtu-footer-link" href="/contact">
             Get a quote for your space

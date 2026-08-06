@@ -23,30 +23,29 @@ const TABS: Tab[] = [
 
 const BLOCKS = [
   {
-    title: "See Everything",
+    title: "One Dashboard. Total Visibility.",
     desc: (
       <>
-        Connect every unit and see it all in one place. One dashboard, whether
-        it&rsquo;s one room or two hundred.
+        Monitor live air quality, track every device, manage filter health, and
+        control operations from one intelligent platform.
       </>
     ),
   },
   {
-    title: "Control in Real Time",
+    title: "Real-Time Control.",
     desc: (
       <>
-        Live AQI, filter health, and fan speed, adjustable from your phone,
-        wherever you are.
+        Check live air quality, adjust fan speed, schedule operations, and receive
+        maintenance alerts, all with a tap.
       </>
     ),
   },
   {
-    title: "It Services Itself",
+    title: "Predictive Maintenance",
     desc: (
       <>
-        Your purifier knows when it needs service and tells us before you notice.
-        No checking, no guesswork, no maintenance you forgot about. We already
-        know, and we&rsquo;re already on the way.
+        PureAir continuously monitors its own health and automatically generates
+        service alerts, enabling proactive maintenance.
       </>
     ),
   },

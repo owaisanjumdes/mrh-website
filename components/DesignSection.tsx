@@ -5,6 +5,7 @@
 // Copy kept verbatim from the Figma design.
 
 import type { ReactNode } from "react";
+import ComparePureAir from "@/components/ComparePureAir";
 
 export default function DesignSection({
   eyebrow = "Design",
@@ -161,6 +162,9 @@ export default function DesignSection({
           gap: clamp(24px, 3vw, 48px);
           height: 56px;
           padding: 0 10px 0 24px;
+          border: none;
+          cursor: pointer;
+          font-family: inherit;
           border-radius: 28px;
           background: rgba(42, 42, 45, 0.72);
           backdrop-filter: blur(20px) saturate(180%);
@@ -248,19 +252,7 @@ export default function DesignSection({
         </div>
       ) : null}
 
-      <a className="ds-cta reveal-bubble" href="#design" data-reveal>
-        <span className="ds-cta-label">Compare PureAir Design</span>
-        <span className="ds-cta-icon" aria-hidden>
-          <svg viewBox="0 0 24 24" fill="none">
-            <path
-              d="M12 5v14M5 12h14"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-          </svg>
-        </span>
-      </a>
+      <ComparePureAir />
     </section>
   );
 }

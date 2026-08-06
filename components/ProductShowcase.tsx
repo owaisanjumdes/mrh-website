@@ -20,16 +20,16 @@ export default function ProductShowcase({ heroVideo }: { heroVideo?: string } = 
       <Highlights />
       <DesignSection
         eyebrow="Why PureAir"
-        title={<>Purity You Can Feel</>}
+        title={<>Because Every Breath Matters</>}
         copy={
           <>
-            German filtration that turns any room into the cleanest air you&rsquo;ll
-            breathe all day.
+            Powerful multi-stage German filtration that quietly removes
+            pollutants, creating healthier spaces for work, learning, and living.
           </>
         }
       />
       <CloserLook />
-      <PureAirInAction sub="200+ Spaces, and Counting" />
+      <PureAirInAction sub="Engineered for Every Environment" />
       <ComparePerformance />
       <BatteryLife
         title={
@@ -72,16 +72,14 @@ export default function ProductShowcase({ heroVideo }: { heroVideo?: string } = 
       />
       <CenterStage
         eyebrow="Connected Intelligence"
-        heading="The Smartest Thing in the Room"
+        heading="Monitor. Control. Optimize."
         body={
           <>
-            Every MRH unit is online. Open the app and the air becomes a number
-            you can watch, a system you can control, and a service that takes
-            care of itself.{" "}
-            <b>
-              Live AQI, filter health, and performance, in real time, from
-              anywhere.
-            </b>
+            Manage every PureAir unit from a single intelligent dashboard. Monitor
+            live AQI and PM levels, control fan speeds, schedule operations, receive
+            filter replacement alerts, and track the real-time health of every
+            connected device.{" "}
+            <b>One App. Every Device. Complete Control.</b>
           </>
         }
         showBlocks

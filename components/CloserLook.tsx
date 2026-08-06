@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
 
 // "Take a closer look." product viewer — Figma node 707:3669 (dark mode).
 // Reuses the FeatureExplorer functionality from the home page (a pill list that
@@ -13,7 +13,7 @@ type Feature = {
   id: string;
   label: string;
   title: string;
-  description: string;
+  description: ReactNode;
   image: string;
   accent?: string;
   colors?: ColorOption[];
@@ -25,7 +25,7 @@ const FEATURES: Feature[] = [
     label: "Colors",
     title: "Colors",
     description:
-      "Four powder-coated finishes built to fit the room. Pick one that disappears into your space, or match it to your brand.",
+      "Choose from four elegant finishes, or customize the color to match your brand identity and interior aesthetics.",
     image: "/rgm.webp",
     accent: "#f0a48c",
     colors: [
@@ -37,42 +37,57 @@ const FEATURES: Feature[] = [
   },
   {
     id: "filtration",
-    label: "Multi-stage filter",
-    title: "Multi-stage filter",
-    description:
-      "Pre-filter, activated carbon, HEPA H13, and antimicrobial mesh, tuned for India's mix of dust, gases, and bioaerosols. Captures 99.97% of particles down to 0.3 microns.",
+    label: "Multi-Stage German Filtration",
+    title: "Multi-Stage German Filtration",
+    description: (
+      <>
+        Advanced <strong>Pre Filters</strong> and <strong>Main Filters</strong> work
+        together to effectively reduce <strong>PM10, PM2.5</strong>, dust, and other
+        airborne pollutants, delivering cleaner and healthier indoor air.
+      </>
+    ),
     image: "/fmc.png",
   },
   {
     id: "sensor",
-    label: "Live AQI sensor",
-    title: "Live AQI sensor",
-    description:
-      "Real-time PM2.5 and AQI right on the front panel. The same air you're breathing, read continuously, in plain numbers you can trust.",
+    label: "Live AQI Monitoring",
+    title: "Live AQI Monitoring",
+    description: (
+      <>
+        Real-time <strong>AQI, PM2.5, and PM10</strong> readings are continuously
+        displayed on the front panel, giving you instant visibility into the air you
+        breathe.
+      </>
+    ),
     image: "/am.webp",
   },
   {
     id: "iot",
-    label: "App control",
-    title: "App control",
-    description:
-      "Connect PureAir to the MRH app for live readings, filter health, and scheduling from anywhere. Every unit reports into the OK Play deployment dashboard.",
+    label: "Smart App Control",
+    title: "Smart App Control",
+    description: (
+      <>
+        Monitor live <strong>AQI, PM2.5, and PM10</strong>, track filter health,
+        control fan speed, and schedule operations remotely, all through the MRH
+        mobile app and centralized dashboard.
+      </>
+    ),
     image: "/iphonetimings.png",
   },
   {
     id: "engineering",
-    label: "Metal Unibody",
-    title: "Metal Unibody",
+    label: "Built to Last",
+    title: "Built to Last",
     description:
-      "A powder-coated metal unibody, not plastic. It stays rigid, runs cool and quiet, and shrugs off years of daily use without a creak or a warp.",
+      "A precision-engineered powder-coated metal body delivers superior durability, corrosion resistance, and reliable performance.",
     image: "/metalbody.png",
   },
   {
     id: "diagnostics",
-    label: "Self-diagnostic alerts",
-    title: "Self-diagnostic alerts",
+    label: "Predictive Service Alerts",
+    title: "Predictive Service Alerts",
     description:
-      "PureAir tracks its own health and flags service before you notice a thing. We get the alert, and we handle it.",
+      "Advanced onboard diagnostics continuously monitor system health and automatically generate maintenance alerts, enabling proactive service, minimizing downtime and ensure uninterrupted performance.",
     image: "/sow.jpg",
   },
 ];

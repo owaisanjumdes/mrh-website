@@ -124,6 +124,7 @@ function Carousel({ cards }: { cards: CardItem[] }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const n = cards.length;
   const advance = () => setActive((i) => (i + 1) % n);
+  const prev = () => setActive((i) => (i - 1 + n) % n);
 
   // Center the active card in the viewport whenever it changes, so the previous
   // and next cards bleed equally off the left and right edges.
@@ -151,19 +152,32 @@ function Carousel({ cards }: { cards: CardItem[] }) {
 
   return (
     <div className="env-carousel" ref={rootRef}>
-      <div className="env-track" ref={trackRef}>
-        {cards.map((c, i) => (
-          <article className="env-card" key={i} style={{ background: "#000000" }}>
-            {c.withImage ? (
-              c.imgSrc ? (
-                <img loading="lazy" className="env-card-img" src={c.imgSrc} alt={c.imgLabel ?? ""} />
-              ) : (
-                <Slot className="env-card-img" label={c.imgLabel ?? "Image"} />
-              )
-            ) : null}
-            {c.imgLabel ? <span className={`env-card-pill ${c.pillDark ? "env-card-pill--dark" : ""}`}>{c.imgLabel}</span> : null}
-          </article>
-        ))}
+      <div className="env-carousel-vp">
+        <div className="env-track" ref={trackRef}>
+          {cards.map((c, i) => (
+            <article className="env-card" key={i} style={{ background: "#000000" }}>
+              {c.withImage ? (
+                c.imgSrc ? (
+                  <img loading="lazy" className="env-card-img" src={c.imgSrc} alt={c.imgLabel ?? ""} />
+                ) : (
+                  <Slot className="env-card-img" label={c.imgLabel ?? "Image"} />
+                )
+              ) : null}
+              {c.imgLabel ? <span className={`env-card-pill ${c.pillDark ? "env-card-pill--dark" : ""}`}>{c.imgLabel}</span> : null}
+            </article>
+          ))}
+        </div>
+
+        <button type="button" className="env-arrow env-arrow--prev" onClick={prev} aria-label="Previous space">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path d="M15 6l-6 6 6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+        <button type="button" className="env-arrow env-arrow--next" onClick={advance} aria-label="Next space">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
       </div>
 
       <div className="env-cprog">
@@ -319,7 +333,7 @@ export default function Environment() {
         /* Buy Now CTA below each card, centered */
         .env-prod-cta-row { display: flex; justify-content: center; margin-top: clamp(20px, 2vw, 30px); }
         .env-prod-buy { display: inline-flex; align-items: center; height: 52px; padding: 0 clamp(28px, 3vw, 40px); border-radius: 980px; background: #1d1d1f; color: #ffffff; font-size: clamp(15px, 1.4vw, 17px); font-weight: 600; letter-spacing: -0.01em; text-decoration: none; white-space: nowrap; transition: background 200ms ease; }
-        .env-prod-buy:hover { background: #333335; }
+        .env-prod-buy:hover { background: #1d1d1f; }
 
         /* ---------- 2b. impact blocks (16:9 video, then 3 stats below) ---------- */
         .env-im { background: #ffffff; width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); padding: clamp(44px, 6vw, 96px) 0; }
@@ -337,7 +351,7 @@ export default function Environment() {
         /* "Explore X" pill (reveal-bubble animation), placed below the stats */
         .env-im-cta-wrap { margin-top: clamp(26px, 3.2vw, 46px); }
         .env-xcta-pill { display: inline-flex; align-items: center; height: 54px; padding: 0 32px; border-radius: 27px; background: #1d1d1f; color: #ffffff; font-size: clamp(15px, 1.5vw, 18px); font-weight: 600; letter-spacing: -0.01em; text-decoration: none; white-space: nowrap; transition: background 200ms ease; }
-        .env-xcta-pill:hover { background: #333335; }
+        .env-xcta-pill:hover { background: #1d1d1f; }
 
         /* ---------- 5. design section (light) ---------- */
         .env-design-media { position: relative; margin: clamp(40px, 5vw, 64px) auto 0; width: min(1048px, 100%); aspect-ratio: 16 / 9; border-radius: 20px; overflow: hidden; }
@@ -349,7 +363,7 @@ export default function Environment() {
         @media (max-width: 640px) { .env-design-duo { grid-template-columns: 1fr; } }
         .env-design-cta-row { display: flex; justify-content: center; margin-top: clamp(40px, 5vw, 64px); }
         .env-design-cta { display: inline-flex; align-items: center; height: 56px; padding: 0 32px; border-radius: 28px; background: #1d1d1f; text-decoration: none; cursor: pointer; transition: background 200ms ease; }
-        .env-design-cta:hover { background: #333335; }
+        .env-design-cta:hover { background: #148042; }
         .env-design-cta-label { color: #ffffff; font-size: 17px; font-weight: 600; letter-spacing: -0.022em; white-space: nowrap; }
         .env-stats3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(28px, 4vw, 60px); max-width: 980px; margin: clamp(48px, 6vw, 80px) auto 0; text-align: center; }
         .env-stat3-up { margin: 0; font-size: clamp(15px, 1.4vw, 17px); font-weight: 500; color: #6e6e73; line-height: 1.4; }
@@ -382,11 +396,21 @@ export default function Environment() {
         .env-dots { display: inline-flex; align-items: center; gap: 10px; height: 14px; }
         .env-dot { width: 8px; height: 8px; padding: 0; border: none; border-radius: 999px; background: #c7c7cc; cursor: pointer; transition: width 320ms cubic-bezier(0.22,1,0.36,1), background 200ms ease; }
         .env-dot.is-active { width: 30px; background: #1d1d1f; }
-        .env-arrows { display: inline-flex; gap: 10px; }
-        .env-arrow { width: 36px; height: 36px; border: none; border-radius: 999px; background: #e3e3e6; color: #1d1d1f; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: background 200ms ease, opacity 200ms ease; }
-        .env-arrow:hover { background: #d6d6da; }
-        .env-arrow:disabled { opacity: 0.4; cursor: default; }
-        .env-arrow svg { width: 18px; height: 18px; }
+        /* Prev/next arrows overlaid on the carousel edges (matches SolutionsBanner) */
+        .env-carousel-vp { position: relative; }
+        .env-arrow {
+          position: absolute; top: 50%; transform: translateY(-50%); z-index: 5;
+          width: clamp(38px, 3.4vw, 48px); height: clamp(38px, 3.4vw, 48px);
+          border: none; border-radius: 50%; background: #ffffff; color: #333336;
+          display: inline-flex; align-items: center; justify-content: center;
+          cursor: pointer; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+          transition: background 200ms ease, transform 150ms ease;
+        }
+        .env-arrow:hover { background: #f0f0f2; }
+        .env-arrow:active { transform: translateY(-50%) scale(0.92); }
+        .env-arrow--prev { left: clamp(2px, 1vw, 14px); }
+        .env-arrow--next { right: clamp(2px, 1vw, 14px); }
+        .env-arrow svg { width: 44%; height: 44%; }
 
         /* ---------- 3. made to last (stats) ---------- */
         .env-stats-row { display: grid; grid-template-columns: 1fr; gap: clamp(36px, 5vw, 64px); margin-top: clamp(40px, 5vw, 72px); }
@@ -516,7 +540,7 @@ export default function Environment() {
         .env-sim-col-body { margin: 0; font-size: clamp(15px, 1.4vw, 18px); font-weight: 500; line-height: 1.45; letter-spacing: 0.011em; color: #6e6e73; }
         @media (max-width: 700px) { .env-sim-cols { grid-template-columns: 1fr; gap: clamp(22px, 5vw, 32px); } }
         .env-sim-link { display: inline-flex; align-items: center; gap: 6px; margin-top: clamp(34px, 4.5vw, 60px); color: #0066cc; font-size: clamp(16px, 1.4vw, 19px); font-weight: 600; letter-spacing: -0.01em; text-decoration: none; transition: color 200ms ease; }
-        .env-sim-link:hover { color: #0a84ff; }
+        .env-sim-link:hover { color: #148042; }
         .env-sim-link span { display: inline-block; transition: transform 200ms ease; }
         .env-sim-link:hover span { transform: translateX(3px); }
 
@@ -598,7 +622,7 @@ export default function Environment() {
               </div>
             </div>
             <div className="env-prod-cta-row">
-              <a className="env-prod-buy" href="/contact">Buy Now</a>
+              <a className="env-prod-buy cta-wipe" href="/contact">Buy Now</a>
             </div>
           </div>
           <div className="env-prod" data-reveal style={{ ["--ri" as string]: 1 }}>
@@ -613,7 +637,7 @@ export default function Environment() {
               </div>
             </div>
             <div className="env-prod-cta-row">
-              <a className="env-prod-buy" href="/contact">Buy Now</a>
+              <a className="env-prod-buy cta-wipe" href="/contact">Buy Now</a>
             </div>
           </div>
         </div>
@@ -836,7 +860,7 @@ function AssessmentStrip() {
         .tas-title { margin: 0; color: #1d1d1f; font-size: clamp(20px, 2.4vw, 32px); font-weight: 600; line-height: 1.125; letter-spacing: -0.01em; }
         .tas-body { margin: clamp(10px, 1.4vw, 18px) 0 0; color: #6e6e73; font-size: clamp(13px, 1.1vw, 16px); font-weight: 500; line-height: 1.45; letter-spacing: -0.006em; max-width: 56ch; }
         .tas-cta { display: inline-flex; align-items: center; margin-top: clamp(16px, 2.4vw, 30px); padding: 10px 22px; border-radius: 980px; background: #0071e3; color: #ffffff; font-size: clamp(13px, 1.1vw, 16px); font-weight: 500; text-decoration: none; transition: background 200ms ease; }
-        .tas-cta:hover { background: #0077ed; }
+        .tas-cta:hover { background: #0071e3; }
         .tas-icon { color: #b8934a; display: inline-flex; flex: none; }
         .tas-icon svg { width: clamp(120px, 20vw, 260px); height: auto; }
         @media (max-width: 760px) {
@@ -851,7 +875,7 @@ function AssessmentStrip() {
             Tell us about your premises, and we will calculate the number of units
             and incorporate the formula.
           </p>
-          <a className="tas-cta" href="/contact">Get a free air assessment</a>
+          <a className="tas-cta cta-wipe" href="/contact">Get a free air assessment</a>
         </div>
         <span className="tas-icon" aria-hidden>
           <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
@@ -1192,7 +1216,7 @@ function ImpactBlock({
         </div>
         {cta ? (
           <div className="env-im-cta-wrap" data-reveal>
-            <a className="env-xcta-pill reveal-bubble" href={cta.href}>
+            <a className="env-xcta-pill cta-wipe reveal-bubble" href={cta.href}>
               <span>{cta.label}</span>
             </a>
           </div>

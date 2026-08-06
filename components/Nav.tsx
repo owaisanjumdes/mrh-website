@@ -216,7 +216,7 @@ export default function Nav() {
         /* The MRH mark fills only ~60% of its PNG canvas (vs ~75% for MANN+HUMMEL),
            so at equal CSS height it renders smaller. Give it a larger height to
            match the visible size, and nudge it down to optically center the mark. */
-        .mrh-nav-mrh { transform: translateY(8%); margin-left: clamp(-44px, -3vw, -14px); height: clamp(43px, 4.2vw, 61px); }
+        .mrh-nav-mrh { transform: translateY(8%); margin-left: clamp(-44px, -3vw, -14px); height: clamp(50px, 4.9vw, 71px); }
         .mrh-nav.is-products .mrh-nav-mrh { height: clamp(56px, 5.5vw, 81px); }
         .mrh-nav-link {
           color: var(--nav-fg);
@@ -382,7 +382,7 @@ export default function Nav() {
         @media (max-width: 820px) {
           .mrh-nav-center { display: none !important; }
           .mrh-nav { justify-content: flex-start !important; padding-left: clamp(14px, 4.5vw, 24px) !important; padding-right: clamp(14px, 4.5vw, 24px) !important; }
-          .mrh-nav-mrh { margin-left: 0 !important; height: clamp(34px, 8.5vw, 44px) !important; }
+          .mrh-nav-mrh { margin-left: 0 !important; height: clamp(38px, 9.5vw, 50px) !important; }
           .mrh-nav-mh { order: 1; margin-left: clamp(8px, 2.4vw, 16px) !important; margin-right: 0 !important; height: clamp(26px, 6.5vw, 34px) !important; }
           .mrh-nav-actions { order: 2; margin-left: auto !important; gap: 8px !important; }
           /* Keep the CTA on one line and compact so it never wraps or squeezes. */

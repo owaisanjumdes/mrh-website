@@ -93,7 +93,7 @@ export default function ProductsHero({ videoSrc }: { videoSrc?: string } = {}) {
           width: 100%;
           padding-bottom: clamp(10px, 2vh, 22px);
         }
-        .ph--video .ph-buy { margin-top: 0; }
+        .ph--video .ph-buy { margin-top: 0; margin-bottom: clamp(-22px, -2vh, -10px); }
 
         /* --- Wordmark --- */
         .ph-head {
@@ -260,10 +260,7 @@ export default function ProductsHero({ videoSrc }: { videoSrc?: string } = {}) {
         <div className="ph-buy">
           <div className="ph-cta-row">
             <Link href="/contact" className="ph-cta">
-              Buy now
-            </Link>
-            <Link href="/contact" className="ph-cta ph-cta--secondary">
-              Get bulk quotes
+              Buy Now
             </Link>
           </div>
         </div>
